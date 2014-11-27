@@ -1,13 +1,13 @@
 var buildings = [['Any','Design School','Ann Packer','Matthew Arnold'],
-			['Any','Haselgrave','James France','Stewart Mason'],['Any','Keith Green','Civil & Building', 'Sir David Davies']];
+				 ['Any','Haselgrave','James France','Stewart Mason'],['Any','Keith Green','Civil & Building', 'Sir David Davies']];
 
 var rooms = [[['Any','LDS.0.03','LDS.0.17','LDS.0.18'],['Any','JJ.0.04','JJ.0.17','JJ.0.18'],['Any','ZZ.1.03','ZZ.1.05','ZZ.1.06']],
-		[['Any','N.0.01','N.0.02','N.0.03'],['Any','CC.0.11','CC.0.12','CC.0.13'],['Any','SMB.0.02','SMB.0.08','SMB.0.17']],
-		[['Any','KG.1.07','KG.1.09','KG.1.11'],['Any','RT.0.27','RT.0.33','RT.0.37'],['Any','W.0.01','W.0.02','W.0.03']]];
+			 [['Any','N.0.01','N.0.02','N.0.03'],['Any','CC.0.11','CC.0.12','CC.0.13'],['Any','SMB.0.02','SMB.0.08','SMB.0.17']],
+			 [['Any','KG.1.07','KG.1.09','KG.1.11'],['Any','RT.0.27','RT.0.33','RT.0.37'],['Any','W.0.01','W.0.02','W.0.03']]];
 	
 var modCodes = [[['14COA101','14COA107','14COA124'],['14COB101','14COB231','14COB290'],['14COC001','14COC104','14COC140'],['14COD280','14COD290','14COD292']],
-			[['14MMA100','14MMA508','14MMA800'],['14MMB104','14MMB403','14MMB404'],['14MMC104','14MMC603','14MMC801'],['14MMD101','14MMD105','14MMD802']],
-			[['14PHA102','14PHA201','14PHA220'],['14PHB102','14PHB106','14PHB203'],['14PHC012','14PHC108','14PHC205'],['14PHD013','14PHD120','14PHD205']]];
+				[['14MMA100','14MMA508','14MMA800'],['14MMB104','14MMB403','14MMB404'],['14MMC104','14MMC603','14MMC801'],['14MMD101','14MMD105','14MMD802']],
+				[['14PHA102','14PHA201','14PHA220'],['14PHB102','14PHB106','14PHB203'],['14PHC012','14PHC108','14PHC205'],['14PHD013','14PHD120','14PHD205']]];
 			
 var modNames = [['Essential Skills for Computing','Logic and Functional Programming','Computer Systems'],
 				['Requirements Engineering','OSNI 1','Team Projects'],
@@ -20,22 +20,23 @@ var subCounter = 0;
 var round = 1;	
 var numRooms = 1;
 
-function updateBuilding(b){
+function updateBuilding(b)
+{
 	document.getElementById('requests').style.backgroundImage = "";
 	var parkChoice = b.selectedIndex;
 	var html = '';
 	var html2 = '';
 	
-	if(parkChoice == 0){
+	if (parkChoice == 0)
+	{
 		html += '<option>Any</option>';
 		html2 += '<option>Any</option>';
 	}
-	else{
-	
-		for(var i = 0; i < buildings[parkChoice-1].length; i++){
-			
-			html += '<option>' + buildings[parkChoice-1][i] + '</option>'
-		
+	else
+	{	
+		for(var i = 0; i < buildings[parkChoice-1].length; i++)
+		{			
+			html += '<option>' + buildings[parkChoice-1][i] + '</option>';		
 		}
 		
 		html2 += '<option>Any</option>';
@@ -43,22 +44,24 @@ function updateBuilding(b){
 	}
 
 	document.getElementById('building'+b.parentNode.parentNode.rowIndex).innerHTML = html;
-	document.getElementById('room'+b.parentNode.parentNode.rowIndex).innerHTML = html2;		
-	
+	document.getElementById('room'+b.parentNode.parentNode.rowIndex).innerHTML = html2;			
 }			
 
-function updateBackground(){
+function updateBackground()
+{
 	var parkChoice = document.getElementById('park1').value;
 	var buildingChoice = document.getElementById('building1').value;
 	var roomChoice = document.getElementById('room1').value;
 
-	if(parkChoice == 'East' && buildingChoice == 'Design School'  && roomChoice == 'LDS.0.17'){
+	if (parkChoice == 'East' && buildingChoice == 'Design School'  && roomChoice == 'LDS.0.17')
+	{
 		document.getElementById('requests').style.backgroundImage = "url('http://www.lboro.ac.uk/media/wwwlboroacuk/content/facilitiesmanagement/pagephotos/lds017.jpg')";
 		document.getElementById('requests').style.backgroundRepeat = "no-repeat";
 		document.getElementById('requests').style.backgroundSize = "50% 30%";
 		document.getElementById('requests').style.backgroundPosition = "left bottom";
 	}
-	else{
+	else
+	{
 		document.getElementById('requests').style.backgroundImage = "";
 		document.getElementById('requests').style.opacity = "1";
 	}
@@ -66,23 +69,23 @@ function updateBackground(){
 			
 }
 
-function updateRoom(r){
-	
+function updateRoom(r)
+{	
 	var parkChoice = document.getElementById('park'+r.parentNode.parentNode.rowIndex).selectedIndex;
 	var buildingChoice = r.selectedIndex;
 	
 	var html = '';
 	document.getElementById('requests').style.backgroundImage = "";
 	
-	if(parkChoice == 0 || buildingChoice == 0){
+	if(parkChoice == 0 || buildingChoice == 0)
+	{
 		html += '<option>Any</option>';
 	}
-	else{
-	
-		for(var i = 0; i < rooms[parkChoice-1][buildingChoice-1].length; i++){
-			
-			html += '<option>' + rooms[parkChoice-1][buildingChoice-1][i] + '</option>'
-		
+	else
+	{	
+		for (var i = 0; i < rooms[parkChoice-1][buildingChoice-1].length; i++)
+		{			
+			html += '<option>' + rooms[parkChoice-1][buildingChoice-1][i] + '</option>';		
 		}
 	}
 
@@ -122,14 +125,13 @@ function populateModNames(partChoice)
 {
 	var html = '';
 	document.getElementById('modName').options.length = 0;
+	
 	for(var i = 0; i < modNames[partChoice].length; i++)
 	{
 		html += '<option>' + modNames[partChoice][i] + '</option>';
 	}
+	
 	document.getElementById('modName').innerHTML = html;
-	
-	
-	
 }
 
 function updateEndWeek()
@@ -143,10 +145,12 @@ function updateEndWeek()
 	
 	for(var i = startChoice; i < 13; i++)
 	{
-		if(i == endChoice && endChoice >= startChoice){
+		if(i == endChoice && endChoice >= startChoice)
+		{
 			html += '<option selected="selected">' + i + '</option>'; 
 		}
-		else{
+		else
+		{
 			html += '<option>' + i + '</option>';
 		}
 	}
@@ -186,7 +190,7 @@ function addRequest()
 	{
 		parkIndex.push(document.getElementById('park'+i).selectedIndex);
 		buildingIndex.push(document.getElementById('building'+i).selectedIndex);
-		roomIndex.push(document.getElementById('room'+i).selectedIndex)
+		roomIndex.push(document.getElementById('room'+i).selectedIndex);
 	}
 	
 	var deptCodeIndex = document.getElementById('deptCode').selectedIndex;
@@ -305,11 +309,17 @@ function cancelRow(r)
 	var rowIndex = r.parentNode.parentNode.rowIndex;
 	var rowID = r.parentNode.parentNode.id;
 	document.getElementById('submissionsTable').deleteRow(rowIndex);
+	
 	// Update the status in history of submissions
 	//document.getElementById('s'+rowID).innerHTML = 'Cancelled';
 	for (var i = 0; i < submissions.length; i++)
+	{
 		if (submissions[i][0] == rowID)
+		{
 			submissions.splice(i, 1);
+		}
+	}
+	
 	subCounter--;
 }
 
@@ -336,7 +346,10 @@ function editRow(r)
 			document.getElementById('room1').selectedIndex = submissions[i][11];
 			
 			for (var j=0; j<9; j++)
+			{
 				document.getElementById('c'+j).checked = submissions[i][12][j];
+			}
+			
 			cancelRow(r);
 		}
 	}				
@@ -373,7 +386,7 @@ function showhide()
 	if (value == 'Show')
 	{
 		document.getElementById('showHide').value = 'Hide';
-		document.getElementById('collapsible').style.visibility = 'visible'
+		document.getElementById('collapsible').style.visibility = 'visible';
 	}
 	else 
 	{			
