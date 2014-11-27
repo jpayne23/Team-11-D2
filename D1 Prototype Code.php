@@ -144,15 +144,17 @@
 					</table>
 				</div>
 				<div  id='requests' style='background-color:#2DABE0; overflow:auto; float:left; width:32.74%; height:100%; margin-left:1%; border-style:double; border-color:#FFFFFF; border-radius:10px 10px;'>
-					<h4 style='text-align:left; padding-left:10px; font-family:arial; font-size:18pt; color:#FFFFFF;'>Requests (Optional)</h4>
+					<h4 style='text-align:left; padding-left:10px; font-family:arial; font-size:18pt; color:#FFFFFF;'>Advanced Search</h4>
 					<!--<input class='buttons' type='button' id='showHide' onclick='showhide();' value='Show' style='font-size: 14px; margin-left:15px;'>-->
 					<table class='imageTable' style='padding-left:10px;' id='locationInputTable'>					
 						<tr>
-							<td style='font-family:arial; font-size:16px; color:#FFFFFF;'>Priority</td>
+							<td style='font-family:arial; font-size:16px; color:#FFFFFF;'>Search Type</td>
 							<td>
-								<select name="priority" id="priority" class="larger" disabled onchange="update();">
-									<option selected='selected'>Yes</option>
-									<option>No</option>
+								<select name="priority" id="priority" class="larger" onchange="updateSearch(this.selectedIndex);">
+									<option selected='selected'>Room Info</option>
+									<option>Day + Time</option>
+									<option>Facilities</option>
+									<option>Capacity</option>
 								</select>
 							</td>
 						</tr>
@@ -172,7 +174,7 @@
 								</tr>							
 								<tr>
 									<td>
-										<label for="multiRoom" >Room 1</label>
+										<label for="multiRoom" >Room</label>
 									</td>
 									<td>
 										<select name="park" id="park1" class="larger" onchange="updateBuilding(this);">
@@ -193,16 +195,14 @@
 										</select>
 									</td>
 								</tr>	
-								<tr>
+								<!--<tr>
 									<td colspan='5' style='text-align:center'>
 										<input class="rButtons" type='button' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>
 									</td>
-								</tr>
+								</tr>-->
 							</table>
-								<br/>
-								<br/>
-								<br/>
-								
+							<br />
+							<input id='bleh' type='button' value='Search'></input>	
 						</tr>
 					</table>
 				</div>

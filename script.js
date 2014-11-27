@@ -480,6 +480,53 @@ function removeRoom(r)
 	}
 }
 
+function updateSearch(index){
+
+	var html = '';
+	
+	document.getElementById('imageTable').innerHTML = '';
+	
+	
+	
+	switch(index){
+		case 0:
+			html = '<tr><td></td><td><label for="park" >Park</label></td><td><label for="building" >Building</label></td><td>' + 
+					'<label for="room" >Room</label></td></tr><tr><td><label for="multiRoom" >Room</label>' +
+					'</td><td><select name="park" id="park1" class="larger" onchange="updateBuilding(this);">' +
+					'<option>Any</option><option>East</option><option>Central</option><option>West</option>'
+					'</select></td><td><select name="building" id="building1" class="larger" onchange="updateRoom(this);">' +
+					'<option>Any</option></select></td><td><select name="room" id="room1" class="larger" onchange="updateBackground();">' +
+					'<option>Any</option></select></td></tr>'
+		
+		case 1:
+	
+	}
+
+
+
+}
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 function openDiv()
 {
 	document.getElementById('popupDiv').style.visibility = 'visible';
