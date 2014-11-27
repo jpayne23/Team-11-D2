@@ -1,0 +1,87 @@
+.buttons{
+
+	border:2px solid black;
+	border-style: outset;
+	border-radius: 5px;  
+	background-color:#FFFFFF;
+	font: bold 18px Arial; 
+	color:#2DABE0;
+	margin-left:15px;
+}
+
+.buttons:hover{
+
+	border:2px solid black;
+	border-radius: 5px;  
+	background-color:#2DABE0;
+	font: bold 18px Arial; 
+	color:#FFFFFF;
+	margin-left:15px;
+}
+
+.rButtons{
+
+	border:2px solid black;
+	border-style: outset;
+	border-radius: 5px;  
+	background-color:#FFFFFF;
+	font: bold 14px Arial; 
+	color:#2DABE0;
+}
+
+.rButtons:hover{
+
+	border:2px solid black;
+	border-radius: 5px;  
+	background-color:#2DABE0;
+	font: bold 14px Arial; 
+	color:#FFFFFF;
+}
+
+.pButtons{
+
+	border:2px solid black;
+	border-style: outset;
+	border-radius: 5px;  
+	background-color:#FFFFFF;
+	font: bold 14px Arial; 
+	color:#2D9BE0;
+}
+
+.pButtons:hover{
+
+	border:2px solid black;
+	border-radius: 5px;  
+	background-color:#2D9BE0;
+	font: bold 14px Arial; 
+	color:#FFFFFF;
+}
+
+.tabButtons{
+
+	border:2px solid black;
+	border-radius: 5px;  
+	background-color:#2DABE0;
+	font: bold 18px Arial; 
+	color:#FFFFFF;
+	margin-left:15px;
+	vertical-align: center;
+}
+
+.tabButtons:hover{
+
+	border:2px solid black;
+	border-style: outset;
+	border-radius: 5px;  
+	background-color:#FFFFFF;
+	font: bold 18px Arial; 
+	color:#2DABE0;
+	margin-left:15px;
+	vertical-align: center;
+}
+
+.imageTable{
+
+	background-color: rgba(45,171,224,0.25);
+
+}
