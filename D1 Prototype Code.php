@@ -3,7 +3,8 @@
 		<title>Website Prototype</title>
 		<link rel="Shortcut Icon" type="image/png" href="icon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css">
-		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' type='text/javascript'></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 		<script src='script.js' type='text/javascript'></script>
 	</head>
 	<body style='background-color:#708090' onload='updateModCode();updateModName();'>
@@ -46,7 +47,7 @@
 					<h3 style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'>General Information</h3>
 					<table style='height:50%'>
 						<tr>
-							<td>
+							<td>								
 								<label for="deptCode" style='font-family:arial; font-size:16px; color:#FFFFFF;'>Department Code</label>
 							</td>
 							<td>
@@ -87,49 +88,15 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="sWeek" style='font-family:arial; font-size:16px; color:#FFFFFF;'> Start Week</label>
+								<label for="weeks" style='font-family:arial; font-size:16px; color:#FFFFFF;'>Pick weeks</label>								
 							</td>
 							<td>
-								<select name="sWeek" id="sWeek" class="larger" onchange="updateEndWeek();">
-									<option selected="selected">1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-									<option>11</option>
-									<option>12</option>
-								</select>
+								<input type='button' value='clickme' onclick='openDiv();'></input>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label for="lWeek" style='font-family:arial; font-size:16px; color:#FFFFFF;'> End Week</label>
-							</td>
-							<td>
-								<select name="lWeek" id="lWeek" class="larger">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
-									<option>11</option>
-									<option selected="selected">12</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="seshType" style='font-family:arial; font-size:16px; color:#FFFFFF;'> Session Type </label>
+								<label for="seshType" style='font-family:arial; font-size:16px; color:#FFFFFF;'>Session Type</label>
 							</td>
 							<td>
 								<select name="seshType" id="seshType" class="larger" onchange="update();">
@@ -263,6 +230,29 @@
 			<div id='footer' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:15%; margin-top:2%;'>
 				<img src="https://dl.dropboxusercontent.com/s/yxk9ed3oimhlwkd/Footer.jpg" style='width:100%; height:14%; border-bottom-left-radius: 10px 10px; border-bottom-right-radius: 5px 10px;'>
 			</div>
+		</div>
+		
+		<div id='popupDiv' style='visibility: hidden;'>
+			<p>This is a popup div</p>
+			<ol id="selectable">
+				<li>Week 1</li>
+				<li>Week 2</li>
+				<li>Week 3</li>
+				<li>Week 4</li>
+				<li>Week 5</li>
+				<li>Week 6</li>
+				<li>Week 7</li>
+				<li>Week 8</li>
+				<li>Week 9</li>
+				<li>Week 10</li>
+				<li>Week 11</li>
+				<li>Week 12</li>
+				<li>Week 13</li>
+				<li>Week 14</li>
+				<li>Week 15</li>
+				<li>Week 16</li>
+			</ol>
+			<input type="button" value="closeme" onclick='closeDiv();'></input>
 		</div>
 	</body>
 </html>

@@ -85,3 +85,39 @@
 	background-color: rgba(45,171,224,0.25);
 
 }
+
+#popupDiv{
+	border-radius: 7px;
+    background:#6b6a63;
+    margin:30px auto 0;
+    padding:6px;  
+    position:absolute;
+    width:800px;
+    top: 50%;
+    left: 50%;
+    margin-left: -400px; // 1/2 width
+    margin-top: -40px; // 1/2 height
+}
+
+#selectable .ui-selecting{ 
+	background: #FECA40; 
+}
+
+#selectable .ui-selected { 
+	background: #F39814; color: white; 
+}
+
+#selectable { 
+	list-style-type: none; 
+	float : left; 
+	margin: 0; 
+	padding: 0; 
+	width: 60%; 
+}
+
+#selectable li { 
+	margin: 3px; 
+	padding: 0.4em; 
+	font-size: 1.4em; 
+	height: 18px; 
+}

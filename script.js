@@ -465,6 +465,7 @@ function removeRoom(r)
 	{
 		document.getElementById('maxRoomsLabel').innerHTML = "<input type='button' class='pbuttons' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>";
 	}
+	
 	var rowIndex = r.parentNode.parentNode.rowIndex;
 	document.getElementById('multiRoomTable').deleteRow(rowIndex);
 	numRooms--;
@@ -478,3 +479,13 @@ function removeRoom(r)
 		rows.cells[3].childNodes[0].id = "room" + i;					
 	}
 }
+
+function openDiv()
+{
+	document.getElementById('popupDiv').style.visibility = 'visible';
+}
+
+function closeDiv()
+{
+	document.getElementById('popupDiv').style.visibility = 'hidden';
+}	
