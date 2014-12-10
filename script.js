@@ -134,7 +134,7 @@ function populateModNames(partChoice)
 	document.getElementById('modName').innerHTML = html;
 }
 
-function updateEndWeek()
+/*function updateEndWeek()
 {
 	var startChoice = document.getElementById('sWeek').selectedIndex + 1;
 	var html = '';
@@ -156,7 +156,7 @@ function updateEndWeek()
 	}
 	
 	document.getElementById('lWeek').innerHTML = html;
-}
+}*/
 
 function addRequest()
 {
@@ -176,8 +176,6 @@ function addRequest()
 	var deptCode = document.getElementById('deptCode').value;
 	var part = document.getElementById('part').value;
 	var moduleCode = document.getElementById('modCode').value;
-	var startWeek = document.getElementById('sWeek').value;
-	var endWeek = document.getElementById('lWeek').value;
 	var sType = document.getElementById('seshType').value;
 	var sLength = document.getElementById('seshLength').value;
 	var priority = document.getElementById('priority').value;
@@ -196,8 +194,6 @@ function addRequest()
 	var deptCodeIndex = document.getElementById('deptCode').selectedIndex;
 	var partIndex = document.getElementById('part').selectedIndex;
 	var moduleCodeIndex = document.getElementById('modCode').selectedIndex;
-	var startWeekIndex = document.getElementById('sWeek').selectedIndex;
-	var endWeekIndex = document.getElementById('lWeek').selectedIndex;
 	var sTypeIndex = document.getElementById('seshType').selectedIndex;
 	var sLengthIndex = document.getElementById('seshLength').selectedIndex;
 	var priorityIndex = document.getElementById('priority').selectedIndex;
@@ -212,7 +208,7 @@ function addRequest()
 		checkedBool.push($(this).is(":checked"));
 	});
 	
-	var temp = [submissionIDCounter, deptCodeIndex, partIndex, moduleCodeIndex, startWeekIndex, endWeekIndex, sTypeIndex, sLengthIndex, priorityIndex, parkIndex, buildingIndex, roomIndex, checkedBool];
+	var temp = [submissionIDCounter, deptCodeIndex, partIndex, moduleCodeIndex, sTypeIndex, sLengthIndex, priorityIndex, parkIndex, buildingIndex, roomIndex, checkedBool];
 	submissions.push(temp);
 }
 
@@ -228,11 +224,9 @@ function submitRequest()
 		var deptCode = document.getElementById('deptCode')[submissions[i][1]].value;
 		var part = document.getElementById('part')[submissions[i][2]].value;
 		var moduleCode = document.getElementById('modCode')[submissions[i][3]].value;
-		var startWeek = document.getElementById('sWeek')[submissions[i][4]].value;
-		var endWeek = document.getElementById('lWeek')[submissions[i][5]].value;
-		var sType = document.getElementById('seshType')[submissions[i][6]].value;
-		var sLength = document.getElementById('seshLength')[submissions[i][7]].value;
-		var priority = document.getElementById('priority')[submissions[i][8]].value;
+		var sType = document.getElementById('seshType')[submissions[i][4]].value;
+		var sLength = document.getElementById('seshLength')[submissions[i][5]].value;
+		var priority = document.getElementById('priority')[submissions[i][6]].value;
 
 		var park = [];
 		var building = [];
@@ -240,15 +234,15 @@ function submitRequest()
 		
 		for (var j = 0; j < numRooms; j++)
 		{
-			park.push(document.getElementById('park1')[submissions[i][9][j]].value);				
-			building.push(document.getElementById('building1')[submissions[i][10][j]].value);
-			room.push(document.getElementById('room1')[submissions[i][11][j]].value);
+			park.push(document.getElementById('park1')[submissions[i][7][j]].value);				
+			building.push(document.getElementById('building1')[submissions[i][8][j]].value);
+			room.push(document.getElementById('room1')[submissions[i][9][j]].value);
 		}
 		
 		var facilities = [];
 		for (var j = 0; j < 9; j++)
 		{
-			if (submissions[i][12][j] == true)
+			if (submissions[i][10][j] == true)
 				facilities.push(document.getElementById('c'+j).value);
 		}
 		
@@ -269,8 +263,6 @@ function submitRequest()
 		
 		cellID.innerHTML = reqID;
 		cell0.innerHTML = moduleCode;
-		cell1.innerHTML = startWeek
-		cell2.innerHTML = endWeek
 		
 		for (var j = 0; j < park.length; j++)
 		{
@@ -368,8 +360,6 @@ function nextRound()
 	// Clear pending submissions when switching round
 	document.getElementById("submissionsTable").innerHTML = "<th>Request ID</th>"
 	+   "<th>Module Code</th>"
-	+	"<th>Start Week</th>"
-	+	"<th>End Week</th>"
 	+	"<th>Location (Park/Building/Room)</th>"
 	+	"<th>Session Type</th>"
 	+	"<th>Session Length</th>"
@@ -480,13 +470,11 @@ function removeRoom(r)
 	}
 }
 
-function updateSearch(index){
-
+function updateSearch(index)
+{
 	var html = '';
 	
-	document.getElementById('imageTable').innerHTML = '';
-	
-	
+	document.getElementById('imageTable').innerHTML = '';	
 	
 	switch(index){
 		case 0:
@@ -496,43 +484,16 @@ function updateSearch(index){
 					'<option>Any</option><option>East</option><option>Central</option><option>West</option>'
 					'</select></td><td><select name="building" id="building1" class="larger" onchange="updateRoom(this);">' +
 					'<option>Any</option></select></td><td><select name="room" id="room1" class="larger" onchange="updateBackground();">' +
-					'<option>Any</option></select></td></tr>'
-		
-		case 1:
-	
+					'<option>Any</option></select></td></tr>';
 	}
-
-
-
 }
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-function openDiv()
+function openPendingDiv()
 {
-	document.getElementById('popupDiv').style.visibility = 'visible';
+	document.getElementById('popupPendingDiv').style.visibility = 'visible';
 }
 
-function closeDiv()
+function closePendingDiv()
 {
-	document.getElementById('popupDiv').style.visibility = 'hidden';
-}	
+	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
+}

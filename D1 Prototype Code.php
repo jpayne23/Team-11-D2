@@ -36,6 +36,7 @@
 				<form action="http://co-project.lboro.ac.uk/team11/history.html" style='display:inline'>
 					<input class='tabButtons' type='submit' value='History' ></input>
 				</form>
+				<input class='tabButtons' type='button' value='Pending Submissions' onclick='openPendingDiv();'></input>				
 				<form action="http://co-project.lboro.ac.uk/team11/login.html" style='display:inline'>
 					<input class='tabButtons' type='submit' value='Log Out' ></input>
 				</form>
@@ -211,7 +212,14 @@
 				<input class='tabButtons' type='button'  value='Submit' onclick='submitRequest();'  ></input>
 				<input class='tabButtons' type='button' value='Next Round' onclick='nextRound();'></input>
 			</div>	
-			<div id='submissions' style='background-color:#2D9BE0; overflow:auto; float:left; margin-left:7.5%; width:84.65%; height:25%; border-style:double; border-color:#FFFFFF; border-radius:10px; text-align:center; margin-top:1%; margin-bottom:1%;'> <!--border-top:5px; border-bottom:0px; border-right:0px; border-left:0px;--> 
+			<div id='footer' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:15%; margin-top:2%;'>
+				<img src="https://dl.dropboxusercontent.com/s/yxk9ed3oimhlwkd/Footer.jpg" style='width:100%; height:14%; border-bottom-left-radius: 10px 10px; border-bottom-right-radius: 5px 10px;'>
+			</div>
+		</div>
+		
+		<div id='popupPendingDiv' style='visibility: hidden;'>
+			<input type="button" value="closeme" onclick='closePendingDiv();'></input>
+			<div id='submissions' style='background-color:#2D9BE0; overflow:auto; margin-left: 2.5%; width:95%; height:100%; border-style:double; border-color:#FFFFFF; border-radius:10px; text-align:center; margin-top:1%; margin-bottom:1%;'> <!--border-top:5px; border-bottom:0px; border-right:0px; border-left:0px;--> 
 				<h3  id='pendingTitle' style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'> Pending submissions for Round 1 </h3>
 				<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>
 					<th>Request ID</th>
@@ -227,32 +235,6 @@
 					<th>Cancel</th>
 				</table>
 			</div>
-			<div id='footer' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:15%; margin-top:2%;'>
-				<img src="https://dl.dropboxusercontent.com/s/yxk9ed3oimhlwkd/Footer.jpg" style='width:100%; height:14%; border-bottom-left-radius: 10px 10px; border-bottom-right-radius: 5px 10px;'>
-			</div>
-		</div>
-		
-		<div id='popupDiv' style='visibility: hidden;'>
-			<p>This is a popup div</p>
-			<ol id="selectable">
-				<li>Week 1</li>
-				<li>Week 2</li>
-				<li>Week 3</li>
-				<li>Week 4</li>
-				<li>Week 5</li>
-				<li>Week 6</li>
-				<li>Week 7</li>
-				<li>Week 8</li>
-				<li>Week 9</li>
-				<li>Week 10</li>
-				<li>Week 11</li>
-				<li>Week 12</li>
-				<li>Week 13</li>
-				<li>Week 14</li>
-				<li>Week 15</li>
-				<li>Week 16</li>
-			</ol>
-			<input type="button" value="closeme" onclick='closeDiv();'></input>
 		</div>
 	</body>
 </html>

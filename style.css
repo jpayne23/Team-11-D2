@@ -86,17 +86,16 @@
 
 }
 
-#popupDiv{
+#popupPendingDiv{
 	border-radius: 7px;
     background:#6b6a63;
-    margin:30px auto 0;
+    margin:30px;
     padding:6px;  
     position:absolute;
-    width:800px;
-    top: 50%;
-    left: 50%;
-    margin-left: -400px; // 1/2 width
-    margin-top: -40px; // 1/2 height
+    width:90%;
+	height:90%;
+    top: 5%;
+    left: 5%;
 }
 
 #selectable .ui-selecting{ 
