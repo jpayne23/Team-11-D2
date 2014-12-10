@@ -13,20 +13,6 @@
 			<div id='header' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:7.5%; margin-top:2%;'>
 				<img src="https://dl.dropboxusercontent.com/s/dkg93fbkfrk34d8/Bannerlboro.png" style='width:100%; height:14%; border-top-left-radius: 10px 10px ;border-top-right-radius: 10px 10px;'>
 			</div>
-			<div style='background-color:#E0E0E0; border-top:1.5px solid #ccc; height:5.5%; width:85%; margin-left:7.5%; margin-right:7.5%; margin-bottom:0.5%;'>
-				<table style='margin-left:auto; margin-right:auto;'> 
-					<tr>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center; margin-left'> <a href='http://www.lboro.ac.uk/?external'> University home </a></label> </th>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/study/'> Prospective students </a> </label> </th>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/international/'> International </a> </label> </th>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/news-events/'> News and events </a> </label> </th>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/about/'> About us </a></label> </th>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/departments/'> Schools and departments </a> </label> </th>
-						<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/research/'> Research </a> </label> </th>
-						<th style='padding:4px 8px;'> <label style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center;'> <a href='http://www.lboro.ac.uk/enterprise/'>Working with business </a> </label> </th>
-					</tr>
-				</table>
-			</div>
 			<div style='height:4%; margin-left:7.5%; margin-right:7.5%; width:85%;'>
 				<form action="http://co-project.lboro.ac.uk/team11/WebsitePrototype.html" style='display:inline'>
 					<input class='tabButtons' type='submit' value='Home' ></input>
@@ -229,9 +215,6 @@
 				<input class='tabButtons' type='button'  value='Submit' onclick='submitRequest();'></input>
 				<input class='tabButtons' type='button' value='Next Round' onclick='nextRound();'></input>
 			</div>	
-			<div id='footer' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:15%; margin-top:2%;'>
-				<img src="https://dl.dropboxusercontent.com/s/yxk9ed3oimhlwkd/Footer.jpg" style='width:100%; height:14%; border-bottom-left-radius: 10px 10px; border-bottom-right-radius: 5px 10px;'>
-			</div>
 		</div>
 		
 		<div id='popupPendingDiv' style='visibility: hidden;'>
