@@ -24,10 +24,37 @@ var numRooms = 1;
 //---------------------
 // Add week selector
 $(function() {
+	var startElementSelected;
+	
 	$("#popupWeeks").bind("mousedown", function(e) {
 		e.metaKey = true;
-	}).selectable();
-});	
+	}).selectable({
+		start: function(e){		// Add more to list if current one dragging is not selected, otherwise remove it
+			var classSelected = e.toElement.className.search("ui-selected")
+			if (classSelected != -1)	// clicked element is already selected
+			{
+				startElementSelected = true;
+			}
+			else
+			{
+				startElementSelected = false;
+			}			
+		},
+		selecting: function(e, ui)
+		{
+			if (startElementSelected == true)
+			{
+				ui.selecting.className = "ui-state-default";
+			}
+			else
+			{
+				
+			}
+		}
+	});
+	
+	
+});
 
 function updateBuilding(b)
 {
