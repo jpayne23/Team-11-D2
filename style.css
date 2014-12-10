@@ -98,25 +98,27 @@
     left: 5%;
 }
 
-#selectable .ui-selecting{ 
+#popupWeeks .ui-selecting{ 
 	background: #FECA40; 
 }
 
-#selectable .ui-selected { 
+#popupWeeks .ui-selected { 
 	background: #F39814; color: white; 
 }
 
-#selectable { 
-	list-style-type: none; 
-	float : left; 
+#popupWeeks { 
+	list-style-type: none;
 	margin: 0; 
 	padding: 0; 
-	width: 60%; 
+	width: 450px; 
 }
 
-#selectable li { 
-	margin: 3px; 
-	padding: 0.4em; 
-	font-size: 1.4em; 
-	height: 18px; 
+#popupWeeks li { 
+	margin: 1px; 
+	padding: 1px; 
+	float: left;
+	font-size: 1.5em;
+	text-align: center;
+	list-style-position:inside;
+	border: 1px solid black;
 }

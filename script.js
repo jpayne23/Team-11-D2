@@ -20,6 +20,15 @@ var subCounter = 0;
 var round = 1;	
 var numRooms = 1;
 
+// Any JQUERY
+//---------------------
+// Add week selector
+$(function() {
+	$("#popupWeeks").bind("mousedown", function(e) {
+		e.metaKey = true;
+	}).selectable();
+});	
+
 function updateBuilding(b)
 {
 	document.getElementById('requests').style.backgroundImage = "";
@@ -488,6 +497,7 @@ function updateSearch(index)
 	}
 }
 
+// Open and close popups for pending submissions div
 function openPendingDiv()
 {
 	document.getElementById('popupPendingDiv').style.visibility = 'visible';
@@ -496,4 +506,15 @@ function openPendingDiv()
 function closePendingDiv()
 {
 	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
+}
+
+// Open and close popups for selecting weeks div
+function openWeeksDiv()
+{
+	document.getElementById('popupWeeksDiv').style.visibility = 'visible';
+}
+
+function closeWeeksDiv()
+{
+	document.getElementById('popupWeeksDiv').style.visibility = 'hidden';
 }

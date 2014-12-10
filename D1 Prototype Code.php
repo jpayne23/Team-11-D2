@@ -3,6 +3,7 @@
 		<title>Website Prototype</title>
 		<link rel="Shortcut Icon" type="image/png" href="icon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 		<script src='script.js' type='text/javascript'></script>
@@ -91,8 +92,24 @@
 							<td>
 								<label for="weeks" style='font-family:arial; font-size:16px; color:#FFFFFF;'>Pick weeks</label>								
 							</td>
-							<td>
-								<input type='button' value='clickme' onclick='openDiv();'></input>
+							<td colspan='2'>
+								<ol id="popupWeeks">
+									<li class="ui-state-default">1</li>
+									<li class="ui-state-default">2</li>
+									<li class="ui-state-default">3</li>
+									<li class="ui-state-default">4</li>
+									<li class="ui-state-default">5</li>
+									<li class="ui-state-default">6</li>
+									<li class="ui-state-default">7</li>
+									<li class="ui-state-default">8</li>
+									<li class="ui-state-default">9</li>
+									<li class="ui-state-default">10</li>
+									<li class="ui-state-default">11</li>
+									<li class="ui-state-default">12</li>
+									<li class="ui-state-default">13</li>
+									<li class="ui-state-default">14</li>
+									<li class="ui-state-default">15</li>
+								</ol>
 							</td>
 						</tr>
 						<tr>
@@ -209,7 +226,7 @@
 				</div>
 			</div>
 			<div style='float:left; margin-left:7.5%; margin-right:7.5%; width:100%; margin-top:0.5%;'>
-				<input class='tabButtons' type='button'  value='Submit' onclick='submitRequest();'  ></input>
+				<input class='tabButtons' type='button'  value='Submit' onclick='submitRequest();'></input>
 				<input class='tabButtons' type='button' value='Next Round' onclick='nextRound();'></input>
 			</div>	
 			<div id='footer' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:15%; margin-top:2%;'>
