@@ -72,14 +72,24 @@ $(function() {
 	
 });
 
-function updateBuilding(b)
+function updateBuilding()
 {
 	var string = $("#park1").serialize();
 	$.get("updateBuilding.php?" + string, function(data)
 	{
 		$('#buildingDiv').html(data);
 	});		
-}			
+}
+
+function updateRoom()
+{
+	var string = ("building="+document.getElementById('building1')[document.getElementById('building1').selectedIndex].id);
+	
+	$.get("updateRoom.php?" + string, function(data)
+	{
+		$('#roomDiv').html(data);
+	});		
+}		
 
 function updateBackground()
 {
@@ -103,7 +113,7 @@ function updateBackground()
 			
 }
 
-function updateRoom(r)
+/*function updateRoom(r)
 {	
 	var parkChoice = document.getElementById('park'+r.parentNode.parentNode.rowIndex).selectedIndex;
 	var buildingChoice = r.selectedIndex;
@@ -123,8 +133,8 @@ function updateRoom(r)
 		}
 	}
 
-	document.getElementById('room'+r.parentNode.parentNode.rowIndex).innerHTML = html;	
-}
+	document.getElementById('room'+r.parentNode.parentNode.rowIndex).innerHTML = html;
+}*/
 
 function updateModCode()
 {

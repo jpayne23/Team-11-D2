@@ -172,23 +172,16 @@
 										<label for="multiRoom" >Room</label>
 									</td>
 									<td>
-										<div id='parkDiv'>
-											<select>
-												<option>Any</option>
-											</select>
+										<div id='parkDiv'>											
 										</div>
 									</td>
 									<td>
-										<div id='buildingDiv'>	
-											<select>
-												<option>Any</option>
-											</select>
+										<div id='buildingDiv'>
 										</div>
 									</td>
 									<td>
-										<select name="room" id="room1" class="larger" onchange="updateBackground();">
-											<option>Any</option>
-										</select>
+										<div id='roomDiv'>											
+										</div>
 									</td>
 								</tr>	
 								<!--<tr>
