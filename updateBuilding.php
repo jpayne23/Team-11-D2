@@ -1,12 +1,8 @@
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
-	$username = 'team11';
-	$password = 'bcx94daw';
-	$host = 'co-project.lboro.ac.uk';
-	$dbName = 'team11';
+	include "password.php"
 	$dsn = "mysql://$username:$password@$host/$dbName"; 
-
 	$db =& MDB2::connect($dsn); 
 	if(PEAR::isError($db)){ 
 		die($db->getMessage());
