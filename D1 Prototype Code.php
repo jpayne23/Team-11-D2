@@ -134,15 +134,8 @@
 						<h3 style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'>Facilities</h3>
 						<tr>
 							<td id='checkboxes' style='font-family:arial; font-size:16px; color:#FFFFFF; padding:0px;'>							
-								<input type="checkbox" id='c0' name="facility" value="Computer">Computer</input></br>
-								<input type="checkbox" id='c1' name="facility" value="Projector">Projector</input></br>
-								<input type="checkbox" id='c2' name="facility" value="Whiteboard">Whiteboard</input></br>
-								<input type="checkbox" id='c3' name="facility" value="OHP">OHP</input></br>
-								<input type="checkbox" id='c4' name="facility" value="Video/DVD Player">Video/DVD Player</input></br>
-								<input type="checkbox" id='c5' name="facility" value="PA System">PA System</input></br>
-								<input type="checkbox" id='c6' name="facility" value="Radio Microphone">Radio Microphone</input></br>
-								<input type="checkbox" id='c7' name="facility" value="ReVIEW Lecture Capture">ReVIEW Lecture Capture</input></br>
-								<input type="checkbox" id='c8' name="facility" value="Visualiser">Visualiser</input>
+								<div id='facilitiesDiv'>
+								</div>
 							</td>
 						</tr>
 					</table>
