@@ -1,0 +1,268 @@
+<html>
+	<head>
+		<title>Rooms & Timetable Prototype</title>
+		<link href="mystyle.css" rel="stylesheet" type="text/css">
+		<script type='text/javascript'>
+		
+			function showEast()
+			{
+				if(document.getElementById('parkcentral').style.backgroundColor= '#000000')
+				{
+					document.getElementById('parkcentral').style.backgroundColor= '#FFFFFF'
+					document.getElementById('parkcentral').style.color= '#000000'
+				}
+				if(document.getElementById('parkwest').style.backgroundColor= '#000000')
+				{
+					document.getElementById('parkwest').style.backgroundColor= '#FFFFFF'
+					document.getElementById('parkwest').style.color= '#000000'
+				}
+				document.getElementById('parkeast').style.backgroundColor= '#000000'
+				document.getElementById('parkeast').style.color= '#FFFFFF'
+				
+				if(document.getElementById('central').style.visibility= 'visible')
+				{
+					document.getElementById('central').style.visibility= 'hidden'
+				}
+				if(document.getElementById('west').style.visibility= 'visible')
+				{
+					document.getElementById('west').style.visibility= 'hidden'
+				}
+				document.getElementById('east').style.visibility= 'visible'
+			}
+			
+			function showEastContent()
+			{
+				if(document.getElementById('parkeast').style.height= '40%	')
+				{	
+					document.getElementById('parkeast').style.height= '20%'
+				}
+				if(document.getElementById('parkeast').style.height= '20%')
+				{	
+					document.getElementById('parkeast').style.height= '40%'
+				}
+				if(document.getElementById('centralinfo').style.visibility= 'visible')
+				{
+					document.getElementById('centralinfo').style.visibility= 'hidden'
+				}
+				if(document.getElementById('westinfo').style.visibility= 'visible')
+				{
+					document.getElementById('westinfo').style.visibility= 'hidden'
+				}
+				document.getElementById('eastinfo').style.visibility= 'visible'
+			}
+			
+			function showCentralContent()
+			{
+				if(document.getElementById('eastinfo').style.visibility= 'visible')
+				{
+					document.getElementById('eastinfo').style.visibility= 'hidden'
+				}
+				if(document.getElementById('westinfo').style.visibility= 'visible')
+				{
+					document.getElementById('westinfo').style.visibility= 'hidden'
+				}
+				document.getElementById('centralinfo').style.visibility= 'visible'
+			}
+			
+			function showWestContent()
+			{
+				if(document.getElementById('eastinfo').style.visibility= 'visible')
+				{
+					document.getElementById('eastinfo').style.visibility= 'hidden'
+				}
+				if(document.getElementById('centralinfo').style.visibility= 'visible')
+				{
+					document.getElementById('centralinfo').style.visibility= 'hidden'
+				}
+				document.getElementById('westinfo').style.visibility= 'visible'
+			}
+			
+			function showCentral()
+			{	
+				if(document.getElementById('parkeast').style.backgroundColor= '#000000')
+				{
+					document.getElementById('parkeast').style.backgroundColor= '#FFFFFF'
+					document.getElementById('parkeast').style.color= '#000000'
+				}
+				if(document.getElementById('parkwest').style.backgroundColor= '#000000')
+				{
+					document.getElementById('parkwest').style.backgroundColor= '#FFFFFF'
+					document.getElementById('parkwest').style.color= '#000000'
+				}
+				document.getElementById('parkcentral').style.backgroundColor= '#000000'
+				document.getElementById('parkcentral').style.color= '#FFFFFF'
+				
+				if(document.getElementById('east').style.visibility= 'visible')
+				{
+					document.getElementById('east').style.visibility= 'hidden'
+				}	
+				if(document.getElementById('west').style.visibility= 'visible')
+				{
+					document.getElementById('west').style.visibility= 'hidden'
+				}
+				document.getElementById('central').style.visibility= 'visible'
+			}
+			
+			function showWest()
+			{
+				if(document.getElementById('parkeast').style.backgroundColor= '#000000')
+				{
+					document.getElementById('parkeast').style.backgroundColor= '#FFFFFF'
+					document.getElementById('parkeast').style.color= '#000000'
+				}
+				if(document.getElementById('parkcentral').style.backgroundColor= '#000000')
+				{
+					document.getElementById('parkcentral').style.backgroundColor= '#FFFFFF'
+					document.getElementById('parkcentral').style.color= '#000000'
+				}
+				document.getElementById('parkwest').style.backgroundColor= '#000000'
+				document.getElementById('parkwest').style.color= '#FFFFFF'
+				if(document.getElementById('east').style.visibility= 'visible')
+				{
+					document.getElementById('east').style.visibility= 'hidden'
+				}
+				if(document.getElementById('central').style.visibility= 'visible')
+				{
+					document.getElementById('central').style.visibility= 'hidden'
+				}
+				document.getElementById('west').style.visibility= 'visible'
+			}
+			
+			function hideParkContent()
+			{
+				
+				document.getElementById('eastinfo').style.visibility= 'hidden'
+				document.getElementById('centralinfo').style.visibility= 'hidden'
+				document.getElementById('westinfo').style.visibility= 'hidden'
+			}
+		</script>
+	</head>
+	<body>
+	<table>
+	</table>
+		<div class= 'rooms'>
+		<button class= 'close'> x </button>
+			<table class= 'park'>
+				<tr class= 'park'>
+					<th id= 'parkeast' class= 'park' onclick='showEast()'> East Park </th>
+					<th id= 'parkcentral' class= 'park' onclick='showCentral()'> Central Park </th>
+					<th id= 'parkwest' class= 'park' onclick='showWest()'> West Park </th>	
+			</table>
+			<table id='east' class= 'east'>
+				<tr>
+					<th class= 'rooms' onclick='showEastContent()'> Room Name: LDS.0.17 <img src="a001.jpg" height=200 width=400>  Capacity 148 </th>
+					<table id='eastinfo' class='eastinfo'>
+						<tr>
+							<th> room info</th>
+						<tr>	
+					</table>
+					<!--<th class= 'rooms'> </img></th>
+					<th class= 'rooms'> </th>-->
+				</tr>
+			</table>
+			<table id='central' class= 'central'>
+				<tr>
+					<th class= 'rooms' onclick='showCentralContent()'> Room Name: A.0.01   Capacity 102 </th>
+					<table id='centralinfo' class='centralinfo'>
+						<tr>
+							<th> room info</th>
+						<tr>	
+					</table>
+				</tr>
+			</table>
+			<table id='west' class= 'west'>
+				<tr>
+					<th class= 'rooms' onclick='showWestContent()'> Room Name: W.0.01   Capacity 124 </th>
+					<table id='westinfo' class='central'>
+						<tr>
+							<th> room info</th>
+						<tr>	
+					</table>
+				</tr>
+			</table>
+		</div>
+		<div class= 'timetable'>
+			<table class= 'timetable'>
+				<tr>
+					<th class= 'times'> </th>
+					<th class= 'times'> 09.00-10.00 </br> Period 1</th>
+					<th class= 'times'> 10.00-11.00 </br> Period 2 </th>
+					<th class= 'times'> 11.00-12.00 </br> Period 3 </th>
+					<th class= 'times'> 12.00-13.00 </br> Period 4 </th>
+					<th class= 'times'> 13.00-14.00 </br> Period 5 </th>
+					<th class= 'times'> 14.00-15.00 </br> Period 6 </th>
+					<th class= 'times'> 15.00-16.00 </br> Period 7 </th>
+					<th class= 'times'> 16.00-17.00 </br> Period 8 </th>
+					<th class= 'times'> 17.00-18.00 </br> Period 9 </th>
+				</tr>
+				<tr>
+					<th class= 'days'> Monday </th>
+					<th class= 'content'>  </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+				</tr>
+				<tr>
+					<th class= 'days'> Tuesday </th>
+					<th class= 'content'>  </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+				</tr>
+				<tr>
+					<th class= 'days'> Wednesday </th>
+					<th class= 'content'>  </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+				</tr>
+				<tr>
+					<th class= 'days'> Thursday </th>
+					<th class= 'content'>  </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+				</tr>
+				<tr>
+					<th class= 'days'> Friday </th>
+					<th class= 'content'>  </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+					<th class= 'content'> </th>
+				</tr>
+
+				
+		</div>
+	
+	
+	
+	</body>
+	
+
+
+</html>
