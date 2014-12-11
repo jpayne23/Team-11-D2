@@ -10,9 +10,6 @@
 	</head>
 	<body style='background-color:#708090' onload='updateModCode();updateModName();'>
 		<div id="whole" style='width:1680px; margin-left:auto; margin-right:auto;'>
-			<div id='header' style='background-color:#708090; width:85%; margin-left:7.5%; margin-right:7.5%; margin-top:2%;'>
-				<img src="https://dl.dropboxusercontent.com/s/dkg93fbkfrk34d8/Bannerlboro.png" style='width:100%; height:14%; border-top-left-radius: 10px 10px ;border-top-right-radius: 10px 10px;'>
-			</div>
 			<div style='height:4%; margin-left:7.5%; margin-right:7.5%; width:85%;'>
 				<form action="http://co-project.lboro.ac.uk/team11/WebsitePrototype.html" style='display:inline'>
 					<input class='tabButtons' type='submit' value='Home' ></input>
