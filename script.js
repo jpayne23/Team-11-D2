@@ -59,9 +59,7 @@ $(function() {
 				
 			}
 		}
-	});
-	
-	
+	});	
 });
 
 function updateBuilding(b)

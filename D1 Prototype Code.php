@@ -182,11 +182,17 @@
 										<label for="multiRoom" >Room</label>
 									</td>
 									<td>
-										<div id='parkDiv'>											
+										<div id='parkDiv'>
+											<select>
+												<option>Any</option>
+											</select>
 										</div>
 									</td>
 									<td>
-										<div id='buildingDiv'>											
+										<div id='buildingDiv'>	
+											<select>
+												<option>Any</option>
+											</select>
 										</div>
 									</td>
 									<td>

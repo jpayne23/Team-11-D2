@@ -18,6 +18,7 @@
 	}
 	
 	echo '<select name="park" id="park1" onchange="updateBuilding()" class="larger">';
+	echo '<option>Any</option>';
 	while ($row = $res->fetchRow())
 	{
 		echo '<option>' . $row["park"] . '</option>';
