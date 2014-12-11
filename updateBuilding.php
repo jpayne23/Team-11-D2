@@ -2,7 +2,6 @@
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
-	require_once 'MDB2.php';
 	$dsn = "mysql://$username:$password@$host/$dbName"; 
 	$db =& MDB2::connect($dsn); 
 	if(PEAR::isError($db)){ 
