@@ -1,9 +1,8 @@
 <?php
 	// Setting up connecting to the database
-	require_once 'MDB2.php';
-	include 'password.php';
+	require_once 'MDB2.php';			
+	include "password.php"
 	$dsn = "mysql://$username:$password@$host/$dbName"; 
-
 	$db =& MDB2::connect($dsn); 
 	if(PEAR::isError($db)){ 
 		die($db->getMessage());
