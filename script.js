@@ -22,6 +22,14 @@ var numRooms = 1;
 
 // Any JQUERY
 //---------------------
+$(document).ready(function()		// Execute all of this on load 
+{
+	$.get("updatePark.php", function(data)
+	{
+		$('#parkDiv').html(data);
+	});
+});
+
 // Add week selector
 $(function() {
 	var startElementSelected;
@@ -58,29 +66,11 @@ $(function() {
 
 function updateBuilding(b)
 {
-	document.getElementById('requests').style.backgroundImage = "";
-	var parkChoice = b.selectedIndex;
-	var html = '';
-	var html2 = '';
-	
-	if (parkChoice == 0)
+	var string = $("#park1").serialize();
+	$.get("updateBuilding.php?" + string, function(data)
 	{
-		html += '<option>Any</option>';
-		html2 += '<option>Any</option>';
-	}
-	else
-	{	
-		for(var i = 0; i < buildings[parkChoice-1].length; i++)
-		{			
-			html += '<option>' + buildings[parkChoice-1][i] + '</option>';		
-		}
-		
-		html2 += '<option>Any</option>';
-		
-	}
-
-	document.getElementById('building'+b.parentNode.parentNode.rowIndex).innerHTML = html;
-	document.getElementById('room'+b.parentNode.parentNode.rowIndex).innerHTML = html2;			
+		$('#buildingDiv').html(data);
+	});		
 }			
 
 function updateBackground()

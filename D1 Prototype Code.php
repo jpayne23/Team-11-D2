@@ -181,17 +181,12 @@
 										<label for="multiRoom" >Room</label>
 									</td>
 									<td>
-										<select name="park" id="park1" class="larger" onchange="updateBuilding(this);">
-											<option>Any</option>
-											<option>East</option>
-											<option>Central</option>
-											<option>West</option>
-										</select>
+										<div id='parkDiv'>											
+										</div>
 									</td>
 									<td>
-										<select name="building" id="building1" class="larger" onchange='updateRoom(this);'>
-											<option>Any</option>
-										</select>
+										<div id='buildingDiv'>											
+										</div>
 									</td>
 									<td>
 										<select name="room" id="room1" class="larger" onchange="updateBackground();">
