@@ -23,7 +23,42 @@ var numRooms = 1;
 // Any JQUERY
 //---------------------
 $(document).ready(function()		// Execute all of this on load 
-{
+{	
+	// Add week selector
+	$(function() {
+		var startElementSelected = false;
+		
+		$("#popupWeeks").selectable({
+			start: function(e){		// Add more to list if current one dragging is not selected, otherwise remove it
+				/*var classSelected = e.toElement.className.search("ui-selected");
+				if (classSelected != -1)	// clicked element is already selected
+				{
+					startElementSelected = true;
+				}
+				else
+				{
+					startElementSelected = false;
+				}	*/
+
+				$("#popupWeeks").on("click",function(){
+					alert("The paragraph was clicked.");
+				});
+			},
+			selecting: function(e, ui)
+			{
+				if (startElementSelected == true)
+				{
+					ui.selecting.className = "ui-state-default";
+				}
+				else
+				{
+					
+				}
+			}
+		});	
+	});
+	
+	// Add park selector
 	$.get("updatePark.php", function(data)
 	{
 		$('#parkDiv').html(data);
@@ -33,44 +68,7 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		$('#facilitiesDiv').html(data);
 	});
-});
-
-
-	
-
-// Add week selector
-$(function() {
-	var startElementSelected;
-	
-	$("#popupWeeks").bind("mousedown", function(e) {
-		e.metaKey = true;
-	}).selectable({
-		start: function(e){		// Add more to list if current one dragging is not selected, otherwise remove it
-			var classSelected = e.toElement.className.search("ui-selected")
-			if (classSelected != -1)	// clicked element is already selected
-			{
-				startElementSelected = true;
-			}
-			else
-			{
-				startElementSelected = false;
-			}			
-		},
-		selecting: function(e, ui)
-		{
-			if (startElementSelected == true)
-			{
-				ui.selecting.className = "ui-state-default";
-			}
-			else
-			{
-				
-			}
-		}
-	});
-	
-	
-});
+});	
 
 function updateBuilding()
 {
