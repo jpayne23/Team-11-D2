@@ -146,7 +146,6 @@
 							</td>
 						</tr>
 					</table>
-					<p><a href="Rooms_Timetable_Proto.html" onclick="newPopup(this.href, 'myWindow', '1500', '1300', 'no');return false"> open rooms pop-up </a></p>
 				</div>
 				<div  id='requests' style='background-color:#2DABE0; overflow:auto; float:left; width:32.74%; height:100%; margin-left:1%; border-style:double; border-color:#FFFFFF; border-radius:10px 10px;'>
 					<h4 style='text-align:left; padding-left:10px; font-family:arial; font-size:18pt; color:#FFFFFF;'>Advanced Search</h4>
