@@ -16,7 +16,7 @@
 		die($res->getMessage());
 	}
 	
-	echo '<select name="park" id="park1" onchange="updateBuilding()" class="larger">';
+	echo '<select name="park" id="park1" onchange="updateBuilding(); updateRoom();" class="larger">';
 	echo '<option>Any</option>';
 	while ($row = $res->fetchRow())
 	{

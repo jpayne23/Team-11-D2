@@ -18,9 +18,17 @@
 	}
 	
 	echo '<select name="building" id="building1" class="larger" onchange="updateRoom()">';
-	while ($row = $res->fetchRow())
+	echo '<option>Any</option>';
+	if($park != 'Any')
 	{
-		echo '<option id ="'.$row["buildingcode"].'">' . $row["buildingcode"] . " - " . $row["building"] . '</option>';
+		while ($row = $res->fetchRow())
+		{
+			echo '<option id ="'.$row["buildingcode"].'">' . $row["buildingcode"] . " - " . $row["building"] . '</option>';
+		}
 	}
+	else 
+	{
+		echo '<option>Any</option>';
+	}	
 	echo '</select>';
 ?>

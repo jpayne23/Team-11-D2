@@ -64,6 +64,7 @@ $(document).ready(function()		// Execute all of this on load
 		$('#parkDiv').html(data);
 	});
 	
+	// Load facilities
 	$.get("loadFacilities.php", function(data)
 	{
 		$('#facilitiesDiv').html(data);
@@ -81,7 +82,8 @@ function updateBuilding()
 
 function updateRoom()
 {
-	var string = ("building="+document.getElementById('building1')[document.getElementById('building1').selectedIndex].id);
+	var building = document.getElementById('building1');
+	var string = "building=" + building[building.selectedIndex].id;
 	
 	$.get("updateRoom.php?" + string, function(data)
 	{
@@ -110,29 +112,6 @@ function updateBackground()
 		
 			
 }
-
-/*function updateRoom(r)
-{	
-	var parkChoice = document.getElementById('park'+r.parentNode.parentNode.rowIndex).selectedIndex;
-	var buildingChoice = r.selectedIndex;
-	
-	var html = '';
-	document.getElementById('requests').style.backgroundImage = "";
-	
-	if(parkChoice == 0 || buildingChoice == 0)
-	{
-		html += '<option>Any</option>';
-	}
-	else
-	{	
-		for (var i = 0; i < rooms[parkChoice-1][buildingChoice-1].length; i++)
-		{			
-			html += '<option>' + rooms[parkChoice-1][buildingChoice-1][i] + '</option>';		
-		}
-	}
-
-	document.getElementById('room'+r.parentNode.parentNode.rowIndex).innerHTML = html;
-}*/
 
 function updateModCode()
 {
@@ -175,30 +154,6 @@ function populateModNames(partChoice)
 	
 	document.getElementById('modName').innerHTML = html;
 }
-
-/*function updateEndWeek()
-{
-	var startChoice = document.getElementById('sWeek').selectedIndex + 1;
-	var html = '';
-	
-	var endChoice = document.getElementById('lWeek').value;
-	
-	document.getElementById('lWeek').options.length = 0;
-	
-	for(var i = startChoice; i < 13; i++)
-	{
-		if(i == endChoice && endChoice >= startChoice)
-		{
-			html += '<option selected="selected">' + i + '</option>'; 
-		}
-		else
-		{
-			html += '<option>' + i + '</option>';
-		}
-	}
-	
-	document.getElementById('lWeek').innerHTML = html;
-}*/
 
 function addRequest()
 {
