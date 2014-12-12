@@ -18,9 +18,9 @@
 	}
 	
 	echo '<select name="building" id="building1" class="larger" onchange="updateRoom()">';
-	echo '<option>Any</option>';
 	if($park != 'Any')
 	{
+		echo '<option>Any</option>';
 		while ($row = $res->fetchRow())
 		{
 			echo '<option id ="'.$row["buildingcode"].'">' . $row["buildingcode"] . " - " . $row["building"] . '</option>';
