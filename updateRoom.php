@@ -17,8 +17,7 @@
 	{
 		die($res->getMessage());
 	}
-	
-	echo 'Warning: Room doesnt update properly if you dont change building first';
+		
 	echo '<select name="room" id="room1" class="larger">';
 	echo '<option>Any</option>';
 	if ($building != 'Any')

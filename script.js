@@ -77,7 +77,10 @@ function updateBuilding()
 	$.get("updateBuilding.php?" + string, function(data)
 	{
 		$('#buildingDiv').html(data);
-	});		
+	}).done(function()		// Does this when the request is finished
+	{
+		updateRoom();
+	});			
 }
 
 function updateRoom()
@@ -88,7 +91,7 @@ function updateRoom()
 	$.get("updateRoom.php?" + string, function(data)
 	{
 		$('#roomDiv').html(data);
-	});		
+	});	
 }		
 
 function updateBackground()
