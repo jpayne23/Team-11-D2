@@ -520,11 +520,156 @@ function closeWeeksDiv()
 	document.getElementById('popupWeeksDiv').style.visibility = 'hidden';
 }
 
-function newPopup(url, winName, w, h, scroll) 
+/*function newPopup(url, winName, w, h, scroll) 
 {
 	var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
 	var TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
 	var settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
 	var popupWindow = window.open(url, winName, settings)
 			
+}*/
+function openAdvancedSearchDiv()
+{
+	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'visible';
+}
+function closeAdvancedSearchDiv()
+{
+	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'hidden';
+	document.getElementById('east').style.visibility= 'hidden'
+	document.getElementById('eastinfo').style.visibility= 'hidden';
+	document.getElementById('central').style.visibility= 'hidden';
+	document.getElementById('centralinfo').style.visibility= 'hidden';
+	document.getElementById('west').style.visibility= 'hidden';
+	document.getElementById('westinfo').style.visibility= 'hidden';
+}
+function showEast()
+{
+	if(document.getElementById('parkcentral').style.backgroundColor= '#000000')
+	{
+		document.getElementById('parkcentral').style.backgroundColor= '#FFFFFF'
+		document.getElementById('parkcentral').style.color= '#000000'
+	}
+	if(document.getElementById('parkwest').style.backgroundColor= '#000000')
+	{
+		document.getElementById('parkwest').style.backgroundColor= '#FFFFFF'
+		document.getElementById('parkwest').style.color= '#000000'
+	}
+	document.getElementById('parkeast').style.backgroundColor= '#000000'
+	document.getElementById('parkeast').style.color= '#FFFFFF'
+	
+	if(document.getElementById('central').style.visibility= 'visible')
+	{
+		document.getElementById('central').style.visibility= 'hidden'
+	}
+	if(document.getElementById('west').style.visibility= 'visible')
+	{
+		document.getElementById('west').style.visibility= 'hidden'
+	}
+	document.getElementById('east').style.visibility= 'visible'
+}
+
+function showEastContent()
+{
+	if(document.getElementById('parkeast').style.height= '40')
+	{	
+		document.getElementById('parkeast').style.height= '20%'
+	}
+	if(document.getElementById('parkeast').style.height= '20%')
+	{	
+		document.getElementById('parkeast').style.height= '40%'
+	}
+	if(document.getElementById('centralinfo').style.visibility= 'visible')
+	{
+		document.getElementById('centralinfo').style.visibility= 'hidden'
+	}
+	if(document.getElementById('westinfo').style.visibility= 'visible')
+	{
+		document.getElementById('westinfo').style.visibility= 'hidden'
+	}
+	document.getElementById('eastinfo').style.visibility= 'visible'
+}
+
+function showCentral()
+{	
+	if(document.getElementById('parkeast').style.backgroundColor= '#000000')
+	{
+		document.getElementById('parkeast').style.backgroundColor= '#FFFFFF'
+		document.getElementById('parkeast').style.color= '#000000'
+	}
+	if(document.getElementById('parkwest').style.backgroundColor= '#000000')
+	{
+		document.getElementById('parkwest').style.backgroundColor= '#FFFFFF'
+		document.getElementById('parkwest').style.color= '#000000'
+	}
+	document.getElementById('parkcentral').style.backgroundColor= '#000000'
+	document.getElementById('parkcentral').style.color= '#FFFFFF'
+	
+	if(document.getElementById('east').style.visibility= 'visible')
+	{
+		document.getElementById('east').style.visibility= 'hidden'
+	}	
+	if(document.getElementById('west').style.visibility= 'visible')
+	{
+		document.getElementById('west').style.visibility= 'hidden'
+	}
+	document.getElementById('central').style.visibility= 'visible'
+}
+
+function showCentralContent()
+{
+	if(document.getElementById('eastinfo').style.visibility= 'visible')
+	{
+		document.getElementById('eastinfo').style.visibility= 'hidden'
+	}
+	if(document.getElementById('westinfo').style.visibility= 'visible')
+	{
+		document.getElementById('westinfo').style.visibility= 'hidden'
+	}
+	document.getElementById('centralinfo').style.visibility= 'visible'
+}
+
+function showWest()
+{
+	if(document.getElementById('parkeast').style.backgroundColor= '#000000')
+	{
+		document.getElementById('parkeast').style.backgroundColor= '#FFFFFF'
+		document.getElementById('parkeast').style.color= '#000000'
+	}
+	if(document.getElementById('parkcentral').style.backgroundColor= '#000000')
+	{
+		document.getElementById('parkcentral').style.backgroundColor= '#FFFFFF'
+		document.getElementById('parkcentral').style.color= '#000000'
+	}
+	document.getElementById('parkwest').style.backgroundColor= '#000000'
+	document.getElementById('parkwest').style.color= '#FFFFFF'
+	if(document.getElementById('east').style.visibility= 'visible')
+	{
+		document.getElementById('east').style.visibility= 'hidden'
+	}
+	if(document.getElementById('central').style.visibility= 'visible')
+	{
+		document.getElementById('central').style.visibility= 'hidden'
+	}
+	document.getElementById('west').style.visibility= 'visible'
+}
+
+function showWestContent()
+{
+	if(document.getElementById('eastinfo').style.visibility= 'visible')
+	{
+		document.getElementById('eastinfo').style.visibility= 'hidden'
+	}
+	if(document.getElementById('centralinfo').style.visibility= 'visible')
+	{
+		document.getElementById('centralinfo').style.visibility= 'hidden'
+	}
+	document.getElementById('westinfo').style.visibility= 'visible'
+}
+
+function hideParkContent()
+{
+	
+	document.getElementById('eastinfo').style.visibility= 'hidden'
+	document.getElementById('centralinfo').style.visibility= 'hidden'
+	document.getElementById('westinfo').style.visibility= 'hidden'
 }
