@@ -69,6 +69,16 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		$('#facilitiesDiv').html(data);
 	});
+	
+		// Load Parts
+	$(function()
+	{
+		var deptCode = "deptCode=" + document.getElementById("deptDiv").innerHTML;
+		$.get("loadPart.php?" + deptCode, function(data)
+		{
+			$('#partDiv').html(data);
+		});
+	});
 });	
 
 function updateBuilding()
