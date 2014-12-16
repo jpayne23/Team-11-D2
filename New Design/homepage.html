@@ -5,6 +5,11 @@
 	<meta charset="UTF-8">
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
+	
+	<script src="javascript/jquery-2.1.1.js"></script>
+	<script src="javascript/jquery-ui.js"></script>
+	<script src="javascript/script.js"></script>
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 
@@ -28,8 +33,100 @@
 					<h2> General Information</h2>
 				</header>
 				<content>
-					<p> HTML5 and CSS3 are two different technologies and two different layer (Structure and Presentation) of any web page but one common thing in both the technology is that both are still under development (would be good to say improving further) and both focusing to have a good support on different devices. HTML5 is not required to use CSS3 media query but HTML5 provides essential structure that make responsive design to be more extensive.</p>
-					<p>HTML5 and CSS3 are two different technologies and two different layer (Structure and Presentation) of any web page but one common thing in both the technology is that both are still under development (would be good to say improving further) and both focusing to have a good support on different devices. HTML5 is not required to use CSS3 media query but HTML5 provides essential structure that make responsive design to be more extensive.</p>
+					<table>
+						<tr>
+							<td>								
+								<label>Department Code</label>
+							</td>
+							<td>
+								<select id="deptCode">
+									<option>CO</option>
+									<option>MM</option>
+									<option>EA</option>  
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Part</label>
+							</td>
+							<td>
+								<select id="part">
+									<option>A</option>
+									<option>B</option>
+									<option>C</option>
+									<option>D</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Module Code</label>
+							</td>
+							<td>
+								<select id="modCode">
+									<option></option>
+								</select>
+							</td>
+							<td>
+								<select id="modName">
+									<option></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Pick weeks</label>								
+							</td>
+							<td colspan='2'>
+								<ol id="popupWeeks">
+									<li class="ui-state-default">1</li>
+									<li class="ui-state-default">2</li>
+									<li class="ui-state-default">3</li>
+									<li class="ui-state-default">4</li>
+									<li class="ui-state-default">5</li>
+									<li class="ui-state-default">6</li>
+									<li class="ui-state-default">7</li>
+									<li class="ui-state-default">8</li>
+									<li class="ui-state-default">9</li>
+									<li class="ui-state-default">10</li>
+									<li class="ui-state-default">11</li>
+									<li class="ui-state-default">12</li>
+									<li class="ui-state-default">13</li>
+									<li class="ui-state-default">14</li>
+									<li class="ui-state-default">15</li>
+								</ol>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Session Type</label>
+							</td>
+							<td>
+								<select id="seshType">
+									<option>Feedback</option>
+									<option>Lecture</option>
+									<option>Practical</option>
+									<option>Seminar</option>
+									<option>Tutorial</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label> Session Length </label>
+							</td>
+							<td>
+								<select id="seshLength">
+									<option>1 Hour</option>
+									<option>2 Hours</option>
+									<option>3 Hours</option>
+									<option>4 Hours</option>
+									<option>5 Hours</option>
+								</select>
+							</td>
+						</tr>
+					</table>
 				</content>
 			</article>
 			<article class="bottomcontent">
@@ -37,8 +134,14 @@
 					<h2> Facilities </h2>
 				</header>
 				<content>
-					<p> HTML5 and CSS3 are two different technologies and two different layer (Structure and Presentation) of any web page but one common thing in both the technology is that both are still under development (would be good to say improving further) and both focusing to have a good support on different devices. HTML5 is not required to use CSS3 media query but HTML5 provides essential structure that make responsive design to be more extensive.</p>
-					<p>HTML5 and CSS3 are two different technologies and two different layer (Structure and Presentation) of any web page but one common thing in both the technology is that both are still under development (would be good to say improving further) and both focusing to have a good support on different devices. HTML5 is not required to use CSS3 media query but HTML5 provides essential structure that make responsive design to be more extensive.</p>
+					<table id='facilitiesTable'>
+						<tr>
+							<td id='checkboxes'>							
+								<div id='facilitiesDiv'>
+								</div>
+							</td>
+						</tr>
+					</table>
 				</content>
 		</article>
 		</div>

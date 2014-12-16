@@ -1,18 +1,3 @@
-var buildings = [['Any','Design School','Ann Packer','Matthew Arnold'],
-				 ['Any','Haselgrave','James France','Stewart Mason'],['Any','Keith Green','Civil & Building', 'Sir David Davies']];
-
-var rooms = [[['Any','LDS.0.03','LDS.0.17','LDS.0.18'],['Any','JJ.0.04','JJ.0.17','JJ.0.18'],['Any','ZZ.1.03','ZZ.1.05','ZZ.1.06']],
-			 [['Any','N.0.01','N.0.02','N.0.03'],['Any','CC.0.11','CC.0.12','CC.0.13'],['Any','SMB.0.02','SMB.0.08','SMB.0.17']],
-			 [['Any','KG.1.07','KG.1.09','KG.1.11'],['Any','RT.0.27','RT.0.33','RT.0.37'],['Any','W.0.01','W.0.02','W.0.03']]];
-	
-var modCodes = [[['14COA101','14COA107','14COA124'],['14COB101','14COB231','14COB290'],['14COC001','14COC104','14COC140'],['14COD280','14COD290','14COD292']],
-				[['14MMA100','14MMA508','14MMA800'],['14MMB104','14MMB403','14MMB404'],['14MMC104','14MMC603','14MMC801'],['14MMD101','14MMD105','14MMD802']],
-				[['14PHA102','14PHA201','14PHA220'],['14PHB102','14PHB106','14PHB203'],['14PHC012','14PHC108','14PHC205'],['14PHD013','14PHD120','14PHD205']]];
-			
-var modNames = [['Essential Skills for Computing','Logic and Functional Programming','Computer Systems'],
-				['Requirements Engineering','OSNI 1','Team Projects'],
-				['Robotics','Algorithm Analysis','Cryptography and Network Security']];
-
 var submissions = [];			
 //stored in	this variable: all submissions that have been submitted and all submissions that have been added. ie concat of hist+pending
 var submissionIDCounter = 0;

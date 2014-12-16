@@ -134,6 +134,31 @@ a:hover, a:active{
 	margin: 20px auto;
 }
 
+#popupWeeks .ui-selecting{ 
+	background: #FECA40; 
+}
+
+#popupWeeks .ui-selected { 
+	background: #F39814; color: white; 
+}
+
+#popupWeeks { 
+	list-style-type: none;
+	margin: 0; 
+	padding: 0; 
+	width: 100%; 
+}
+
+#popupWeeks li { 
+	margin: 1px; 
+	padding: 1px; 
+	float: left;
+	font-size: 1.4em;
+	text-align: center;
+	list-style-position:inside;
+	border: 1px solid black;
+}
+
 @media only screen and (min-width: 150px) and (max-width: 600px)
 {
 	.body{
