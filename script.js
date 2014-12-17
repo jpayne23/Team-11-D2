@@ -80,8 +80,10 @@ $(document).ready(function()		// Execute all of this on load
 			// For every selected element, add it to the array
 			$(".ui-selected", this).each(function() 
 			{
-				selectedItems.push(this.innerHTML);
+				selectedItems.push($(this).text());
 			});
+			
+			updateSelectedWeeks(selectedItems)
 		},
 		
 		distance: 1			// This is so we can register normal mouse click events
@@ -97,13 +99,22 @@ $(document).ready(function()		// Execute all of this on load
 		if (selectedItems.indexOf(clickedText) == -1)
 		{						
 			$(this).addClass('ui-selected');
-			selectedItems.push(clickedText);
 		}
 		else 	// If element is already selected, then remove it from the array and remove selected class
 		{
 			$(this).removeClass('ui-selected');
-			selectedItems.splice(selectedItems.indexOf(clickedText), 1);
 		}
+		
+		// Reset selected items
+		selectedItems.length = 0;
+		
+		// For every selected element, add it to the array
+		$(".ui-selected").each(function() 
+		{
+			selectedItems.push($(this).text());
+		});				
+		
+		updateSelectedWeeks(selectedItems);
 	});
 	
 	// Add park selector
@@ -128,6 +139,47 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 });	
+
+function updateSelectedWeeks(selectedItems)
+{		
+	document.getElementById('weeksSelected').innerHTML = 'You have selected weeks: ';
+	
+	var length = selectedItems.length;
+	var output = [];
+	var i, j;
+	
+	for (i = 0; i < length; i = j + 1)
+	{
+		// Beginning of range or single
+		output.push(selectedItems[i]);
+		
+		// Find end of range
+		for (var j = i + 1; j < length && parseInt(selectedItems[j]) == parseInt(selectedItems[j-1]) + 1; j++);
+		j--;
+		
+		if (i == j) 
+		{
+			// single number
+			output.push(",");
+		} 
+		else 
+		{
+			if (i + 1 == j)
+			{
+				// two numbers
+				output.push(",", selectedItems[j], ",");
+			}
+			else 
+			{ 
+				// range
+				output.push("-", selectedItems[j], ",");
+			}		
+		} 		
+	}
+	
+	output.pop(); // remove trailing comma
+	document.getElementById('weeksSelected').innerHTML += output.join("");
+}
 
 function updateBuilding()
 {
