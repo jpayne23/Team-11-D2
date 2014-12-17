@@ -138,6 +138,56 @@ $(document).ready(function()		// Execute all of this on load
 			$('#partDiv').html(data);
 		});
 	});
+	
+	
+	//get Facilities of a given room (room1 only)
+	$('#btnGetFacilities').on('click', function()
+	{
+		var room = document.getElementById("room1").value;
+		var roomNo = "roomNo=" + room;
+		if(room == "Any")
+			return;
+		$.get("roomFacility.php?" + roomNo, function(data)
+		{
+			$("#dialog").html(data);
+			document.getElementById("dialog").title = "Facilities for " + room; //this wont update when you change room
+			$('#dialog').dialog({
+			      show: {
+			        effect: "fadeIn",
+			        duration: 500
+			      }
+			}); //end dialog
+		}); //end $.get
+		
+	}); //end click function
+	
+	
+	$('#getCheckedFacilities').on('click',function()
+	{
+		$("#checkedFacilitiesDiv").html("");
+		var valid = false; //to check if any facilities are selected
+		for(var i = 0;i<45;i=i+2) //+2 because it skips the <br> tags in between
+		{
+			if($('#facilitiesDiv').children().eq(i).is(':checked')){
+				//append the facility name to a div to display
+				$('#checkedFacilitiesDiv').append($('#facilitiesDiv').children().eq(i).attr('name') + "</br>");
+				valid = true;
+			}
+		}
+		if(valid == false)
+			return;
+		
+		$("#checkedFacilitiesDiv").dialog({ //opens dialog box
+		      show: {
+		        effect: "fadeIn",
+		        duration: 500
+		      }
+		}); //end dialog
+		
+		
+	});
+	
+	
 });	
 
 function updateSelectedWeeks(selectedItems)
