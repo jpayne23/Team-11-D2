@@ -4,7 +4,6 @@
 		<link rel="Shortcut Icon" type="image/png" href="icon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-		<link href="mystyle.css" rel="stylesheet" type="text/css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 		<script src='script.js' type='text/javascript'></script>
@@ -28,7 +27,7 @@
 			</div>	
 			<!--<input type="button" <a href="Website Prototype1.html" style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center; margin-left'>
 			<th style='padding:4px 8px; border-right:1.5px solid #ccc;'> <a href="history.html" style='font-family:arial; font-size:3.5mm; font-color:#333333; text-align:center; margin-left'> History </a> </th>-->
-			<div style= 'float:left; margin-left:7.5%; width:85%; height:45%;' >
+			<div style= 'float:left; margin-left:7.5%; width:85%; height:70%;' >
 				<div style= 'background-color:#2DABE0; overflow:auto; float:left; width:33%; height:100%; border-style:double; border-color:#FFFFFF; border-radius:10px 10px;'>
 					<h3 style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'>General Information</h3>
 					<table style='height:50%'>
@@ -137,8 +136,11 @@
 							</td>
 						</tr>
 					</table>
-					<button onclick='openAdvancedSearchDiv()'> Advanced Search </button>
-				<!--	<p><a href="Rooms_Timetable_Proto.html" onclick="newPopup(this.href, 'myWindow', '1500', '1300', 'no');return false"> open rooms pop-up </a></p>-->
+					<p><a href="Rooms_Timetable_Proto.html" onclick="newPopup(this.href, 'myWindow', '1500', '1300', 'no');return false"> open rooms pop-up </a></p>
+					<input type='button' id='getCheckedFacilities' value = 'Get Selected Facilities'/>
+					<div id="checkedFacilitiesDiv"></div>
+					<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
+					<div id="matchedRoomsdiv"></div>
 				</div>
 				<div  id='requests' style='background-color:#2DABE0; overflow:auto; float:left; width:32.74%; height:100%; margin-left:1%; border-style:double; border-color:#FFFFFF; border-radius:10px 10px;'>
 					<h4 style='text-align:left; padding-left:10px; font-family:arial; font-size:18pt; color:#FFFFFF;'>Advanced Search</h4>
@@ -189,7 +191,7 @@
 									</td>
 									<td>
 										<div id='roomDiv'>
-											<select>
+											<select id='chosenRoom'>
 												<option>Any</option>
 											</select>										
 										</div>
@@ -203,8 +205,11 @@
 							</table>
 							<br />
 							<input id='bleh' type='button' value='Search'></input>	
+							<input id='btnGetFacilities' type='button' value='Get Facilities'></input>
 						</tr>
 					</table>
+					
+					<div id="dialog" title="Facilities of this room"></div>
 				</div>
 			</div>
 			<div style='float:left; margin-left:7.5%; margin-right:7.5%; width:100%; margin-top:0.5%;'>
@@ -231,124 +236,6 @@
 					<th>Cancel</th>
 				</table>
 			</div>
-		</div>
-		<div id='popupAdvancedSearchDiv' style='visibility: hidden'>
-		<div class= 'rooms'>
-			<button class= 'close' onclick='closeAdvancedSearchDiv()'> x </button>
-			<table class= 'park'>
-				<tr class= 'park'>
-					<th id= 'parkeast' class= 'park' onclick='showEast(); hideParkContent()'> East Park </th>
-					<th id= 'parkcentral' class= 'park' onclick='showCentral(); hideParkContent()'> Central Park </th>
-					<th id= 'parkwest' class= 'park' onclick='showWest(); hideParkContent()'> West Park </th>	
-			</table>
-			<table id='east' class= 'east'>
-				<tr>
-					<th class= 'rooms' onclick='showEastContent()'> Room Name: LDS.0.17 <img src="a001.jpg" height=200 width=400>  Capacity 148 </th>
-					<table id='eastinfo' class='eastinfo'>
-						<tr>
-							<th> room info</th>
-						<tr>	
-					</table>
-					<!--<th class= 'rooms'> </img></th>
-					<th class= 'rooms'> </th>-->
-				</tr>
-			</table>
-			<table id='central' class= 'central'>
-				<tr>
-					<th class= 'rooms' onclick='showCentralContent()'> Room Name: A.0.01   Capacity 102 </th>
-					<table id='centralinfo' class='centralinfo'>
-						<tr>
-							<th> room info</th>
-						<tr>	
-					</table>
-				</tr>
-			</table>
-			<table id='west' class= 'west'>
-				<tr>
-					<th class= 'rooms' onclick='showWestContent()'> Room Name: W.0.01   Capacity 124 </th>
-					<table id='westinfo' class='central'>
-						<tr>
-							<th> room info</th>
-						<tr>	
-					</table>
-				</tr>
-			</table>
-		</div>
-			<div class= 'timetable'>
-				<table class= 'timetable'>
-					<tr>
-						<th class= 'times'> </th>
-						<th class= 'times'> 09.00-10.00 </br> Period 1</th>
-						<th class= 'times'> 10.00-11.00 </br> Period 2 </th>
-						<th class= 'times'> 11.00-12.00 </br> Period 3 </th>
-						<th class= 'times'> 12.00-13.00 </br> Period 4 </th>
-						<th class= 'times'> 13.00-14.00 </br> Period 5 </th>
-						<th class= 'times'> 14.00-15.00 </br> Period 6 </th>
-						<th class= 'times'> 15.00-16.00 </br> Period 7 </th>
-						<th class= 'times'> 16.00-17.00 </br> Period 8 </th>
-						<th class= 'times'> 17.00-18.00 </br> Period 9 </th>
-					</tr>
-					<tr>
-						<th class= 'days'> Monday </th>
-						<th class= 'content'>  </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-					</tr>
-					<tr>
-						<th class= 'days'> Tuesday </th>
-						<th class= 'content'>  </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-					</tr>
-					<tr>
-						<th class= 'days'> Wednesday </th>
-						<th class= 'content'>  </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-					</tr>
-					<tr>
-						<th class= 'days'> Thursday </th>
-						<th class= 'content'>  </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-					</tr>
-					<tr>
-						<th class= 'days'> Friday </th>
-						<th class= 'content'>  </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-						<th class= 'content'> </th>
-					</tr>
-				</div>
 		</div>
 	</body>
 </html>

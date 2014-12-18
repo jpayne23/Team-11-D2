@@ -9,7 +9,9 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$sql = "SELECT distinct `Facility` FROM `Facilities`;";			
+	$roomNo = $_REQUEST['roomNo'];
+	//echo $roomNo;
+	$sql = "SELECT Facility FROM Facilities WHERE Room = '".$roomNo."' ;";	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
@@ -18,11 +20,11 @@
 	$i = 0;
 	while ($row = $res->fetchRow())
 	{
-		//remove all whitespaces so we can use it as an ID.
-		$id = $string = preg_replace('/\s+/', '', $row["facility"]);
-		
-		//print out a checkbox for each facility
-		echo '<input type="checkbox" id='.$id.' name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
+		/*echo "<pre>";
+		print_r($row);
+		echo "</pre>";*/
+		//echo '<input type="checkbox" id="c'.$i.'" name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
+		echo $row["facility"]."</br>";
 		$i++;
 	}
 ?>
