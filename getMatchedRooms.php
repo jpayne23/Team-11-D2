@@ -10,7 +10,9 @@
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
 	$input = $_REQUEST['f'];
-	$f = json_decode($input,true);
+	$f = json_decode($input,true); //decode back into a PHP array
+	
+	//Make a string of the facilities to use in SQL Query
 	$fac = "(";
 	for($i=0;$i<sizeof($f) - 1;$i++)
 	{
@@ -20,20 +22,11 @@
 	
 
 	$sql = "";
-	/*
-	for ($j = 0; $j < sizeof($f)-1; $j++){
-		$sql .= "SELECT `Room` FROM `Facilities` WHERE `Facility` = '". $f[0]. "' UNION ";
-
-	}
-	$sql .= "SELECT `Room` FROM `Facilities` WHERE `Facility` = '".$f[sizeof($f)-1]."' ";
-    $sql .= "group by `Room` having count(distinct `Room`) = ".sizeof($f).";";
-	*/
-    
     $sql .= "select f.room ";
     $sql .= "from `Facilities` f ";
-   $sql .= "where f.facility in ". $fac ." ";
+   $sql .= "where f.facility in ". $fac ." "; //e.g. $fac = ('Computer', 'DVD Player')
    $sql .= "group by f.room ";
-   $sql .= "having count(distinct f.facility) = ". sizeof($f) .";";
+   $sql .= "having count(distinct f.facility) = ". sizeof($f) .";"; //$f = no. of facilities
     
     
 
@@ -47,10 +40,6 @@
 	$i = 0;
 	while ($row = $res->fetchRow())
 	{
-		/*echo "<pre>";
-		print_r($row);
-		echo "</pre>";*/
-		//echo '<input type="checkbox" id="c'.$i.'" name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
 		echo $row["room"]."</br>";
 		$i++;
 	}
