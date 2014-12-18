@@ -24,38 +24,97 @@ var numRooms = 1;
 //---------------------
 $(document).ready(function()		// Execute all of this on load 
 {	
-	// Add week selector
-	$(function() {
-		var startElementSelected = false;
-		
-		$("#popupWeeks").selectable({
-			start: function(e){		// Add more to list if current one dragging is not selected, otherwise remove it
-				/*var classSelected = e.toElement.className.search("ui-selected");
-				if (classSelected != -1)	// clicked element is already selected
-				{
-					startElementSelected = true;
-				}
-				else
-				{
-					startElementSelected = false;
-				}	*/
-
-				$("#popupWeeks").on("click",function(){
-					alert("The paragraph was clicked.");
-				});
-			},
-			selecting: function(e, ui)
+	// Add week selector	
+	var selectedItems = [];		// Holds all selectable elements which are already selected
+	var numSelecting = 0;		// Keep count of how many elements we have selected during selecting event
+	var selectAll = false;
+	var removeAll = false;
+	
+	$("#popupWeeks").bind("mousedown", function(e) {				
+		e.metaKey = true;		// Simulates holding down control to select non-adjacent elements
+	}).selectable(
+	{	
+		selecting: function(e, ui)
+		{
+			var clickedText = ui.selecting.innerHTML;
+			
+			if (numSelecting == 0)		// If this is the first element being selected
 			{
-				if (startElementSelected == true)
+				// If element is not already selected, we now add all other elements we later select
+				if (selectedItems.indexOf(clickedText) == -1)
 				{
-					ui.selecting.className = "ui-state-default";
+					selectAll = true;
+					removeAll = false;
 				}
-				else
+				else	// If element is already selected, then we remove all other elements we later select
 				{
-					
+					selectAll = false;
+					removeAll = true;
 				}
+			}						
+			
+			// If element is not selected, add it to array
+			if (selectAll)
+			{
+				selectedItems.push(clickedText);
 			}
-		});	
+			
+			if (removeAll)	// If element is already selected, then remove it from the array and remove it's class
+			{
+				selectedItems.splice(selectedItems.indexOf(clickedText), 1);
+				ui.selecting.className = "ui-state-default";
+			}
+
+			// Move on to the next element
+			numSelecting++;
+		},
+		
+		stop: function()
+		{
+			// Reset selectedItems and numSelecting to 0
+			selectedItems.length = 0;
+			numSelecting = 0;
+			var selectAll = false;
+			var removeAll = false;
+			
+			// For every selected element, add it to the array
+			$(".ui-selected", this).each(function() 
+			{
+				selectedItems.push($(this).text());
+			});
+			
+			updateSelectedWeeks(selectedItems)
+		},
+		
+		distance: 1			// This is so we can register normal mouse click events
+	});
+	
+	// Since the distance on the selectable is now greater than zero, clicks do not work if the mouse does not move
+	// Simulate mouse click like the selector would normally
+	$("#popupWeeks li").click(function()
+	{
+		var clickedText = $(this).text();
+		
+		// If element is not selected, add it to array and add selected class
+		if (selectedItems.indexOf(clickedText) == -1)
+		{						
+			$(this).addClass('ui-selected');
+		}
+		else 	// If element is already selected, then remove it from the array and remove selected class
+		{
+			$(this).removeClass('ui-selected');
+		}
+		
+		// Reset selected items
+		selectedItems.length = 0;
+		
+		// For every selected element, add it to the array
+		$(".ui-selected").each(function() 
+		{
+			selectedItems.push($(this).text());
+		});				
+		
+		updateSelectedWeeks(selectedItems);
 	});
 	
 	// Add park selector
@@ -70,7 +129,7 @@ $(document).ready(function()		// Execute all of this on load
 		$('#facilitiesDiv').html(data);
 	});
 	
-		// Load Parts
+	// Load Parts
 	$(function()
 	{
 		var deptCode = "deptCode=" + document.getElementById("deptDiv").innerHTML;
@@ -103,7 +162,10 @@ $(document).ready(function()		// Execute all of this on load
 	}); //end click function
 	
 	
+<<<<<<< HEAD
 	//display the checked facilities
+=======
+>>>>>>> origin/master
 	$('#getCheckedFacilities').on('click',function()
 	{
 		$("#checkedFacilitiesDiv").html("");
@@ -116,6 +178,7 @@ $(document).ready(function()		// Execute all of this on load
 				valid = true;
 			}
 		}
+<<<<<<< HEAD
 		if(valid == false){
 			  $('#getCheckedFacilities').tooltip({ items: "#getCheckedFacilities", content: "You didn't select any facilities"});
 			  $('#getCheckedFacilities').tooltip("open");
@@ -124,6 +187,10 @@ $(document).ready(function()		// Execute all of this on load
 			    });
 			return;
 		}
+=======
+		if(valid == false)
+			return;
+>>>>>>> origin/master
 		
 		$("#checkedFacilitiesDiv").dialog({ //opens dialog box
 		      show: {
@@ -136,6 +203,7 @@ $(document).ready(function()		// Execute all of this on load
 	});
 	
 	
+<<<<<<< HEAD
 	//Find rooms matching given facilities
 	$("#getMatchingRooms").on('click',function(){
 		var f = [];
@@ -173,7 +241,50 @@ $(document).ready(function()		// Execute all of this on load
 	}); //end click function
 	
 	
+=======
+>>>>>>> origin/master
 });	
+
+function updateSelectedWeeks(selectedItems)
+{		
+	document.getElementById('weeksSelected').innerHTML = 'You have selected weeks: ';
+	
+	var length = selectedItems.length;
+	var output = [];
+	var i, j;
+	
+	for (i = 0; i < length; i = j + 1)
+	{
+		// Beginning of range or single
+		output.push(selectedItems[i]);
+		
+		// Find end of range
+		for (var j = i + 1; j < length && parseInt(selectedItems[j]) == parseInt(selectedItems[j-1]) + 1; j++);
+		j--;
+		
+		if (i == j) 
+		{
+			// single number
+			output.push(",");
+		} 
+		else 
+		{
+			if (i + 1 == j)
+			{
+				// two numbers
+				output.push(",", selectedItems[j], ",");
+			}
+			else 
+			{ 
+				// range
+				output.push("-", selectedItems[j], ",");
+			}		
+		} 		
+	}
+	
+	output.pop(); // remove trailing comma
+	document.getElementById('weeksSelected').innerHTML += output.join("");
+}
 
 function updateBuilding()
 {

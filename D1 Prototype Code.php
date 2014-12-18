@@ -77,22 +77,23 @@
 							</td>
 							<td colspan='2'>
 								<ol id="popupWeeks">
-									<li class="ui-state-default ui-selected" value="1">1</li>
-									<li class="ui-state-default ui-selected">2</li>
-									<li class="ui-state-default ui-selected">3</li>
-									<li class="ui-state-default ui-selected">4</li>
-									<li class="ui-state-default ui-selected">5</li>
-									<li class="ui-state-default ui-selected">6</li>
-									<li class="ui-state-default ui-selected">7</li>
-									<li class="ui-state-default ui-selected">8</li>
-									<li class="ui-state-default ui-selected">9</li>
-									<li class="ui-state-default ui-selected">10</li>
-									<li class="ui-state-default ui-selected">11</li>
-									<li class="ui-state-default ui-selected">12</li>
+									<li class="ui-state-default">1</li>
+									<li class="ui-state-default">2</li>
+									<li class="ui-state-default">3</li>
+									<li class="ui-state-default">4</li>
+									<li class="ui-state-default">5</li>
+									<li class="ui-state-default">6</li>
+									<li class="ui-state-default">7</li>
+									<li class="ui-state-default">8</li>
+									<li class="ui-state-default">9</li>
+									<li class="ui-state-default">10</li>
+									<li class="ui-state-default">11</li>
+									<li class="ui-state-default">12</li>
 									<li class="ui-state-default">13</li>
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
 								</ol>
+								<p id='weeksSelected'>You have selected weeks: </p>
 							</td>
 						</tr>
 						<tr>
@@ -139,8 +140,11 @@
 					<p><a href="Rooms_Timetable_Proto.html" onclick="newPopup(this.href, 'myWindow', '1500', '1300', 'no');return false"> open rooms pop-up </a></p>
 					<input type='button' id='getCheckedFacilities' value = 'Get Selected Facilities'/>
 					<div id="checkedFacilitiesDiv"></div>
+<<<<<<< HEAD
 					<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
 					<div id="matchedRoomsdiv"></div>
+=======
+>>>>>>> origin/master
 				</div>
 				<div  id='requests' style='background-color:#2DABE0; overflow:auto; float:left; width:32.74%; height:100%; margin-left:1%; border-style:double; border-color:#FFFFFF; border-radius:10px 10px;'>
 					<h4 style='text-align:left; padding-left:10px; font-family:arial; font-size:18pt; color:#FFFFFF;'>Advanced Search</h4>
