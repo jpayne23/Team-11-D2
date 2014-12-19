@@ -161,11 +161,7 @@ $(document).ready(function()		// Execute all of this on load
 		
 	}); //end click function
 	
-	
-<<<<<<< HEAD
 	//display the checked facilities
-=======
->>>>>>> origin/master
 	$('#getCheckedFacilities').on('click',function()
 	{
 		$("#checkedFacilitiesDiv").html("");
@@ -178,7 +174,7 @@ $(document).ready(function()		// Execute all of this on load
 				valid = true;
 			}
 		}
-<<<<<<< HEAD
+		
 		if(valid == false){
 			  $('#getCheckedFacilities').tooltip({ items: "#getCheckedFacilities", content: "You didn't select any facilities"});
 			  $('#getCheckedFacilities').tooltip("open");
@@ -187,10 +183,9 @@ $(document).ready(function()		// Execute all of this on load
 			    });
 			return;
 		}
-=======
+		
 		if(valid == false)
 			return;
->>>>>>> origin/master
 		
 		$("#checkedFacilitiesDiv").dialog({ //opens dialog box
 		      show: {
@@ -202,8 +197,6 @@ $(document).ready(function()		// Execute all of this on load
 		
 	});
 	
-	
-<<<<<<< HEAD
 	//Find rooms matching given facilities
 	$("#getMatchingRooms").on('click',function(){
 		var f = [];
@@ -239,10 +232,6 @@ $(document).ready(function()		// Execute all of this on load
 		}); //end $_get
 		
 	}); //end click function
-	
-	
-=======
->>>>>>> origin/master
 });	
 
 function updateSelectedWeeks(selectedItems)
