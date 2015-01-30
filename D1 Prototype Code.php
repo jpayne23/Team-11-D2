@@ -21,7 +21,7 @@
 				<form action="http://co-project.lboro.ac.uk/team11/history.html" style='display:inline'>
 					<input class='tabButtons' type='submit' value='History' ></input>
 				</form>
-				<input class='tabButtons' type='button' value='Pending Submissions' onclick='openPendingDiv();'></input>				
+				<input class='tabButtons' id='pendingButton' type='button' value='Pending Submissions'></input>				
 				<form action="http://co-project.lboro.ac.uk/team11/login.html" style='display:inline'>
 					<input class='tabButtons' type='submit' value='Log Out' ></input>
 				</form>
