@@ -139,6 +139,16 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
+	// Load pending submissions
+	$('#pendingButton').click(function()
+	{
+		$.get("loadPendingSubmissions.php", function(data)
+		{
+			$('#submissions').html(data);
+		});
+		
+		openPendingDiv();
+	});
 	
 	//get Facilities of a given room (room1 only)
 	$('#btnGetFacilities').on('click', function()
@@ -316,8 +326,6 @@ function updateBackground()
 		document.getElementById('requests').style.backgroundImage = "";
 		document.getElementById('requests').style.opacity = "1";
 	}
-		
-			
 }
 
 function updateModCode()

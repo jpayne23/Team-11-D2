@@ -112,6 +112,7 @@
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
 								</ol>
+								<label id='weeksSelected'>You have selected weeks:</label>
 							</td>
 						</tr>
 						<tr>
