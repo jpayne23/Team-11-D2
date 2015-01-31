@@ -101,7 +101,20 @@ a:hover, a:active{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;*/==
 }
-
+.centercontent{
+	color: #FFFFFF;
+	width: 45%;
+	margin-top: 2%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgba(51,0,102,1);
+	padding: 1% 2%;
+	/*border-right: 4px solid #CC0066;
+	border-bottom: 5px solid #CC0066;*/
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;*/==
+}
 .bottomcontent{
 	color: #FFFFFF;
 	float: left;

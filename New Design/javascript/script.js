@@ -106,13 +106,35 @@ $(document).ready(function()		// Execute all of this on load
 	// Load Parts
 	$(function()
 	{
-		var deptCode = "deptCode=" + document.getElementById("deptDiv").innerHTML;
+		var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
 		$.get("loadPart.php?" + deptCode, function(data)
 		{
 			$('#partDiv').html(data);
 		});
 	});
+	
+	// Load Module Codes
+	$(function()
+	{
+		var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
+		var part = "&part=any";
+		$.get("loadModCodes.php?" + deptCode + part, function(data)
+		{
+			$('#modCodeDiv').html(data);
+		});
+	});
+	
 });	
+
+function updateModCode()
+{
+	var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
+	var part = "&part=" + document.getElementById("part")[document.getElementById("part").selectedIndex].id;
+	$.get("loadModCodes.php?" + deptCode + part, function(data)
+	{
+		$('#modCodeDiv').html(data);
+	});
+}
 
 function updateBuilding()
 {
@@ -157,48 +179,6 @@ function updateBackground()
 	}
 		
 			
-}
-
-function updateModCode()
-{
-	var deptChoice = document.getElementById('deptCode').selectedIndex;
-	var partChoice = document.getElementById('part').selectedIndex;
-	var html = '';
-	
-	document.getElementById('modCode').options.length = 0;
-	
-	for(var i = 0; i < modCodes[deptChoice][partChoice].length; i++)
-	{
-		html += '<option>' + modCodes[deptChoice][partChoice][i] + '</option>';
-	}
-	document.getElementById('modCode').innerHTML = html;
-	updateModName();
-}
-
-function updateModName()
-{
-	var ModuleCode = document.getElementById('modCode').value;
-	var partChoice = document.getElementById('part').selectedIndex;
-	populateModNames(partChoice);
-	document.getElementById('modName').selectedIndex = document.getElementById('modCode').selectedIndex;
-}
-
-function updateModCodeFromName()
-{
-	document.getElementById('modCode').selectedIndex = document.getElementById('modName').selectedIndex;
-}
-
-function populateModNames(partChoice)
-{
-	var html = '';
-	document.getElementById('modName').options.length = 0;
-	
-	for(var i = 0; i < modNames[partChoice].length; i++)
-	{
-		html += '<option>' + modNames[partChoice][i] + '</option>';
-	}
-	
-	document.getElementById('modName').innerHTML = html;
 }
 
 function addRequest()
