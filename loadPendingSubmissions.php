@@ -9,8 +9,12 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status FROM Request, RoomRequest ";
-	$sql .= "JOIN RequestToRoom WHERE RequestToRoom.RequestID = Request.RequestID;";
+	$sql = "SELECT Request.RequestID, ModCode, Room, Facility, Weeks, SessionType, SessionLength, Status ";
+	$sql .= "FROM Request ";
+	$sql .= "JOIN WeekRequest ON WeekRequest.RequestID = Request.RequestID ";		// Add weeks to the results
+	$sql .= "LEFT JOIN FacilityRequest ON FacilityRequest.RequestID = Request.RequestID ";		// Add facilities to the results
+	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
+	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID";		// Add rooms to the results
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
@@ -22,6 +26,8 @@
 	echo "<th>Request ID</th>";
 	echo "<th>Module Code</th>";
 	echo "<th>Room</th>";
+	echo "<th>Facilities</th>";
+	echo "<th>Weeks</th>";
 	echo "<th>Session Type</th>";
 	echo "<th>Session Length (Hours)</th>";
 	echo "<th>Status</th>";
@@ -33,6 +39,8 @@
 		echo "<td>" . $row["requestid"] . "</td>";
 		echo "<td>" . $row["modcode"] . "</td>";
 		echo "<td>" . $row["room"] . "</td>";
+		echo "<td>" . $row["facility"] . "</td>";
+		echo "<td>" . $row["weeks"] . "</td>";
 		echo "<td>" . $row["sessiontype"] . "</td>";
 		echo "<td>" . $row["sessionlength"] . "</td>";
 		echo "<td>" . $row["status"] . "</td>";
