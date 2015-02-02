@@ -129,15 +129,38 @@ $(document).ready(function()		// Execute all of this on load
 	// Load pending submissions
 	$('#pendingButton').click(function()
 	{
-		$.get("loadPendingSubmissions.php", function(data)
+		var sortDirection = "sortDirection=down"
+		$.get("loadPendingSubmissions.php?" + sortDirection, function(data)
 		{
 			$('#submissions').html(data);
 		});
 		
 		openDiv("popupPendingDiv");
+	});	
+	
+	// Down arrow click event
+	$('#submissions').on('click', "#downArrow", function() 
+	{
+		// Reload table but in ascending order
+		var sortDirection = "sortDirection=up";
+		$.get("loadPendingSubmissions.php?" + sortDirection, function(data)
+		{
+			$('#submissions').html(data);
+		});
 	});
 	
-	// Load pending submissions
+	// Up arrow click event
+	$('#submissions').on('click', "#upArrow", function() 
+	{		
+		// Reload table but in ascending order
+		var sortDirection = "sortDirection=down";
+		$.get("loadPendingSubmissions.php?" + sortDirection, function(data)
+		{
+			$('#submissions').html(data);
+		});
+	});	
+	
+	// Load history submissions
 	$('#historyButton').click(function()
 	{
 		$.get("loadHistorySubmissions.php", function(data)

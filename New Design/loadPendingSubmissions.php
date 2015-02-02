@@ -9,11 +9,22 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	$sortDirection = $_REQUEST['sortDirection'];
+	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
-	$sql .= "WHERE Status = 'Pending';";
+	$sql .= "WHERE Status = 'Pending' ";
+	
+	if ($sortDirection == "up")
+	{				
+		$sql .= "ORDER BY Request.RequestID DESC;";
+	}
+	else
+	{
+		$sql .= "ORDER BY Request.RequestID ASC;";
+	}
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
@@ -21,8 +32,15 @@
 		die($res->getMessage());
 	}
 	
-	echo "<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";
-	echo "<th>Request ID</th>";
+	echo "<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";	
+	if ($sortDirection == "up")
+	{				
+		echo "<th>Request ID <img id='upArrow' src='img/upArrow.png'></th>";
+	}
+	else
+	{
+		echo "<th>Request ID <img id='downArrow' src='img/downArrow.png'></th>";
+	}	
 	echo "<th>Module Code</th>";
 	echo "<th>Room</th>";
 	echo "<th>Facilities</th>";
