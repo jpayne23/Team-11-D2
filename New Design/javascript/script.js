@@ -15,7 +15,7 @@ $(document).ready(function()		// Execute all of this on load
 	var selectAll = false;
 	var removeAll = false;
 	
-	$("#popupWeeks").bind("mousedown", function(e) {				
+	$("#weekSelector").bind("mousedown", function(e) {				
 		e.metaKey = true;		// Simulates holding down control to select non-adjacent elements
 	}).selectable(
 	{	
@@ -74,7 +74,7 @@ $(document).ready(function()		// Execute all of this on load
 	
 	// Since the distance on the selectable is now greater than zero, clicks do not work if the mouse does not move
 	// Simulate mouse click like the selector would normally
-	$("#popupWeeks li").click(function()
+	$("#weekSelector li").click(function()
 	{
 		var clickedText = $(this).text();
 		
@@ -172,82 +172,7 @@ function updateRoom()
 	});	
 }		
 
-function updateBackground()
-{
-	var parkChoice = document.getElementById('park1').value;
-	var buildingChoice = document.getElementById('building1').value;
-	var roomChoice = document.getElementById('room1').value;
-
-	if (parkChoice == 'East' && buildingChoice == 'Design School'  && roomChoice == 'LDS.0.17')
-	{
-		document.getElementById('requests').style.backgroundImage = "url('http://www.lboro.ac.uk/media/wwwlboroacuk/content/facilitiesmanagement/pagephotos/lds017.jpg')";
-		document.getElementById('requests').style.backgroundRepeat = "no-repeat";
-		document.getElementById('requests').style.backgroundSize = "50% 30%";
-		document.getElementById('requests').style.backgroundPosition = "left bottom";
-	}
-	else
-	{
-		document.getElementById('requests').style.backgroundImage = "";
-		document.getElementById('requests').style.opacity = "1";
-	}
-		
-			
-}
-
-function addRequest()
-{
-	var html = '';
-
-	var park = [];
-	var building = [];
-	var room = [];
-	
-	for (var i = 1; i <= numRooms; i++)
-	{
-		park.push(document.getElementById('park'+i).value);
-		building.push(document.getElementById('building'+i).value);
-		room.push(document.getElementById('room'+i).value);
-	}
-
-	var deptCode = document.getElementById('deptCode').value;
-	var part = document.getElementById('part').value;
-	var moduleCode = document.getElementById('modCode').value;
-	var sType = document.getElementById('seshType').value;
-	var sLength = document.getElementById('seshLength').value;
-	var priority = document.getElementById('priority').value;
-	
-	var parkIndex = [];				
-	var buildingIndex = [];
-	var roomIndex = [];
-
-	for (var i = 1; i <= numRooms; i++)
-	{
-		parkIndex.push(document.getElementById('park'+i).selectedIndex);
-		buildingIndex.push(document.getElementById('building'+i).selectedIndex);
-		roomIndex.push(document.getElementById('room'+i).selectedIndex);
-	}
-	
-	var deptCodeIndex = document.getElementById('deptCode').selectedIndex;
-	var partIndex = document.getElementById('part').selectedIndex;
-	var moduleCodeIndex = document.getElementById('modCode').selectedIndex;
-	var sTypeIndex = document.getElementById('seshType').selectedIndex;
-	var sLengthIndex = document.getElementById('seshLength').selectedIndex;
-	var priorityIndex = document.getElementById('priority').selectedIndex;
-	
-	var checked = [];
-	var checkedBool = [];
-	$('#checkboxes input:checked').each(function() { 
-		checked.push($(this).attr('value'));
-	});
-	
-	$('#checkboxes input').each(function() { 
-		checkedBool.push($(this).is(":checked"));
-	});
-	
-	var temp = [submissionIDCounter, deptCodeIndex, partIndex, moduleCodeIndex, sTypeIndex, sLengthIndex, priorityIndex, parkIndex, buildingIndex, roomIndex, checkedBool];
-	submissions.push(temp);
-}
-
+/*
 function submitRequest()
 {
 	addRequest();
@@ -419,7 +344,7 @@ function showhide()
 		document.getElementById('showHide').value = 'Show';
 		document.getElementById('collapsible').style.visibility = 'collapse';
 	}
-}	
+}	*/
 
 function addRoom()
 {
@@ -533,17 +458,6 @@ function openPendingDiv()
 function closePendingDiv()
 {
 	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
-}
-
-// Open and close popups for selecting weeks div
-function openWeeksDiv()
-{
-	document.getElementById('popupWeeksDiv').style.visibility = 'visible';
-}
-
-function closeWeeksDiv()
-{
-	document.getElementById('popupWeeksDiv').style.visibility = 'hidden';
 }
 
 /*function newPopup(url, winName, w, h, scroll) 
@@ -698,14 +612,4 @@ function hideParkContent()
 	document.getElementById('eastinfo').style.visibility= 'hidden'
 	document.getElementById('centralinfo').style.visibility= 'hidden'
 	document.getElementById('westinfo').style.visibility= 'hidden'
-}
-
-function openPendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'visible';
-}
-
-function closePendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
 }

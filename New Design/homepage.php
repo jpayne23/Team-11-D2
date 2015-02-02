@@ -87,7 +87,7 @@
 								<label>Pick weeks</label>								
 							</td>
 							<td colspan='2'>
-								<ol id="popupWeeks">
+								<ol id="weekSelector">
 									<li class="ui-state-default">1</li>
 									<li class="ui-state-default">2</li>
 									<li class="ui-state-default">3</li>
@@ -142,11 +142,7 @@
 								<input type='text' id='date'>
 							</td>
 						</tr>
-						<p>abcdefghijklmnopqrstuvwxyz</p>
-						dsdsddsas
-					</table>
-					
-					
+					</table>					
 				</content>
 			</article>
 			<article class="bottomcontent">

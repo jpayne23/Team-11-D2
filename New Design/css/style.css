@@ -147,22 +147,22 @@ a:hover, a:active{
 	margin: 20px auto;
 }
 
-#popupWeeks .ui-selecting{ 
+#weekSelector .ui-selecting{ 
 	background: #FECA40; 
 }
 
-#popupWeeks .ui-selected { 
+#weekSelector .ui-selected { 
 	background: #F39814; color: white; 
 }
 
-#popupWeeks { 
+#weekSelector { 
 	list-style-type: none;
 	margin: 0; 
 	padding: 0; 
 	width: 100%; 
 }
 
-#popupWeeks li { 
+#weekSelector li { 
 	margin: 1px; 
 	padding: 1px; 
 	float: left;
@@ -171,7 +171,6 @@ a:hover, a:active{
 	list-style-position:inside;
 	border: 1px solid black;
 }
-
 
 #popupPendingDiv{
 	border-radius: 7px;
@@ -237,26 +236,4 @@ a:hover, a:active{
 		width:96%;
 		margin-top: 3%;
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
