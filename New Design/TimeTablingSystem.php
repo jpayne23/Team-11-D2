@@ -26,7 +26,7 @@
 		{
 			$deptCode = $row["deptcode"];
 			
-			$url = "http://co-project.lboro.ac.uk/cgpw/teamproject/website/Current/homepage.php";
+			$url = "http://co-project.lboro.ac.uk/team11/Prakash/homepage.php";
 			$fields = array
 			(
 				'deptCode' => $deptCode

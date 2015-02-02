@@ -19,7 +19,7 @@
 		<nav>
 			<ul>
 				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Pending</a></li>
+				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#">Ad Hoc</a></li>
 				<li><a href="#">History</a></li>
 				<li><a href="#">Log Out</a></li>
@@ -134,7 +134,19 @@
 								</select>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<label> Pick Date </label>
+							</td>
+							<td>
+								<input type='text' id='date'>
+							</td>
+						</tr>
+						<p>abcdefghijklmnopqrstuvwxyz</p>
+						dsdsddsas
 					</table>
+					
+					
 				</content>
 			</article>
 			<article class="bottomcontent">
@@ -152,6 +164,12 @@
 					</table>
 				</content>
 		</article>
+		</div>
+		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+			<input type="button" value="Close me!" onclick='closePendingDiv();'></input>
+			<div id='submissions'>
+				<h3  id='pendingTitle' style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'> Pending submissions for Round 1 </h3>
+			</div>
 		</div>
 	</div>
 	<footer class="mainFooter">

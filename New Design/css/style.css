@@ -172,6 +172,19 @@ a:hover, a:active{
 	border: 1px solid black;
 }
 
+
+#popupPendingDiv{
+	border-radius: 7px;
+	background:#6b6a63;
+	margin:30px;
+	padding:6px;  
+	position:absolute;
+	width:90%;
+	height:90%;
+	top: 5%;
+	left: 5%;
+}
+
 @media only screen and (min-width: 150px) and (max-width: 600px)
 {
 	.body{
@@ -224,7 +237,7 @@ a:hover, a:active{
 		width:96%;
 		margin-top: 3%;
 	}
-
+	
 }
 
 

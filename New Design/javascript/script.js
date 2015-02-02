@@ -124,6 +124,19 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
+	$('#date').datepicker({minDate:0, beforeShowDay: $.datepicker.noWeekends, firstDay: 1});
+	
+	// Load pending submissions
+	$('#pendingButton').click(function()
+	{
+		$.get("loadPendingSubmissions.php", function(data)
+		{
+			$('#submissions').html(data);
+		});
+		
+		openPendingDiv();
+	});
+	
 });	
 
 function updateModCode()
@@ -685,4 +698,14 @@ function hideParkContent()
 	document.getElementById('eastinfo').style.visibility= 'hidden'
 	document.getElementById('centralinfo').style.visibility= 'hidden'
 	document.getElementById('westinfo').style.visibility= 'hidden'
+}
+
+function openPendingDiv()
+{
+	document.getElementById('popupPendingDiv').style.visibility = 'visible';
+}
+
+function closePendingDiv()
+{
+	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
 }
