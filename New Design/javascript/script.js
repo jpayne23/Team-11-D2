@@ -134,9 +134,19 @@ $(document).ready(function()		// Execute all of this on load
 			$('#submissions').html(data);
 		});
 		
-		openPendingDiv();
+		openDiv("popupPendingDiv");
 	});
 	
+	// Load pending submissions
+	$('#historyButton').click(function()
+	{
+		$.get("loadHistorySubmissions.php", function(data)
+		{
+			$('#history').html(data);
+		});
+		
+		openDiv("popupHistoryDiv");
+	});	
 });	
 
 function updateModCode()
@@ -449,15 +459,15 @@ function updateSearch(index)
 	}
 }
 
-// Open and close popups for pending submissions div
-function openPendingDiv()
+// Open and close popups for divs
+function openDiv(id)
 {
-	document.getElementById('popupPendingDiv').style.visibility = 'visible';
+	document.getElementById(id).style.visibility = 'visible';
 }
 
-function closePendingDiv()
+function closeDiv(id)
 {
-	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
+	document.getElementById(id).style.visibility = 'hidden';
 }
 
 /*function newPopup(url, winName, w, h, scroll) 

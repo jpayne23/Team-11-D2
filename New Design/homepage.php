@@ -21,7 +21,7 @@
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#">Ad Hoc</a></li>
-				<li><a href="#">History</a></li>
+				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#">Log Out</a></li>
 			</ul>
 		</nav>
@@ -162,9 +162,13 @@
 		</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input type="button" value="Close me!" onclick='closePendingDiv();'></input>
-			<div id='submissions'>
-				<h3  id='pendingTitle' style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'> Pending submissions for Round 1 </h3>
+			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");'></input>
+			<div id='submissions'>				
+			</div>
+		</div>
+		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
+			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
+			<div id='history'>
 			</div>
 		</div>
 	</div>
