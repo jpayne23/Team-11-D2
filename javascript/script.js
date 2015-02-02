@@ -15,7 +15,7 @@ $(document).ready(function()		// Execute all of this on load
 	var selectAll = false;
 	var removeAll = false;
 	
-	$("#popupWeeks").bind("mousedown", function(e) {				
+	$("#weekSelector").bind("mousedown", function(e) {				
 		e.metaKey = true;		// Simulates holding down control to select non-adjacent elements
 	}).selectable(
 	{	
@@ -67,6 +67,7 @@ $(document).ready(function()		// Execute all of this on load
 			{
 				selectedItems.push(this.innerHTML);
 			});
+			updateSelectedWeeks(selectedItems);
 		},
 		
 		distance: 1			// This is so we can register normal mouse click events
@@ -74,7 +75,7 @@ $(document).ready(function()		// Execute all of this on load
 	
 	// Since the distance on the selectable is now greater than zero, clicks do not work if the mouse does not move
 	// Simulate mouse click like the selector would normally
-	$("#popupWeeks li").click(function()
+	$("#weekSelector li").click(function()
 	{
 		var clickedText = $(this).text();
 		
@@ -82,23 +83,32 @@ $(document).ready(function()		// Execute all of this on load
 		if (selectedItems.indexOf(clickedText) == -1)
 		{						
 			$(this).addClass('ui-selected');
-			selectedItems.push(clickedText);
 		}
 		else 	// If element is already selected, then remove it from the array and remove selected class
 		{
 			$(this).removeClass('ui-selected');
-			selectedItems.splice(selectedItems.indexOf(clickedText), 1);
 		}
+		
+		// Reset selected items
+		selectedItems.length = 0;
+		
+		// For every selected element, add it to the array
+		$(".ui-selected").each(function() 
+		{
+			selectedItems.push($(this).text());
+		});				
+		
+		updateSelectedWeeks(selectedItems);
 	});
 	
 	// Add park selector
-	$.get("updatePark.php", function(data)
+	$.get("php/updatePark.php", function(data)
 	{
 		$('#parkDiv').html(data);
 	});
 	
 	// Load facilities
-	$.get("loadFacilities.php", function(data)
+	$.get("php/loadFacilities.php", function(data)
 	{
 		$('#facilitiesDiv').html(data);
 	});
@@ -107,7 +117,7 @@ $(document).ready(function()		// Execute all of this on load
 	$(function()
 	{
 		var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
-		$.get("loadPart.php?" + deptCode, function(data)
+		$.get("php/loadPart.php?" + deptCode, function(data)
 		{
 			$('#partDiv').html(data);
 		});
@@ -118,7 +128,7 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
 		var part = "&part=any";
-		$.get("loadModCodes.php?" + deptCode + part, function(data)
+		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 		{
 			$('#modCodeDiv').html(data);
 		});
@@ -126,30 +136,50 @@ $(document).ready(function()		// Execute all of this on load
 	
 	$('#date').datepicker({minDate:0, beforeShowDay: $.datepicker.noWeekends, firstDay: 1});
 	
-	// Load pending submissions
+	// Load pending page
 	$('#pendingButton').click(function()
 	{
-		$.get("loadPendingSubmissions.php", function(data)
+		$.get("php/loadPendingSubmissions.php", function(data)
 		{
 			$('#submissions').html(data);
 		});
 		
-		openPendingDiv();
+		openDiv("popupPendingDiv");
 	});
 	
-	//Open Advanced Requests
-	$('#btnAdvancedRequest').click(function()
+	// Load history page
+	$('#historyButton').click(function()
 	{
-		$.get("loadPopupRequest.php", function(data)
+		$.get("php/loadHistorySubmissions.php", function(data)
 		{
-
-			$('#popupRequestDiv').html(data);
+			$('#history').html(data);
 		});
 		
-		openPopupRequestDiv();
-	});
+		openDiv("popupHistoryDiv");
+	});	
 	
-		//Find rooms matching given facilities
+	//get Facilities of a given room (room1 only)
+	$('#btnGetFacilities').on('click', function()
+	{
+		var room = document.getElementById("room1").value;
+		var roomNo = "roomNo=" + room;
+		if(room == "Any")
+			return;
+		$.get("php/roomFacility.php?" + roomNo, function(data)
+		{
+			$("#dialog").html(data);
+			document.getElementById("dialog").title = "Facilities for " + room; //this wont update when you change room
+			$('#dialog').dialog({
+			      show: {
+			        effect: "fadeIn",
+			        duration: 500
+			      }
+			}); //end dialog
+		}); //end $.get
+		
+	}); //end click function
+	
+	//Find rooms matching given facilities
 	$("#getMatchingRooms").on('click',function(){
 		var f = [];
 		var valid = false; //to check if any facilities are selected
@@ -171,7 +201,7 @@ $(document).ready(function()		// Execute all of this on load
 		}
 		
 		f = JSON.stringify(f);
-		$.get("getMatchedRooms.php?f=" + f, function(data)		
+		$.get("php/getMatchedRooms.php?f=" + f, function(data)		
 		{
 			$("#matchedRoomsdiv").html(data);
 			$('#matchedRoomsdiv').dialog({
@@ -184,22 +214,13 @@ $(document).ready(function()		// Execute all of this on load
 		}); //end $_get
 		
 	}); //end click function
-	
-});
-
-function loadRoomTable()
-{
-	$.get("updatePark.php", function(data)
-	{
-		$('#parkDiv').html(data);
-	});
-}
+});	
 
 function updateModCode()
 {
 	var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
 	var part = "&part=" + document.getElementById("part")[document.getElementById("part").selectedIndex].id;
-	$.get("loadModCodes.php?" + deptCode + part, function(data)
+	$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 	{
 		$('#modCodeDiv').html(data);
 	});
@@ -208,7 +229,7 @@ function updateModCode()
 function updateBuilding()
 {
 	var string = $("#park1").serialize();
-	$.get("updateBuilding.php?" + string, function(data)
+	$.get("php/updateBuilding.php?" + string, function(data)
 	{
 		$('#buildingDiv').html(data);
 	}).done(function()		// Does this when the request is finished
@@ -222,88 +243,149 @@ function updateRoom()
 	var building = document.getElementById('building1');
 	var string = "building=" + building[building.selectedIndex].id;
 	
-	$.get("updateRoom.php?" + string, function(data)
+	$.get("php/updateRoom.php?" + string, function(data)
 	{
 		$('#roomDiv').html(data);
 	});	
 }		
 
-function updateBackground()
-{
-	var parkChoice = document.getElementById('park1').value;
-	var buildingChoice = document.getElementById('building1').value;
-	var roomChoice = document.getElementById('room1').value;
-
-	if (parkChoice == 'East' && buildingChoice == 'Design School'  && roomChoice == 'LDS.0.17')
+function updateSelectedWeeks(selectedItems)
+{		
+	document.getElementById('weeksSelected').innerHTML = 'You have selected weeks: ';
+	
+	var length = selectedItems.length;
+	var output = [];
+	var i, j;
+	
+	for (i = 0; i < length; i = j + 1)
 	{
-		document.getElementById('requests').style.backgroundImage = "url('http://www.lboro.ac.uk/media/wwwlboroacuk/content/facilitiesmanagement/pagephotos/lds017.jpg')";
-		document.getElementById('requests').style.backgroundRepeat = "no-repeat";
-		document.getElementById('requests').style.backgroundSize = "50% 30%";
-		document.getElementById('requests').style.backgroundPosition = "left bottom";
-	}
-	else
-	{
-		document.getElementById('requests').style.backgroundImage = "";
-		document.getElementById('requests').style.opacity = "1";
-	}
+		// Beginning of range or single
+		output.push(selectedItems[i]);
 		
-			
+		// Find end of range
+		for (var j = i + 1; j < length && parseInt(selectedItems[j]) == parseInt(selectedItems[j-1]) + 1; j++);
+		j--;
+		
+		if (i == j) 
+		{
+			// single number
+			output.push(",");
+		} 
+		else 
+		{
+			if (i + 1 == j)
+			{
+				// two numbers
+				output.push(",", selectedItems[j], ",");
+			}
+			else 
+			{ 
+				// range
+				output.push("-", selectedItems[j], ",");
+			}		
+		} 		
+	}
+	
+	output.pop(); // remove trailing comma
+	document.getElementById('weeksSelected').innerHTML += output.join("");
 }
 
-function addRequest()
+function openDiv(id)
 {
-	var html = '';
-
-	var park = [];
-	var building = [];
-	var room = [];
-	
-	for (var i = 1; i <= numRooms; i++)
-	{
-		park.push(document.getElementById('park'+i).value);
-		building.push(document.getElementById('building'+i).value);
-		room.push(document.getElementById('room'+i).value);
-	}
-
-	var deptCode = document.getElementById('deptCode').value;
-	var part = document.getElementById('part').value;
-	var moduleCode = document.getElementById('modCode').value;
-	var sType = document.getElementById('seshType').value;
-	var sLength = document.getElementById('seshLength').value;
-	var priority = document.getElementById('priority').value;
-	
-	var parkIndex = [];				
-	var buildingIndex = [];
-	var roomIndex = [];
-
-	for (var i = 1; i <= numRooms; i++)
-	{
-		parkIndex.push(document.getElementById('park'+i).selectedIndex);
-		buildingIndex.push(document.getElementById('building'+i).selectedIndex);
-		roomIndex.push(document.getElementById('room'+i).selectedIndex);
-	}
-	
-	var deptCodeIndex = document.getElementById('deptCode').selectedIndex;
-	var partIndex = document.getElementById('part').selectedIndex;
-	var moduleCodeIndex = document.getElementById('modCode').selectedIndex;
-	var sTypeIndex = document.getElementById('seshType').selectedIndex;
-	var sLengthIndex = document.getElementById('seshLength').selectedIndex;
-	var priorityIndex = document.getElementById('priority').selectedIndex;
-	
-	var checked = [];
-	var checkedBool = [];
-	$('#checkboxes input:checked').each(function() { 
-		checked.push($(this).attr('value'));
-	});
-	
-	$('#checkboxes input').each(function() { 
-		checkedBool.push($(this).is(":checked"));
-	});
-	
-	var temp = [submissionIDCounter, deptCodeIndex, partIndex, moduleCodeIndex, sTypeIndex, sLengthIndex, priorityIndex, parkIndex, buildingIndex, roomIndex, checkedBool];
-	submissions.push(temp);
+	document.getElementById(id).style.visibility = 'visible';
 }
 
+function closeDiv(id)
+{
+	document.getElementById(id).style.visibility = 'hidden';
+}
+/*this may be useful for multirooms
+function addRoom()
+{
+	numRooms = document.getElementById('multiRoomTable').rows.length - 1;
+	if (numRooms < 4)
+	{
+		var row = document.getElementById('multiRoomTable').insertRow(numRooms);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		var cell5 = row.insertCell(4);
+		
+		cell1.innerHTML = 'Room ' + (numRooms);
+		cell1.style.color = "#FFFFFF";
+		cell1.style.font = "16px arial";
+		cell2.innerHTML =  '<select name="park" id="park' + numRooms + '" class="larger" onchange="updateBuilding(this);">' +
+								'<option>Any</option>' +
+								'<option>East</option>' +
+								'<option>Central</option>' +
+								'<option>West</option>' +
+							'</select>';
+		cell3.innerHTML = 	'<select name="building" id="building' + numRooms + '" class="larger" onchange="updateRoom(this);">' +
+								'<option>Any</option>' +
+							'</select>';
+		cell4.innerHTML = 	'<select name="room" id="room' + numRooms + '" class="larger">' +
+								'<option>Any</option>' + 
+							'</select>';
+		cell5.innerHTML = '<input class="rButtons" type="button" value="Remove" onclick="removeRoom(this);"></input>';
+	}
+	if (numRooms == 4)
+	{
+		var row = document.getElementById('multiRoomTable').insertRow(numRooms);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		var cell5 = row.insertCell(4);
+		
+		cell1.innerHTML = "Room " + (numRooms);
+		cell1.id = "r"+ numRooms
+		cell1.style.color = "#FFFFFF";
+		cell1.style.font = "16px arial";
+		cell2.innerHTML =  '<select name="park" id="park' + numRooms + '" class="larger" onchange="updateBuilding(this);">' +
+								'<option>Any</option>' +
+								'<option>East</option>' +
+								'<option>Central</option>' +
+								'<option>West</option>' +
+							'</select>';
+		cell3.innerHTML = 	'<select name="building" id="building' + numRooms + '" class="larger" onchange="updateRoom(this);">' +
+								'<option>Any</option>' +
+							'</select>';
+		cell4.innerHTML = 	'<select name="room" id="room' + numRooms + '" class="larger">' +
+								'<option>Any</option>' + 
+							'</select>';	
+		cell5.innerHTML = '<input class="rButtons" type="button" value="Remove" onclick="removeRoom(this);"></input>';
+		var cell6 = document.getElementById('addRoomButton').parentNode;
+		cell6.innerHTML = "Maximum number of rooms reached.";
+		cell6.colSpan = "5";
+		cell6.id = "maxRoomsLabel";
+		cell6.style.color = "#FFFFFF";
+		cell6.style.font = "16px arial";
+	}			
+}
+
+function removeRoom(r)
+{
+	if (numRooms >= 4)
+	{
+		document.getElementById('maxRoomsLabel').innerHTML = "<input type='button' class='pbuttons' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>";
+	}
+	
+	var rowIndex = r.parentNode.parentNode.rowIndex;
+	document.getElementById('multiRoomTable').deleteRow(rowIndex);
+	numRooms--;
+	
+	for (var i = 2; i <= numRooms; i++)
+	{
+		var rows = document.getElementById('multiRoomTable').rows[i];
+		rows.cells[0].innerHTML = "Room " + i;
+		rows.cells[1].childNodes[0].id = "park" + i;
+		rows.cells[2].childNodes[0].id = "building" + i;
+		rows.cells[3].childNodes[0].id = "room" + i;					
+	}
+}
+*/
+/*
 function submitRequest()
 {
 	addRequest();
@@ -475,93 +557,9 @@ function showhide()
 		document.getElementById('showHide').value = 'Show';
 		document.getElementById('collapsible').style.visibility = 'collapse';
 	}
-}	
+}	*/
 
-function addRoom()
-{
-	numRooms = document.getElementById('multiRoomTable').rows.length - 1;
-	if (numRooms < 4)
-	{
-		var row = document.getElementById('multiRoomTable').insertRow(numRooms);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		var cell4 = row.insertCell(3);
-		var cell5 = row.insertCell(4);
-		
-		cell1.innerHTML = 'Room ' + (numRooms);
-		cell1.style.color = "#FFFFFF";
-		cell1.style.font = "16px arial";
-		cell2.innerHTML =  '<select name="park" id="park' + numRooms + '" class="larger" onchange="updateBuilding(this);">' +
-								'<option>Any</option>' +
-								'<option>East</option>' +
-								'<option>Central</option>' +
-								'<option>West</option>' +
-							'</select>';
-		cell3.innerHTML = 	'<select name="building" id="building' + numRooms + '" class="larger" onchange="updateRoom(this);">' +
-								'<option>Any</option>' +
-							'</select>';
-		cell4.innerHTML = 	'<select name="room" id="room' + numRooms + '" class="larger">' +
-								'<option>Any</option>' + 
-							'</select>';
-		cell5.innerHTML = '<input class="rButtons" type="button" value="Remove" onclick="removeRoom(this);"></input>';
-	}
-	if (numRooms == 4)
-	{
-		var row = document.getElementById('multiRoomTable').insertRow(numRooms);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		var cell4 = row.insertCell(3);
-		var cell5 = row.insertCell(4);
-		
-		cell1.innerHTML = "Room " + (numRooms);
-		cell1.id = "r"+ numRooms
-		cell1.style.color = "#FFFFFF";
-		cell1.style.font = "16px arial";
-		cell2.innerHTML =  '<select name="park" id="park' + numRooms + '" class="larger" onchange="updateBuilding(this);">' +
-								'<option>Any</option>' +
-								'<option>East</option>' +
-								'<option>Central</option>' +
-								'<option>West</option>' +
-							'</select>';
-		cell3.innerHTML = 	'<select name="building" id="building' + numRooms + '" class="larger" onchange="updateRoom(this);">' +
-								'<option>Any</option>' +
-							'</select>';
-		cell4.innerHTML = 	'<select name="room" id="room' + numRooms + '" class="larger">' +
-								'<option>Any</option>' + 
-							'</select>';	
-		cell5.innerHTML = '<input class="rButtons" type="button" value="Remove" onclick="removeRoom(this);"></input>';
-		var cell6 = document.getElementById('addRoomButton').parentNode;
-		cell6.innerHTML = "Maximum number of rooms reached.";
-		cell6.colSpan = "5";
-		cell6.id = "maxRoomsLabel";
-		cell6.style.color = "#FFFFFF";
-		cell6.style.font = "16px arial";
-	}			
-}
-
-function removeRoom(r)
-{
-	if (numRooms >= 4)
-	{
-		document.getElementById('maxRoomsLabel').innerHTML = "<input type='button' class='pbuttons' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>";
-	}
-	
-	var rowIndex = r.parentNode.parentNode.rowIndex;
-	document.getElementById('multiRoomTable').deleteRow(rowIndex);
-	numRooms--;
-	
-	for (var i = 2; i <= numRooms; i++)
-	{
-		var rows = document.getElementById('multiRoomTable').rows[i];
-		rows.cells[0].innerHTML = "Room " + i;
-		rows.cells[1].childNodes[0].id = "park" + i;
-		rows.cells[2].childNodes[0].id = "building" + i;
-		rows.cells[3].childNodes[0].id = "room" + i;					
-	}
-}
-
+/*
 function updateSearch(index)
 {
 	var html = '';
@@ -579,28 +577,8 @@ function updateSearch(index)
 					'<option>Any</option></select></td></tr>';
 	}
 }
-
-// Open and close popups for pending submissions div
-function openPendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'visible';
-}
-
-function closePendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
-}
-
-// Open and close popups for selecting weeks div
-function openWeeksDiv()
-{
-	document.getElementById('popupWeeksDiv').style.visibility = 'visible';
-}
-
-function closeWeeksDiv()
-{
-	document.getElementById('popupWeeksDiv').style.visibility = 'hidden';
-}
+*/
+// Open and close popups for divs
 
 /*function newPopup(url, winName, w, h, scroll) 
 {
@@ -610,6 +588,7 @@ function closeWeeksDiv()
 	var popupWindow = window.open(url, winName, settings)
 			
 }*/
+/*
 function openAdvancedSearchDiv()
 {
 	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'visible';
@@ -754,24 +733,4 @@ function hideParkContent()
 	document.getElementById('eastinfo').style.visibility= 'hidden'
 	document.getElementById('centralinfo').style.visibility= 'hidden'
 	document.getElementById('westinfo').style.visibility= 'hidden'
-}
-
-function openPendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'visible';
-}
-
-function closePendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
-}
-
-function openPopupRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'visible';
-}
-
-function closePopupRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-}
+}*/

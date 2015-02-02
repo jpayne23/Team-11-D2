@@ -1,1 +1,0 @@
-if you want to change anything in here, either make a copy of it and do it on a different directory or note what changes you make in here

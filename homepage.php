@@ -21,7 +21,7 @@
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#">Ad Hoc</a></li>
-				<li><a href="#">History</a></li>
+				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#">Log Out</a></li>
 			</ul>
 		</nav>
@@ -87,7 +87,7 @@
 								<label>Pick weeks</label>								
 							</td>
 							<td colspan='2'>
-								<ol id="popupWeeks">
+								<ol id="weekSelector">
 									<li class="ui-state-default">1</li>
 									<li class="ui-state-default">2</li>
 									<li class="ui-state-default">3</li>
@@ -104,6 +104,8 @@
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
 								</ol>
+								</br>
+								<p id='weeksSelected'>You have selected weeks: </p>
 							</td>
 						</tr>
 						<tr>
@@ -134,6 +136,7 @@
 								</select>
 							</td>
 						</tr>
+						<!-- need this in ad-hoc
 						<tr>
 							<td>
 								<label> Pick Date </label>
@@ -142,14 +145,63 @@
 								<input type='text' id='date'>
 							</td>
 						</tr>
+						-->
+						<!-- start of room selecter -->
 						<tr>
-							<td>
-								<input type='button' id='btnAdvancedRequest' value='Advanced Request'/>
-							</td>
-						</tr>
-					</table>
-					
-					
+							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>
+								<tr>
+									<td></td>                                                                                                                                                                                                                                                                                                                                                                  
+									<td>
+										<label for="park" >Park</label>
+									</td>
+									<td>
+										<label for="building" >Building</label>
+									</td>
+									<td>
+										<label for="room" >Room</label>
+									</td>
+								</tr>							
+								<tr>
+									<td>
+										<label for="multiRoom" >Room</label>
+									</td>
+									<td>
+										<div id='parkDiv'>
+											<select name="park" id="park1">
+												<option>Any</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<div id='buildingDiv'>
+											<select name="building" id="building1">
+												<option>Any</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<div id='roomDiv'>
+											<select name="room" id="room1">
+												<option>Any</option>
+											</select>										
+										</div>
+									</td>
+								</tr>	
+								<tr>
+									<td colspan = 4>
+										<!--<input id='btnSearch' type='button' value='Search'></input> this does nothing-->
+										<input id='btnGetFacilities' type='button' value='Get Facilities'></input> 									</td>
+									<!--
+									<td colspan='5' style='text-align:center'>
+										<input class="rButtons" type='button' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>
+									</td>
+									-->
+								</tr>
+								
+								</table>
+								<!--end of room selecter-->
+							</table>	
+						</tr>						
 				</content>
 			</article>
 			<article class="bottomcontent">
@@ -162,8 +214,12 @@
 							<td id='checkboxes'>							
 								<div id='facilitiesDiv'>
 								</div>
-								<input id='getMatchingRooms' type='button' value='Rooms with checked Facilities'></input>
-								<div id="matchedRoomsdiv"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
+							<div id="matchedRoomsdiv"></div>
 							</td>
 						</tr>
 					</table>
@@ -171,12 +227,16 @@
 		</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input type="button" value="Close me!" onclick='closePendingDiv();'></input>
-			<div id='submissions'>
-				<h3  id='pendingTitle' style='text-align:left; padding-left:10px; font-family:arial; font-size:20pt; color:#FFFFFF'> Pending submissions for Round 1 </h3>
+			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");'></input>
+			<div id='submissions'>				
 			</div>
 		</div>
-		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
+			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
+			<div id='history'>
+			</div>
+		</div>
+		<div id="dialog" title="Facilities of this room"></div>
 		</div>
 	</div>
 	<footer class="mainFooter">
