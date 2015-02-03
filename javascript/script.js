@@ -136,16 +136,39 @@ $(document).ready(function()		// Execute all of this on load
 	
 	$('#date').datepicker({minDate:0, beforeShowDay: $.datepicker.noWeekends, firstDay: 1});
 	
-	// Load pending page
+	// Load pending submissions
 	$('#pendingButton').click(function()
 	{
-		$.get("php/loadPendingSubmissions.php", function(data)
+		var sortDirection = "sortDirection=down"
+		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
 		{
 			$('#submissions').html(data);
 		});
 		
 		openDiv("popupPendingDiv");
+	});	
+	
+	// Down arrow click event
+	$('#submissions').on('click', "#downArrow", function() 
+	{
+		// Reload table but in ascending order
+		var sortDirection = "sortDirection=up";
+		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
+		{
+			$('#submissions').html(data);
+		});
 	});
+	
+	// Up arrow click event
+	$('#submissions').on('click', "#upArrow", function() 
+	{		
+		// Reload table but in ascending order
+		var sortDirection = "sortDirection=down";
+		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
+		{
+			$('#submissions').html(data);
+		});
+	});	
 	
 	// Load history page
 	$('#historyButton').click(function()
