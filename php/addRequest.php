@@ -11,31 +11,67 @@
 	
 	$modCode = $_REQUEST['modCode'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
+	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
 	$sessionLength = $_REQUEST['sessionLength'];
+	$sessionLength = (int)$sessionLength;
 	$specialReq = "";
 	
 	// Convert the selected weeks to the database weeks format
-	$weeksArray = explode(",", $selectedWeeks);
-	for ($i = 0; $i < count($weeksArray); $i++)
+	$weeksArray = array();
+	if ($selectedWeeks != "")
 	{
-		$dashPos = strpos($weeksArray[$i], "-");	// Find position of dash
-		
-		if ($dashPos === false)		// If dash is not found, then the entry is a single week
+		$weeksArray = explode(",", $selectedWeeks);
+		for ($i = 0; $i < count($weeksArray); $i++)
 		{
-			$weeksArray[$i] = $weeksArray[$i] . "-" . $weeksArray[$i];
+			$dashPos = strpos($weeksArray[$i], "-");	// Find position of dash
+			
+			if ($dashPos === false)		// If dash is not found, then the entry is a single week
+			{
+				$weeksArray[$i] = $weeksArray[$i] . "-" . $weeksArray[$i];
+			}			
+		}	
+
+		for ($j = 0; $j < count($weeksArray); $j++)
+		{
+			$dashPos = strpos($weeksArray[$j], "-");
+			$leftSide = substr($weeksArray[$j], 0, $dashPos);
+			$rightSide = substr($weeksArray[$j], $dashPos + 1);
+			
+			$weeksArray[$j] = "[" . $leftSide . "," . $rightSide . "]";
 		}
-	}		
-	print_r($weeksArray);
+	}
 	
-	/*$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES (2," . $modCode . "," . $sessionType . "," . $sessionLength . ",1,0,". $specialReq .",1,Submitted)";
+	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
+	$sql .= "VALUES (2,'$modCode','$sessionType',$sessionLength,1,0,'',1,'Submitted')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
 	}	
+
+	for ($k = 0; $k < count($weeksArray); $k++)
+	{
+		$sql2 = "INSERT INTO WeekRequest (RequestID, Weeks) ";
+		$sql2 .= "VALUES ((SELECT MAX(RequestID) From Request), '$weeksArray[$k]')"; 
+
+		$res2 =& $db->query($sql2);
+		if(PEAR::isError($res2))
+		{
+			die($res2->getMessage());
+		}
+	}
 	
-	echo $sql;*/
+	for ($l = 0; $l < count($facilities); $l++)
+	{
+		$sql3 = "INSERT INTO FacilityRequest (RequestID, Facility) ";
+		$sql3 .= "VALUES ((SELECT MAX(RequestID) From Request), '$facilities[$l]')"; 
+
+		$res3 =& $db->query($sql3);
+		if(PEAR::isError($res3))
+		{
+			die($res3->getMessage());
+		}
+	}
 ?>

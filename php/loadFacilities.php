@@ -9,7 +9,7 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$sql = "SELECT distinct `Facility` FROM `Facilities`;";			
+	$sql = "SELECT distinct `Facility` FROM `Facility`;";			
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{

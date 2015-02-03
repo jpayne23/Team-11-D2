@@ -245,6 +245,7 @@ $(document).ready(function()		// Execute all of this on load
 			// Data to send
 			modCode: document.getElementById('modCodes').value.substr(0, 8),
 			selectedWeeks: updateSelectedWeeks(selectedItems),
+			facilities: getCheckedFacilities(),
 			sessionType: document.getElementById('seshType').value,
 			sessionLength: document.getElementById('seshLength').value.substr(0, 1)
 		},
@@ -254,6 +255,20 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 });	
+
+function getCheckedFacilities()
+{
+	var checkFacilities = [];
+	for (var i = 0; i < 13; i++)
+	{
+		if (document.getElementById('c' + i).checked)
+		{
+			checkFacilities.push(document.getElementById('c' + i).value);
+		}
+	}
+	
+	return checkFacilities;
+}
 
 function updateModCode()
 {
