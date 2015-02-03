@@ -40,6 +40,7 @@
 							</td>
 							<td>
 									<?php
+										session_start();
 										require_once 'MDB2.php';			
 										include "/disks/diskh/teams/team11/passwords/password.php";
 										$dsn = "mysql://$username:$password@$host/$dbName"; 
@@ -49,7 +50,7 @@
 										}
 										$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 										
-										$deptCode = $_POST["deptCode"];
+										$deptCode = $_SESSION["deptCode"];
 										$sql = "SELECT DeptCode, DeptName FROM DeptNames WHERE DeptCode = '".$deptCode."';";
 										$res =& $db->query($sql);
 										
