@@ -108,7 +108,7 @@
 			$weekString = str_replace("]", "", $weekString);		// Remove the closing bracket
 			
 			// Test for if the week start and end are the same Eg: 11-11
-			$commaPos = strpos($weekString, "-");	// Find position of comma
+			$commaPos = strpos($weekString, "-");	// Find position of dash
 			$leftSide = substr($weekString, 0, $commaPos);
 			$rightSide = substr($weekString, $commaPos + 1);
 			

@@ -237,6 +237,22 @@ $(document).ready(function()		// Execute all of this on load
 		}); //end $_get
 		
 	}); //end click function
+	
+	// Send request to database
+	$("#submit").click(function(){
+		$.post("php/addRequest.php",
+		{	
+			// Data to send
+			modCode: document.getElementById('modCodes').value.substr(0, 8),
+			selectedWeeks: updateSelectedWeeks(selectedItems),
+			sessionType: document.getElementById('seshType').value,
+			sessionLength: document.getElementById('seshLength').value.substr(0, 1)
+		},
+		function(data, status){
+			// Function to do things with the data
+			alert(data);
+		});
+	});
 });	
 
 function updateModCode()
@@ -274,8 +290,6 @@ function updateRoom()
 
 function updateSelectedWeeks(selectedItems)
 {		
-	document.getElementById('weeksSelected').innerHTML = 'You have selected weeks: ';
-	
 	var length = selectedItems.length;
 	var output = [];
 	var i, j;
@@ -296,7 +310,7 @@ function updateSelectedWeeks(selectedItems)
 		} 
 		else 
 		{
-			if (i + 1 == j)
+			if (i == j)
 			{
 				// two numbers
 				output.push(",", selectedItems[j], ",");
@@ -310,7 +324,7 @@ function updateSelectedWeeks(selectedItems)
 	}
 	
 	output.pop(); // remove trailing comma
-	document.getElementById('weeksSelected').innerHTML += output.join("");
+	return output.join("");
 }
 
 function openDiv(id)

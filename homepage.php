@@ -106,7 +106,7 @@
 									<li class="ui-state-default">15</li>
 								</ol>
 								</br>
-								<p id='weeksSelected'>You have selected weeks: </p>
+								<p id='weeksSelected'></p>
 							</td>
 						</tr>
 						<tr>
@@ -204,6 +204,7 @@
 							</table>	
 						</tr>						
 				</content>
+				<input type="submit" class="submit" id="submit" value="Submit" />			
 			</article>
 			<article class="bottomcontent">
 				<header>
