@@ -9,10 +9,14 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	session_start();
+	$deptCode = $_SESSION['deptCode'];
+	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results
+	$sql .= "WHERE Status = 'Submitted' AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))

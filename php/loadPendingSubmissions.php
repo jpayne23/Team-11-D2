@@ -9,13 +9,16 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	session_start();
+	$deptCode = $_SESSION['deptCode'];
 	$sortDirection = $_REQUEST['sortDirection'];
+	
 	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
-	$sql .= "WHERE Status = 'Pending' ";
+	$sql .= "WHERE Status = 'Pending' AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
 	if ($sortDirection == "up")
 	{				

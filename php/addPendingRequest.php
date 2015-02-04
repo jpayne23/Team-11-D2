@@ -9,6 +9,8 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	session_start();
+	$deptCode = $_SESSION['deptCode'];	
 	$modCode = $_REQUEST['modCode'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
 	$facilities = $_REQUEST['facilities'];
@@ -43,7 +45,7 @@
 	}
 	
 	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID, PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES (2,'$modCode','$sessionType',$sessionLength,1,1,1,0,'',1,'Pending')";
+	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,1,1,1,0,'',1,'Pending')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
