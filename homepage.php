@@ -211,6 +211,7 @@
 							</table>	
 						</tr>						
 				</content>
+				<input type="submit" class="submit" id="submit" value="Submit" />
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -235,7 +236,7 @@
 						</tr>
 					</table>
 				</content>
-		</article>
+			</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");'></input>
