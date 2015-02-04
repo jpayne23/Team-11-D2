@@ -5,12 +5,13 @@ var subCounter = 0;
 var round = 1;	
 var numRooms = 1;
 
+var selectedItems = ['1','2','3','4','5','6','7','8','9','10','11','12'];		// Holds all selectable elements which are already selected
+
 // Any JQUERY
 //---------------------
 $(document).ready(function()		// Execute all of this on load 
 {	
-	// Add week selector	
-	var selectedItems = ['1','2','3','4','5','6','7','8','9','10','11','12'];		// Holds all selectable elements which are already selected
+	// Add week selector		
 	var numSelecting = 0;		// Keep count of how many elements we have selected during selecting event
 	var selectAll = false;
 	var removeAll = false;
@@ -170,6 +171,46 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});	
 	
+	// Edit button click event
+	$('#submissions').on('click', "#editIcon", function() 
+	{
+		closeDiv("popupPendingDiv");
+		
+		var requestID = "requestID=" + this.name.substr(-2, 2);
+		
+		// Load the form with data from database
+		$.get("php/fetchEditData.php?" + requestID, function(data)
+		{
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modtitle = JSON.parse(data)[2];
+			var part = JSON.parse(data)[3]
+			var sessionType = JSON.parse(data)[4];
+			var sessionLength = JSON.parse(data)[5];
+			var specialReq = JSON.parse(data)[6];
+			var weeks = JSON.parse(data)[7];
+			
+			document.getElementById('part').value = part;
+			updateModCode();
+			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			document.getElementById('seshType').value = sessionType;
+			if (sessionLength == 1)
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hour";
+			}
+			else
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hours";
+			}	
+			document.getElementById('specialReq').value = specialReq;			
+			setSelectedWeeks(weeks);
+			
+			$('#submit').val("Edit");	
+			$('#submit').removeClass("none");
+			$('#submit').addClass(requestID);
+		});
+	});
+	
 	// Load history page
 	$('#historyButton').click(function()
 	{
@@ -238,7 +279,8 @@ $(document).ready(function()		// Execute all of this on load
 	}); //end click function
 	
 	// Send request to database as pending
-	$("#submit").click(function(){
+	$("#submit").click(function()
+	{		
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var selectedWeeks = updateSelectedWeeks(selectedItems);
@@ -249,21 +291,46 @@ $(document).ready(function()		// Execute all of this on load
 		
 		// Error check
 		if (selectedWeeks.length != 0)
-		{			
-			$.post("php/addPendingRequest.php",
-			{	
-				// Data to send
-				modCode: modCode,
-				selectedWeeks: selectedWeeks,
-				facilities: facilities,
-				sessionType: sessionType,
-				sessionLength: sessionLength,
-				specialReq: specialReq
-			},
-			function(data, status){
-				// Function to do things with the data
-				alert(status);
-			});
+		{	
+			if ($('#submit').hasClass('none'))
+			{
+				$.post("php/addPendingRequest.php",
+				{	
+					// Data to send
+					modCode: modCode,
+					selectedWeeks: selectedWeeks,
+					facilities: facilities,
+					sessionType: sessionType,
+					sessionLength: sessionLength,
+					specialReq: specialReq
+				},
+				function(data, status){
+					// Function to do things with the data
+					alert(data);
+				});
+			}
+			else
+			{
+				var requestID = $('#submit').attr('class');
+				$.post("php/editPendingRequest.php",
+				{	
+					// Data to send
+					requestID: requestID,
+					modCode: modCode,
+					selectedWeeks: selectedWeeks,
+					sessionType: sessionType,
+					sessionLength: sessionLength,
+					specialReq: specialReq
+				},
+				function(data, status){
+					// Function to do things with the data
+					alert(data);
+				});
+				
+				$('#submit').val("Submit");	
+				$('#submit').removeClass();
+				$('#submit').addClass('none');
+			}
 		}
 		else
 		{
@@ -377,6 +444,50 @@ function updateSelectedWeeks(selectedItems)
 	
 	output.pop(); // remove trailing comma
 	return output.join("");
+}
+
+function setSelectedWeeks(weeksArray)
+{
+	var output = [];
+	
+	for (var i = 0; i < weeksArray.length; i++)
+	{
+		var dashPos = weeksArray[i].indexOf("-");
+		
+		if (dashPos > 0)
+		{
+			var leftSide = weeksArray[i].substring(0, dashPos);
+			var rightSide = weeksArray[i].substring(dashPos + 1, weeksArray[i].length);
+			
+			for (var j = leftSide; j <= rightSide; j++)
+			{
+				output.push(j);
+			}
+		}
+		else
+		{
+			output.push(weeksArray[i]);
+		}			
+	}
+	
+	// Set the week selector to all the correct highlighted values
+	selectedItems = output;
+	
+	$("#weekSelector").children().each(function()
+	{
+		for (var k = 0; k < output.length; k++)
+		{
+			if (this.innerHTML == output[k])
+			{
+				$(this).addClass('ui-selected');
+				break;				// Exit current loop cycle once match is found
+			}
+			else
+			{
+				$(this).removeClass('ui-selected');
+			}
+		}
+	});		
 }
 
 function openDiv(id)

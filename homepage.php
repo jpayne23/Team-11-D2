@@ -218,7 +218,7 @@
 							</table>	
 						</tr>						
 				</content>
-				<input type="submit" class="submit" id="submit" value="Submit" />
+				<input type="submit" class="none" id="submit" value="Submit" />
 			</article>
 			<article class="bottomcontent">
 				<header>

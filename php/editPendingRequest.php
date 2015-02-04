@@ -11,14 +11,14 @@
 	
 	session_start();
 	$deptCode = $_SESSION['deptCode'];	
+	$requestID = $_REQUEST['requestID'];
 	$modCode = $_REQUEST['modCode'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
-	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
 	$sessionLength = $_REQUEST['sessionLength'];
 	$sessionLength = (int)$sessionLength;
 	$specialReq = $_REQUEST['specialReq'];
-		
+	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
 	if ($selectedWeeks != "")
@@ -44,19 +44,23 @@
 		}
 	}
 	
-	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID, PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,1,1,1,0,'$specialReq',1,'Pending')";
+	/*$sql = "UPDATE Request ";
+	$sql .= "SET ModCode = '$modCode', SessionType = '$sessionType', SessionLength = $sessionLength, ";
+	$sql .= "SpecialRequirements = '$specialReq' ";
+	$sql .= "WHERE RequestID = $requestID";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
-	}	
-
+	}*/
+	
 	for ($k = 0; $k < count($weeksArray); $k++)
 	{
-		$sql2 = "INSERT INTO WeekRequest (RequestID, Weeks) ";
-		$sql2 .= "VALUES ((SELECT MAX(RequestID) From Request), '$weeksArray[$k]')"; 
+		echo $weeksArray[$k];
+		$sql2 = "UPDATE WeekRequest ";
+		$sql2 .= "SET Weeks = '$weeksArray[$k]' "
+		$sql2 .= "WHERE RequestID = $requestID"; 
 
 		$res2 =& $db->query($sql2);
 		if(PEAR::isError($res2))
@@ -64,19 +68,4 @@
 			die($res2->getMessage());
 		}
 	}
-	
-	for ($l = 0; $l < count($facilities); $l++)
-	{
-		if ($facilities != "null")
-		{
-			$sql3 = "INSERT INTO FacilityRequest (RequestID, Facility) ";
-			$sql3 .= "VALUES ((SELECT MAX(RequestID) From Request), '$facilities[$l]')"; 
-
-			$res3 =& $db->query($sql3);
-			if(PEAR::isError($res3))
-			{
-				die($res3->getMessage());
-			}
-		}
-	}	
 ?>

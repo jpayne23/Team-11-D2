@@ -13,7 +13,6 @@
 	$deptCode = $_SESSION['deptCode'];
 	$sortDirection = $_REQUEST['sortDirection'];
 	
-	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
@@ -128,6 +127,7 @@
 		echo "<td>" . $row["sessiontype"] . "</td>";
 		echo "<td>" . $row["sessionlength"] . "</td>";
 		echo "<td>" . $row["status"] . "</td>";
+		echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
 		echo "</tr>";
 	}
 	
