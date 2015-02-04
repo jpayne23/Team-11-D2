@@ -41,26 +41,33 @@
 							<td>
 									<?php
 										session_start();
-										require_once 'MDB2.php';			
-										include "/disks/diskh/teams/team11/passwords/password.php";
-										$dsn = "mysql://$username:$password@$host/$dbName"; 
-										$db =& MDB2::connect($dsn); 
-										if(PEAR::isError($db)){ 
-											die($db->getMessage());
-										}
-										$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
-										
-										$deptCode = $_SESSION["deptCode"];
-										$sql = "SELECT DeptCode, DeptName FROM DeptNames WHERE DeptCode = '".$deptCode."';";
-										$res =& $db->query($sql);
-										
-										if(PEAR::isError($res))
+										if (isset($_SESSION["deptCode"]))
 										{
-											die($res->getMessage());
+											require_once 'MDB2.php';			
+											include "/disks/diskh/teams/team11/passwords/password.php";
+											$dsn = "mysql://$username:$password@$host/$dbName"; 
+											$db =& MDB2::connect($dsn); 
+											if(PEAR::isError($db)){ 
+												die($db->getMessage());
+											}
+											$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
+											
+											$deptCode = $_SESSION["deptCode"];
+											$sql = "SELECT DeptCode, DeptName FROM DeptNames WHERE DeptCode = '".$deptCode."';";
+											$res =& $db->query($sql);
+											
+											if(PEAR::isError($res))
+											{
+												die($res->getMessage());
+											}
+											while ($row = $res->fetchRow())
+											{
+												echo '<div id="deptCodeDiv" title="'.$row["deptcode"].'">'.$row["deptcode"].' - '.$row["deptname"].'</div>';
+											}
 										}
-										while ($row = $res->fetchRow())
+										else
 										{
-											echo '<div id="deptCodeDiv" title="'.$row["deptcode"].'">'.$row["deptcode"].' - '.$row["deptname"].'</div>';
+											header("Location: login.html");
 										}
 									?>
 							</td>
@@ -204,7 +211,6 @@
 							</table>	
 						</tr>						
 				</content>
-				<input type="submit" class="submit" id="submit" value="Submit" />
 			</article>
 			<article class="bottomcontent">
 				<header>
