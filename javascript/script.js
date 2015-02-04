@@ -10,7 +10,7 @@ var numRooms = 1;
 $(document).ready(function()		// Execute all of this on load 
 {	
 	// Add week selector	
-	var selectedItems = [];		// Holds all selectable elements which are already selected
+	var selectedItems = ['1','2','3','4','5','6','7','8','9','10','11','12'];		// Holds all selectable elements which are already selected
 	var numSelecting = 0;		// Keep count of how many elements we have selected during selecting event
 	var selectAll = false;
 	var removeAll = false;

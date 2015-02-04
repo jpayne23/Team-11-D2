@@ -96,22 +96,22 @@
 							</td>
 							<td colspan='2'>
 								<ol id="weekSelector">
-									<li class="ui-state-default">1</li>
-									<li class="ui-state-default">2</li>
-									<li class="ui-state-default">3</li>
-									<li class="ui-state-default">4</li>
-									<li class="ui-state-default">5</li>
-									<li class="ui-state-default">6</li>
-									<li class="ui-state-default">7</li>
-									<li class="ui-state-default">8</li>
-									<li class="ui-state-default">9</li>
-									<li class="ui-state-default">10</li>
-									<li class="ui-state-default">11</li>
-									<li class="ui-state-default">12</li>
+									<li class="ui-state-default ui-selected">1</li>
+									<li class="ui-state-default ui-selected">2</li>
+									<li class="ui-state-default ui-selected">3</li>
+									<li class="ui-state-default ui-selected">4</li>
+									<li class="ui-state-default ui-selected">5</li>
+									<li class="ui-state-default ui-selected">6</li>
+									<li class="ui-state-default ui-selected">7</li>
+									<li class="ui-state-default ui-selected">8</li>
+									<li class="ui-state-default ui-selected">9</li>
+									<li class="ui-state-default ui-selected">10</li>
+									<li class="ui-state-default ui-selected">11</li>
+									<li class="ui-state-default ui-selected">12</li>
 									<li class="ui-state-default">13</li>
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
-								</ol>
+								</ol>								
 								</br>
 							</td>
 						</tr>
