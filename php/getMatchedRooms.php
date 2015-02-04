@@ -11,7 +11,6 @@
 	
 	$input = $_REQUEST['f'];
 	$f = json_decode($input,true); //decode back into a PHP array
-	
 	//Make a string of the facilities to use in SQL Query
 	$fac = "(";
 	for($i=0;$i<sizeof($f) - 1;$i++)
@@ -19,19 +18,14 @@
 		$fac.= "'" .$f[$i]. "', ";
 	}
 	$fac.= "'" .$f[sizeof($f)-1]. "')";
-	
 
 	$sql = "";
-    $sql .= "select f.room ";
-    $sql .= "from `Facilities` f ";
-   $sql .= "where f.facility in ". $fac ." "; //e.g. $fac = ('Computer', 'DVD Player')
-   $sql .= "group by f.room ";
-   $sql .= "having count(distinct f.facility) = ". sizeof($f) .";"; //$f = no. of facilities
-    
-    
+	$sql .= "select f.room ";
+	$sql .= "from `RoomFacilities` f ";
+	$sql .= "where f.facility in ". $fac ." "; //e.g. $fac = ('1', '2')
+	$sql .= "group by f.room ";
+	$sql .= "having count(distinct f.facility) = ". sizeof($f) .";"; //$f = no. of facilities
 
-	
-	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{

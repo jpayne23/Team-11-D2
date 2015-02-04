@@ -210,7 +210,7 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			if($('#facilitiesDiv').children().eq(i).is(':checked')){
 				//append the facility name to a array to send to server
-				f[f.length]= $('#facilitiesDiv').children().eq(i).attr('name');
+				f[f.length]= Number($('#facilitiesDiv').children().eq(i).attr('id').substr(1,2))+1;
 				valid = true;
 			}
 		}
@@ -222,8 +222,8 @@ $(document).ready(function()		// Execute all of this on load
 			    });
 			return;
 		}
-		
 		f = JSON.stringify(f);
+		alert(f);
 		$.get("php/getMatchedRooms.php?f=" + f, function(data)		
 		{
 			$("#matchedRoomsdiv").html(data);
