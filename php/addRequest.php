@@ -65,13 +65,16 @@
 	
 	for ($l = 0; $l < count($facilities); $l++)
 	{
-		$sql3 = "INSERT INTO FacilityRequest (RequestID, Facility) ";
-		$sql3 .= "VALUES ((SELECT MAX(RequestID) From Request), '$facilities[$l]')"; 
-
-		$res3 =& $db->query($sql3);
-		if(PEAR::isError($res3))
+		if ($facilities != "null")
 		{
-			die($res3->getMessage());
+			$sql3 = "INSERT INTO FacilityRequest (RequestID, Facility) ";
+			$sql3 .= "VALUES ((SELECT MAX(RequestID) From Request), '$facilities[$l]')"; 
+
+			$res3 =& $db->query($sql3);
+			if(PEAR::isError($res3))
+			{
+				die($res3->getMessage());
+			}
 		}
 	}
 ?>

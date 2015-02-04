@@ -240,19 +240,34 @@ $(document).ready(function()		// Execute all of this on load
 	
 	// Send request to database
 	$("#submit").click(function(){
-		$.post("php/addRequest.php",
-		{	
-			// Data to send
-			modCode: document.getElementById('modCodes').value.substr(0, 8),
-			selectedWeeks: updateSelectedWeeks(selectedItems),
-			facilities: getCheckedFacilities(),
-			sessionType: document.getElementById('seshType').value,
-			sessionLength: document.getElementById('seshLength').value.substr(0, 1)
-		},
-		function(data, status){
-			// Function to do things with the data
-			alert(data);
-		});
+		// Get all values from form
+		var modCode = document.getElementById('modCodes').value.substr(0, 8);
+		var selectedWeeks = updateSelectedWeeks(selectedItems);
+		var facilities = getCheckedFacilities();
+		var sessionType = document.getElementById('seshType').value;
+		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
+		
+		// Error check
+		if (selectedWeeks.length != 0)
+		{			
+			$.post("php/addRequest.php",
+			{	
+				// Data to send
+				modCode: modCode,
+				selectedWeeks: selectedWeeks,
+				facilities: facilities,
+				sessionType: sessionType,
+				sessionLength: sessionLength
+			},
+			function(data, status){
+				// Function to do things with the data
+				alert(status);
+			});
+		}
+		else
+		{
+			alert("Please enter what weeks you want to book the module for");
+		}
 	});
 });	
 
@@ -267,7 +282,15 @@ function getCheckedFacilities()
 		}
 	}
 	
-	return checkFacilities;
+	if (checkFacilities.length == 0)
+	{
+		return "null";	// Sends an null string to the php file so as not to cause an error
+						// Instead of sending an empty array
+	}
+	else
+	{
+		return checkFacilities;
+	}	
 }
 
 function updateModCode()
