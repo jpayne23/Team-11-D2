@@ -11,20 +11,43 @@
 	
 	$roomNo = $_REQUEST['roomNo'];
 	//echo $roomNo;
-	$sql = "SELECT Facility FROM Facilities WHERE Room = '".$roomNo."' ;";	
+	$sql = "SELECT Facility FROM Facility;";	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
 	}
-	$i = 0;
+	$facList = $res->fetchAll();
+	$sql = "SELECT Facility FROM RoomFacilities WHERE Room = '".$roomNo."' ;";	
+	$res =& $db->query($sql);
+	if(PEAR::isError($res))
+	{
+		die($res->getMessage());
+	}
+	
+	$sql = "SELECT * FROM Room WHERE Room = '".$roomNo."' ;";	
+	$res2 =& $db->query($sql);
+	if(PEAR::isError($res2))
+	{
+		die($res2->getMessage());
+	}
+	
+	while ($row = $res2->fetchRow())
+	{
+		echo "Capacity: ".$row["capacity"]."</br>";
+		if ($row["lab"] == 0)
+		{
+			echo "Type: Lecture Room";
+		}
+		else
+		{
+			echo "Type: Lab";
+		}
+		echo "</br>";
+	}
+	echo "Facilities: </br>";
 	while ($row = $res->fetchRow())
 	{
-		/*echo "<pre>";
-		print_r($row);
-		echo "</pre>";*/
-		//echo '<input type="checkbox" id="c'.$i.'" name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
-		echo $row["facility"]."</br>";
-		$i++;
+		echo $facList[$row["facility"]-1]["facility"]."</br>";
 	}
 ?>
