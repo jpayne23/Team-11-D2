@@ -245,6 +245,7 @@ $(document).ready(function()		// Execute all of this on load
 		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
+		var specialReq = document.getElementById('specialReq').value;
 		
 		// Error check
 		if (selectedWeeks.length != 0)
@@ -256,7 +257,8 @@ $(document).ready(function()		// Execute all of this on load
 				selectedWeeks: selectedWeeks,
 				facilities: facilities,
 				sessionType: sessionType,
-				sessionLength: sessionLength
+				sessionLength: sessionLength,
+				specialReq: specialReq
 			},
 			function(data, status){
 				// Function to do things with the data

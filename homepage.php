@@ -143,6 +143,14 @@
 								</select>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								Special Requirements:
+							</td>
+							<td>
+								<textarea id="specialReq" cols="40" rows="3"></textarea>
+							</td>
+						</tr>
 						<!-- need this in ad-hoc
 						<tr>
 							<td>
