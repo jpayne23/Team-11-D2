@@ -16,9 +16,14 @@
 		die($res->getMessage());
 	}
 	$i = 0;
+	//$ar = $res->fetchAll();
+	//echo json_encode( $ar );
+	$ar = array();	
 	while ($row = $res->fetchRow())
 	{
-		echo '<input type="checkbox" id="c'.$i.'" name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
+		//echo '<input type="checkbox" id="c'.$i.'" name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
+		$ar[sizeof($ar)] = $row["facility"];
 		$i++;
 	}
+	echo json_encode($ar);
 ?>

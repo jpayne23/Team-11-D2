@@ -14,6 +14,8 @@
 </head>
 
 <body class="body">
+	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
+	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
@@ -24,7 +26,7 @@
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
-		</nav>
+		</nav>	
 	</header>
 	<div class="mainContent">
 		<div class="content">
@@ -141,14 +143,6 @@
 									<option>4 Hours</option>
 									<option>5 Hours</option>
 								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								Special Requirements:
-							</td>
-							<td>
-								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
 						<!-- need this in ad-hoc
