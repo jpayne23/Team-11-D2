@@ -241,6 +241,7 @@
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");'></input>
+			<input type="button" id = 'submitRequests' value="Submit all requests"></input>
 			<div id='submissions'>				
 			</div>
 		</div>

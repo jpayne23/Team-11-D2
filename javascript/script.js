@@ -237,7 +237,7 @@ $(document).ready(function()		// Execute all of this on load
 		
 	}); //end click function
 	
-	// Send request to database
+	// Send request to database as pending
 	$("#submit").click(function(){
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
@@ -249,7 +249,7 @@ $(document).ready(function()		// Execute all of this on load
 		// Error check
 		if (selectedWeeks.length != 0)
 		{			
-			$.post("php/addRequest.php",
+			$.post("php/addPendingRequest.php",
 			{	
 				// Data to send
 				modCode: modCode,
@@ -267,6 +267,19 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert("Please enter what weeks you want to book the module for");
 		}
+	});
+	
+	// Make all pending requests submitted ones
+	$("#submitRequests").click(function()
+	{
+		$.post("php/addSubmittedRequest.php");
+		
+		// Reload pending submissions
+		var sortDirection = "sortDirection=down"
+		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
+		{
+			$('#submissions').html(data);
+		});
 	});
 });	
 

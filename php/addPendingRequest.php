@@ -15,8 +15,8 @@
 	$sessionType = $_REQUEST['sessionType'];
 	$sessionLength = $_REQUEST['sessionLength'];
 	$sessionLength = (int)$sessionLength;
-	$specialReq = "";
-	
+	$specialReq = "a";
+		
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
 	if ($selectedWeeks != "")
@@ -42,8 +42,8 @@
 		}
 	}
 	
-	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES (2,'$modCode','$sessionType',$sessionLength,1,0,'',1,'Submitted')";
+	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID, PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
+	$sql .= "VALUES (2,'$modCode','$sessionType',$sessionLength,1,1,1,0,'',1,'Pending')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
