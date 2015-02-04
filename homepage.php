@@ -22,7 +22,7 @@
 				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#">Ad Hoc</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
-				<li><a href="#">Log Out</a></li>
+				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -106,7 +106,7 @@
 									<li class="ui-state-default">15</li>
 								</ol>
 								</br>
-								<p id='weeksSelected'></p>
+								<p id='weeksSelected'>You have selected weeks: </p>
 							</td>
 						</tr>
 						<tr>
@@ -204,7 +204,6 @@
 							</table>	
 						</tr>						
 				</content>
-				<input type="submit" class="submit" id="submit" value="Submit" />			
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -223,6 +222,9 @@
 							<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
 							<div id="matchedRoomsdiv"></div>
 							</td>
+						</tr>
+						<tr>
+						<td><input type='text' id='autoFacilities'/>
 						</tr>
 					</table>
 				</content>
