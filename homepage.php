@@ -113,7 +113,6 @@
 									<li class="ui-state-default">15</li>
 								</ol>
 								</br>
-								<p id='weeksSelected'>You have selected weeks: </p>
 							</td>
 						</tr>
 						<tr>
@@ -198,7 +197,7 @@
 								<tr>
 									<td colspan = 4>
 										<!--<input id='btnSearch' type='button' value='Search'></input> this does nothing-->
-										<input id='btnGetFacilities' type='button' value='Get Facilities'></input> 									</td>
+										<input id='btnGetInfo' type='button' value='Get Info'></input> 									</td>
 									<!--
 									<td colspan='5' style='text-align:center'>
 										<input class="rButtons" type='button' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>
