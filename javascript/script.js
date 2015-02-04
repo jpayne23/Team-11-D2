@@ -182,7 +182,7 @@ $(document).ready(function()		// Execute all of this on load
 	});	
 	
 	//get Facilities of a given room (room1 only)
-	$('#btnGetFacilities').on('click', function()
+	$('#btnGetInfo').on('click', function()
 	{
 		var room = document.getElementById("room1").value;
 		var roomNo = "roomNo=" + room;
@@ -191,7 +191,7 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/roomFacility.php?" + roomNo, function(data)
 		{
 			$("#dialog").html(data);
-			document.getElementById("dialog").title = "Facilities for " + room; //this wont update when you change room
+			document.getElementById("dialog").title = "Room Info ";
 			$('#dialog').dialog({
 			      show: {
 			        effect: "fadeIn",
