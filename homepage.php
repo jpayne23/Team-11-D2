@@ -221,18 +221,19 @@
 					<table id='facilitiesTable'>
 						<tr>
 							<td id='checkboxes'>							
-								<div id='facilitiesDiv'>
-								</div>
+								<div id='facilitiesDiv'></div>
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
-							<div id="matchedRoomsdiv"></div>
+								<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
+								<div id="matchedRoomsdiv"></div>
 							</td>
 						</tr>
 						<tr>
-						<td><input type='text' id='autoFacilities'/>
+							<td>
+								<input type='text' id='autoFacilities'/>
+							</td>	
 						</tr>
 					</table>
 				</content>
@@ -245,11 +246,9 @@
 		</div>
 		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
 			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
-			<div id='history'>
-			</div>
+			<div id='history'></div>
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>
-		</div>
 	</div>
 	<footer class="mainFooter">
 		<p>Copyright &copy 2015: Team11
