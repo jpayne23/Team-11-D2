@@ -223,7 +223,6 @@ $(document).ready(function()		// Execute all of this on load
 			return;
 		}
 		f = JSON.stringify(f);
-		alert(f);
 		$.get("php/getMatchedRooms.php?f=" + f, function(data)		
 		{
 			$("#matchedRoomsdiv").html(data);
