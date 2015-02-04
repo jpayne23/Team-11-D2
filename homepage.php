@@ -204,6 +204,7 @@
 							</table>	
 						</tr>						
 				</content>
+				<input type="submit" class="submit" id="submit" value="Submit" />
 			</article>
 			<article class="bottomcontent">
 				<header>
