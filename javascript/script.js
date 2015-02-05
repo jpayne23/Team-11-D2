@@ -119,6 +119,7 @@ $(document).ready(function()		// Execute all of this on load
 		for(var i = 0; i<13; i++)
 		{
 			listOfFac[i] = listOfFac[i].substr(1,listOfFac[i].length - 2);
+			listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 		}
 		//$('#facilitiesDiv').html(listOfFac);
 	}).done(function(){
@@ -402,7 +403,8 @@ function createAutoCompleteFacList()
 	html= "<table id='sortable'></table>";
 	$("#facilitiesDiv").append(html);
 	
-  (function( $ ) {
+	//
+  (function( $ ) { //This function has been taken off the Jquery website and tweaked for our use
     $.widget( "custom.combobox", {
       _create: function() {
         this.wrapper = $( "<span>" )
@@ -412,6 +414,7 @@ function createAutoCompleteFacList()
         this.element.hide();
         this._createAutocomplete();
         this._createShowAllButton();
+		this._createAddButton();
       },
  
       _createAutocomplete: function() {
@@ -422,6 +425,7 @@ function createAutoCompleteFacList()
           .appendTo( this.wrapper )
           .val( value )
           .attr( "title", "" )
+		  .attr("id","facDropDown")
           .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
           .autocomplete({
             delay: 0,
@@ -444,13 +448,14 @@ function createAutoCompleteFacList()
         });
       },
  
-      _createShowAllButton: function() {
+      _createShowAllButton: function() { //create the show all drop down button
         var input = this.input,
           wasOpen = false;
  
         $( "<a>" )
           .attr( "tabIndex", -1 )
           .attr( "title", "Show All Items" )
+		  .attr("id",'btnShowAllItems')
           .tooltip()
           .appendTo( this.wrapper )
           .button({
@@ -466,7 +471,6 @@ function createAutoCompleteFacList()
           })
           .click(function() {
             input.focus();
- 
             // Close if already visible
             if ( wasOpen ) {
               return;
@@ -476,17 +480,31 @@ function createAutoCompleteFacList()
             input.autocomplete( "search", "" );
           });
       },
+	  
+	  //Created my own function to add a 'add' button to add the chosen facility to the list
+	  _createAddButton: function(){
+		var btn = $('<button>Add</button>').click(function () 
+		{
+			var fac = $('#facDropDown').val(); //get the value of the selected facility
+			if (fac != "")
+				addFacToList(fac); //call function to add the facility to a list underneath
+		});
+
+		$('#btnShowAllItems').after(btn); //append this button to the screen
+		
+	  },
  
-      _source: function( request, response ) {
+      _source: function( request, response ) { //this function is for matching the user's entry with the results using RegExp
         var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
         response( this.element.children( "option" ).map(function() {
           var text = $( this ).text();
-          if ( this.value && ( !request.term || matcher.test(text) ) )
-            return {
+          if ( this.value && ( !request.term || matcher.test(text) ) ){
+			return {
               label: text,
               value: text,
               option: this
             };
+		  }
         }) );
       },
  
@@ -494,10 +512,10 @@ function createAutoCompleteFacList()
  
         // Selected an item, nothing to do
         if ( ui.item ) {
-			addFacToList(this.input.val());
           return;
         }
 		
+	
 
         // Search for a match (case-insensitive)
         var value = this.input.val(),
@@ -512,23 +530,10 @@ function createAutoCompleteFacList()
  
         // Found a match, nothing to do
         if ( valid ) {
-			addFacToList(this.input.val());
           return;
         }
 		
- 		function addFacToList(fac){ //add selected facility to list
-			var facid = fac.replace(/ /g,''); //remove spaces so ID works
-			//check facilitiy isnt already on the list
-			
-			if($("#" + facid).length > 0) {
-			//it doesn't exist
-			alert("already exists");
-			return;
-			}
-			
-			html = "<tr id='"+facid+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
-			$( "#sortable" ).after(html);
-		}
+ 		
 		
 
 		
@@ -551,17 +556,30 @@ function createAutoCompleteFacList()
     });
   })( jQuery );
  
-  $(function() {
+  $(function() { //functions to create the elements onto the screen
     $( "#comboFac" ).combobox();
     $( "#toggle" ).click(function() {
       $( "#combobox" ).toggle();
     });
   });
   
+  function addFacToList(fac){ //add selected facility to list
+			var facid = fac.replace(/ /g,''); //remove spaces so ID works
+			//check facilitiy isnt already on the list
+			facid = facid.replace(/\//g, ''); //remove forward slash so ID works
+			if($("#" + facid).length > 0) {
+				//it doesn't exist
+				alert("already exists");
+				return;
+			}
+			//create the elements and append them to the list, adding the appropriate information
+			html = "<tr id='"+facid+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
+			$( "#sortable" ).after(html);
+		}
 
 }	
 
-function deleteFac(id)
+function deleteFac(id) //function to delete the facility by searching for its id
 {
 	id = id.substr(3,id.length);
 	$( '#'+id ).remove();
