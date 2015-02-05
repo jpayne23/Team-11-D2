@@ -14,6 +14,8 @@
 </head>
 
 <body class="body">
+	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
+	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
@@ -24,7 +26,7 @@
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
-		</nav>
+		</nav>	
 	</header>
 	<div class="mainContent">
 		<div class="content">
@@ -96,24 +98,23 @@
 							</td>
 							<td colspan='2'>
 								<ol id="weekSelector">
-									<li class="ui-state-default">1</li>
-									<li class="ui-state-default">2</li>
-									<li class="ui-state-default">3</li>
-									<li class="ui-state-default">4</li>
-									<li class="ui-state-default">5</li>
-									<li class="ui-state-default">6</li>
-									<li class="ui-state-default">7</li>
-									<li class="ui-state-default">8</li>
-									<li class="ui-state-default">9</li>
-									<li class="ui-state-default">10</li>
-									<li class="ui-state-default">11</li>
-									<li class="ui-state-default">12</li>
+									<li class="ui-state-default ui-selected">1</li>
+									<li class="ui-state-default ui-selected">2</li>
+									<li class="ui-state-default ui-selected">3</li>
+									<li class="ui-state-default ui-selected">4</li>
+									<li class="ui-state-default ui-selected">5</li>
+									<li class="ui-state-default ui-selected">6</li>
+									<li class="ui-state-default ui-selected">7</li>
+									<li class="ui-state-default ui-selected">8</li>
+									<li class="ui-state-default ui-selected">9</li>
+									<li class="ui-state-default ui-selected">10</li>
+									<li class="ui-state-default ui-selected">11</li>
+									<li class="ui-state-default ui-selected">12</li>
 									<li class="ui-state-default">13</li>
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
-								</ol>
+								</ol>								
 								</br>
-								<p id='weeksSelected'>You have selected weeks: </p>
 							</td>
 						</tr>
 						<tr>
@@ -142,6 +143,14 @@
 									<option>4 Hours</option>
 									<option>5 Hours</option>
 								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Special Requirements:
+							</td>
+							<td>
+								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
 						<!-- need this in ad-hoc
@@ -198,7 +207,7 @@
 								<tr>
 									<td colspan = 4>
 										<!--<input id='btnSearch' type='button' value='Search'></input> this does nothing-->
-										<input id='btnGetFacilities' type='button' value='Get Facilities'></input> 									</td>
+										<input id='btnGetInfo' type='button' value='Get Info'></input> 									</td>
 									<!--
 									<td colspan='5' style='text-align:center'>
 										<input class="rButtons" type='button' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>
@@ -211,7 +220,7 @@
 							</table>	
 						</tr>						
 				</content>
-				<input type="submit" class="submit" id="submit" value="Submit" />
+				<input type="submit" class="none" id="submit" value="Submit" />
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -244,6 +253,7 @@
 			<input type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu()'></input>
 			<div id='filterDiv' style='visibility: hidden;'>
 			</div>
+			<input type="button" id = 'submitRequests' value="Submit all requests"></input>
 			<div id='submissions'>				
 			</div>
 		</div>

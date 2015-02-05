@@ -10,7 +10,10 @@
 	
 	$username1 = $_POST["username"];
 	$password1 = $_POST["password"];
-	
+	$username1 = stripslashes($username1);
+	$password1 = stripslashes($password1);
+	$username1 = mysql_real_escape_string($username1);
+	$password1 = mysql_real_escape_string($password1);
 	$sql = "SELECT `DeptCode` FROM `Users` WHERE `UserName` = '".$username1."' and `Password` = '".$password1."' ";			
 	$res =& $db->query($sql);
 	

@@ -4,13 +4,15 @@ var submissionIDCounter = 0;
 var subCounter = 0;
 var round = 1;	
 var numRooms = 1;
+var listOfFac = [];
+
+var selectedItems = ['1','2','3','4','5','6','7','8','9','10','11','12'];		// Holds all selectable elements which are already selected
 
 // Any JQUERY
 //---------------------
 $(document).ready(function()		// Execute all of this on load 
 {	
-	// Add week selector	
-	var selectedItems = [];		// Holds all selectable elements which are already selected
+	// Add week selector		
 	var numSelecting = 0;		// Keep count of how many elements we have selected during selecting event
 	var selectAll = false;
 	var removeAll = false;
@@ -110,7 +112,17 @@ $(document).ready(function()		// Execute all of this on load
 	// Load facilities
 	$.get("php/loadFacilities.php", function(data)
 	{
-		$('#facilitiesDiv').html(data);
+		//bring in string and turn into array
+		data = data.substr(1,data.length - 2);
+		listOfFac = data.split(',');
+		//remove quotes from each element of the array
+		for(var i = 0; i<13; i++)
+		{
+			listOfFac[i] = listOfFac[i].substr(1,listOfFac[i].length - 2);
+		}
+		//$('#facilitiesDiv').html(listOfFac);
+	}).done(function(){
+		createAutoCompleteFacList();
 	});
 	
 	// Load Parts
@@ -170,6 +182,46 @@ $(document).ready(function()		// Execute all of this on load
 			$('#submissions').html(data);
 		});
 	});	
+	
+	// Edit button click event
+	$('#submissions').on('click', "#editIcon", function() 
+	{
+		closeDiv("popupPendingDiv");
+		
+		var requestID = "requestID=" + this.name.substr(-2, 2);
+		
+		// Load the form with data from database
+		$.get("php/fetchEditData.php?" + requestID, function(data)
+		{
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modtitle = JSON.parse(data)[2];
+			var part = JSON.parse(data)[3]
+			var sessionType = JSON.parse(data)[4];
+			var sessionLength = JSON.parse(data)[5];
+			var specialReq = JSON.parse(data)[6];
+			var weeks = JSON.parse(data)[7];
+			
+			document.getElementById('part').value = part;
+			updateModCode();
+			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			document.getElementById('seshType').value = sessionType;
+			if (sessionLength == 1)
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hour";
+			}
+			else
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hours";
+			}	
+			document.getElementById('specialReq').value = specialReq;			
+			setSelectedWeeks(weeks);
+			
+			$('#submit').val("Edit");	
+			$('#submit').removeClass("none");
+			$('#submit').addClass(requestID);
+		});
+	});
 	
 	// Load history page
 	$('#historyButton').click(function()
@@ -238,38 +290,260 @@ $(document).ready(function()		// Execute all of this on load
 		
 	}); //end click function
 	
-	// Send request to database
-	$("#submit").click(function(){
+	// Send request to database as pending
+	$("#submit").click(function()
+	{		
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var selectedWeeks = updateSelectedWeeks(selectedItems);
 		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
+		var specialReq = document.getElementById('specialReq').value;
 		
 		// Error check
 		if (selectedWeeks.length != 0)
-		{			
-			$.post("php/addRequest.php",
-			{	
-				// Data to send
-				modCode: modCode,
-				selectedWeeks: selectedWeeks,
-				facilities: facilities,
-				sessionType: sessionType,
-				sessionLength: sessionLength
-			},
-			function(data, status){
-				// Function to do things with the data
-				alert(status);
-			});
+		{	
+			if ($('#submit').hasClass('none'))
+			{
+				$.post("php/addPendingRequest.php",
+				{	
+					// Data to send
+					modCode: modCode,
+					selectedWeeks: selectedWeeks,
+					facilities: facilities,
+					sessionType: sessionType,
+					sessionLength: sessionLength,
+					specialReq: specialReq
+				},
+				function(data, status){
+					// Function to do things with the data
+					alert(data);
+				});
+			}
+			else
+			{
+				var requestID = $('#submit').attr('class');
+				$.post("php/editPendingRequest.php",
+				{	
+					// Data to send
+					requestID: requestID,
+					modCode: modCode,
+					selectedWeeks: selectedWeeks,
+					sessionType: sessionType,
+					sessionLength: sessionLength,
+					specialReq: specialReq
+				},
+				function(data, status){
+					// Function to do things with the data
+					alert(data);
+				});
+				
+				$('#submit').val("Submit");	
+				$('#submit').removeClass();
+				$('#submit').addClass('none');
+			}
 		}
 		else
 		{
 			alert("Please enter what weeks you want to book the module for");
 		}
 	});
-});	
+	
+	// Make all pending requests submitted ones
+	$("#submitRequests").click(function()
+	{
+		$.post("php/addSubmittedRequest.php");
+		
+		// Reload pending submissions
+		var sortDirection = "sortDirection=down"
+		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
+		{
+			$('#submissions').html(data);
+		});
+	});
+});
+
+function createAutoCompleteFacList()
+{
+	//Create dropdown list for search suggestions
+	html = "<div class='ui-widget'>";
+	html+= "<select id='comboFac'>";
+	
+	for(var i = 0; i < listOfFac.length;i++)
+	{
+		html+= "<option>" + listOfFac[i] + "</option>";
+	}
+	html+= "</select></div>";
+	$('#facilitiesDiv').html(html);
+	
+	html= "<table id='sortable'></table>";
+	$("#facilitiesDiv").append(html);
+	
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .attr( "title", "Show All Items" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+			addFacToList(this.input.val());
+          return;
+        }
+		
+
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+			addFacToList(this.input.val());
+          return;
+        }
+		
+ 		function addFacToList(fac){ //add selected facility to list
+			var facid = fac.replace(/ /g,''); //remove spaces so ID works
+			//check facilitiy isnt already on the list
+			
+			if($("#" + facid).length > 0) {
+			//it doesn't exist
+			alert("already exists");
+			return;
+			}
+			
+			html = "<tr id='"+facid+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
+			$( "#sortable" ).after(html);
+		}
+		
+
+		
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " didn't match any item" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.autocomplete( "instance" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+ 
+  $(function() {
+    $( "#comboFac" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#combobox" ).toggle();
+    });
+  });
+  
+
+}	
+
+function deleteFac(id)
+{
+	id = id.substr(3,id.length);
+	$( '#'+id ).remove();
+}
 
 function filterMenu()
 {
@@ -387,6 +661,50 @@ function updateSelectedWeeks(selectedItems)
 	return output.join("");
 }
 
+function setSelectedWeeks(weeksArray)
+{
+	var output = [];
+	
+	for (var i = 0; i < weeksArray.length; i++)
+	{
+		var dashPos = weeksArray[i].indexOf("-");
+		
+		if (dashPos > 0)
+		{
+			var leftSide = weeksArray[i].substring(0, dashPos);
+			var rightSide = weeksArray[i].substring(dashPos + 1, weeksArray[i].length);
+			
+			for (var j = leftSide; j <= rightSide; j++)
+			{
+				output.push(j);
+			}
+		}
+		else
+		{
+			output.push(weeksArray[i]);
+		}			
+	}
+	
+	// Set the week selector to all the correct highlighted values
+	selectedItems = output;
+	
+	$("#weekSelector").children().each(function()
+	{
+		for (var k = 0; k < output.length; k++)
+		{
+			if (this.innerHTML == output[k])
+			{
+				$(this).addClass('ui-selected');
+				break;				// Exit current loop cycle once match is found
+			}
+			else
+			{
+				$(this).removeClass('ui-selected');
+			}
+		}
+	});		
+}
+
 function openDiv(id)
 {
 	document.getElementById(id).style.visibility = 'visible';
@@ -395,6 +713,15 @@ function openDiv(id)
 function closeDiv(id)
 {
 	document.getElementById(id).style.visibility = 'hidden';
+}
+
+function resizeText(multiplier) 
+{
+	if (document.body.style.fontSize == "") 
+	{
+		document.body.style.fontSize = "1.0em";
+	}
+	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
 }
 /*this may be useful for multirooms
 function addRoom()

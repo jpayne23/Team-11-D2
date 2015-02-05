@@ -9,21 +9,11 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$sql = "SELECT distinct `Facility` FROM `Facility`;";			
+	$sql = "UPDATE Request SET Status='Submitted' WHERE Status='Pending';";
+	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
 	}
-	$i = 0;
-	//$ar = $res->fetchAll();
-	//echo json_encode( $ar );
-	$ar = array();	
-	while ($row = $res->fetchRow())
-	{
-		//echo '<input type="checkbox" id="c'.$i.'" name="'.$row["facility"].'" value="'.$row["facility"].'">'.$row["facility"].'</input></br>';
-		$ar[sizeof($ar)] = $row["facility"];
-		$i++;
-	}
-	echo json_encode($ar);
 ?>

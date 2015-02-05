@@ -9,6 +9,8 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	session_start();
+	$deptCode = $_SESSION['deptCode'];
 	$sortDirection = $_REQUEST['sortDirection'];
 	$flag = $_REQUEST['flag'];
 	
@@ -37,7 +39,7 @@
 	{
 		$sql .= " AND SessionType = '" . $sessionType . "'";
 	}
-	
+	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
 	if ($sortDirection == "up")
 	{				
@@ -151,6 +153,7 @@
 		echo "<td>" . $row["sessiontype"] . "</td>";
 		echo "<td>" . $row["sessionlength"] . "</td>";
 		echo "<td>" . $row["status"] . "</td>";
+		echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
 		echo "</tr>";
 	}
 	

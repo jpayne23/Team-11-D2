@@ -44,6 +44,8 @@
 			echo "Type: Lab";
 		}
 		echo "</br>";
+		echo "<img src='".$row['url']."' alt='http://co-project.lboro.ac.uk/team11/Prakash/img/noImg.jpg' height='100' width='100'>";
+		echo "</br>";
 	}
 	echo "Facilities: </br>";
 	while ($row = $res->fetchRow())

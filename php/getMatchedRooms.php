@@ -31,10 +31,17 @@
 	{
 		die($res->getMessage());
 	}
-	$i = 0;
-	while ($row = $res->fetchRow())
+	if($res -> numRows() == 0)
 	{
-		echo $row["room"]."</br>";
-		$i++;
+		echo "No Rooms with these facilities!";
+	}
+	else
+	{
+		echo "Rooms: </br>";
+		while ($row = $res->fetchRow())
+		{
+			echo $row["room"]."</br>";
+
+		}
 	}
 ?>
