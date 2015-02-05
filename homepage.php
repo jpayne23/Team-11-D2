@@ -241,11 +241,15 @@
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");'></input>
+			<input type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu()'></input>
+			<div id='filterDiv' style='visibility: hidden;'>
+			</div>
 			<div id='submissions'>				
 			</div>
 		</div>
 		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
 			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
+			<input type="button" value="Filter Results" onclick=''></input>
 			<div id='history'></div>
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>

@@ -140,7 +140,8 @@ $(document).ready(function()		// Execute all of this on load
 	$('#pendingButton').click(function()
 	{
 		var sortDirection = "sortDirection=down"
-		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
+		var flag = "&flag=0"
+		$.get("php/loadPendingSubmissions.php?" + sortDirection + flag, function(data)
 		{
 			$('#submissions').html(data);
 		});
@@ -269,6 +270,28 @@ $(document).ready(function()		// Execute all of this on load
 		}
 	});
 });	
+
+function filterMenu()
+{
+	$.get("php/loadFilter.php?", function(data)
+	{
+		$('#filterDiv').html(data);
+	});
+};
+
+function filterTable()
+{
+	var modCode = "modCode=" + document.getElementById("modCodesFilter")[document.getElementById("modCodesFilter").selectedIndex].id;
+	var sessionType = "&sessionType=" + document.getElementById("sessionTypeFilter")[document.getElementById("sessionTypeFilter").selectedIndex].id;
+	var flag = "&flag=1";
+	var sortDirection = "&sortDirection=down"
+	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + sortDirection + flag, function(data)
+	{
+		$('#submissions').html(data);
+	});
+	
+	closeDiv('filterDiv');
+}
 
 function getCheckedFacilities()
 {

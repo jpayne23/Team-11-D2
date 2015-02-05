@@ -10,20 +10,42 @@
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
 	$sortDirection = $_REQUEST['sortDirection'];
+	$flag = $_REQUEST['flag'];
+	
+	if ($flag == 1){
+		$modCode = $_REQUEST['modCode'];
+		$sessionType = $_REQUEST['sessionType'];
+	}
+	else{
+		
+		$modCode = 'Any';
+		$sessionType = 'Any';
+		
+	}
 	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
-	$sql .= "WHERE Status = 'Pending' ";
+	$sql .= "WHERE Status = 'Pending'";
+	
+	if ($modCode != "Any")
+	{				
+		$sql .= " AND ModCode = '" . $modCode . "'";
+	}
+	if ($sessionType != "Any")
+	{
+		$sql .= " AND SessionType = '" . $sessionType . "'";
+	}
+	
 	
 	if ($sortDirection == "up")
 	{				
-		$sql .= "ORDER BY Request.RequestID DESC;";
+		$sql .= " ORDER BY Request.RequestID DESC;";
 	}
 	else
 	{
-		$sql .= "ORDER BY Request.RequestID ASC;";
+		$sql .= " ORDER BY Request.RequestID ASC;";
 	}
 	
 	$res =& $db->query($sql);
@@ -48,6 +70,8 @@
 	echo "<th>Session Type</th>";
 	echo "<th>Session Length (Hours)</th>";
 	echo "<th>Status</th>";
+	
+	$modCodes = array();
 		
 	// Populate the table with rows from database	
 	while ($row = $res->fetchRow())
@@ -55,6 +79,8 @@
 		echo "<tr>";
 		echo "<td>" . $row["requestid"] . "</td>";
 		echo "<td>" . $row["modcode"] . "</td>";
+		
+		//$modCodes[$modCodes.size] = $row["modcode"];
 		
 		if ($row["room"] == "")	// If there are no rooms, return 'Any'
 		{
