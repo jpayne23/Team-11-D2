@@ -152,36 +152,22 @@ $(document).ready(function()		// Execute all of this on load
 	// Load pending submissions
 	$('#pendingButton').click(function()
 	{
-		var sortDirection = "sortDirection=down";
-		var flag = "&flag=0";
-		$.get("php/loadPendingSubmissions.php?" + sortDirection + flag, function(data)
-		{
-			$('#submissions').html(data);
-		});
-		
+		reloadPendingTable("down", "RequestID");		
 		openDiv("popupPendingDiv");
 	});	
 	
 	// Down arrow click event
 	$('#submissions').on('click', "#downArrow", function() 
 	{
-		// Reload table but in ascending order
-		var sortDirection = "sortDirection=up";
-		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
-		{
-			$('#submissions').html(data);
-		});
+		var sortColumn = this.name;
+		reloadPendingTable("up", sortColumn);
 	});
 	
 	// Up arrow click event
 	$('#submissions').on('click', "#upArrow", function() 
 	{		
-		// Reload table but in ascending order
-		var sortDirection = "sortDirection=down";
-		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
-		{
-			$('#submissions').html(data);
-		});
+		var sortColumn = this.name;
+		reloadPendingTable("down", sortColumn);
 	});	
 	
 	// Edit button click event
@@ -378,14 +364,21 @@ $(document).ready(function()		// Execute all of this on load
 		$.post("php/addSubmittedRequest.php");
 		
 		// Reload pending submissions
-		var sortDirection = "sortDirection=down";
-		var flag = "&flag=0";
-		$.get("php/loadPendingSubmissions.php?" + sortDirection + flag, function(data)
-		{
-			$('#submissions').html(data);
-		});
+		reloadPendingTable("down", "RequestID");	
 	});
 });
+
+function reloadPendingTable(sortDirection, sortColumn)
+{
+	// Reload table based on sort direction and column
+	sortDirection = "sortDirection=" + sortDirection;
+	sortColumn = "&sortColumn=" + sortColumn;
+	var flag = "&flag=0";
+	$.get("php/loadPendingSubmissions.php?" + sortDirection + flag + sortColumn, function(data)
+	{
+		$('#submissions').html(data);
+	});
+}
 
 function createAutoCompleteFacList()
 {

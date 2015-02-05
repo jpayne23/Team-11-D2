@@ -12,6 +12,7 @@
 	session_start();
 	$deptCode = $_SESSION['deptCode'];
 	$sortDirection = $_REQUEST['sortDirection'];
+	$sortColumn = $_REQUEST['sortColumn'];
 	$flag = $_REQUEST['flag'];
 	
 	if ($flag == 1){
@@ -21,8 +22,7 @@
 	else{
 		
 		$modCode = 'Any';
-		$sessionType = 'Any';
-		
+		$sessionType = 'Any';		
 	}
 	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
@@ -45,11 +45,57 @@
 	
 	if ($sortDirection == "up")
 	{				
-		$sql .= " ORDER BY Request.RequestID DESC;";
+		switch ($sortColumn)
+		{
+			case "RequestID":
+				$sql .= " ORDER BY Request.RequestID DESC;";
+				break;
+			case "ModuleCode":
+				$sql .= " ORDER BY ModCode DESC;";
+				break;
+			case "Room":
+				$sql .= " ORDER BY Room DESC;";
+				break;
+			case "SessionType":
+				$sql .= " ORDER BY Request.SessionType DESC;";
+				break;
+			case "SessionLength":
+				$sql .= " ORDER BY Request.SessionLength DESC;";
+				break;
+			case "Day":
+				$sql .= " ORDER BY Request.DayID DESC;";
+				break;
+			case "Period":
+				$sql .= " ORDER BY Request.PeriodID DESC;";
+				break;
+		}		
 	}
 	else
 	{
-		$sql .= " ORDER BY Request.RequestID ASC;";
+		switch ($sortColumn)
+		{
+			case "RequestID":
+				$sql .= " ORDER BY Request.RequestID ASC;";
+				break;
+			case "ModuleCode":
+				$sql .= " ORDER BY ModCode ASC;";
+				break;
+			case "Room":
+				$sql .= " ORDER BY Room ASC;";
+				break;
+			case "SessionType":
+				$sql .= " ORDER BY Request.SessionType ASC;";
+				break;
+			case "SessionLength":
+				$sql .= " ORDER BY Request.SessionLength ASC;";
+				break;
+			case "Day":
+				$sql .= " ORDER BY Request.DayID ASC;";
+				break;
+			case "Period":
+				$sql .= " ORDER BY Request.PeriodID ASC;";
+				break;
+		}	
 	}
 	
 	$res =& $db->query($sql);
@@ -61,20 +107,29 @@
 	echo "<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";	
 	if ($sortDirection == "up")
 	{				
-		echo "<th>Request ID <img id='upArrow' src='img/upArrow.png'></th>";
+		echo "<th>Request ID <img id='upArrow' name='RequestID' src='img/upArrow.png'></th>";
+		echo "<th>Module Code <img id='upArrow' name= 'ModuleCode' src='img/upArrow.png'></th>";
+		echo "<th>Room <img id='upArrow' name='Room' src='img/upArrow.png'></th>";
+		echo "<th>Facilities</th>";
+		echo "<th>Weeks</th>";
+		echo "<th>Session Type <img id='upArrow' name='SessionType' src='img/upArrow.png'></th>";
+		echo "<th>Session Length <img id='upArrow' name='SessionLength' src='img/upArrow.png'></th>";
+		echo "<th>Day <img id='upArrow' name='Day' src='img/upArrow.png'></th>";
+		echo "<th>Start Time <img id='upArrow' name='Period' src='img/upArrow.png'></th>";
 	}
 	else
 	{
-		echo "<th>Request ID <img id='downArrow' src='img/downArrow.png'></th>";
-	}	
-	echo "<th>Module Code</th>";
-	echo "<th>Room</th>";
-	echo "<th>Facilities</th>";
-	echo "<th>Weeks</th>";
-	echo "<th>Session Type</th>";
-	echo "<th>Session Length (Hours)</th>";
-	echo "<th>Day</th>";
-	echo "<th>Start Time</th>";
+		echo "<th>Request ID <img id='downArrow' name='RequestID' src='img/downArrow.png'></th>";
+		echo "<th>Module Code <img id='downArrow' name= 'ModuleCode' src='img/downArrow.png'></th>";
+		echo "<th>Room <img id='downArrow' name='Room' src='img/downArrow.png'></th>";
+		echo "<th>Facilities</th>";
+		echo "<th>Weeks</th>";
+		echo "<th>Session Type <img id='downArrow' name='SessionType' src='img/downArrow.png'></th>";
+		echo "<th>Session Length <img id='downArrow' name='SessionLength' src='img/downArrow.png'></th>";
+		echo "<th>Day <img id='downArrow' name='Day' src='img/downArrow.png'></th>";
+		echo "<th>Start Time <img id='downArrow' name='Period' src='img/downArrow.png'></th>";
+	}
+	
 	echo "<th>Status</th>";
 	
 	$modCodes = array();
