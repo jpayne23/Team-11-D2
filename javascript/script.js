@@ -377,8 +377,9 @@ $(document).ready(function()		// Execute all of this on load
 		$.post("php/addSubmittedRequest.php");
 		
 		// Reload pending submissions
-		var sortDirection = "sortDirection=down"
-		$.get("php/loadPendingSubmissions.php?" + sortDirection, function(data)
+		var sortDirection = "sortDirection=down";
+		var flag = "&flag=0";
+		$.get("php/loadPendingSubmissions.php?" + sortDirection + flag, function(data)
 		{
 			$('#submissions').html(data);
 		});
