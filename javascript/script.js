@@ -366,6 +366,22 @@ $(document).ready(function()		// Execute all of this on load
 		// Reload pending submissions
 		reloadPendingTable("down", "RequestID");	
 	});
+
+	
+	
+	$('#reset').click(function() //reset all default values
+	{
+		$("select#part")[0].selectedIndex = 1;
+		updateModCode();
+		$("#modCodes")[0].selectedIndex = 0;
+		$("select#seshType")[0].selectedIndex = 0;
+		$("select#seshLength")[0].selectedIndex = 0;
+		$("select#day")[0].selectedIndex = 0;
+		$("select#time")[0].selectedIndex = 0;
+		$("#specialReq").val("");
+		
+	});
+	
 });
 
 function reloadPendingTable(sortDirection, sortColumn)
