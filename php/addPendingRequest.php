@@ -18,6 +18,8 @@
 	$sessionLength = $_REQUEST['sessionLength'];
 	$sessionLength = (int)$sessionLength;
 	$specialReq = $_REQUEST['specialReq'];
+	$day = $_REQUEST['day'];
+	$time = $_REQUEST['time'];
 		
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
@@ -44,8 +46,8 @@
 		}
 	}
 	
-	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID, PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,1,1,1,0,'$specialReq',1,'Pending')";
+	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID,PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
+	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,$day,$time,1,0,'$specialReq',1,'Pending')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))

@@ -317,6 +317,8 @@ $(document).ready(function()		// Execute all of this on load
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
 		var specialReq = document.getElementById('specialReq').value;
+		var day = document.getElementById('day').selectedIndex + 1;
+		var time = document.getElementById('time').selectedIndex + 1;
 		
 		// Error check
 		if (selectedWeeks.length != 0)
@@ -331,7 +333,9 @@ $(document).ready(function()		// Execute all of this on load
 					//facilities: facilities,
 					sessionType: sessionType,
 					sessionLength: sessionLength,
-					specialReq: specialReq
+					specialReq: specialReq,
+					day: day,
+					time: time
 				},
 				function(data, status){
 					// Function to do things with the data

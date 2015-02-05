@@ -12,7 +12,7 @@
 	session_start();
 	$deptCode = $_SESSION['deptCode'];
 	
-	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Status ";
+	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, DayID, PeriodID, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results
@@ -32,6 +32,8 @@
 	echo "<th>Weeks</th>";
 	echo "<th>Session Type</th>";
 	echo "<th>Session Length (Hours)</th>";
+	echo "<th>Day</th>";
+	echo "<th>Start Time</th>";
 	echo "<th>Status</th>";
 		
 	// Populate the table with rows from database	
@@ -109,6 +111,33 @@
 		
 		echo "<td>" . $row["sessiontype"] . "</td>";
 		echo "<td>" . $row["sessionlength"] . "</td>";
+		
+		$sql4 = "SELECT Day FROM DayInfo WHERE DayID = ".$row["dayid"].";";
+		$res4 =& $db->query($sql4);
+		if(PEAR::isError($res4))
+		{
+			die($res4->getMessage());
+		}
+
+		while ($row4 = $res4->fetchRow())
+		{
+			echo "<td>" . $row4["day"] . "</td>";
+			
+		}
+		
+		$sql5 = "SELECT Period FROM PeriodInfo WHERE PeriodID = " . $row["periodid"] . ";";
+		$res5 =& $db->query($sql5);
+		if(PEAR::isError($res5))
+		{
+			die($res5->getMessage());
+		}
+
+		while ($row5 = $res5->fetchRow())
+		{
+			echo "<td>" . $row5["period"] . "</td>";
+			
+		}
+		
 		echo "<td>" . $row["status"] . "</td>";
 		echo "</tr>";
 	}
