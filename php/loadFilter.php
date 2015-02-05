@@ -9,12 +9,16 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	/*$deptCode = $_REQUEST['deptCode'];
-	$part = $_REQUEST['part'];
-	*/
+	session_start();
+	$deptCode = $_SESSION['deptCode'];
 	
-	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE Status = 'Pending')";	
-
+	//$part = $_REQUEST['part'];
+	
+	$add = " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
+	
+	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE Status = 'Pending'";	
+	$sql .= $add;
+	
 	$res =& $db->query($sql);
 	
 	if(PEAR::isError($res))
@@ -38,7 +42,8 @@
 	
 	echo "<tr><td>Session Type</td><td>";
 	
-	$sql = "SELECT DISTINCT SessionType FROM Request WHERE Status = 'Pending'";	
+	$sql = "SELECT DISTINCT SessionType FROM Request WHERE Status = 'Pending'";
+	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 
 	$res =& $db->query($sql);
 	
@@ -54,7 +59,28 @@
 	{
 		echo '<option id ="'.$row["sessiontype"].'">' . $row["sessiontype"].'</option>';
 	}
-	echo "</select></td></tr></table>";
+	echo "</select></td></tr>";
+	
+	echo "<tr><td>Day</td><td>";
+	
+	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE Status='Pending'";
+	$sql .= $add;
+	
+	$res =& $db->query($sql);
+	
+	if(PEAR::isError($res))
+	{
+		die($res->getMessage());
+	}
+	echo '<select name="day" id="dayFilter">';
+	
+	echo '<option id ="Any">Any</option>';
+	
+	while ($row = $res->fetchRow())
+	{
+		echo '<option id ="'.$row["day"].'">' . $row["day"].'</option>';
+	}
+	echo "</select></td></tr>";
 	
 	echo "<input type='button' value='Filter Away!' onclick='filterTable()'></input>";
 	
