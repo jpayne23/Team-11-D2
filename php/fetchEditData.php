@@ -11,9 +11,11 @@
 	
 	$requestID = $_REQUEST['requestID'];
 	
-	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, Room, SessionType, SessionLength, SpecialRequirements ";
+	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, Room, SessionType, SessionLength, Day, Period, SpecialRequirements ";
 	$sql .= "FROM Request ";
 	$sql .= "JOIN Module ON Request.ModCode = Module.ModCode ";
+	$sql .= "JOIN DayInfo ON Request.DayID = DayInfo.DayID ";
+	$sql .= "JOIN PeriodInfo ON Request.PeriodID = PeriodInfo.PeriodID ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
 	$sql .= "WHERE Request.RequestID = '$requestID'";
@@ -33,6 +35,8 @@
 		array_push($results, $row['part']);
 		array_push($results, $row['sessiontype']);
 		array_push($results, $row['sessionlength']);
+		array_push($results, $row['day']);
+		array_push($results, $row['period']);
 		array_push($results, $row['specialrequirements']);
 	}
 	
@@ -66,6 +70,5 @@
 	}
 	
 	array_push($results, $weekArray);
-	
 	echo json_encode($results);
 ?>

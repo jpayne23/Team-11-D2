@@ -151,8 +151,8 @@ $(document).ready(function()		// Execute all of this on load
 	// Load pending submissions
 	$('#pendingButton').click(function()
 	{
-		var sortDirection = "sortDirection=down"
-		var flag = "&flag=0"
+		var sortDirection = "sortDirection=down";
+		var flag = "&flag=0";
 		$.get("php/loadPendingSubmissions.php?" + sortDirection + flag, function(data)
 		{
 			$('#submissions').html(data);
@@ -188,19 +188,21 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		closeDiv("popupPendingDiv");
 		
-		var requestID = "requestID=" + this.name.substr(-2, 2);
+		var requestID = "requestID=" + this.name.substr(8);
 		
 		// Load the form with data from database
 		$.get("php/fetchEditData.php?" + requestID, function(data)
-		{
+		{			
 			var requestID = JSON.parse(data)[0];
 			var modCode = JSON.parse(data)[1];
 			var modtitle = JSON.parse(data)[2];
 			var part = JSON.parse(data)[3]
 			var sessionType = JSON.parse(data)[4];
 			var sessionLength = JSON.parse(data)[5];
-			var specialReq = JSON.parse(data)[6];
-			var weeks = JSON.parse(data)[7];
+			var day = JSON.parse(data)[6];
+			var period = JSON.parse(data)[7];
+			var specialReq = JSON.parse(data)[8];
+			var weeks = JSON.parse(data)[9];			
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -214,6 +216,8 @@ $(document).ready(function()		// Execute all of this on load
 			{
 				document.getElementById('seshLength').value = sessionLength + " Hours";
 			}	
+			document.getElementById('day').value = day;
+			document.getElementById('time').value = period;
 			document.getElementById('specialReq').value = specialReq;			
 			setSelectedWeeks(weeks);
 			
@@ -579,6 +583,7 @@ function filterTable()
 	
 	closeDiv('filterDiv');
 }
+
 
 function getCheckedFacilities()
 {
