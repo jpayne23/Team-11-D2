@@ -44,7 +44,7 @@
 		}
 	}
 	
-	/*$sql = "UPDATE Request ";
+	$sql = "UPDATE Request ";
 	$sql .= "SET ModCode = '$modCode', SessionType = '$sessionType', SessionLength = $sessionLength, ";
 	$sql .= "SpecialRequirements = '$specialReq' ";
 	$sql .= "WHERE RequestID = $requestID";
@@ -53,19 +53,27 @@
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
-	}*/
+	}
+	
+	// Delete the weeks currently in the table
+	$sql2 = "DELETE FROM WeekRequest ";
+	$sql2 .= "WHERE RequestID = $requestID";
+	
+	$res2 =& $db->query($sql2);
+	if(PEAR::isError($res2))
+	{
+		die($res2->getMessage());
+	}
 	
 	for ($k = 0; $k < count($weeksArray); $k++)
 	{
-		echo $weeksArray[$k];
-		$sql2 = "UPDATE WeekRequest ";
-		$sql2 .= "SET Weeks = '$weeksArray[$k]' "
-		$sql2 .= "WHERE RequestID = $requestID"; 
+		$sql3 = "INSERT INTO WeekRequest (RequestID, Weeks) ";
+		$sql3 .= "VALUES ($requestID, '$weeksArray[$k]')"; 
 
-		$res2 =& $db->query($sql2);
-		if(PEAR::isError($res2))
+		$res3 =& $db->query($sql3);
+		if(PEAR::isError($res3))
 		{
-			die($res2->getMessage());
+			die($res3->getMessage());
 		}
 	}
 ?>

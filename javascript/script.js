@@ -223,6 +223,19 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
+	// Delete button click event
+	$('#submissions').on('click', "#deleteIcon", function() 
+	{
+		$.post("php/deletePendingRequest.php", 
+		{
+			
+		},
+		function(data)
+		{
+			
+		});
+	});
+	
 	// Load history page
 	$('#historyButton').click(function()
 	{
@@ -296,7 +309,7 @@ $(document).ready(function()		// Execute all of this on load
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var selectedWeeks = updateSelectedWeeks(selectedItems);
-		var facilities = getCheckedFacilities();
+		//var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
 		var specialReq = document.getElementById('specialReq').value;
@@ -311,7 +324,7 @@ $(document).ready(function()		// Execute all of this on load
 					// Data to send
 					modCode: modCode,
 					selectedWeeks: selectedWeeks,
-					facilities: facilities,
+					//facilities: facilities,
 					sessionType: sessionType,
 					sessionLength: sessionLength,
 					specialReq: specialReq
@@ -676,12 +689,12 @@ function setSelectedWeeks(weeksArray)
 			
 			for (var j = leftSide; j <= rightSide; j++)
 			{
-				output.push(j);
+				output.push(String(j));
 			}
 		}
 		else
 		{
-			output.push(weeksArray[i]);
+			output.push(String(weeksArray[i]));
 		}			
 	}
 	

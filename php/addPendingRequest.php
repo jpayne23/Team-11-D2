@@ -13,7 +13,7 @@
 	$deptCode = $_SESSION['deptCode'];	
 	$modCode = $_REQUEST['modCode'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
-	$facilities = $_REQUEST['facilities'];
+	//$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
 	$sessionLength = $_REQUEST['sessionLength'];
 	$sessionLength = (int)$sessionLength;
@@ -65,7 +65,7 @@
 		}
 	}
 	
-	for ($l = 0; $l < count($facilities); $l++)
+	/*for ($l = 0; $l < count($facilities); $l++)
 	{
 		if ($facilities != "null")
 		{
@@ -78,5 +78,5 @@
 				die($res3->getMessage());
 			}
 		}
-	}	
+	}	*/
 ?>
