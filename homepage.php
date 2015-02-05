@@ -147,6 +147,38 @@
 						</tr>
 						<tr>
 							<td>
+								<label> Day </label>
+							</td>
+							<td>
+								<select id="day">
+									<option>Monday</option>
+									<option>Tuesday</option>
+									<option>Wednesday</option>
+									<option>Thursday</option>
+									<option>Friday</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label> Start Time </label>
+							</td>
+							<td>
+								<select id="time">
+									<option>09:00</option>
+									<option>10:00</option>
+									<option>11:00</option>
+									<option>12:00</option>
+									<option>13:00</option>
+									<option>14:00</option>
+									<option>15:00</option>
+									<option>16:00</option>
+									<option>17:00</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								Special Requirements:
 							</td>
 							<td>
@@ -249,11 +281,11 @@
 			</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");'></input>
+			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
 			<input type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu()'></input>
 			<div id='filterDiv' style='visibility: hidden;'>
 			</div>
-			<input type="button" id = 'submitRequests' value="Submit all requests"></input>
+			<input type="button" id = 'submitRequests' value="Submit all requests" onclick="alert('You nobhead!')"></input>
 			<div id='submissions'>				
 			</div>
 		</div>
