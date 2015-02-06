@@ -13,12 +13,38 @@
 	$f = json_decode($input,true); //decode back into a PHP array
 	//Make a string of the facilities to use in SQL Query
 	$fac = "(";
-	for($i=0;$i<sizeof($f) - 1;$i++)
+	for($i=0;$i<sizeof($f)-1;$i++)
 	{
-		$fac.= "'" .$f[$i]. "', ";
+		$fac.= "'";
+		
+		$sql = "";
+		$sql .= "select FacilityID from Facility where Facility like '".$f[$i]."';";
+		$res =& $db->query($sql);
+		if(PEAR::isError($res))
+		{
+			die($res->getMessage());
+		}
+		while ($row = $res->fetchRow())
+		{
+			$fac .= $row["facilityid"];
+		}
+		
+		$fac.= "', ";
 	}
-	$fac.= "'" .$f[sizeof($f)-1]. "')";
-
+	$fac.= "'";
+	$sql = "";
+	$sql .= "select FacilityID from Facility where Facility = '".$f[sizeof($f)-1]."';";
+	$res =& $db->query($sql);
+	if(PEAR::isError($res))
+	{
+		die($res->getMessage());
+	}
+	while ($row = $res->fetchRow())
+	{
+		$fac .= $row["facilityid"];
+	}
+	$fac .= "')";
+	
 	$sql = "";
 	$sql .= "select f.room ";
 	$sql .= "from `RoomFacilities` f ";
@@ -37,7 +63,7 @@
 	}
 	else
 	{
-		echo "Rooms: </br>";
+		echo "Number of Rooms: ".$res -> numRows()."</br>";
 		while ($row = $res->fetchRow())
 		{
 			echo $row["room"]."</br>";

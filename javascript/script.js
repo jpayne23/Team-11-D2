@@ -263,13 +263,23 @@ $(document).ready(function()		// Execute all of this on load
 	$("#getMatchingRooms").on('click',function(){
 		var f = [];
 		var valid = false; //to check if any facilities are selected
-		for(var i = 0;i<45;i=i+2) //+2 because it skips the <br> tags in between
+		/*for(var i = 0;i<45;i=i+2) //+2 because it skips the <br> tags in between
 		{
 			if($('#facilitiesDiv').children().eq(i).is(':checked')){
 				//append the facility name to a array to send to server
 				f[f.length]= Number($('#facilitiesDiv').children().eq(i).attr('id').substr(1,2))+1;
 				valid = true;
 			}
+		}*/
+		var facDiv = document.getElementById("facilitiesDiv").children;
+		for(var i = 2; i <facDiv.length; i++)
+		{
+			f.push(facDiv[i].getAttribute('name'));
+		}
+		
+		if (f.length != 0)
+		{
+			valid = true;
 		}
 		if(valid == false){
 			  $('#getMatchingRooms').tooltip({ items: "#getMatchingRooms", content: "You didn't select any facilities"});
@@ -582,7 +592,7 @@ function createAutoCompleteFacList()
 				return;
 			}
 			//create the elements and append them to the list, adding the appropriate information
-			html = "<tr id='"+facid+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
+			html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
 			$( "#sortable" ).after(html);
 		}
 
