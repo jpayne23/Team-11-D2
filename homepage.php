@@ -254,7 +254,7 @@
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Advanced Request'/>
-
+				<input type='button' id='reset' value='Reset'/>
 			</article>
 			<article class="bottomcontent">
 				<header>
