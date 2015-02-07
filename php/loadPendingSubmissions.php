@@ -153,7 +153,7 @@
 		}		
 		
 		// List facilities in one row instead of multiple						
-		$sql2 = "SELECT Facility FROM FacilityRequest WHERE RequestID = ".$row["requestid"].";";
+		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID = (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].");";
 		$res2 =& $db->query($sql2);
 		if(PEAR::isError($res2))
 		{
@@ -206,6 +206,61 @@
 			
 			array_push($weekArray, $weekString);
 		}
+		
+		// Sort the weeks by ascending order
+		for ($i = 0; $i < count($weekArray); $i++)
+		{
+			// Get the left hand side of the currently selected week
+			// Set it to the lowest value
+			$currentWeek = $weekArray[$i];			
+			$currentDashPos = strpos($currentWeek, "-");	// Find position of dash
+			if ($currentDashPos === false)
+			{
+				$currentLeftSide = $currentWeek;
+			}
+			else
+			{
+				$currentLeftSide = substr($currentWeek, 0, $currentDashPos);
+			}
+			
+			$lowestWeekIndex = $i;
+			
+			for ($j = $i + 1; $j < count($weekArray); $j++)
+			{
+				// Get the left hand side of the next selected week, compare it to the lowest week
+				// Swap if the next selected week is lower
+				$nextWeek = $weekArray[$j];
+				$nextDashPos = strpos($nextWeek, "-");	// Find position of dash
+				if ($nextDashPos === false)
+				{
+					$nextLeftSide = $nextWeek;
+				}
+				else
+				{
+					$nextLeftSide = substr($nextWeek, 0, $nextDashPos);
+				}			
+
+				$lowestDashPos = strpos($weekArray[$lowestWeekIndex], "-");
+				if ($lowestDashPos === false)
+				{
+					$lowestLeftSide = $weekArray[$lowestWeekIndex];
+				}
+				else
+				{
+					$lowestLeftSide = substr($weekArray[$lowestWeekIndex], 0, $lowestDashPos);
+				}	
+				
+				if ($nextLeftSide < $lowestLeftSide)
+				{
+					$lowestWeekIndex = $j;	
+				}
+				
+			}			
+			
+			$tempWeek = $weekArray[$lowestWeekIndex];			
+			$weekArray[$lowestWeekIndex] = $weekArray[$i];			
+			$weekArray[$i] = $tempWeek;	
+		}				
 		echo implode(", ", $weekArray);			// Concatenate the elements of the array of weeks with a comma
 		echo "</td>";
 		
