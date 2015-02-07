@@ -210,6 +210,20 @@ a:hover, a:active{
 	left: 5%;
 }
 
+#popupRequestDiv{
+	border-radius: 7px;
+	border-color: rgba(51, 0, 102, 1);
+	border-style: solid;
+	background:#FFFFF2;
+	margin:30px;
+	padding:6px;  
+	position:absolute;
+	width:90%;
+	height:98%;
+	top: 3%;
+	left: 3%;
+}
+
 #filterDiv{
 	border-radius: 7px;
 	background:#ABCDEF;

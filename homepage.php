@@ -253,6 +253,8 @@
 						</tr>						
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
+				<input type='button' id='btnAdvancedRequest' value='Advanced Request'/>
+
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -271,11 +273,6 @@
 								<div id="matchedRoomsdiv"></div>
 							</td>
 						</tr>
-						<tr>
-							<td>
-								<input type='text' id='autoFacilities'/>
-							</td>	
-						</tr>
 					</table>
 				</content>
 			</article>
@@ -293,6 +290,8 @@
 			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
 			<input type="button" value="Filter Results" onclick=''></input>
 			<div id='history'></div>
+		</div>
+		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>
 	</div>

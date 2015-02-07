@@ -391,8 +391,263 @@ $(document).ready(function()		// Execute all of this on load
 		$("#specialReq").val("");
 		
 	});
-	
+		//Open Advanced Requests
+	$('#btnAdvancedRequest').click(function()
+	{
+		$.get("php/loadPopupRequest.php", function(data)
+		{
+
+			$('#popupRequestDiv').html(data);
+		});
+		
+		openPopupRequestDiv();
+	});
+	populateTimetable();
 });
+
+
+//functions for advanced request-------------------------------------
+function populateTimetable()
+{
+	var id;
+	for(var d = 1; d<6; d++)
+	{
+		for(var p = 10; p > 1; p--) //go backwards as we are inserting the tiles in reverse order
+			{
+				id = "d" + d + "p" + p;
+				$('#d'+d+'').after("<td class= 'test' id="+id+"> Content </td>");
+			}
+	}
+}
+function updateAdvancedBuilding(value)
+{
+	var string = value.substr(4, 1).toUpperCase();
+	//string = string.toUpperCase();
+	//alert(string);
+
+	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
+	{
+		//alert(data);
+		//data = "'" + data + "'";
+		//content = '<a id="prev" title="Previous Slide">Previous Slide</a><a id="next" title="Next Slide">Next Slide</a>'
+		//alert(content);
+		$("#parkcontent").append(data);
+	});
+}
+
+function clearParkContent(){
+	$("#parkcontent").html("");
+}
+
+function updateAdvancedRoom(value)
+{
+	
+	
+	//alert(value);
+	
+	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
+	{
+		//alert(data);
+		//data = "'" + data + "'";
+		//content = '<a id="prev" title="Previous Slide">Previous Slide</a><a id="next" title="Next Slide">Next Slide</a>'
+		//alert(content);
+		$("#buildingcontent").append(data);
+	});
+}
+
+function clearBuildingContent(){
+	$("#buildingcontent").html("");
+}
+
+function updateAdvancedRoomFacility(value)
+	{
+		
+		//alert(value);
+		/*var room = document.getElementById("room1").value;
+		var roomNo = "roomNo=" + room;
+		if(room == "Any")
+			return;*/
+		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
+		{
+			//alert(data);
+			$("#roominfo").html(data);
+			//document.getElementById("roominfo").title = "Room Info ";
+			/*$('#dialog').dialog({
+			      show: {
+			        effect: "fadeIn",
+			        duration: 500
+			      }
+			}); //end dialog*/
+		}); //end $.get
+		
+	//}); //end click function
+	}
+	
+function openAdvancedSearchDiv()
+{
+	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'visible';
+}
+function closeAdvancedRequestDiv()
+{
+	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
+	document.getElementById('east').style.visibility= 'hidden'
+	document.getElementById('eastinfo').style.visibility= 'hidden';
+	document.getElementById('central').style.visibility= 'hidden';
+	document.getElementById('centralinfo').style.visibility= 'hidden';
+	document.getElementById('west').style.visibility= 'hidden';
+	document.getElementById('westinfo').style.visibility= 'hidden';
+}
+
+function showEast()
+{
+	if(document.getElementById('parkcentral').style.backgroundColor= '##330066')
+	{
+		document.getElementById('parkcentral').style.backgroundColor= '#CC0066'
+	}
+	if(document.getElementById('parkwest').style.backgroundColor= '#330066')
+	{
+		document.getElementById('parkwest').style.backgroundColor= '#CC0066'
+	}
+	document.getElementById('parkeast').style.backgroundColor= '#330066'
+	
+	if(document.getElementById('central').style.visibility= 'visible')
+	{
+		document.getElementById('central').style.visibility= 'hidden'
+	}
+	if(document.getElementById('west').style.visibility= 'visible')
+	{
+		document.getElementById('west').style.visibility= 'hidden'
+	}
+	document.getElementById('east').style.visibility= 'visible'
+}
+
+function showEastContent()
+{
+	if(document.getElementById('parkeast').style.height= '40')
+	{	
+		document.getElementById('parkeast').style.height= '20%'
+	}
+	if(document.getElementById('parkeast').style.height= '20%')
+	{	
+		document.getElementById('parkeast').style.height= '40%'
+	}
+	if(document.getElementById('centralinfo').style.visibility= 'visible')
+	{
+		document.getElementById('centralinfo').style.visibility= 'hidden'
+	}
+	if(document.getElementById('westinfo').style.visibility= 'visible')
+	{
+		document.getElementById('westinfo').style.visibility= 'hidden'
+	}
+	document.getElementById('eastinfo').style.visibility= 'visible'
+}
+
+function showCentral()
+{	
+	if(document.getElementById('parkeast').style.backgroundColor= '#330066')
+	{
+		document.getElementById('parkeast').style.backgroundColor= '#CC0066'
+	}
+	if(document.getElementById('parkwest').style.backgroundColor= '#330066')
+	{
+		document.getElementById('parkwest').style.backgroundColor= '#CC0066'
+	}
+	document.getElementById('parkcentral').style.backgroundColor= '#330066'
+	
+	if(document.getElementById('east').style.visibility= 'visible')
+	{
+		document.getElementById('east').style.visibility= 'hidden'
+	}	
+	if(document.getElementById('west').style.visibility= 'visible')
+	{
+		document.getElementById('west').style.visibility= 'hidden'
+	}
+	document.getElementById('central').style.visibility= 'visible'
+}
+
+function showCentralContent()
+{
+	if(document.getElementById('eastinfo').style.visibility= 'visible')
+	{
+		document.getElementById('eastinfo').style.visibility= 'hidden'
+	}
+	if(document.getElementById('westinfo').style.visibility= 'visible')
+	{
+		document.getElementById('westinfo').style.visibility= 'hidden'
+	}
+	document.getElementById('centralinfo').style.visibility= 'visible'
+}
+
+function showWest()
+{
+	if(document.getElementById('parkeast').style.backgroundColor= '#330066')
+	{
+		document.getElementById('parkeast').style.backgroundColor= '#CC0066'
+	}
+	if(document.getElementById('parkcentral').style.backgroundColor= '#330066')
+	{
+		document.getElementById('parkcentral').style.backgroundColor= '#CC0066'
+	}
+	document.getElementById('parkwest').style.backgroundColor= '#330066'
+	
+	if(document.getElementById('east').style.visibility= 'visible')
+	{
+		document.getElementById('east').style.visibility= 'hidden'
+	}
+	if(document.getElementById('central').style.visibility= 'visible')
+	{
+		document.getElementById('central').style.visibility= 'hidden'
+	}
+	document.getElementById('west').style.visibility= 'visible'
+}
+
+function showWestContent()
+{
+	if(document.getElementById('eastinfo').style.visibility= 'visible')
+	{
+		document.getElementById('eastinfo').style.visibility= 'hidden'
+	}
+	if(document.getElementById('centralinfo').style.visibility= 'visible')
+	{
+		document.getElementById('centralinfo').style.visibility= 'hidden'
+	}
+	document.getElementById('westinfo').style.visibility= 'visible'
+}
+
+function hideParkContent()
+{
+	return;
+	document.getElementById('eastinfo').style.visibility= 'hidden'
+	document.getElementById('centralinfo').style.visibility= 'hidden'
+	document.getElementById('westinfo').style.visibility= 'hidden'
+}
+function clearRoomContent()
+{
+	$('#roominfo').html("");
+}
+
+function openPendingDiv()
+{
+	document.getElementById('popupPendingDiv').style.visibility = 'visible';
+}
+
+function closePendingDiv()
+{
+	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
+}
+
+function openPopupRequestDiv()
+{
+	document.getElementById('popupRequestDiv').style.visibility = 'visible';
+}
+
+function closePopupRequestDiv()
+{
+	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
+}
+
+	
+//--------------------------------------------------------------------------	
 
 function reloadPendingTable(sortDirection, sortColumn)
 {
