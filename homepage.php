@@ -253,8 +253,8 @@
 						</tr>						
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
-				<input type='button' id='btnAdvancedRequest' value='Advanced Request'/>
-				<input type='button' id='reset' value='Reset'/>
+				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
+				<input type='button' id='reset' value='Reset All Fields'/>
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -275,6 +275,14 @@
 						</tr>
 					</table>
 				</content>
+			</article>
+			<article class="bottomcontent">
+				<header>
+					<h2> Chosen Rooms </h2>
+				</header>
+				<table id='chosenRooms' data-norooms=0>
+				
+				</table>
 			</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->

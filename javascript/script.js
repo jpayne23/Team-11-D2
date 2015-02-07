@@ -474,28 +474,46 @@ function clearBuildingContent(){
 
 function updateAdvancedRoomFacility(value)
 	{
-		
-		//alert(value);
-		/*var room = document.getElementById("room1").value;
-		var roomNo = "roomNo=" + room;
-		if(room == "Any")
-			return;*/
+
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
 			//alert(data);
+			data+= "<input type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
 			$("#roominfo").html(data);
-			//document.getElementById("roominfo").title = "Room Info ";
-			/*$('#dialog').dialog({
-			      show: {
-			        effect: "fadeIn",
-			        duration: 500
-			      }
-			}); //end dialog*/
 		}); //end $.get
 		
-	//}); //end click function
 	}
-	
+
+function addRoomToList(id)
+{
+	newid = id.replace(/\./g, '');
+	if ($('#rm'+newid).length > 0 ) { //search for id existence
+        alert('room already added');
+		return;
+    }
+	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
+	x = parseInt(x); 
+	if(x>=3){ //check the no of rooms already chosen
+		alert("You cannot choose more than 3 rooms");
+		return;
+	}
+	x++;
+	var str = x.toString();
+	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
+	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+	$('#chosenRooms').after(html);
+}
+
+function deleteRoom(id)
+{
+	var roomid = id.substr(3,id.length);
+	$( '#'+roomid ).remove();
+	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
+	if(x>0)
+		x--;
+	var str = x.toString();
+	$('#chosenRooms').attr('data-norooms',''+str+''); //alter the value of the rooms added
+}
 function openAdvancedSearchDiv()
 {
 	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'visible';
