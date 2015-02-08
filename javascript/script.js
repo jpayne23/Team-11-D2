@@ -217,13 +217,15 @@ $(document).ready(function()		// Execute all of this on load
 	// Delete button click event
 	$('#submissions').on('click', "#deleteIcon", function() 
 	{
+		var requestID = this.name.substr(10);
 		$.post("php/deletePendingRequest.php", 
 		{
-			
+			requestID: requestID
 		},
 		function(data)
 		{
-			
+			alert(data);
+			reloadPendingTable("down", "RequestID");
 		});
 	});
 	
