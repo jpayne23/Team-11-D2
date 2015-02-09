@@ -32,7 +32,7 @@
 		<div class="content">
 			<article class="topcontent">
 				<header>
-					<h2> General Information</h2>
+					<h2 id='genInfo'> General Information</h2>
 				</header>
 				<content>
 					<table>
@@ -255,6 +255,7 @@
 				<input type="submit" class="none" id="submit" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
+				<input type='button' name = '' id='round' value='Next Round'/>
 			</article>
 			<article class="bottomcontent">
 				<header>

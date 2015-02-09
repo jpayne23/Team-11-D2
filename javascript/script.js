@@ -318,6 +318,7 @@ $(document).ready(function()		// Execute all of this on load
 		var specialReq = document.getElementById('specialReq').value;
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
+		var round = document.getElementById('round').getAttribute('name');
 		
 		// Error check
 		if (selectedWeeks.length != 0)
@@ -334,7 +335,8 @@ $(document).ready(function()		// Execute all of this on load
 					sessionLength: sessionLength,
 					specialReq: specialReq,
 					day: day,
-					time: time
+					time: time,
+					round: round
 				},
 				function(data, status){
 					// Function to do things with the data
@@ -418,7 +420,27 @@ $(document).ready(function()		// Execute all of this on load
 	});
 
 	populateTimetable();
+	
+	$('#round').click(function() //reset all default values
+	{
+		alert("pending submissions might be lost");
+		$.post("php/simulateRound.php");
+		var newRound = parseInt(this.getAttribute('name'))+1;
+		this.name = newRound;
+		document.getElementById('genInfo').innerHTML = 'General Information - Round ' + newRound;
+	});
+	
+	$(function()
+	{
+		$.get("php/loadRound.php", function(data)
+		{
+			document.getElementById('round').name = data;
+			document.getElementById('genInfo').innerHTML = 'General Information - Round ' + data;
+		});
+	});
+	
 });
+
 
 
 //functions for advanced request-------------------------------------
