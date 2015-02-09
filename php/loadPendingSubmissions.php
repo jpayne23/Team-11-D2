@@ -152,14 +152,15 @@
 			echo "<td>" . $row["room"] . "</td>";
 		}		
 		
-		// List facilities in one row instead of multiple						
-		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID = (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].");";
+		// List facilities in one row instead of multiple			
+		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
+		echo $sql2;
 		$res2 =& $db->query($sql2);
 		if(PEAR::isError($res2))
 		{
 			die($res2->getMessage());
 		}
-		
+		echo 'helo';
 		// If there are no results, return 'Any'
 		if ($res2->numRows() == 0)
 		{

@@ -55,7 +55,7 @@
 		}		
 		
 		// List facilities in one row instead of multiple						
-		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID = (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].");";
+		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
 		$res2 =& $db->query($sql2);
 		if(PEAR::isError($res2))
 		{
