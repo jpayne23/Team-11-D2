@@ -13,7 +13,7 @@
 	$deptCode = $_SESSION['deptCode'];	
 	$modCode = $_REQUEST['modCode'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
-	//$facilities = $_REQUEST['facilities'];
+	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
 	$sessionLength = $_REQUEST['sessionLength'];
 	$sessionLength = (int)$sessionLength;
@@ -54,7 +54,8 @@
 	{
 		die($res->getMessage());
 	}	
-
+	
+	// Add selected weeks to the database
 	for ($k = 0; $k < count($weeksArray); $k++)
 	{
 		$sql2 = "INSERT INTO WeekRequest (RequestID, Weeks) ";
@@ -67,18 +68,37 @@
 		}
 	}
 	
-	/*for ($l = 0; $l < count($facilities); $l++)
+	// Get FacilityID from the submitted facility names
+	$facilityIDs = array();
+	for ($l = 0; $l < count($facilities); $l++)
 	{
 		if ($facilities != "null")
-		{
-			$sql3 = "INSERT INTO FacilityRequest (RequestID, Facility) ";
-			$sql3 .= "VALUES ((SELECT MAX(RequestID) From Request), '$facilities[$l]')"; 
-
+		{			
+			$sql3 = "SELECT FacilityID FROM Facility WHERE Facility = '$facilities[$l]'";
+			
 			$res3 =& $db->query($sql3);
 			if(PEAR::isError($res3))
 			{
 				die($res3->getMessage());
 			}
+			
+			while ($row3 = $res3->fetchRow())
+			{
+				array_push($facilityIDs, $row3['facilityid']);
+			}			
 		}
-	}	*/
+	}	
+	
+	// Add selected facilities to the database
+	for ($m = 0; $m < count($facilityIDs); $m++)
+	{
+		$sql4 = "INSERT INTO FacilityRequest (RequestID, FacilityID) ";
+		$sql4 .= "VALUES ((SELECT MAX(RequestID) From Request), '$facilityIDs[$m]')"; 	
+
+		$res4 =& $db->query($sql4);
+		if(PEAR::isError($res4))
+		{
+			die($res4->getMessage());
+		}
+	}
 ?>
