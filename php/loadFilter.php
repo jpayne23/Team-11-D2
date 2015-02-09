@@ -82,6 +82,30 @@
 	}
 	echo "</select></td></tr>";
 	
+	echo "<tr><td>Facility</td><td>";
+	
+	$sql = "SELECT DISTINCT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE ";
+	$sql .= "RequestID IN (SELECT RequestID FROM Request WHERE Status='Pending' ";
+	$sql .= "AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')))";
+	
+	$res =& $db->query($sql);
+	
+	if(PEAR::isError($res))
+	{
+		die($res->getMessage());
+	}
+	
+	echo "<select name='facilities' id='facilitiesFilter'>";
+	
+	echo '<option id ="Any">Any</option>';
+	
+	while ($row = $res->fetchRow())
+	{
+		echo '<option id ="'.$row["facility"].'">' . $row["facility"].'</option>';
+	}
+	
+	echo "</select></td></tr></table>";
+	
 	echo "<input type='button' value='Filter Away!' onclick='filterTable()'></input>";
 	
 ?>
