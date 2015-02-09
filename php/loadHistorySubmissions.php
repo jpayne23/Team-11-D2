@@ -18,7 +18,7 @@
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	// Add rooms to the results
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
 	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";
-	$sql .= "WHERE Status = 'Submitted' AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
+	$sql .= "WHERE Status != 'Pending' AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
