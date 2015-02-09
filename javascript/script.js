@@ -179,17 +179,18 @@ $(document).ready(function()		// Execute all of this on load
 		
 		// Load the form with data from database
 		$.get("php/fetchEditData.php?" + requestID, function(data)
-		{			
+		{						
 			var requestID = JSON.parse(data)[0];
 			var modCode = JSON.parse(data)[1];
 			var modtitle = JSON.parse(data)[2];
 			var part = JSON.parse(data)[3]
 			var sessionType = JSON.parse(data)[4];
 			var sessionLength = JSON.parse(data)[5];
-			var day = JSON.parse(data)[6];
+			var day = JSON.parse(data)[6];			
 			var period = JSON.parse(data)[7];
 			var specialReq = JSON.parse(data)[8];
-			var weeks = JSON.parse(data)[9];			
+			var weeks = JSON.parse(data)[9];		
+			var facilities = JSON.parse(data)[10];
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -207,6 +208,11 @@ $(document).ready(function()		// Execute all of this on load
 			document.getElementById('time').value = period;
 			document.getElementById('specialReq').value = specialReq;			
 			setSelectedWeeks(weeks);
+			
+			for (var i = 0; i < facilities.length; i++)
+			{
+				setFacilities(facilities[i]);
+			}
 			
 			$('#submit').val("Edit");	
 			$('#submit').removeClass("none");
@@ -312,7 +318,7 @@ $(document).ready(function()		// Execute all of this on load
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var selectedWeeks = updateSelectedWeeks(selectedItems);
-		//var facilities = getCheckedFacilities();
+		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
 		var specialReq = document.getElementById('specialReq').value;
@@ -330,7 +336,7 @@ $(document).ready(function()		// Execute all of this on load
 					// Data to send
 					modCode: modCode,
 					selectedWeeks: selectedWeeks,
-					//facilities: facilities,
+					facilities: facilities,
 					sessionType: sessionType,
 					sessionLength: sessionLength,
 					specialReq: specialReq,
@@ -893,20 +899,36 @@ function createAutoCompleteFacList()
   });
   
   function addFacToList(fac){ //add selected facility to list
-			var facid = fac.replace(/ /g,''); //remove spaces so ID works
-			//check facilitiy isnt already on the list
-			facid = facid.replace(/\//g, ''); //remove forward slash so ID works
-			if($("#" + facid).length > 0) {
-				//it doesn't exist
-				alert("already exists");
-				return;
-			}
-			//create the elements and append them to the list, adding the appropriate information
-			html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
-			$( "#sortable" ).after(html);
+		var facid = fac.replace(/ /g,''); //remove spaces so ID works
+		//check facilitiy isnt already on the list
+		facid = facid.replace(/\//g, ''); //remove forward slash so ID works
+		if($("#" + facid).length > 0) {
+			//it doesn't exist
+			alert("already exists");
+			return;
 		}
+		//create the elements and append them to the list, adding the appropriate information
+		html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
+		$( "#sortable" ).after(html);
+	}
 
 }	
+
+// Same as addFacToList but slightly different as it's used for editing so it's in scope
+function setFacilities(fac)
+{
+	var facid = fac.replace(/ /g,''); //remove spaces so ID works
+	//check facilitiy isnt already on the list
+	facid = facid.replace(/\//g, ''); //remove forward slash so ID works
+	if($("#" + facid).length > 0) {
+		//it doesn't exist
+		alert("already exists");
+		return;
+	}
+	//create the elements and append them to the list, adding the appropriate information
+	html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
+	$( "#sortable" ).after(html);
+}
 
 function deleteFac(id) //function to delete the facility by searching for its id
 {
@@ -940,12 +962,10 @@ function filterTable()
 function getCheckedFacilities()
 {
 	var checkFacilities = [];
-	for (var i = 0; i < 13; i++)
+	var facDiv = document.getElementById("facilitiesDiv").children;
+	for(var i = 2; i <facDiv.length; i++)
 	{
-		if (document.getElementById('c' + i).checked)
-		{
-			checkFacilities.push(document.getElementById('c' + i).value);
-		}
+		checkFacilities.push(facDiv[i].getAttribute('name'));
 	}
 	
 	if (checkFacilities.length == 0)

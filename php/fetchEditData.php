@@ -68,7 +68,22 @@
 		
 		array_push($weekArray, $weekString);
 	}
-	
 	array_push($results, $weekArray);
+	
+	// List facilities in one row instead of multiple
+	$sql3 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = '$requestID')";
+	$res3 =& $db->query($sql3);
+	if(PEAR::isError($res3))
+	{
+		die($res3->getMessage());
+	}	
+	
+	$facilityArray = array();
+	while ($row3 = $res3->fetchRow())
+	{
+		array_push($facilityArray, $row3['facility']);
+	}
+	array_push($results, $facilityArray);
+	
 	echo json_encode($results);
 ?>
