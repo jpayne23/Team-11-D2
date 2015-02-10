@@ -921,7 +921,7 @@ function createAutoCompleteFacList()
 		}
 		//create the elements and append them to the list, adding the appropriate information
 		html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
-		$( "#sortable" ).after(html);
+		document.getElementById("sortable").innerHTML += html;
 	}
 
 }	
@@ -939,7 +939,7 @@ function setFacilities(fac)
 	}
 	//create the elements and append them to the list, adding the appropriate information
 	html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
-	$( "#sortable" ).after(html);
+	document.getElementById("sortable").innerHTML += html;
 }
 
 function deleteFac(id) //function to delete the facility by searching for its id
