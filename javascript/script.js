@@ -209,10 +209,19 @@ $(document).ready(function()		// Execute all of this on load
 			document.getElementById('specialReq').value = specialReq;			
 			setSelectedWeeks(weeks);
 			
-			for (var i = 0; i < facilities.length; i++)
+			if (facilities.length > 0)
 			{
-				setFacilities(facilities[i]);
+				document.getElementById("sortable").innerHTML = "";
+				
+				for (var i = 0; i < facilities.length; i++)
+				{
+					setFacilities(facilities[i]);
+				}
 			}
+			else 
+			{
+				document.getElementById("sortable").innerHTML = "";
+			}	
 			
 			$('#submit').val("Edit");	
 			$('#submit').removeClass("none");
@@ -358,9 +367,12 @@ $(document).ready(function()		// Execute all of this on load
 					requestID: requestID,
 					modCode: modCode,
 					selectedWeeks: selectedWeeks,
+					facilities: facilities,
 					sessionType: sessionType,
 					sessionLength: sessionLength,
-					specialReq: specialReq
+					specialReq: specialReq,
+					day: day,
+					time: time
 				},
 				function(data, status){
 					// Function to do things with the data
@@ -962,8 +974,8 @@ function filterTable()
 function getCheckedFacilities()
 {
 	var checkFacilities = [];
-	var facDiv = document.getElementById("facilitiesDiv").children;
-	for(var i = 2; i <facDiv.length; i++)
+	var facDiv = $('#sortable').children().children();
+	for(var i = 0; i <facDiv.length; i++)
 	{
 		checkFacilities.push(facDiv[i].getAttribute('name'));
 	}
@@ -976,7 +988,7 @@ function getCheckedFacilities()
 	else
 	{
 		return checkFacilities;
-	}	
+	}
 }
 
 function updateModCode()

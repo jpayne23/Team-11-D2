@@ -14,10 +14,13 @@
 	$requestID = $_REQUEST['requestID'];
 	$modCode = $_REQUEST['modCode'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
+	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
 	$sessionLength = $_REQUEST['sessionLength'];
 	$sessionLength = (int)$sessionLength;
 	$specialReq = $_REQUEST['specialReq'];
+	$day = $_REQUEST['day'];
+	$time = $_REQUEST['time'];
 	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
@@ -46,7 +49,7 @@
 	
 	$sql = "UPDATE Request ";
 	$sql .= "SET ModCode = '$modCode', SessionType = '$sessionType', SessionLength = $sessionLength, ";
-	$sql .= "SpecialRequirements = '$specialReq' ";
+	$sql .= "DayID = $day, PeriodID = $time, SpecialRequirements = '$specialReq' ";
 	$sql .= "WHERE RequestID = $requestID";
 	
 	$res =& $db->query($sql);
@@ -65,6 +68,7 @@
 		die($res2->getMessage());
 	}
 	
+	// Insert new weeks back in
 	for ($k = 0; $k < count($weeksArray); $k++)
 	{
 		$sql3 = "INSERT INTO WeekRequest (RequestID, Weeks) ";
@@ -74,6 +78,50 @@
 		if(PEAR::isError($res3))
 		{
 			die($res3->getMessage());
+		}
+	}
+	
+	// Get FacilityID from the submitted facility names
+	$facilityIDs = array();
+	for ($l = 0; $l < count($facilities); $l++)
+	{
+		if ($facilities != "null")
+		{			
+			$sql4 = "SELECT FacilityID FROM Facility WHERE Facility = '$facilities[$l]'";
+			
+			$res4 =& $db->query($sql4);
+			if(PEAR::isError($res4))
+			{
+				die($res4->getMessage());
+			}
+			
+			while ($row4 = $res4->fetchRow())
+			{
+				array_push($facilityIDs, $row4['facilityid']);
+			}			
+		}
+	}	
+	
+	// Delete the facilities currently in the table
+	$sql5 = "DELETE FROM FacilityRequest ";
+	$sql5 .= "WHERE RequestID = $requestID";
+	
+	$res5 =& $db->query($sql5);
+	if(PEAR::isError($res5))
+	{
+		die($res5->getMessage());
+	}
+	
+	// Add selected facilities to the database
+	for ($m = 0; $m < count($facilityIDs); $m++)
+	{
+		$sql6 = "INSERT INTO FacilityRequest (RequestID, FacilityID) ";
+		$sql6 .= "VALUES ($requestID, '$facilityIDs[$m]')"; 	
+
+		$res6 =& $db->query($sql6);
+		if(PEAR::isError($res6))
+		{
+			die($res6->getMessage());
 		}
 	}
 ?>
