@@ -17,7 +17,7 @@
 	$add = " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
 	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE Status = 'Pending'";	
-	$sql .= $add;
+	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
 	$res =& $db->query($sql);
 	
@@ -64,7 +64,7 @@
 	echo "<tr><td>Day</td><td>";
 	
 	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE Status='Pending'";
-	$sql .= $add;
+	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
 	$res =& $db->query($sql);
 	

@@ -1012,8 +1012,10 @@ function filterTable()
 	var modCode = "modCode=" + document.getElementById("modCodesFilter")[document.getElementById("modCodesFilter").selectedIndex].id;
 	var sessionType = "&sessionType=" + document.getElementById("sessionTypeFilter")[document.getElementById("sessionTypeFilter").selectedIndex].id;
 	var flag = "&flag=1";
-	var sortDirection = "&sortDirection=down"
-	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + sortDirection + flag, function(data)
+	var sortDirection = "&sortDirection=down";
+	var sortColumn = "&sortColumn=RequestID";
+	var day = "&day=" + document.getElementById("dayFilter")[document.getElementById("dayFilter").selectedIndex].id;
+	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + day + sortDirection + sortColumn + flag, function(data)
 	{
 		$('#submissions').html(data);
 	});

@@ -18,11 +18,13 @@
 	if ($flag == 1){
 		$modCode = $_REQUEST['modCode'];
 		$sessionType = $_REQUEST['sessionType'];
+		$day = $_REQUEST['day'];
 	}
 	else{
 		
 		$modCode = 'Any';
-		$sessionType = 'Any';		
+		$sessionType = 'Any';	
+		$day = 'Any';
 	}
 	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
@@ -40,6 +42,10 @@
 	if ($sessionType != "Any")
 	{
 		$sql .= " AND SessionType = '" . $sessionType . "'";
+	}
+	if ($day != "Any")
+	{				
+		$sql .= " AND Request.DayID = (SELECT DayID FROM DayInfo WHERE Day = '" . $day . "')";
 	}
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
