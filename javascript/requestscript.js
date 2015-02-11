@@ -1,4 +1,4 @@
-var maxSize = 0;
+//var maxSize = 0;
 var times;
 $(document).ready(function()		// Execute all of this on load 
 {
@@ -19,7 +19,7 @@ $(document).ready(function()		// Execute all of this on load
 	
 	});
 	$('#groupSize').change(function(){
-		alert(maxSize);
+		//alert(maxSize);
 	});
 	
 	
@@ -31,11 +31,25 @@ $(document).ready(function()		// Execute all of this on load
 
 function loadGroupSize()//load the group size based on the module
 {
-	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
+	x = $('#chosenRooms').attr('data-norooms');
+	if (x == "0")
+	{
+		var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
 		$.get("php/loadGroupSize.php?" + modCode, function(data)
 		{
+			$('#maxGroupSize').val(data);
+			document.getElementById("groupSize").max = data;
+			document.getElementById("groupSize").min = 1;
 			$('#groupSize').val(data);
 		});
+	}
+	else
+	{
+		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
+		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
+		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
+		document.getElementById("groupSize").min = 1;
+	}
 }
 
 function populateTimetable()
@@ -308,11 +322,36 @@ function addRoomToList(id)
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-	x++;
-	var str = x.toString();
-	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-	$('#chosenRooms').after(html);
+	maxCap = parseInt(document.getElementById("maxGroupSize").value);
+	reqCap = parseInt(document.getElementById("groupSize").value);
+	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
+	if (roomCap >= reqCap)
+	{
+		if (reqCap>0)
+		{
+			maxCap = maxCap-reqCap;
+			x++;
+			var xStr = x.toString();
+			var maxCapStr = maxCap.toString();
+			$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
+			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
+			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+			$('#chosenRooms').after(html);
+			reqCap = maxCap;
+			alert("Added room to request!")
+		}
+		else
+		{
+				alert("Cannot book a room for 0 students!")
+		}
+	}
+	else
+	{
+		alert("Room not big enough!");
+	}
+	document.getElementById("maxGroupSize").value = maxCap;
+	document.getElementById("groupSize").value = reqCap;
+	document.getElementById("groupSize").max = reqCap;
 }
 
 function deleteRoom(id)
@@ -333,12 +372,12 @@ function openAdvancedSearchDiv()
 function closeAdvancedRequestDiv()
 {
 	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	document.getElementById('east').style.visibility= 'hidden'
+	/*document.getElementById('east').style.visibility= 'hidden'
 	document.getElementById('eastinfo').style.visibility= 'hidden';
 	document.getElementById('central').style.visibility= 'hidden';
 	document.getElementById('centralinfo').style.visibility= 'hidden';
 	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';
+	document.getElementById('westinfo').style.visibility= 'hidden';*/
 }
 
 function showEast()
