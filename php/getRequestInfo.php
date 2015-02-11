@@ -9,51 +9,27 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	session_start();
-	$deptCode = $_SESSION['deptCode'];
+	$requestID = $_REQUEST['requestID'];
 	
-	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
+	//$sql = "SELECT *  FROM Request WHERE RequestID = '".$requestID."';";		
+	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, Room, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
 	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	// Add rooms to the results
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
-	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";
-	$sql .= "WHERE Status != 'Pending' AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
-	
+	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";	
+	$sql .= "JOIN Module ON Module.ModCode = Request.ModCode ";	
+	$sql .= "JOIN Users ON Users.UserID = Request.UserID ";	
+	$sql .= "JOIN DeptNames ON DeptNames.DeptCode = Users.DeptCode ";
+	$sql .= "WHERE Request.RequestID = '".$requestID."';";
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
 	}
 	
-	echo "<table border='1' id='historyTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";
-	echo "<th>Request ID</th>";
-	echo "<th>Module Code</th>";
-	echo "<th>Room</th>";
-	echo "<th>Facilities</th>";
-	echo "<th>Weeks</th>";
-	echo "<th>Session Type</th>";
-	echo "<th>Session Length (Hours)</th>";
-	echo "<th>Day</th>";
-	echo "<th>Start Time</th>";
-	echo "<th>Status</th>";
-		
-	// Populate the table with rows from database	
 	while ($row = $res->fetchRow())
 	{
-		echo "<tr id='historyRow' name ='".$row["requestid"]."'>";
-		echo "<td>" . $row["requestid"] . "</td>";
-		echo "<td>" . $row["modcode"] . "</td>";
-		
-		if ($row["room"] == "")	// If there are no rooms, return 'Any'
-		{
-			echo "<td>Any</td>";
-		}
-		else
-		{
-			echo "<td>" . $row["room"] . "</td>";
-		}		
-		
 		// List facilities in one row instead of multiple						
 		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
 		$res2 =& $db->query($sql2);
@@ -61,22 +37,20 @@
 		{
 			die($res2->getMessage());
 		}
-		
+		$facilities = "";
 		// If there are no results, return 'Any'
 		if ($res2->numRows() == 0)
 		{
-			echo "<td>Any</td>";
+			$facilities .= "Any";
 		}
 		else 
 		{
-			echo "<td>";
 			$facArray = array();
 			while ($row2 = $res2->fetchRow())
 			{		
 				array_push($facArray, $row2["facility"]);					
 			}
-			echo implode(", ", $facArray);		// Concatenate the elements of the array of facilities with a comma
-			echo "</td>";
+			$facilities = implode(", ", $facArray);		// Concatenate the elements of the array of facilities with a comma
 		}		
 		
 		// List weeks in one row instead of multiple		
@@ -86,8 +60,6 @@
 		{
 			die($res3->getMessage());
 		}
-		
-		echo "<td>";
 		$weekArray = array();
 		while ($row3 = $res3->fetchRow())
 		{
@@ -162,18 +134,72 @@
 			$weekArray[$lowestWeekIndex] = $weekArray[$i];			
 			$weekArray[$i] = $tempWeek;	
 		}		
-		echo implode(", ", $weekArray);			// Concatenate the elements of the array of weeks with a comma
-		echo "</td>";
+		$weeks = implode(", ", $weekArray);			// Concatenate the elements of the array of weeks with a comma
 		
-		echo "<td>" . $row["sessiontype"] . "</td>";
-		echo "<td>" . $row["sessionlength"] . "</td>";
+		if ($row["priorityrequest"] == 0)
+		{
+			$priority = "No";
+		}
+		else
+		{
+			$priority = "Yes";
+		}
 		
-		echo "<td>" . $row["day"] . "</td>";
-		echo "<td>" . $row["period"] . "</td>";
+		if ($row["adhocrequest"] == 0)
+		{
+			$adhoc = "No";
+		}
+		else
+		{
+			$adhoc = "Yes";
+		}
 		
-		echo "<td>" . $row["status"] . "</td>";
-		echo "</tr>";
+		if ($row["sessionlength"] == 1)
+		{
+			$hours = " hour";
+		}
+		else
+		{
+			$hours = " hours";
+		}
+		
+		if ($row["specialrequirements"] == "")
+		{
+			$spReq = "N/A";
+		}
+		else
+		{
+			$spReq  = $row["specialrequirements"];
+		}
+		
+		if ($row["room"] == "")
+		{
+			$room = "Any";
+		}
+		else
+		{
+			$room  = $row["room"];
+		}
+		
+		echo "Request ID: ".$row["requestid"]."\n";
+		echo "Department: ".$row["deptname"]."\n";
+		echo "Department Code: ".$row["deptcode"]."\n";
+		echo "Module Code: ".$row["modcode"]."\n";
+		echo "Module Title: ".$row["title"]."\n";
+		echo "Session Type: ".$row["sessiontype"]."\n";
+		echo "Session Length: ".$row["sessionlength"].$hours."\n";
+		echo "Day: ".$row["day"]."\n";
+		echo "Period: ".$row["periodid"]." starting at ".$row["period"]."\n";
+		echo "Priority Request: ".$priority."\n";
+		echo "Ad-Hoc Request: ".$adhoc."\n";
+		echo "Special Requirements: ".$spReq."\n";
+		echo "Round Number: ".$row["roundid"]."\n";
+		echo "Facilities Requested: ".$facilities."\n";
+		echo "Weeks Requested: ".$weeks."\n";
+		echo "Room: ".$room."\n";
+		echo "Status: ".$row["status"]."\n";
+		
+		//print_r($row);
 	}
 	
-	echo "</table>";
 ?>

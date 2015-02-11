@@ -137,7 +137,7 @@
 	// Populate the table with rows from database	
 	while ($row = $res->fetchRow())
 	{
-		echo "<tr>";
+		echo "<tr id='pendingRow' name='".$row["requestid"]."'>";
 		echo "<td>" . $row["requestid"] . "</td>";
 		echo "<td>" . $row["modcode"] . "</td>";
 		

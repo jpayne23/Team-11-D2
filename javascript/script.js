@@ -473,6 +473,32 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
+	$('#submissions').on('click', '#pendingRow', function() //show more info if row clicked
+	{ //need to add pointer css for pendingRow 
+		var requestID = this.getAttribute('name');
+		$.post("php/getRequestInfo.php", 
+		{
+			requestID: requestID
+		},
+		function(data)
+		{
+			alert(data);
+		});
+	});	
+	
+	$('#history').on('click', '#historyRow', function() //show more info if row clicked
+	{ //need to add pointer css for pendingRow 
+		var requestID = this.getAttribute('name');
+		$.post("php/getRequestInfo.php", 
+		{
+			requestID: requestID
+		},
+		function(data)
+		{
+			alert(data);
+		});
+	});	
+	
 });
 
 
