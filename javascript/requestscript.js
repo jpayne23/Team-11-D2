@@ -135,19 +135,21 @@ function updateAdvancedRoomFacility(value)
 			{
 				j = 1;
 			
-				//id = times[i].substr(8,4);
 				id = times[i]['id'];
-				//length = times[i].substr(45,1);
 				length = times[i]['data-length'];
 				var weeks = times[i]['data-weeks'];
+				var display = times[i]['data-display'];
 				$('#'+id).attr('id',id);
 				$('#'+id).attr('data-length',length);
 				$('#'+id).attr('data-selected','1');
 				$('#'+id).attr('data-weeks', weeks);
+				$('#'+id).attr('data-display', display);
 				$('#'+id).attr('class','timeslotbooked');
 				$('#'+id).html('Available');
-				//$('#'+id).replaceWith(times[i]);
 				displayAvailableWeeks(id, value);
+				
+				
+		
 				while(j < (length))
 				{
 					//str = id.substr(3,1);
@@ -161,10 +163,12 @@ function updateAdvancedRoomFacility(value)
 					$('#'+newid).attr('data-selected','1');
 					$('#'+newid).attr('data-weeks', weeks);
 					$('#'+newid).attr('class','timeslotbooked');
+					$('#'+newid).attr('data-display', display);
 					$('#'+newid).html('Available');
 					displayAvailableWeeks(newid, value); //function to show the user the weeks this timeslot is available
 					j++;
 				}
+				
 				
 			}
 		}); // end $.get
@@ -177,7 +181,7 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 		var av = []; //array of available weeks
 		var weeks = [] //array of chosen weeks
 		var temp = [];
-		var len, chosen, w;
+		var len, match, w;
 		var str = "";
 		//weeks = weeks.replace(/[\[\]']+/g,'')
 	
@@ -212,10 +216,8 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 		}
 		
 		temp = str.split(",");
-		chosen = false;
-		str = "";
-		
-		
+		match = false;
+		/*
 		for(var i = 1 ;i < 16;i++){
 			for(var j = 0; j < temp.length; j++){
 				if(temp[j] == i){
@@ -230,17 +232,48 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 			chosen = false;
 		
 		}
+		*/
 		
-		var str = $('#'+id).attr("data-available");
-		str += ":" + av.toString();
-		$('#'+id).attr("data-available", str);
-		$('#'+id).hover(function(){
-			var str = $('#'+id).attr("data-available");
+		avweeks(id, temp);
+}
+
+function avweeks(id, chosen) //function to change the available weeks of a time slot
+{
+	var match, str;
+	var av = [];
+	//a201 = 6,11,12,13,14,15
+	//cc011 = 6,13,14,15
+		var str = $('#'+id).attr('data-display'); //get currently available weeks for this slot
+		var display = str.substr(1,str.length-2);
+		display = display.split(",");	//turn attribute into array
+		var str = "";
+		for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
+			match = false;
+			for(var j = 0; j< chosen.length;j++){
+				if(chosen[j] == display[i]){
+					match = true;
+				}
+			}
+			if(match == false){
+				av[av.length] = display[i];
+			}
+		}
+		str= "";
+		
+		str = av.join(',');
+		
+		//str = "[" + str + "]";
+		$('#' + id).attr('data-display',str);
+		
+		$('#'+id).hover(function(){// make hover function to show the available weeks
+			var str = $('#'+id).attr("data-display");
 			$('#'+id).html(str);
 		}, function(){
 			$('#'+id).html("Available");
 		});
+	
 }
+
 
 function returnBookedWeeks(start, end)
 {
