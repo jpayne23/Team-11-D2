@@ -253,7 +253,7 @@
 						</tr>						
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
-				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
+				<input type='button' id='btnAdvancedRequest' onclick='updateAdvancedBuilding("parkeast"); clearParkContent()' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
 				<input type='button' name = '' id='round' value='Next Round'/>
 			</article>
@@ -281,7 +281,7 @@
 				<header>
 					<h2> Chosen Rooms </h2>
 				</header>
-				<table id='chosenRooms' data-norooms=0>
+				<table id='chosenRooms' data-norooms=0 data-maxcap>
 				
 				</table>
 			</article>

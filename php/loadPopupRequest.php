@@ -3,14 +3,9 @@
 	<head>
 		<title>Advanced Requests</title>
 		<meta charset="UTF-8">
-		
-		<!--link rel="stylesheet" href="css/style.css" type="text/css" />-->
-		<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
 		<link rel="stylesheet" href="css/request.css" type="text/css" />
-		<script src="javascript/jquery-2.1.1.js"></script>
-		<script src="javascript/jquery-ui.js"></script>
-		
 		<script src="javascript/requestscript.js"></script>
+		
 		<meta name="viewport" content="widtd-device-widtd, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 	</head>
 	<body id= 'body' class= 'requestbody'>
@@ -45,6 +40,10 @@
 									<option>16:00</option>
 									<option>17:00</option>
 								</select>
+							</li>
+							<li>
+								<a>Module Size</a>
+								<input type='text' readonly id='maxGroupSize'/>
 							</li>
 							<li>
 								<a>Group Size</a>

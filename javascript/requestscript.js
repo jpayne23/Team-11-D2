@@ -1,4 +1,4 @@
-var maxSize = 0;
+//var maxSize = 0;
 var times;
 $(document).ready(function()		// Execute all of this on load 
 {
@@ -19,7 +19,7 @@ $(document).ready(function()		// Execute all of this on load
 	
 	});
 	$('#groupSize').change(function(){
-		alert(maxSize);
+		//alert(maxSize);
 	});
 	
 	
@@ -31,11 +31,25 @@ $(document).ready(function()		// Execute all of this on load
 
 function loadGroupSize()//load the group size based on the module
 {
-	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
+	x = $('#chosenRooms').attr('data-norooms');
+	if (x == "0")
+	{
+		var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
 		$.get("php/loadGroupSize.php?" + modCode, function(data)
 		{
+			$('#maxGroupSize').val(data);
+			document.getElementById("groupSize").max = data;
+			document.getElementById("groupSize").min = 1;
 			$('#groupSize').val(data);
 		});
+	}
+	else
+	{
+		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
+		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
+		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
+		document.getElementById("groupSize").min = 1;
+	}
 }
 
 function populateTimetable()
@@ -135,19 +149,21 @@ function updateAdvancedRoomFacility(value)
 			{
 				j = 1;
 			
-				//id = times[i].substr(8,4);
 				id = times[i]['id'];
-				//length = times[i].substr(45,1);
 				length = times[i]['data-length'];
 				var weeks = times[i]['data-weeks'];
+				var display = times[i]['data-display'];
 				$('#'+id).attr('id',id);
 				$('#'+id).attr('data-length',length);
 				$('#'+id).attr('data-selected','1');
 				$('#'+id).attr('data-weeks', weeks);
+				$('#'+id).attr('data-display', display);
 				$('#'+id).attr('class','timeslotbooked');
 				$('#'+id).html('Available');
-				//$('#'+id).replaceWith(times[i]);
 				displayAvailableWeeks(id, value);
+				
+				
+		
 				while(j < (length))
 				{
 					//str = id.substr(3,1);
@@ -161,10 +177,12 @@ function updateAdvancedRoomFacility(value)
 					$('#'+newid).attr('data-selected','1');
 					$('#'+newid).attr('data-weeks', weeks);
 					$('#'+newid).attr('class','timeslotbooked');
+					$('#'+newid).attr('data-display', display);
 					$('#'+newid).html('Available');
 					displayAvailableWeeks(newid, value); //function to show the user the weeks this timeslot is available
 					j++;
 				}
+				
 				
 			}
 		}); // end $.get
@@ -177,7 +195,7 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 		var av = []; //array of available weeks
 		var weeks = [] //array of chosen weeks
 		var temp = [];
-		var len, chosen, w;
+		var len, match, w;
 		var str = "";
 		//weeks = weeks.replace(/[\[\]']+/g,'')
 	
@@ -212,10 +230,8 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 		}
 		
 		temp = str.split(",");
-		chosen = false;
-		str = "";
-		
-		
+		match = false;
+		/*
 		for(var i = 1 ;i < 16;i++){
 			for(var j = 0; j < temp.length; j++){
 				if(temp[j] == i){
@@ -230,17 +246,48 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 			chosen = false;
 		
 		}
+		*/
 		
-		var str = $('#'+id).attr("data-available");
-		str += ":" + av.toString();
-		$('#'+id).attr("data-available", str);
-		$('#'+id).hover(function(){
-			var str = $('#'+id).attr("data-available");
+		avweeks(id, temp);
+}
+
+function avweeks(id, chosen) //function to change the available weeks of a time slot
+{
+	var match, str;
+	var av = [];
+	//a201 = 6,11,12,13,14,15
+	//cc011 = 6,13,14,15
+		var str = $('#'+id).attr('data-display'); //get currently available weeks for this slot
+		var display = str.substr(1,str.length-2);
+		display = display.split(",");	//turn attribute into array
+		var str = "";
+		for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
+			match = false;
+			for(var j = 0; j< chosen.length;j++){
+				if(chosen[j] == display[i]){
+					match = true;
+				}
+			}
+			if(match == false){
+				av[av.length] = display[i];
+			}
+		}
+		str= "";
+		
+		str = av.join(',');
+		
+		//str = "[" + str + "]";
+		$('#' + id).attr('data-display',str);
+		
+		$('#'+id).hover(function(){// make hover function to show the available weeks
+			var str = $('#'+id).attr("data-display");
 			$('#'+id).html(str);
 		}, function(){
 			$('#'+id).html("Available");
 		});
+	
 }
+
 
 function returnBookedWeeks(start, end)
 {
@@ -275,11 +322,37 @@ function addRoomToList(id)
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-	x++;
-	var str = x.toString();
-	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-	document.getElementById('chosenRooms').innerHTML += html;
+
+	maxCap = parseInt(document.getElementById("maxGroupSize").value);
+	reqCap = parseInt(document.getElementById("groupSize").value);
+	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
+	if (roomCap >= reqCap)
+	{
+		if (reqCap>0)
+		{
+			maxCap = maxCap-reqCap;
+			x++;
+			var xStr = x.toString();
+			var maxCapStr = maxCap.toString();
+			$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
+			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
+			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+			document.getElementById('chosenRooms').innerHTML += html;
+			reqCap = maxCap;
+			alert("Added room to request!")
+		}
+		else
+		{
+				alert("Cannot book a room for 0 students!")
+		}
+	}
+	else
+	{
+		alert("Room not big enough!");
+	}
+	document.getElementById("maxGroupSize").value = maxCap;
+	document.getElementById("groupSize").value = reqCap;
+	document.getElementById("groupSize").max = reqCap;
 }
 
 function deleteRoom(id)
@@ -300,12 +373,12 @@ function openAdvancedSearchDiv()
 function closeAdvancedRequestDiv()
 {
 	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	document.getElementById('east').style.visibility= 'hidden'
+	/*document.getElementById('east').style.visibility= 'hidden'
 	document.getElementById('eastinfo').style.visibility= 'hidden';
 	document.getElementById('central').style.visibility= 'hidden';
 	document.getElementById('centralinfo').style.visibility= 'hidden';
 	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';
+	document.getElementById('westinfo').style.visibility= 'hidden';*/
 }
 
 function showEast()
