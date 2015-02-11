@@ -1015,7 +1015,8 @@ function filterTable()
 	var sortDirection = "&sortDirection=down";
 	var sortColumn = "&sortColumn=RequestID";
 	var day = "&day=" + document.getElementById("dayFilter")[document.getElementById("dayFilter").selectedIndex].id;
-	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + day + sortDirection + sortColumn + flag, function(data)
+	var facility = "&facility=" + document.getElementById("facilitiesFilter")[document.getElementById("facilitiesFilter").selectedIndex].id;
+	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + sortDirection + sortColumn + flag, function(data)
 	{
 		$('#submissions').html(data);
 	});
