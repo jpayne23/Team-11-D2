@@ -25,10 +25,8 @@
 		$sessionType = 'Any';		
 	}
 	
-	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
+	$sql = "SELECT Request.RequestID, ModCode, SessionType, SessionLength, Day, Period, Status ";
 	$sql .= "FROM Request ";
-	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
-	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
 	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";
 	$sql .= "WHERE Status = 'Pending'";
@@ -143,22 +141,16 @@
 		
 		//$modCodes[$modCodes.size] = $row["modcode"];
 		
-		if ($row["room"] == "")	// If there are no rooms, return 'Any'
-		{
-			echo "<td>Any</td>";
-		}
-		else
-		{
-			echo "<td>" . $row["room"] . "</td>";
-		}		
-		
-		// List facilities in one row instead of multiple			
-		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
+		// List rooms in one row instead of multiple
+		$sql2 = "SELECT Room FROM RoomRequest ";
+		$sql2 .= "LEFT JOIN RequestToRoom ON " . $row["requestid"]  . " = RequestToRoom.RequestID ";		
+		$sql2 .= "WHERE RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	
 		$res2 =& $db->query($sql2);
 		if(PEAR::isError($res2))
 		{
 			die($res2->getMessage());
 		}
+		
 		// If there are no results, return 'Any'
 		if ($res2->numRows() == 0)
 		{
@@ -166,29 +158,53 @@
 		}
 		else 
 		{
+			$roomArray = array();
+			while ($row2 = $res2->fetchRow())
+			{
+				array_push($roomArray, $row2['room']);
+			}
+			echo "<td>";
+			echo implode(", ", $roomArray);
+			echo "</td>";
+		}	
+		
+		// List facilities in one row instead of multiple			
+		$sql3 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
+		$res3 =& $db->query($sql3);
+		if(PEAR::isError($res3))
+		{
+			die($res3->getMessage());
+		}
+		// If there are no results, return 'Any'
+		if ($res3->numRows() == 0)
+		{
+			echo "<td>Any</td>";
+		}
+		else 
+		{
 			echo "<td>";
 			$facArray = array();
-			while ($row2 = $res2->fetchRow())
+			while ($row3 = $res3->fetchRow())
 			{		
-				array_push($facArray, $row2["facility"]);					
+				array_push($facArray, $row3["facility"]);					
 			}
 			echo implode(", ", $facArray);		// Concatenate the elements of the array of facilities with a comma
 			echo "</td>";
 		}		
 		
 		// List weeks in one row instead of multiple		
-		$sql3 = "SELECT Weeks FROM WeekRequest WHERE RequestID = ".$row["requestid"].";";
-		$res3 =& $db->query($sql3);
-		if(PEAR::isError($res3))
+		$sql4 = "SELECT Weeks FROM WeekRequest WHERE RequestID = ".$row["requestid"].";";
+		$res4 =& $db->query($sql4);
+		if(PEAR::isError($res4))
 		{
-			die($res3->getMessage());
+			die($res4->getMessage());
 		}
 		
 		echo "<td>";
 		$weekArray = array();
-		while ($row3 = $res3->fetchRow())
+		while ($row4 = $res4->fetchRow())
 		{
-			$weekString = $row3["weeks"];
+			$weekString = $row4["weeks"];
 			$weekString = str_replace(",", "-", $weekString);		// Replace the , with a -
 			$weekString = str_replace("[", "", $weekString);		// Remove the opening bracket
 			$weekString = str_replace("]", "", $weekString);		// Remove the closing bracket

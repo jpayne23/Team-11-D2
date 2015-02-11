@@ -279,7 +279,7 @@ function addRoomToList(id)
 	var str = x.toString();
 	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
 	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-	$('#chosenRooms').after(html);
+	document.getElementById('chosenRooms').innerHTML += html;
 }
 
 function deleteRoom(id)
