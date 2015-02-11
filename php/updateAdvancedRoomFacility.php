@@ -34,20 +34,20 @@
 	
 	while ($row = $res2->fetchRow())
 	{
-		echo "Capacity: ".$row["capacity"]."</br>";
+		echo "<b>Capacity:</b>".$row["capacity"]."</br>";
 		if ($row["lab"] == 0)
 		{
-			echo "Type: Lecture Room";
+			echo "<b>Type:</b> Lecture Room";
 		}
 		else
 		{
-			echo "Type: Lab";
+			echo "<b>Type:</b> Lab";
 		}
 		echo "</br>";
-		echo "<img src='".$row['url']."' alt='http://co-project.lboro.ac.uk/team11/Prakash/img/noImg.jpg' height='100' width='100'>";
+		echo "<img src='".$row['url']."' alt='http://co-project.lboro.ac.uk/team11/Prakash/img/noImg.jpg' height='150' width='150'>";
 		echo "</br>";
 	}
-	echo "Facilities: </br>";
+	echo "<b>Facilities:<b> </br>";
 	while ($row = $res->fetchRow())
 	{
 		echo $facList[$row["facility"]-1]["facility"]."</br>";
