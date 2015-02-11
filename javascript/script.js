@@ -144,6 +144,8 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 		{
 			$('#modCodeDiv').html(data);
+		}).done(function(){
+			loadGroupSize();
 		});
 	});
 	
@@ -439,6 +441,20 @@ $(document).ready(function()		// Execute all of this on load
 
 	populateTimetable();
 	
+	//These functions load and update the day and time chosen between the main page and the popup room.
+	$('#popupDay').val($('#day').val());
+	$('#popupTime').val($('#time').val());
+	$('#popupDay').change(function(){
+		var day = $('#popupDay').val();
+		$('#day').val(day);
+	
+	});
+	$('#popupTime').change(function(){
+		var day = $('#popupTime').val();
+		$('#time').val(day);
+	
+	});
+	
 	$('#round').click(function() //reset all default values
 	{
 		alert("pending submissions might be lost");
@@ -462,6 +478,15 @@ $(document).ready(function()		// Execute all of this on load
 
 
 //functions for advanced request-------------------------------------
+function loadGroupSize()//load the group size based on the module
+{
+	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
+		$.get("php/loadGroupSize.php?" + modCode, function(data)
+		{
+			$('#groupSize').val(data);
+		});
+}
+
 function populateTimetable()
 {
 	var id;
