@@ -49,6 +49,14 @@ function loadGroupSize()//load the group size based on the module
 		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
 		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
 		document.getElementById("groupSize").min = 1;
+		var rooms = getSelectedRooms();
+		var groupSizes = getGroupSizes();
+		var html= "";
+		for (var i = 0; i < rooms.length; i++)
+		{
+			html += "<tr id="+("rm" + rooms[i].replace(/\./g, ''))+"><td>"+groupSizes[i]+"</td><td> Students in room </td><td>"+rooms[i]+"</td><td id='del"+ ("rm" + rooms[i].replace(/\./g, '')) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+		}
+		$("#buildingcontent").append(html);
 	}
 }
 
@@ -338,6 +346,7 @@ function addRoomToList(id)
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
 			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
+			$("#buildingcontent").append(html);
 			reqCap = maxCap;
 			alert("Added room to request!")
 		}
