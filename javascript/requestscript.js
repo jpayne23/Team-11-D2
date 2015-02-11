@@ -336,7 +336,7 @@ function addRoomToList(id)
 			var maxCapStr = maxCap.toString();
 			$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
-			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
 			reqCap = maxCap;
 			alert("Added room to request!")

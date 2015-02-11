@@ -13,6 +13,7 @@
 	$deptCode = $_SESSION['deptCode'];	
 	$modCode = $_REQUEST['modCode'];
 	$rooms = $_REQUEST['rooms'];
+	$groupSizes = $_REQUEST['groupSizes'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
 	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
@@ -22,7 +23,7 @@
 	$day = $_REQUEST['day'];
 	$time = $_REQUEST['time'];
 	$round = $_REQUEST['round'];
-		
+	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
 	if ($selectedWeeks != "")
@@ -108,7 +109,7 @@
 	for ($n = 0; $n < count($rooms); $n++)
 	{
 		$sql5 = "INSERT INTO RoomRequest (Room, GroupSize) ";
-		$sql5 .= "VALUES ('$rooms[$n]', 50)";
+		$sql5 .= "VALUES ('$rooms[$n]', " . (int)$groupSizes[$n] . ")";
 		
 		$res5 =& $db->query($sql5);
 		if(PEAR::isError($res5))

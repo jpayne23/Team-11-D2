@@ -233,6 +233,7 @@ $(document).ready(function()		// Execute all of this on load
 				for (var i = 0; i < rooms.length; i++)
 				{
 					var id = rooms[i];
+					setSelectedRooms();
 					addRoomToList(id);
 				}
 			}
@@ -345,6 +346,7 @@ $(document).ready(function()		// Execute all of this on load
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var rooms = getSelectedRooms();
+		var groupSizes = getGroupSizes();
 		var selectedWeeks = updateSelectedWeeks(selectedItems);
 		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
@@ -364,6 +366,7 @@ $(document).ready(function()		// Execute all of this on load
 					// Data to send
 					modCode: modCode,
 					rooms: rooms,
+					groupSizes: groupSizes,
 					selectedWeeks: selectedWeeks,
 					facilities: facilities,
 					sessionType: sessionType,
@@ -527,12 +530,62 @@ function getSelectedRooms()
 	
 	$('#chosenRooms tr').each(function()
 	{
-		rooms.push($(this).find("td").eq(0).html());
+		rooms.push($(this).find("td").eq(2).html());
 	});	
 	
-	return rooms;
+	if (rooms.length == 0)
+	{
+		return "null";	// Sends an null string to the php file so as not to cause an error
+						// Instead of sending an empty array
+	}
+	else
+	{
+		return rooms;
+	}
 }
 
+function getGroupSizes()
+{
+	var groupSizes = [];
+	var numGroups = $('#chosenRooms').children().children().length;
+	
+	$('#chosenRooms tr').each(function()
+	{
+		groupSizes.push($(this).find("td").eq(0).html());
+	});	
+	
+	if (groupSizes.length == 0)
+	{
+		return "null";	// Sends an null string to the php file so as not to cause an error
+						// Instead of sending an empty array
+	}
+	else
+	{
+		return groupSizes;
+	}
+}
+
+function setSelectedRooms()
+{
+	newid = id.replace(/\./g, '');
+	if ($('#rm'+newid).length > 0 ) { //search for id existence
+        alert('room already added');
+		return;
+    }
+	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
+	x = parseInt(x); 
+	if(x>=3){ //check the no of rooms already chosen
+		alert("You cannot choose more than 3 rooms");
+		return;
+	}
+	
+	x++;
+	var xStr = x.toString();
+	$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
+	
+	var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+	document.getElementById('chosenRooms').innerHTML += html;
+}
 //functions for advanced request-------------------------------------
 function loadGroupSize()//load the group size based on the module
 {

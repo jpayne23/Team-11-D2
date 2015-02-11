@@ -125,6 +125,7 @@
 		}
 	}
 	
+	
 	// Delete rooms currently in the table
 	$sql7 = "DELETE FROM RoomRequest WHERE RoomRequestID IN ";
 	$sql7 .= "(SELECT RoomRequestID FROM RequestToRoom WHERE RequestID = '$requestID')";
@@ -136,24 +137,27 @@
 	}
 	
 	// Add selected rooms to the database
-	for ($n = 0; $n < count($rooms); $n++)
+	if (rooms != "null")
 	{
-		$sql8 = "INSERT INTO RoomRequest (Room, GroupSize) ";
-		$sql8 .= "VALUES ('$rooms[$n]', 80)";
-		
-		$res8 =& $db->query($sql8);
-		if(PEAR::isError($res8))
+		for ($n = 0; $n < count($rooms); $n++)
 		{
-			die($res8->getMessage());
-		}
-		
-		$sql9 = "INSERT INTO RequestToRoom (RequestID, RoomRequestID) ";
-		$sql9 .= "VALUES ($requestID, (SELECT MAX(RoomRequestID) FROM RoomRequest))";
-		
-		$res9 =& $db->query($sql9);
-		if(PEAR::isError($res9))
-		{
-			die($res9->getMessage());
+			$sql8 = "INSERT INTO RoomRequest (Room, GroupSize) ";
+			$sql8 .= "VALUES ('$rooms[$n]', 80)";
+			
+			$res8 =& $db->query($sql8);
+			if(PEAR::isError($res8))
+			{
+				die($res8->getMessage());
+			}
+			
+			$sql9 = "INSERT INTO RequestToRoom (RequestID, RoomRequestID) ";
+			$sql9 .= "VALUES ($requestID, (SELECT MAX(RoomRequestID) FROM RoomRequest))";
+			
+			$res9 =& $db->query($sql9);
+			if(PEAR::isError($res9))
+			{
+				die($res9->getMessage());
+			}
 		}
 	}
 ?>
