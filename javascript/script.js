@@ -266,7 +266,10 @@ $(document).ready(function()		// Execute all of this on load
 	// Load history page
 	$('#historyButton').click(function()
 	{
-		$.get("php/loadHistorySubmissions.php", function(data)
+		var sortDirection = "sortDirection=down";
+		var sortColumn = "&sortColumn=RequestID";
+		var flag = "&flag=0";
+		$.get("php/loadHistorySubmissions.php?" + sortDirection + sortColumn + flag, function(data)
 		{
 			$('#history').html(data);
 		});
@@ -1085,13 +1088,13 @@ function deleteFac(id) //function to delete the facility by searching for its id
 function filterMenu(source)
 {
 	if(source == "Pending"){
-		$.get("php/loadFilter.php?source=" + source, function(data)
+		$.get("php/loadFilter.php?source=Pending", function(data)
 		{
 			$('#filterDiv').html(data);
 		});
 	}
 	else{
-		$.get("php/loadFilter.php?source=" + source, function(data)
+		$.get("php/loadFilter.php?source=History", function(data)
 		{
 			$('#filterDivHist').html(data);
 		});
@@ -1109,21 +1112,23 @@ function filterTable(source)
 	var day = "&day=" + document.getElementById("dayFilter")[document.getElementById("dayFilter").selectedIndex].id;
 	var facility = "&facility=" + document.getElementById("facilitiesFilter")[document.getElementById("facilitiesFilter").selectedIndex].id;
 	
-	if(source = "History")
+	if(source == "History")
 	{
+		alert("Here");
 		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
 		$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
 		{
 			$('#submissions').html(data);
 		});
+		closeDiv('filterDivHist');
 	}
-	
-	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + sortDirection + sortColumn + flag, function(data)
-	{
-		$('#submissions').html(data);
-	});
-
-	closeDiv('filterDiv');
+	else{
+		$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + sortDirection + sortColumn + flag, function(data)
+		{
+			$('#submissions').html(data);
+		});
+		closeDiv('filterDiv');
+	}
 }
 
 

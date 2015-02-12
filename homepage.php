@@ -297,7 +297,7 @@
 		</div>
 		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
 			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
-			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History")'></input>
+			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
 			<div id='filterDivHist' style='visibility: hidden;'>
 			</div>
 			<div id='history'></div>

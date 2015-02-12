@@ -16,7 +16,8 @@
 	
 	//$part = $_REQUEST['part'];
 	
-	if ($source == 'Pending'){
+	if ($source == 'Pending')
+	{
 		$status = "Status = 'Pending'";
 		echo "<input type='button' value='Close me!' onclick='closeDiv(\"filterDiv\");'></input>";
 	}
@@ -50,7 +51,7 @@
 	
 	echo "<tr><td>Session Type</td><td>";
 	
-	$sql = "SELECT DISTINCT SessionType FROM Request WHERE ". $status;
+	$sql = "SELECT DISTINCT SessionType FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 
 	$res =& $db->query($sql);
@@ -71,7 +72,7 @@
 	
 	echo "<tr><td>Day</td><td>";
 	
-	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE ". $status;
+	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
 	$res =& $db->query($sql);
@@ -140,6 +141,6 @@
 	
 	echo "</table>";
 	
-	echo "<input type='button' value='Filter Away!' onclick='filterTable($source)'></input>";
+	echo "<input type='button' value='Filter Away!' onclick='filterTable(\"$source\");alert(\"click\");'></input>";
 	
 ?>
