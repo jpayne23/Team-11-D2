@@ -999,27 +999,47 @@ function deleteFac(id) //function to delete the facility by searching for its id
 	$( '#'+id ).remove();
 }
 
-function filterMenu()
+function filterMenu(source)
 {
-	$.get("php/loadFilter.php?", function(data)
-	{
-		$('#filterDiv').html(data);
-	});
+	if(source == "Pending"){
+		$.get("php/loadFilter.php?source=" + source, function(data)
+		{
+			$('#filterDiv').html(data);
+		});
+	}
+	else{
+		$.get("php/loadFilter.php?source=" + source, function(data)
+		{
+			$('#filterDivHist').html(data);
+		});
+	}
 };
 
-function filterTable()
+function filterTable(source)
 {
+	
 	var modCode = "modCode=" + document.getElementById("modCodesFilter")[document.getElementById("modCodesFilter").selectedIndex].id;
 	var sessionType = "&sessionType=" + document.getElementById("sessionTypeFilter")[document.getElementById("sessionTypeFilter").selectedIndex].id;
 	var flag = "&flag=1";
 	var sortDirection = "&sortDirection=down";
 	var sortColumn = "&sortColumn=RequestID";
 	var day = "&day=" + document.getElementById("dayFilter")[document.getElementById("dayFilter").selectedIndex].id;
-	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + day + sortDirection + sortColumn + flag, function(data)
+	var facility = "&facility=" + document.getElementById("facilitiesFilter")[document.getElementById("facilitiesFilter").selectedIndex].id;
+	
+	if(source = "History")
+	{
+		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
+		$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
+		{
+			$('#submissions').html(data);
+		});
+	}
+	
+	$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + sortDirection + sortColumn + flag, function(data)
 	{
 		$('#submissions').html(data);
 	});
-	
+
 	closeDiv('filterDiv');
 }
 
