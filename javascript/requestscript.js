@@ -29,21 +29,26 @@ $(document).ready(function()		// Execute all of this on load
 
 
 
-function loadGroupSize()//load the group size based on the module
-{
-	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
-		$.get("php/loadGroupSize.php?" + modCode, function(data)
-		{
-			$('#groupSize').val(data);
-		});
-
-	}
-	else
-	{
-		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
-		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
-		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
-		document.getElementById("groupSize").min = 1;
+ function loadGroupSize()//load the group size based on the module
+ {
+ 	x = $('#chosenRooms').attr('data-norooms');
+ 	if (x == "0")
+ 	{
+ 		var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
+ 		$.get("php/loadGroupSize.php?" + modCode, function(data)
+ 		{
+ 			$('#maxGroupSize').val(data);
+ 			document.getElementById("groupSize").max = data;
+ 			document.getElementById("groupSize").min = 1;
+ 			$('#groupSize').val(data);
+ 		});
+ 	}
+ 	else
+ 	{
+ 		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
+ 		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
+ 		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
+ 		document.getElementById("groupSize").min = 1;
 		var rooms = getSelectedRooms();
 		var groupSizes = getGroupSizes();
 		var html= "";
@@ -52,9 +57,8 @@ function loadGroupSize()//load the group size based on the module
 			html += "<tr id="+("rm" + rooms[i].replace(/\./g, ''))+"><td>"+groupSizes[i]+"</td><td> Students in room </td><td>"+rooms[i]+"</td><td id='del"+ ("rm" + rooms[i].replace(/\./g, '')) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 		}
 		$("#buildingcontent").append(html);
-	}
-
-}
+ 	}
+ }
 
 function populateTimetable()
 {
@@ -327,13 +331,6 @@ function addRoomToList(id)
 		return;
 	}
 
-	x++;
-	var str = x.toString();
-	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-	$('#chosenRooms').after(html);
-
-
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
@@ -355,7 +352,7 @@ function addRoomToList(id)
 		}
 		else
 		{
-				alert("Cannot book a room for 0 students!")
+			alert("Cannot book a room for 0 students!")
 		}
 	}
 	else
@@ -365,7 +362,6 @@ function addRoomToList(id)
 	document.getElementById("maxGroupSize").value = maxCap;
 	document.getElementById("groupSize").value = reqCap;
 	document.getElementById("groupSize").max = reqCap;
-
 }
 
 function deleteRoom(id)

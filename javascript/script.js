@@ -663,26 +663,6 @@ function updateAdvancedRoomFacility(value)
 		
 	}
 
-function addRoomToList(id)
-{
-	newid = id.replace(/\./g, '');
-	if ($('#rm'+newid).length > 0 ) { //search for id existence
-        alert('room already added');
-		return;
-    }
-	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
-	x = parseInt(x); 
-	if(x>=3){ //check the no of rooms already chosen
-		alert("You cannot choose more than 3 rooms");
-		return;
-	}
-	x++;
-	var str = x.toString();
-	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-	document.getElementById('chosenRooms').innerHTML += html;
-}
-
 function deleteRoom(id)
 {
 	var roomid = id.substr(3,id.length);

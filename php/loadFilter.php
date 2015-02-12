@@ -13,9 +13,7 @@
 	$deptCode = $_SESSION['deptCode'];
 	
 	$source = $_REQUEST['source'];
-	
-	//$part = $_REQUEST['part'];
-	
+		
 	if ($source == 'Pending')
 	{
 		$status = "Status = 'Pending'";

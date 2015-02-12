@@ -34,7 +34,7 @@
 	
 	while ($row = $res2->fetchRow())
 	{
-		echo "<b>Capacity:</b>".$row["capacity"]."</br>";
+		echo "<b>Capacity:</b><span id='roomCapacity'>".$row["capacity"]."</span></br>";
 		if ($row["lab"] == 0)
 		{
 			echo "<b>Type:</b> Lecture Room";

@@ -281,8 +281,7 @@
 				<header>
 					<h2> Chosen Rooms </h2>
 				</header>
-				<table id='chosenRooms' data-norooms=0>
-				
+				<table id='chosenRooms' data-norooms=0 data-maxcap>				
 				</table>
 			</article>
 		</div>
