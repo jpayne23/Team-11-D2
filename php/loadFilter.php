@@ -12,11 +12,21 @@
 	session_start();
 	$deptCode = $_SESSION['deptCode'];
 	
+	$source = $_REQUEST['source'];
+	
 	//$part = $_REQUEST['part'];
 	
-	$add = " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
+	if ($source == 'Pending'){
+		$status = "Status = 'Pending'";
+		echo "<input type='button' value='Close me!' onclick='closeDiv(\"filterDiv\");'></input>";
+	}
+	else
+	{
+		$status = "Status != 'Pending'";
+		echo "<input type='button' value='Close me!' onclick='closeDiv(\"filterDivHist\");'></input>";
+	}
 	
-	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE Status = 'Pending'";	
+	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
 	$res =& $db->query($sql);
@@ -25,8 +35,6 @@
 	{
 		die($res->getMessage());
 	}
-	
-	echo "<input type='button' value='Close me!' onclick='closeDiv(\"filterDiv\");'></input>";
 	
 	echo "<table id='facilitiesTable'><tr><td>ModCode</td><td>";
 	
@@ -42,7 +50,7 @@
 	
 	echo "<tr><td>Session Type</td><td>";
 	
-	$sql = "SELECT DISTINCT SessionType FROM Request WHERE Status = 'Pending'";
+	$sql = "SELECT DISTINCT SessionType FROM Request WHERE ". $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 
 	$res =& $db->query($sql);
@@ -63,7 +71,7 @@
 	
 	echo "<tr><td>Day</td><td>";
 	
-	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE Status='Pending'";
+	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE ". $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
 	$res =& $db->query($sql);
@@ -85,8 +93,8 @@
 	echo "<tr><td>Facility</td><td>";
 	
 	$sql = "SELECT DISTINCT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE ";
-	$sql .= "RequestID IN (SELECT RequestID FROM Request WHERE Status='Pending' ";
-	$sql .= "AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')))";
+	$sql .= "RequestID IN (SELECT RequestID FROM Request WHERE " . $status;
+	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')))";
 	
 	$res =& $db->query($sql);
 	
@@ -104,8 +112,34 @@
 		echo '<option id ="'.$row["facility"].'">' . $row["facility"].'</option>';
 	}
 	
-	echo "</select></td></tr></table>";
+	echo "</select></td></tr>";
 	
-	echo "<input type='button' value='Filter Away!' onclick='filterTable()'></input>";
+	if($source == 'History'){
+		
+		echo "<tr><td>Status</td><td>";
+		
+		$sql = "SELECT DISTINCT Status FROM Request WHERE " . $status;
+		$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
+		
+		$res =& $db->query($sql);
+		
+		if(PEAR::isError($res))
+		{
+			die($res->getMessage());
+		}
+		echo '<select name="status" id="statusFilter">';
+		
+		echo '<option id ="Any">Any</option>';
+		
+		while ($row = $res->fetchRow())
+		{
+			echo '<option id ="'.$row["status"].'">' . $row["status"].'</option>';
+		}
+		echo "</select></td></tr>";
+	}	
+	
+	echo "</table>";
+	
+	echo "<input type='button' value='Filter Away!' onclick='filterTable($source)'></input>";
 	
 ?>
