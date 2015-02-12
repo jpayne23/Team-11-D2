@@ -236,18 +236,6 @@ a:hover, a:active{
 	left: 5%;
 }
 
-#filterDivHist{
-	border-radius: 7px;
-	background:#ABCDEF;
-	margin:30px;
-	padding:6px;  
-	position:absolute;
-	width:40%;
-	height:40%;
-	top: 5%;
-	left: 5%;
-}
-
 @media only screen and (min-width: 150px) and (max-width: 600px)
 {
 	.body{

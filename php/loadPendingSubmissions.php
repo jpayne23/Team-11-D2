@@ -19,14 +19,12 @@
 		$modCode = $_REQUEST['modCode'];
 		$sessionType = $_REQUEST['sessionType'];
 		$day = $_REQUEST['day'];
-		$facility = $_REQUEST['facility'];
 	}
 	else{
 		
 		$modCode = 'Any';
 		$sessionType = 'Any';	
 		$day = 'Any';
-		$facility = 'Any';
 	}
 	
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
@@ -48,10 +46,6 @@
 	if ($day != "Any")
 	{				
 		$sql .= " AND Request.DayID = (SELECT DayID FROM DayInfo WHERE Day = '" . $day . "')";
-	}
-	if ($facility != 'Any')
-	{
-		$sql .= " AND Request.RequestID IN (SELECT FacilityRequest.RequestID FROM FacilityRequest)";
 	}
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
@@ -145,177 +139,146 @@
 	echo "<th>Status</th>";
 	
 	$modCodes = array();
-	$fill = True;
-	
+		
 	// Populate the table with rows from database	
 	while ($row = $res->fetchRow())
 	{
-		if ($facility != 'Any'){
-			
-			$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
-			$sql2 .= " AND '$facility' IN (SELECT Facility FROM Facility WHERE FacilityID IN ";
-			$sql2 .= " (SELECT FacilityID FROM FacilityRequest WHERE RequestID = '".$row['requestid']."'));";
-			
-			$res2 =& $db->query($sql2);
-			if(PEAR::isError($res2))
-			{
-				die($res2->getMessage());
+		echo "<tr id='pendingRow' name='".$row["requestid"]."'>";
+		echo "<td>" . $row["requestid"] . "</td>";
+		echo "<td>" . $row["modcode"] . "</td>";
+		
+		//$modCodes[$modCodes.size] = $row["modcode"];
+		
+		if ($row["room"] == "")	// If there are no rooms, return 'Any'
+		{
+			echo "<td>Any</td>";
+		}
+		else
+		{
+			echo "<td>" . $row["room"] . "</td>";
+		}		
+		
+		// List facilities in one row instead of multiple			
+		$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
+		$res2 =& $db->query($sql2);
+		if(PEAR::isError($res2))
+		{
+			die($res2->getMessage());
+		}
+		// If there are no results, return 'Any'
+		if ($res2->numRows() == 0)
+		{
+			echo "<td>Any</td>";
+		}
+		else 
+		{
+			echo "<td>";
+			$facArray = array();
+			while ($row2 = $res2->fetchRow())
+			{		
+				array_push($facArray, $row2["facility"]);					
 			}
-			
-			if ($res2->numRows() == 0)
-			{
-				$fill = False;
-			}
-			else
-			{
-				$fill = True;
-			}
+			echo implode(", ", $facArray);		// Concatenate the elements of the array of facilities with a comma
+			echo "</td>";
+		}		
+		
+		// List weeks in one row instead of multiple		
+		$sql3 = "SELECT Weeks FROM WeekRequest WHERE RequestID = ".$row["requestid"].";";
+		$res3 =& $db->query($sql3);
+		if(PEAR::isError($res3))
+		{
+			die($res3->getMessage());
 		}
 		
-		if($fill){
-			echo "<tr id='pendingRow' name='".$row["requestid"]."'>";
-			echo "<td>" . $row["requestid"] . "</td>";
-			echo "<td>" . $row["modcode"] . "</td>";
+		echo "<td>";
+		$weekArray = array();
+		while ($row3 = $res3->fetchRow())
+		{
+			$weekString = $row3["weeks"];
+			$weekString = str_replace(",", "-", $weekString);		// Replace the , with a -
+			$weekString = str_replace("[", "", $weekString);		// Remove the opening bracket
+			$weekString = str_replace("]", "", $weekString);		// Remove the closing bracket
 			
-			//$modCodes[$modCodes.size] = $row["modcode"];
+			// Test for if the week start and end are the same Eg: 11-11
+			$commaPos = strpos($weekString, "-");	// Find position of dash
+			$leftSide = substr($weekString, 0, $commaPos);
+			$rightSide = substr($weekString, $commaPos + 1);
 			
-			if ($row["room"] == "")	// If there are no rooms, return 'Any'
+			if ($leftSide == $rightSide)
 			{
-				echo "<td>Any</td>";
+				$weekString = $leftSide;
+			}
+			
+			array_push($weekArray, $weekString);
+		}
+		
+		// Sort the weeks by ascending order
+		for ($i = 0; $i < count($weekArray); $i++)
+		{
+			// Get the left hand side of the currently selected week
+			// Set it to the lowest value
+			$currentWeek = $weekArray[$i];			
+			$currentDashPos = strpos($currentWeek, "-");	// Find position of dash
+			if ($currentDashPos === false)
+			{
+				$currentLeftSide = $currentWeek;
 			}
 			else
 			{
-				echo "<td>" . $row["room"] . "</td>";
-			}		
+				$currentLeftSide = substr($currentWeek, 0, $currentDashPos);
+			}
 			
-			// List facilities in one row instead of multiple	
-
-			if ($facility == 'Any')
+			$lowestWeekIndex = $i;
+			
+			for ($j = $i + 1; $j < count($weekArray); $j++)
 			{
-				$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
-				
-				$res2 =& $db->query($sql2);
-				if(PEAR::isError($res2))
+				// Get the left hand side of the next selected week, compare it to the lowest week
+				// Swap if the next selected week is lower
+				$nextWeek = $weekArray[$j];
+				$nextDashPos = strpos($nextWeek, "-");	// Find position of dash
+				if ($nextDashPos === false)
 				{
-					die($res2->getMessage());
-				}
-			}
-			
-			// If there are no results, return 'Any'
-			if ($res2->numRows() == 0 && $facility == 'Any')
-			{
-				echo "<td>Any</td>";
-			}
-			else 
-			{
-				echo "<td>";
-				$facArray = array();
-				while ($row2 = $res2->fetchRow())
-				{		
-					array_push($facArray, $row2["facility"]);					
-				}
-				echo implode(", ", $facArray);		// Concatenate the elements of the array of facilities with a comma
-				echo "</td>";
-			}		
-			
-			// List weeks in one row instead of multiple		
-			$sql3 = "SELECT Weeks FROM WeekRequest WHERE RequestID = ".$row["requestid"].";";
-			$res3 =& $db->query($sql3);
-			if(PEAR::isError($res3))
-			{
-				die($res3->getMessage());
-			}
-			
-			echo "<td>";
-			$weekArray = array();
-			while ($row3 = $res3->fetchRow())
-			{
-				$weekString = $row3["weeks"];
-				$weekString = str_replace(",", "-", $weekString);		// Replace the , with a -
-				$weekString = str_replace("[", "", $weekString);		// Remove the opening bracket
-				$weekString = str_replace("]", "", $weekString);		// Remove the closing bracket
-				
-				// Test for if the week start and end are the same Eg: 11-11
-				$commaPos = strpos($weekString, "-");	// Find position of dash
-				$leftSide = substr($weekString, 0, $commaPos);
-				$rightSide = substr($weekString, $commaPos + 1);
-				
-				if ($leftSide == $rightSide)
-				{
-					$weekString = $leftSide;
-				}
-				
-				array_push($weekArray, $weekString);
-			}
-			
-			// Sort the weeks by ascending order
-			for ($i = 0; $i < count($weekArray); $i++)
-			{
-				// Get the left hand side of the currently selected week
-				// Set it to the lowest value
-				$currentWeek = $weekArray[$i];			
-				$currentDashPos = strpos($currentWeek, "-");	// Find position of dash
-				if ($currentDashPos === false)
-				{
-					$currentLeftSide = $currentWeek;
+					$nextLeftSide = $nextWeek;
 				}
 				else
 				{
-					$currentLeftSide = substr($currentWeek, 0, $currentDashPos);
+					$nextLeftSide = substr($nextWeek, 0, $nextDashPos);
+				}			
+
+				$lowestDashPos = strpos($weekArray[$lowestWeekIndex], "-");
+				if ($lowestDashPos === false)
+				{
+					$lowestLeftSide = $weekArray[$lowestWeekIndex];
+				}
+				else
+				{
+					$lowestLeftSide = substr($weekArray[$lowestWeekIndex], 0, $lowestDashPos);
+				}	
+				
+				if ($nextLeftSide < $lowestLeftSide)
+				{
+					$lowestWeekIndex = $j;	
 				}
 				
-				$lowestWeekIndex = $i;
-				
-				for ($j = $i + 1; $j < count($weekArray); $j++)
-				{
-					// Get the left hand side of the next selected week, compare it to the lowest week
-					// Swap if the next selected week is lower
-					$nextWeek = $weekArray[$j];
-					$nextDashPos = strpos($nextWeek, "-");	// Find position of dash
-					if ($nextDashPos === false)
-					{
-						$nextLeftSide = $nextWeek;
-					}
-					else
-					{
-						$nextLeftSide = substr($nextWeek, 0, $nextDashPos);
-					}			
-
-					$lowestDashPos = strpos($weekArray[$lowestWeekIndex], "-");
-					if ($lowestDashPos === false)
-					{
-						$lowestLeftSide = $weekArray[$lowestWeekIndex];
-					}
-					else
-					{
-						$lowestLeftSide = substr($weekArray[$lowestWeekIndex], 0, $lowestDashPos);
-					}	
-					
-					if ($nextLeftSide < $lowestLeftSide)
-					{
-						$lowestWeekIndex = $j;	
-					}
-					
-				}			
-				
-				$tempWeek = $weekArray[$lowestWeekIndex];			
-				$weekArray[$lowestWeekIndex] = $weekArray[$i];			
-				$weekArray[$i] = $tempWeek;	
-			}				
-			echo implode(", ", $weekArray);			// Concatenate the elements of the array of weeks with a comma
-			echo "</td>";
+			}			
 			
-			echo "<td>" . $row["sessiontype"] . "</td>";
-			echo "<td>" . $row["sessionlength"] . "</td>";
-			
-			echo "<td>" . $row["day"] . "</td>";
-			echo "<td>" . $row["period"] . "</td>";
-			
-			echo "<td>" . $row["status"] . "</td>";
-			echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
-			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
-			echo "</tr>";
-		}
+			$tempWeek = $weekArray[$lowestWeekIndex];			
+			$weekArray[$lowestWeekIndex] = $weekArray[$i];			
+			$weekArray[$i] = $tempWeek;	
+		}				
+		echo implode(", ", $weekArray);			// Concatenate the elements of the array of weeks with a comma
+		echo "</td>";
+		
+		echo "<td>" . $row["sessiontype"] . "</td>";
+		echo "<td>" . $row["sessionlength"] . "</td>";
+		
+		echo "<td>" . $row["day"] . "</td>";
+		echo "<td>" . $row["period"] . "</td>";
+		
+		echo "<td>" . $row["status"] . "</td>";
+		echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
+		echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
+		echo "</tr>";
 	}
 	
 	echo "</table>";
