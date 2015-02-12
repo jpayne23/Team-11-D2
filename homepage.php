@@ -32,7 +32,7 @@
 		<div class="content">
 			<article class="topcontent">
 				<header>
-					<h2> General Information</h2>
+					<h2 id='genInfo'> General Information</h2>
 				</header>
 				<content>
 					<table>
@@ -253,8 +253,9 @@
 						</tr>						
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
-				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
+				<input type='button' id='btnAdvancedRequest' onclick='updateAdvancedBuilding("parkeast"); clearParkContent()' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
+				<input type='button' name = '' id='round' value='Next Round'/>
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -286,17 +287,20 @@
 			</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+
 			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
-			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu()'></input>
+			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
 			<div id='filterDiv' style='visibility: hidden;'>
 			</div>
-			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" onclick="alert('You nobhead!')"></input>
+			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" ></input>
 			<div id='submissions'>				
 			</div>
 		</div>
 		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
-			<input type="button" value="Filter Results" onclick=''></input>
+			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History")'></input>
+			<div id='filterDivHist' style='visibility: hidden;'>
+			</div>
 			<div id='history'></div>
 		</div>
 		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->

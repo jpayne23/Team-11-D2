@@ -23,7 +23,7 @@
 	//echo '<select name="building" id="building1" onchange="updateRoom()">';
 	while ($row = $res->fetchRow())
 		{
-			echo '<tr id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
+			echo '<tr class ="clickable" id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
 		}
 	//}
 	

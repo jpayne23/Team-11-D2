@@ -309,7 +309,7 @@ a:hover, a:active{
 	border-color: rgba(51, 0, 102, 1);
 	border-style: solid;
 	background:#FFFFF2;
-	margin:30px;
+	margin: 30px;
 	padding:6px;  
 	position:absolute;
 	width:90%;
@@ -371,8 +371,22 @@ a:hover, a:active{
 }
 
 /* CSS to make page responsive */
+#filterDivHist{
+	border-radius: 7px;
+	background:#ABCDEF;
+	margin:30px;
+	padding:6px;  
+	position:absolute;
+	width:40%;
+	height:40%;
+	top: 5%;
+	left: 5%;
+}
 
 @media only screen and (min-width: 480px) and (max-width: 1024px)
+
+
+
 {
 	.body{
 		width: 90%;
