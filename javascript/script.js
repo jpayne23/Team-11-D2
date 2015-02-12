@@ -193,6 +193,7 @@ $(document).ready(function()		// Execute all of this on load
 			var weeks = JSON.parse(data)[9];		
 			var facilities = JSON.parse(data)[10];
 			var rooms = JSON.parse(data)[11];
+			var groupSizes = JSON.parse(data)[12];
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -233,8 +234,8 @@ $(document).ready(function()		// Execute all of this on load
 				for (var i = 0; i < rooms.length; i++)
 				{
 					var id = rooms[i];
-					setSelectedRooms();
-					addRoomToList(id);
+					var groupSize = groupSizes[i];
+					setSelectedRooms(id, groupSize);
 				}
 			}
 			else 
@@ -393,6 +394,7 @@ $(document).ready(function()		// Execute all of this on load
 					requestID: requestID,
 					modCode: modCode,
 					rooms: rooms,
+					groupSizes: groupSizes,
 					selectedWeeks: selectedWeeks,
 					facilities: facilities,
 					sessionType: sessionType,
@@ -568,25 +570,16 @@ function getGroupSizes()
 	}
 }
 
-function setSelectedRooms()
+function setSelectedRooms(id, groupSize)
 {
 	newid = id.replace(/\./g, '');
-	if ($('#rm'+newid).length > 0 ) { //search for id existence
-        alert('room already added');
-		return;
-    }
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	x = parseInt(x); 
-	if(x>=3){ //check the no of rooms already chosen
-		alert("You cannot choose more than 3 rooms");
-		return;
-	}
-	
 	x++;
 	var xStr = x.toString();
+	var cap = groupSize;
 	$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
-	
-	var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+	var html= "<tr id="+("rm" + newid)+"><td>"+groupSize+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 	document.getElementById('chosenRooms').innerHTML += html;
 }
 //functions for advanced request-------------------------------------

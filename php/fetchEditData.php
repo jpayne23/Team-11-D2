@@ -84,7 +84,7 @@
 	array_push($results, $facilityArray);
 	
 	// List rooms in one row instead of multiple
-	$sql4 = "SELECT Room FROM RoomRequest ";
+	$sql4 = "SELECT Room, GroupSize FROM RoomRequest ";
 	$sql4 .= "LEFT JOIN RequestToRoom ON '$requestID' = RequestToRoom.RequestID ";		
 	$sql4 .= "WHERE RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	
 	$res4 =& $db->query($sql4);
@@ -94,11 +94,14 @@
 	}
 	
 	$roomsArray = array();
+	$groupSizeArray = array();
 	while ($row4 = $res4->fetchRow())
 	{
 		array_push($roomsArray, $row4['room']);
+		array_push($groupSizeArray, $row4['groupsize']);
 	}
 	array_push($results, $roomsArray);
+	array_push($results, $groupSizeArray);
 	
 	echo json_encode($results);
 ?>

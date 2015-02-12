@@ -14,6 +14,7 @@
 	$requestID = $_REQUEST['requestID'];
 	$modCode = $_REQUEST['modCode'];
 	$rooms = $_REQUEST['rooms'];
+	$groupSizes = $_REQUEST['groupSizes'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
 	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
@@ -137,12 +138,12 @@
 	}
 	
 	// Add selected rooms to the database
-	if (rooms != "null")
+	if ($rooms != "null")
 	{
 		for ($n = 0; $n < count($rooms); $n++)
 		{
 			$sql8 = "INSERT INTO RoomRequest (Room, GroupSize) ";
-			$sql8 .= "VALUES ('$rooms[$n]', 80)";
+			$sql8 .= "VALUES ('$rooms[$n]', " . (int)$groupSizes[$n]. ")";
 			
 			$res8 =& $db->query($sql8);
 			if(PEAR::isError($res8))

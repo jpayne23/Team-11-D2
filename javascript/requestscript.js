@@ -1,4 +1,3 @@
-var maxSize = 0;
 var times;
 $(document).ready(function()		// Execute all of this on load 
 {
@@ -17,12 +16,7 @@ $(document).ready(function()		// Execute all of this on load
 		var day = $('#popupTime').val();
 		$('#time').val(day);
 	
-	});
-	$('#groupSize').change(function(){
-		alert(maxSize);
-	});
-	
-	
+	});	
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
@@ -382,12 +376,12 @@ function openAdvancedSearchDiv()
 function closeAdvancedRequestDiv()
 {
 	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	document.getElementById('east').style.visibility= 'hidden'
+	/*document.getElementById('east').style.visibility= 'hidden'
 	document.getElementById('eastinfo').style.visibility= 'hidden';
 	document.getElementById('central').style.visibility= 'hidden';
 	document.getElementById('centralinfo').style.visibility= 'hidden';
 	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';
+	document.getElementById('westinfo').style.visibility= 'hidden';*/
 }
 
 function showEast()
