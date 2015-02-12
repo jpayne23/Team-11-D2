@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Login</title>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/style.css" type="text/css"/>
-	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
-	<script type="text/javascript">
-		function quickLogin() //remove me
-		{
-			document.getElementById("username").value = "cojo3";
-			document.getElementById("password").value = "password";
-		}
-	</script>
-</head>
+	<head>
+		<title>Login</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/style.css" type="text/css"/>
+		<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
+		<script type="text/javascript">
+			function quickLogin() //remove me
+			{
+				document.getElementById("username").value = "cojo3";
+				document.getElementById("password").value = "password";
+			}
+		</script>
+	</head>
 
-<body class="body">
-	<header class="mainHeader"> 
-		<img src="img/logo.png">
-		<nav>
-			<ul>
-				<li class="active"><a href="#">Login</a></li>
-				<li><a href="#">Close</a></li>
-			</ul>
-		</nav>
-	</header>
-	<div class="mainContent">
-		<div class="content">
-			<article class="centercontent">
+	<body class="loginBody">
+		<header class="loginHeader"> 
+			<img src="img/logo.png">
+		</header>
+		<div class="loginMainContent">
+			<article class="centerContent">
 				<header>
 					<h2>Login Details</h2>
 				</header>
-				<content>
+				<content class="loginMainContent">
 					<form action="php/login_script.php" method="POST">
 						<p>Username:</p>
 						<input id="username" name="username" type="text"></br>
@@ -38,14 +31,9 @@
 						<input id="password" name="password" type="password"></br></br>
 						<input id="submit" type="submit" value="Submit">
 						<input id="" type="button" value="Autofill" onclick="quickLogin();">
-					</form>
-						
+					</form>	
 				</content>
 			</article>
 		</div>
-	</div>
-	<footer class="mainFooter">
-		<p>Copyright &copy 2015: Team 11
-	</footer>
-</body>
+	</body>
 </html>

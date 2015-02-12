@@ -287,11 +287,12 @@
 			</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
-			<input type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
+
+			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
 			<div id='filterDiv' style='visibility: hidden;'>
 			</div>
-			<input type="button" id = 'submitRequests' value="Submit all requests"></input>
+			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" ></input>
 			<div id='submissions'>				
 			</div>
 		</div>
