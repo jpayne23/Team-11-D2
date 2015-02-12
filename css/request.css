@@ -366,3 +366,8 @@ button.closeAdvanced:hover{
    /* line-height: 0px;
     padding: 11px 3px;  */
 }
+
+.clickable
+{
+	cursor: pointer;
+}

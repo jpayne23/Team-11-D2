@@ -11,13 +11,11 @@
 	
 	$requestID = $_REQUEST['requestID'];
 	
-	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, Room, SessionType, SessionLength, Day, Period, SpecialRequirements ";
+	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, SessionType, SessionLength, Day, Period, SpecialRequirements ";
 	$sql .= "FROM Request ";
 	$sql .= "JOIN Module ON Request.ModCode = Module.ModCode ";
 	$sql .= "JOIN DayInfo ON Request.DayID = DayInfo.DayID ";
 	$sql .= "JOIN PeriodInfo ON Request.PeriodID = PeriodInfo.PeriodID ";
-	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
-	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
 	$sql .= "WHERE Request.RequestID = '$requestID'";
 	
 	$res =& $db->query($sql);
@@ -84,6 +82,23 @@
 		array_push($facilityArray, $row3['facility']);
 	}
 	array_push($results, $facilityArray);
+	
+	// List rooms in one row instead of multiple
+	$sql4 = "SELECT Room FROM RoomRequest ";
+	$sql4 .= "LEFT JOIN RequestToRoom ON '$requestID' = RequestToRoom.RequestID ";		
+	$sql4 .= "WHERE RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	
+	$res4 =& $db->query($sql4);
+	if(PEAR::isError($res4))
+	{
+		die($res4->getMessage());
+	}
+	
+	$roomsArray = array();
+	while ($row4 = $res4->fetchRow())
+	{
+		array_push($roomsArray, $row4['room']);
+	}
+	array_push($results, $roomsArray);
 	
 	echo json_encode($results);
 ?>

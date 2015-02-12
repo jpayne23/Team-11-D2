@@ -11,11 +11,36 @@
 	
 	$requestID = $_REQUEST['requestID'];
 	
-	$sql = "DELETE FROM Request WHERE RequestID = " . $requestID . ";";
-		
+	// Get roomRequestID for given requestID
+	$sql = "SELECT RoomRequestID FROM RequestToRoom WHERE RequestID = " . $requestID . ";";
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
+	}
+	
+	$roomRequestIDs = array();
+	while ($row = $res->fetchRow())
+	{
+		array_push($roomRequestIDs, $row['roomrequestid']);
+	}
+	
+	// Delete the room requests for given request id and room request id
+	for ($i = 0; $i < count($roomRequestIDs); $i++)
+	{
+		$sql = "DELETE FROM RoomRequest WHERE RoomRequestID = " . $roomRequestIDs[$i] . ";";
+		$res =& $db->query($sql);
+		if(PEAR::isError($res))
+		{
+			die($res->getMessage());
+		}
+	}
+	
+	// Delete main request
+	$sql2 = "DELETE FROM Request WHERE RequestID = " . $requestID . ";";		
+	$res2 =& $db->query($sql2);
+	if(PEAR::isError($res2))
+	{
+		die($res2->getMessage());
 	}
 ?>

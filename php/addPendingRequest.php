@@ -12,6 +12,8 @@
 	session_start();
 	$deptCode = $_SESSION['deptCode'];	
 	$modCode = $_REQUEST['modCode'];
+	$rooms = $_REQUEST['rooms'];
+	$groupSizes = $_REQUEST['groupSizes'];
 	$selectedWeeks = $_REQUEST['selectedWeeks'];
 	$facilities = $_REQUEST['facilities'];
 	$sessionType = $_REQUEST['sessionType'];
@@ -21,7 +23,7 @@
 	$day = $_REQUEST['day'];
 	$time = $_REQUEST['time'];
 	$round = $_REQUEST['round'];
-		
+	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
 	if ($selectedWeeks != "")
@@ -100,6 +102,28 @@
 		if(PEAR::isError($res4))
 		{
 			die($res4->getMessage());
+		}
+	}
+	
+	// Add rooms to the database
+	for ($n = 0; $n < count($rooms); $n++)
+	{
+		$sql5 = "INSERT INTO RoomRequest (Room, GroupSize) ";
+		$sql5 .= "VALUES ('$rooms[$n]', " . (int)$groupSizes[$n] . ")";
+		
+		$res5 =& $db->query($sql5);
+		if(PEAR::isError($res5))
+		{
+			die($res5->getMessage());
+		}
+		
+		$sql6 = "INSERT INTO RequestToRoom (RequestID, RoomRequestID) ";
+		$sql6 .= "VALUES ((SELECT MAX(RequestID) FROM Request), (SELECT MAX(RoomRequestID) FROM RoomRequest))";
+		
+		$res6 =& $db->query($sql6);
+		if(PEAR::isError($res6))
+		{
+			die($res6->getMessage());
 		}
 	}
 ?>

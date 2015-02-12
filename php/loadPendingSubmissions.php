@@ -29,10 +29,8 @@
 		$facility = 'Any';
 	}
 	
-	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
+	$sql = "SELECT Request.RequestID, ModCode, SessionType, SessionLength, Day, Period, Status ";
 	$sql .= "FROM Request ";
-	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
-	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";		// Add rooms to the results	
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
 	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";
 	$sql .= "WHERE Status = 'Pending'";
@@ -150,8 +148,7 @@
 	// Populate the table with rows from database	
 	while ($row = $res->fetchRow())
 	{
-		if ($facility != 'Any'){
-			
+		if ($facility != 'Any'){			
 			$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
 			$sql2 .= " AND '$facility' IN (SELECT Facility FROM Facility WHERE FacilityID IN ";
 			$sql2 .= " (SELECT FacilityID FROM FacilityRequest WHERE RequestID = '".$row['requestid']."'));";
@@ -179,17 +176,34 @@
 			
 			//$modCodes[$modCodes.size] = $row["modcode"];
 			
-			if ($row["room"] == "")	// If there are no rooms, return 'Any'
+			// List rooms in one row instead of multiple
+			$sql4 = "SELECT Room FROM RoomRequest ";
+			$sql4 .= "LEFT JOIN RequestToRoom ON " . $row["requestid"]  . " = RequestToRoom.RequestID ";		
+			$sql4 .= "WHERE RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	
+			$res4 =& $db->query($sql4);
+			if(PEAR::isError($res4))
+			{
+				die($res4->getMessage());
+			}
+			
+			// If there are no results, return 'Any'
+			if ($res4->numRows() == 0)
 			{
 				echo "<td>Any</td>";
 			}
-			else
+			else 
 			{
-				echo "<td>" . $row["room"] . "</td>";
+				$roomArray = array();
+				while ($row4 = $res4->fetchRow())
+				{
+					array_push($roomArray, $row4['room']);
+				}
+				echo "<td>";
+				echo implode(", ", $roomArray);
+				echo "</td>";
 			}		
 			
 			// List facilities in one row instead of multiple	
-
 			if ($facility == 'Any')
 			{
 				$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";

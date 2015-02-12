@@ -36,6 +36,24 @@ function loadGroupSize()//load the group size based on the module
 		{
 			$('#groupSize').val(data);
 		});
+
+	}
+	else
+	{
+		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
+		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
+		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
+		document.getElementById("groupSize").min = 1;
+		var rooms = getSelectedRooms();
+		var groupSizes = getGroupSizes();
+		var html= "";
+		for (var i = 0; i < rooms.length; i++)
+		{
+			html += "<tr id="+("rm" + rooms[i].replace(/\./g, ''))+"><td>"+groupSizes[i]+"</td><td> Students in room </td><td>"+rooms[i]+"</td><td id='del"+ ("rm" + rooms[i].replace(/\./g, '')) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+		}
+		$("#buildingcontent").append(html);
+	}
+
 }
 
 function populateTimetable()
@@ -308,11 +326,46 @@ function addRoomToList(id)
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
+
 	x++;
 	var str = x.toString();
 	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
 	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 	$('#chosenRooms').after(html);
+
+
+	maxCap = parseInt(document.getElementById("maxGroupSize").value);
+	reqCap = parseInt(document.getElementById("groupSize").value);
+	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
+	if (roomCap >= reqCap)
+	{
+		if (reqCap>0)
+		{
+			maxCap = maxCap-reqCap;
+			x++;
+			var xStr = x.toString();
+			var maxCapStr = maxCap.toString();
+			$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
+			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
+			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+			document.getElementById('chosenRooms').innerHTML += html;
+			$("#buildingcontent").append(html);
+			reqCap = maxCap;
+			alert("Added room to request!")
+		}
+		else
+		{
+				alert("Cannot book a room for 0 students!")
+		}
+	}
+	else
+	{
+		alert("Room not big enough!");
+	}
+	document.getElementById("maxGroupSize").value = maxCap;
+	document.getElementById("groupSize").value = reqCap;
+	document.getElementById("groupSize").max = reqCap;
+
 }
 
 function deleteRoom(id)
