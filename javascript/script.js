@@ -257,6 +257,7 @@ $(document).ready(function()		// Execute all of this on load
 			$('#submit').val("Edit");	
 			$('#submit').removeClass("none");
 			$('#submit').addClass(requestID);
+			$('#submit').addClass("homeButtons");
 		});
 	});
 	
@@ -435,6 +436,7 @@ $(document).ready(function()		// Execute all of this on load
 				$('#submit').val("Submit");	
 				$('#submit').removeClass();
 				$('#submit').addClass('none');
+				$('#submit').addClass("homeButtons");
 			}
 		}
 		else
@@ -761,16 +763,16 @@ function createAutoCompleteFacList()
           .tooltip()
           .appendTo( this.wrapper )
           .button({
-            icons: {
-              primary: "ui-icon-triangle-1-s"
-            },
-            text: false
+           // icons: {
+             // primary: "ui-icon-triangle-1-s"
+            //},
+            text: true
           })
           .removeClass( "ui-corner-all" )
-          .addClass( "custom-combobox-toggle ui-corner-right" )
-          .mousedown(function() {
-            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
-          })
+         // .addClass( "custom-combobox-toggle ui-corner-right" )
+         // .mousedown(function() {
+           // wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          //})
           .click(function() {
             input.focus();
             // Close if already visible
@@ -785,7 +787,7 @@ function createAutoCompleteFacList()
 	  
 	  //Created my own function to add a 'add' button to add the chosen facility to the list
 	  _createAddButton: function(){
-		var btn = $('<button>Add</button>').click(function () 
+		var btn = $('<button class="homeButtons">Add</button>').click(function () 
 		{
 			var fac = $('#facDropDown').val(); //get the value of the selected facility
 			if (fac != "")

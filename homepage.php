@@ -198,10 +198,10 @@
 						</tr>
 						</table>
 				</content>
-				<input type="submit" class="none" id="submit" value="Submit" />
-				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
-				<input type='button' id='reset' value='Reset All Fields'/>
-				<input type='button' name = '' id='round' value='Next Round'/>
+				<input type="submit" class="homeButtons none" id="submit" value="Submit" />
+				<input type='button' class="homeButtons" id='btnAdvancedRequest' value='Room Request'/>
+				<input type='button' class="homeButtons" id='reset' value='Reset All Fields'/>
+				<input type='button' class="homeButtons" name = '' id='round' value='Next Round'/>
 			</article>
 			<article class="bottomcontent">
 				<header>
@@ -216,7 +216,7 @@
 						</tr>
 						<tr>
 							<td>
-								<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
+								<input class="homeButtons" type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
 								<div id="matchedRoomsdiv"></div>
 							</td>
 						</tr>
