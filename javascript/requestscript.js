@@ -1,32 +1,14 @@
 var times;
 $(document).ready(function()		// Execute all of this on load 
 {
-	loadGroupSize();
-	populateTimetable(); //function to add the tiles to the timetable
-	
-	//These functions load and update the day and time chosen between the main page and the popup room.
-	$('#popupDay').val($('#day').val());
-	$('#popupDay').change(function(){
-		var day = $('#popupDay').val();
-		$('#day').val(day);
-	});
-	$('#popupTime').val($('#time').val());
-	$('#popupTime').change(function(){
-		var day = $('#popupTime').val();
-		$('#time').val(day);
-	
-	});	
-	updateAdvancedBuilding("parkeast");
+
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
-
-
-
- function loadGroupSize()//load the group size based on the module
- {
- 	x = $('#chosenRooms').attr('data-norooms');
- 	if (x == "0")
+function loadGroupSize()//load the group size based on the module
+{
+	x = $('#chosenRooms').attr('data-norooms');
+	if (x == "0")
  	{
  		var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
  		$.get("php/loadGroupSize.php?" + modCode, function(data)
@@ -38,7 +20,7 @@ $(document).ready(function()		// Execute all of this on load
  			$('#groupSize').val(data);
  		});
  	}
- 	else
+	else
  	{
  		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
  		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
@@ -52,9 +34,10 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			html += "<tr id="+("rm" + rooms[i].replace(/\./g, ''))+"><td>"+groupSizes[i]+"</td><td> Students in room </td><td>"+rooms[i]+"</td><td id='del"+ ("rm" + rooms[i].replace(/\./g, '')) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 		}
+		clearBuildingContent();
 		$("#buildingcontent").append(html);
- 	}
- }
+	}
+}
 
 function populateTimetable()
 {
@@ -62,10 +45,10 @@ function populateTimetable()
 	for(var d = 1; d<6; d++)
 	{
 		for(var p = 10; p > 1; p--) //go backwards as we are inserting the tiles in reverse order
-			{
-				id = "d" + d + "p" + (p-1);
-				$('#d'+d+'').after("<td class= 'timeslot' data-selected='0' data-available='' data-display='' id="+id+">Fully Available </td>");
-			}
+		{
+			id = "d" + d + "p" + (p-1);
+			$('#d'+d+'').after("<td class= 'timeslot' data-selected='0' data-available='' data-display='' id="+id+">Fully Available </td>");
+		}
 	}
 }
 
@@ -312,7 +295,7 @@ function addRoomToList(id)
 			var maxCapStr = maxCap.toString();
 			$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
-			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+			var html= "<tr id="+("rm" + newid)+"><td id ='cap"+newid+"'>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
 			$("#buildingcontent").append(html);
 			reqCap = maxCap;
@@ -336,11 +319,22 @@ function addRoomToList(id)
 function deleteRoom(id) //need to implement group capacity, increment when room is deleted
 {
 	var roomid = id.substr(3,id.length);
-	$( '#'+roomid ).remove();
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	if(x>0)
 		x--;
 	var str = x.toString();
 	$('#chosenRooms').attr('data-norooms',''+str+''); //alter the value of the rooms added
-	
+	var groupSize = $('#chosenRooms').attr('data-maxcap');
+	groupSize = parseInt(groupSize);
+	var justroomid = roomid.substr(2,id.length);
+	var capChange = document.getElementById('cap'+justroomid).innerHTML;
+	capChange = parseInt(capChange);
+	groupSize = groupSize+capChange;
+	var groupSizeStr = groupSize.toString();
+	$('#chosenRooms').attr('data-maxcap',''+groupSizeStr+'');
+	while ($( '#'+roomid ).length > 0)
+	{
+		$( '#'+roomid ).remove();
+	}
+	loadGroupSize();
 }
