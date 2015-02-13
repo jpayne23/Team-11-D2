@@ -197,7 +197,7 @@
 							</table>	
 						</tr>						
 				</content>
-				<input type="submit" class="none" id="submit" value="Submit" />
+				<input type="submit" class="none" id="submitAdhoc" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
 			</article>
