@@ -22,7 +22,7 @@
 			<ul>
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#" id='pendingButton'>Pending</a></li>
-				<li><a href="#">Ad Hoc</a></li>
+				<li><a href="#" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
@@ -249,6 +249,10 @@
 			<div id='filterDivHist' style='visibility: hidden;'>
 			</div>
 			<div id='history'></div>
+		</div>
+		<div id='popupAdhocDiv' style='visibility: hidden;'>
+			<input type="button" value="Close me!" onclick='closeDiv("popupAdhocDiv");'></input>
+			<div id='adhoc'></div>
 		</div>
 		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>
