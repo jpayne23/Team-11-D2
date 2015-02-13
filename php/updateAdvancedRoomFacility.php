@@ -47,7 +47,7 @@
 		echo "<img src='".$row['url']."' alt='http://co-project.lboro.ac.uk/team11/Prakash/img/noImg.jpg' height='150' width='150'>";
 		echo "</br>";
 	}
-	echo "<b>Facilities:<b> </br>";
+	echo "<b><u>Facilities:</u></b> </br>";
 	while ($row = $res->fetchRow())
 	{
 		echo $facList[$row["facility"]-1]["facility"]."</br>";

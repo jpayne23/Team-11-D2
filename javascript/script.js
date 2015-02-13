@@ -811,7 +811,7 @@ function createAutoCompleteFacList()
           .val( value )
           .attr( "title", "" )
 		  .attr("id","facDropDown")
-          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          //.addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
           .autocomplete({
             delay: 0,
             minLength: 0,
@@ -837,21 +837,18 @@ function createAutoCompleteFacList()
         var input = this.input,
           wasOpen = false;
  
-        $( "<a>" )
-          .attr( "tabIndex", -1 )
-          .attr( "title", "Show All Items" )
-		  .attr("id",'btnShowAllItems')
-          .tooltip()
-          .appendTo( this.wrapper )
-          .button({
-            icons: {
-              primary: "ui-icon-triangle-1-s"
-            },
-            text: false
-          })
-          .removeClass( "ui-corner-all" )
-          .addClass( "custom-combobox-toggle ui-corner-right" )
-          .mousedown(function() {
+        
+		$('<button>Show All Facilities</button>')
+		.attr( "tabIndex", -1 )
+			.attr("id",'btnShowAllItems')
+			.tooltip()
+			.appendTo( this.wrapper )
+
+
+		//$('#facDropDown').after(btn); //append this button to the screen
+		
+		
+		.mousedown(function() {
             wasOpen = input.autocomplete( "widget" ).is( ":visible" );
           })
           .click(function() {
@@ -864,6 +861,33 @@ function createAutoCompleteFacList()
             // Pass empty string as value to search for, displaying all results
             input.autocomplete( "search", "" );
           });
+		
+
+		
+		/*
+		$( "<a>" )
+          
+          .button({
+            icons: {
+              //primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          //.addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });*/
       },
 	  
 	  //Created my own function to add a 'add' button to add the chosen facility to the list
