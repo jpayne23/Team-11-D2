@@ -105,25 +105,29 @@
 		}
 	}
 	
+	
 	// Add rooms to the database
 	for ($n = 0; $n < count($rooms); $n++)
 	{
-		$sql5 = "INSERT INTO RoomRequest (Room, GroupSize) ";
-		$sql5 .= "VALUES ('$rooms[$n]', " . (int)$groupSizes[$n] . ")";
-		
-		$res5 =& $db->query($sql5);
-		if(PEAR::isError($res5))
+		if($rooms != "null")
 		{
-			die($res5->getMessage());
-		}
-		
-		$sql6 = "INSERT INTO RequestToRoom (RequestID, RoomRequestID) ";
-		$sql6 .= "VALUES ((SELECT MAX(RequestID) FROM Request), (SELECT MAX(RoomRequestID) FROM RoomRequest))";
-		
-		$res6 =& $db->query($sql6);
-		if(PEAR::isError($res6))
-		{
-			die($res6->getMessage());
-		}
+			$sql5 = "INSERT INTO RoomRequest (Room, GroupSize) ";
+			$sql5 .= "VALUES ('$rooms[$n]', " . (int)$groupSizes[$n] . ")";
+			
+			$res5 =& $db->query($sql5);
+			if(PEAR::isError($res5))
+			{
+				die($res5->getMessage());
+			}
+			
+			$sql6 = "INSERT INTO RequestToRoom (RequestID, RoomRequestID) ";
+			$sql6 .= "VALUES ((SELECT MAX(RequestID) FROM Request), (SELECT MAX(RoomRequestID) FROM RoomRequest))";
+			
+			$res6 =& $db->query($sql6);
+			if(PEAR::isError($res6))
+			{
+				die($res6->getMessage());
+			}			
+		}		
 	}
 ?>
