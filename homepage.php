@@ -6,10 +6,11 @@
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
-	
+	<link rel="stylesheet" href="css/request.css" type="text/css" />
 	<script src="javascript/jquery-2.1.1.js"></script>
 	<script src="javascript/jquery-ui.js"></script>
 	<script src="javascript/script.js"></script>
+	<script src="javascript/requestscript.js"></script>
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 

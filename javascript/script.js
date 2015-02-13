@@ -143,8 +143,6 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 		{
 			$('#modCodeDiv').html(data);
-		}).done(function(){
-			loadGroupSize();
 		});
 	});
 	
@@ -479,7 +477,26 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		$.get("php/loadPopupRequest.php", function(data)
 		{
-			$('#popupRequestDiv').html(data);
+			$('#popupRequestDiv').html(data)
+		}).done(function()
+		{
+			addTitles();
+			openDiv("popupRequestDiv");
+			loadGroupSize();
+			populateTimetable(); //function to add the tiles to the timetable
+			
+			//These functions load and update the day and time chosen between the main page and the popup room.
+			$('#popupDay').val($('#day').val());
+			$('#popupDay').change(function(){
+				var day = $('#popupDay').val();
+				$('#day').val(day);
+			});
+			$('#popupTime').val($('#time').val());
+			$('#popupTime').change(function(){
+				var day = $('#popupTime').val();
+				$('#time').val(day);
+			});	
+			updateAdvancedBuilding("parkeast");
 		});
 		openDiv("popupRequestDiv");
 	});
@@ -606,14 +623,6 @@ function setSelectedRooms(id, groupSize)
 	document.getElementById('chosenRooms').innerHTML += html;
 }
 //functions for advanced request-------------------------------------
-function loadGroupSize()//load the group size based on the module
-{
-	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
-		$.get("php/loadGroupSize.php?" + modCode, function(data)
-		{
-			$('#groupSize').val(data);
-		});
-}
 
 function populateTimetable()
 {
