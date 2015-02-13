@@ -139,6 +139,6 @@
 	
 	echo "</table>";
 	
-	echo "<input type='button' value='Filter Away!' onclick='filterTable(\"$source\");alert(\"click\");'></input>";
+	echo "<input type='button' value='Filter Away!' onclick='filterTable(\"$source\");'></input>";
 	
 ?>

@@ -1087,11 +1087,10 @@ function filterTable(source)
 	
 	if(source == "History")
 	{
-		alert("Here");
 		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
-		$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
+		$.get("php/loadHistorySubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
 		{
-			$('#submissions').html(data);
+			$('#history').html(data);
 		});
 		closeDiv('filterDivHist');
 	}
