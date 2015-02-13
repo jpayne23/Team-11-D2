@@ -10,20 +10,19 @@
 	<script src="javascript/jquery-2.1.1.js"></script>
 	<script src="javascript/jquery-ui.js"></script>
 	<script src="javascript/script.js"></script>
-	<!--<script src="javascript/requestscript.js"></script>-->
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 
 <body class="body">
-	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
 	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
+	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
 			<ul>
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#" id='pendingButton'>Pending</a></li>
-				<li><a href="#">Ad Hoc</a></li>
+				<li><a href="#" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
@@ -196,11 +195,13 @@
 							</td>
 						</tr>
 						-->
+						<tr>
+							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>							
 							</table>	
 						</tr>						
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
-				<input type='button' id='btnAdvancedRequest' onclick='' value='Room Request'/>
+				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
 				<input type='button' name = '' id='round' value='Next Round'/>
 			</article>
@@ -228,24 +229,30 @@
 				<header>
 					<h2> Chosen Rooms </h2>
 				</header>
-				<table id='chosenRooms' data-norooms=0>
-				
+				<table id='chosenRooms' data-norooms=0 data-maxcap>				
 				</table>
 			</article>
 		</div>
 		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
-			<input type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu()'></input>
+
+			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
 			<div id='filterDiv' style='visibility: hidden;'>
 			</div>
-			<input type="button" id = 'submitRequests' value="Submit all requests" onclick="alert('You nobhead!')"></input>
+			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" ></input>
 			<div id='submissions'>				
 			</div>
 		</div>
 		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");'></input>
-			<input type="button" value="Filter Results" onclick=''></input>
+			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
+			<div id='filterDivHist' style='visibility: hidden;'>
+			</div>
 			<div id='history'></div>
+		</div>
+		<div id='popupAdhocDiv' style='visibility: hidden;'>
+			<input type="button" value="Close me!" onclick='closeDiv("popupAdhocDiv");'></input>
+			<div id='adhoc'></div>
 		</div>
 		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>

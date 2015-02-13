@@ -1,44 +1,60 @@
-var maxSize = 0;
 var times;
 $(document).ready(function()		// Execute all of this on load 
 {
-	addTitles();
-	updateAdvancedBuilding("parkeast");
 	loadGroupSize();
 	populateTimetable(); //function to add the tiles to the timetable
-
+	
 	//These functions load and update the day and time chosen between the main page and the popup room.
 	$('#popupDay').val($('#day').val());
-	$('#popupTime').val($('#time').val());
 	$('#popupDay').change(function(){
 		var day = $('#popupDay').val();
 		$('#day').val(day);
-	
 	});
+	$('#popupTime').val($('#time').val());
 	$('#popupTime').change(function(){
 		var day = $('#popupTime').val();
 		$('#time').val(day);
 	
-	});
-	$('#groupSize').change(function(){
-		alert(maxSize);
-	});
-	
-	
+	});	
+	updateAdvancedBuilding("parkeast");
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
 
 
 
-function loadGroupSize()//load the group size based on the module
-{
-	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
-		$.get("php/loadGroupSize.php?" + modCode, function(data)
+ function loadGroupSize()//load the group size based on the module
+ {
+ 	x = $('#chosenRooms').attr('data-norooms');
+ 	if (x == "0")
+ 	{
+ 		var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
+ 		$.get("php/loadGroupSize.php?" + modCode, function(data)
+ 		{
+ 			$('#maxGroupSize').val(data);
+ 			document.getElementById("groupSize").max = data;
+			document.getElementById("groupSizeVal").value = data;
+ 			document.getElementById("groupSize").min = 1;
+ 			$('#groupSize').val(data);
+ 		});
+ 	}
+ 	else
+ 	{
+ 		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
+ 		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
+ 		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
+		document.getElementById("groupSizeVal").value = $('#chosenRooms').attr('data-maxcap');
+ 		document.getElementById("groupSize").min = 1;
+		var rooms = getSelectedRooms();
+		var groupSizes = getGroupSizes();
+		var html= "";
+		for (var i = 0; i < rooms.length; i++)
 		{
-			$('#groupSize').val(data);
-		});
-}
+			html += "<tr id="+("rm" + rooms[i].replace(/\./g, ''))+"><td>"+groupSizes[i]+"</td><td> Students in room </td><td>"+rooms[i]+"</td><td id='del"+ ("rm" + rooms[i].replace(/\./g, '')) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+		}
+		$("#buildingcontent").append(html);
+ 	}
+ }
 
 function populateTimetable()
 {
@@ -53,37 +69,12 @@ function populateTimetable()
 	}
 }
 
-function addTitles(){
-	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
-	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
-	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
-}
-
-function closeAdvancedRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	document.getElementById('east').style.visibility= 'hidden'
-	document.getElementById('eastinfo').style.visibility= 'hidden';
-	document.getElementById('central').style.visibility= 'hidden';
-	document.getElementById('centralinfo').style.visibility= 'hidden';
-	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';
-}
-
 function clearParkContent(){
-	$("#buildingcontent").html("");
+	$("#parkcontent").html("");
 }
 
 function clearBuildingContent(){
 	$("#buildingcontent").html("");
-}
-
-function hideParkContent()
-{
-	return;
-	document.getElementById('eastinfo').style.visibility= 'hidden'
-	document.getElementById('centralinfo').style.visibility= 'hidden'
-	document.getElementById('westinfo').style.visibility= 'hidden'
 }
 
 function clearRoomContent()
@@ -98,25 +89,21 @@ function updateAdvancedBuilding(value)
 	//string = string.toUpperCase();
 	//alert(string);
 	//document.getElementById("parkcontent").style.background-color= "#CC0066";
-	$('#parkeast').css("background-color", "#CC0066");
+	
+	/*$('#parkeast').css("background-color", "#CC0066");
 	$('#parkcentral').css("background-color", "#CC0066");
 	$('#parkwest').css("background-color", "#CC0066");
 	$('#'+value).css("background-color", "#330066");
-
+	*/
 	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
 	{
-		//alert(data);
-		//data = "'" + data + "'";
-		//content = '<a id="prev" title="Previous Slide">Previous Slide</a><a id="next" title="Next Slide">Next Slide</a>'
-		//alert(content);
-		addTitles();
-		$("#parkcontent").append(data);
+		$("#parkcontent").html(data);
 	});
 }
 
+
 function updateAdvancedRoomFacility(value)
 	{
-		$("#timetable").css("opacity", "1");// make the timetable visible
 		//get the information about chosen room, and show as popup
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
@@ -143,7 +130,6 @@ function updateAdvancedRoomFacility(value)
 			for(var i =0; i < times.length;i++)
 			{
 				j = 1;
-			
 				id = times[i]['id'];
 				length = times[i]['data-length'];
 				var weeks = times[i]['data-weeks'];
@@ -156,9 +142,6 @@ function updateAdvancedRoomFacility(value)
 				$('#'+id).attr('class','timeslotbooked');
 				$('#'+id).html('Available');
 				displayAvailableWeeks(id, value);
-				
-				
-		
 				while(j < (length))
 				{
 					//str = id.substr(3,1);
@@ -177,8 +160,6 @@ function updateAdvancedRoomFacility(value)
 					displayAvailableWeeks(newid, value); //function to show the user the weeks this timeslot is available
 					j++;
 				}
-				
-				
 			}
 		}); // end $.get
 		
@@ -300,24 +281,15 @@ function updateAdvancedRoom(value)
 	
 	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
 	{
-		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
 	});
-}
-
-function timeOpacity(){
-	//$("#timetable").css("background-color", "green");
-	//var value = document.getElementById("time");
-	//value.style.opacity= "0.5";
-	//$("#timetable").css("background-color", "brown");
-	$("#timetable").css("opacity", "1");
 }
 
 function addRoomToList(id)
 {
 	newid = id.replace(/\./g, '');
 	if ($('#rm'+newid).length > 0 ) { //search for id existence
-        alert('Room has already added');
+        alert('room already added');
 		return;
     }
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
@@ -326,16 +298,7 @@ function addRoomToList(id)
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-	else{
-		alert("You have selected room " + newid)
-	}
-	x++;
-	var str = x.toString();
-	$('#chosenRooms').attr('data-norooms',''+str+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-	$('#chosenRooms').after(html);
-	$('#selectedrooms').after(html);
-	
+
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
@@ -351,13 +314,13 @@ function addRoomToList(id)
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
 			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
-			$("#selectedrooms").append(html);
+			$("#buildingcontent").append(html);
 			reqCap = maxCap;
 			alert("Added room to request!")
 		}
 		else
 		{
-				alert("Cannot book a room for 0 students!")
+			alert("Cannot book a room for 0 students!")
 		}
 	}
 	else
@@ -366,11 +329,11 @@ function addRoomToList(id)
 	}
 	document.getElementById("maxGroupSize").value = maxCap;
 	document.getElementById("groupSize").value = reqCap;
-	document.getElementById("groupSize").max = reqCap;
-	
+	document.getElementById("groupSize").max = maxCap;
+	document.getElementById("groupSizeVal").value = maxCap;
 }
 
-function deleteRoom(id)
+function deleteRoom(id) //need to implement group capacity, increment when room is deleted
 {
 	var roomid = id.substr(3,id.length);
 	$( '#'+roomid ).remove();
@@ -379,167 +342,5 @@ function deleteRoom(id)
 		x--;
 	var str = x.toString();
 	$('#chosenRooms').attr('data-norooms',''+str+''); //alter the value of the rooms added
-}
-
-function openAdvancedSearchDiv()
-{
-	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'visible';
-}
-function closeAdvancedRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	document.getElementById('east').style.visibility= 'hidden'
-	document.getElementById('eastinfo').style.visibility= 'hidden';
-	document.getElementById('central').style.visibility= 'hidden';
-	document.getElementById('centralinfo').style.visibility= 'hidden';
-	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';
-}
-
-function showEast()
-{
-	if(document.getElementById('parkcentral').style.backgroundColor= '##330066')
-	{
-		document.getElementById('parkcentral').style.backgroundColor= '#CC0066'
-	}
-	if(document.getElementById('parkwest').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkwest').style.backgroundColor= '#CC0066'
-	}
-	document.getElementById('parkeast').style.backgroundColor= '#330066'
 	
-	if(document.getElementById('central').style.visibility= 'visible')
-	{
-		document.getElementById('central').style.visibility= 'hidden'
-	}
-	if(document.getElementById('west').style.visibility= 'visible')
-	{
-		document.getElementById('west').style.visibility= 'hidden'
-	}
-	document.getElementById('east').style.visibility= 'visible'
-}
-
-function showEastContent()
-{
-	if(document.getElementById('parkeast').style.height= '40')
-	{	
-		document.getElementById('parkeast').style.height= '20%'
-	}
-	if(document.getElementById('parkeast').style.height= '20%')
-	{	
-		document.getElementById('parkeast').style.height= '40%'
-	}
-	if(document.getElementById('centralinfo').style.visibility= 'visible')
-	{
-		document.getElementById('centralinfo').style.visibility= 'hidden'
-	}
-	if(document.getElementById('westinfo').style.visibility= 'visible')
-	{
-		document.getElementById('westinfo').style.visibility= 'hidden'
-	}
-	document.getElementById('eastinfo').style.visibility= 'visible'
-}
-
-function showCentral()
-{	
-	if(document.getElementById('parkeast').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkeast').style.backgroundColor= '#CC0066'
-	}
-	if(document.getElementById('parkwest').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkwest').style.backgroundColor= '#CC0066'
-	}
-	document.getElementById('parkcentral').style.backgroundColor= '#330066'
-	
-	if(document.getElementById('east').style.visibility= 'visible')
-	{
-		document.getElementById('east').style.visibility= 'hidden'
-	}	
-	if(document.getElementById('west').style.visibility= 'visible')
-	{
-		document.getElementById('west').style.visibility= 'hidden'
-	}
-	document.getElementById('central').style.visibility= 'visible'
-}
-
-function showCentralContent()
-{
-	if(document.getElementById('eastinfo').style.visibility= 'visible')
-	{
-		document.getElementById('eastinfo').style.visibility= 'hidden'
-	}
-	if(document.getElementById('westinfo').style.visibility= 'visible')
-	{
-		document.getElementById('westinfo').style.visibility= 'hidden'
-	}
-	document.getElementById('centralinfo').style.visibility= 'visible'
-}
-
-function showWest()
-{
-	if(document.getElementById('parkeast').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkeast').style.backgroundColor= '#CC0066'
-	}
-	if(document.getElementById('parkcentral').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkcentral').style.backgroundColor= '#CC0066'
-	}
-	document.getElementById('parkwest').style.backgroundColor= '#330066'
-	
-	if(document.getElementById('east').style.visibility= 'visible')
-	{
-		document.getElementById('east').style.visibility= 'hidden'
-	}
-	if(document.getElementById('central').style.visibility= 'visible')
-	{
-		document.getElementById('central').style.visibility= 'hidden'
-	}
-	document.getElementById('west').style.visibility= 'visible'
-}
-
-function showWestContent()
-{
-	if(document.getElementById('eastinfo').style.visibility= 'visible')
-	{
-		document.getElementById('eastinfo').style.visibility= 'hidden'
-	}
-	if(document.getElementById('centralinfo').style.visibility= 'visible')
-	{
-		document.getElementById('centralinfo').style.visibility= 'hidden'
-	}
-	document.getElementById('westinfo').style.visibility= 'visible'
-}
-
-function hideParkContent()
-{
-	return;
-	document.getElementById('eastinfo').style.visibility= 'hidden'
-	document.getElementById('centralinfo').style.visibility= 'hidden'
-	document.getElementById('westinfo').style.visibility= 'hidden'
-}
-function clearRoomContent()
-{
-	$('#roominfo').html("");
-}
-
-function openPendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'visible';
-}
-
-function closePendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
-}
-
-function openPopupRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'visible';
-}
-
-function closePopupRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
 }

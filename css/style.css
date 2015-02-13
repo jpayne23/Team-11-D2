@@ -1,10 +1,117 @@
-body {
+/* ------------------------------------------------- Login Page CSS -------------------------------------*/
+
+.loginBody{
+	margin: 10% auto;
+	width: 50%;
+	clear: both;
+	background-color: #FFFFF2;
+}
+
+.loginHeader{
+	width: 100%;
+}
+
+.loginHeader  img {
+	width:30%;
+	height:auto;
+	margin: auto;
+}
+
+.loginHeader  nav{
+	background-color:#CC0066;
+	height: 40px;
+	width: 15%;
+	float: center;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.loginHeader nav ul {
+	list-style:none;
+	margin: auto;
+}
+
+.loginHeader nav ul  li{
+	float:center;
+	display: inline;
+}
+
+.loginHeader nav a:link, .mainHeader nav a:visited{
+	color: #FFFFFF;
+	display: inline-block;
+	padding: 10px 20px;
+	height:20px;
+	float:center;
+}
+
+.loginHeader nav a:hover, .loginHeader nav a:active{
+
+}
+
+.loginHeader nav .active  a:link, .loginHeader nav .active a:visited{
+	background-color: #330066;
+	text-shadow: none;
+}
+
+.loginHeader nav ul li a{
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+}
+
+.loginMainContent{
+	width: 100%;
+	margin: auto;
+}
+
+
+.centerContent{
+	color: #FFFFFF;
+	background-color: rgba(51,0,102,1);
+	padding: 1% 2%;
+	/*border-right: 4px solid #CC0066;
+	border-bottom: 5px solid #CC0066;*/
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;*/==
+}
+
+.loginFooter{
+	width: 60%;
+	height: 40px;
+	margin: auto;
+	background-color: #CC0066;
+	color: #FFFFFF;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+}
+
+.loginFooter p {
+	width: 92%;
+	margin: 20px auto;
+}
+
+
+
+
+
+/*--------------------------------------------Main Content------------------------------------------------------------------*/
+
+
+.body{
 	background-color:#FFFFF2;
 	font-size:87.5%;
-	font-family: Arial, 'Lucida Sans Unicode';
+	font-family: Arial, Lucida Sans Unicode;
 	line-height:1.5;
 	text-align: left;
+	margin: 0 auto;
+	width: 80%;
+	clear: both;
 }
+
 a{
 	text-decoration: none;
 }
@@ -19,11 +126,7 @@ a:hover, a:active{
 	color: #FFFFFF;
 }
 
-.body{
-	margin: 0 auto;
-	width: 80%;
-	clear: both;
-}
+
 
 .mainHeader  img {
 	width:30%;
@@ -101,20 +204,7 @@ a:hover, a:active{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;*/==
 }
-.centercontent{
-	color: #FFFFFF;
-	width: 45%;
-	margin-top: 2%;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: rgba(51,0,102,1);
-	padding: 1% 2%;
-	/*border-right: 4px solid #CC0066;
-	border-bottom: 5px solid #CC0066;*/
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;*/==
-}
+
 .bottomcontent{
 	color: #FFFFFF;
 	float: left;
@@ -128,23 +218,7 @@ a:hover, a:active{
 	-webkit-border-radius: 5px;
 }
 
-.mainFooter{
-	width: 100%;
-	height: 40px;
-	float: left;
-	background-color: #CC0066;
-	color: #FFFFFF;
-	margin: 2% 0;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	
-}
 
-.mainFooter p {
-	width: 92%;
-	margin: 20px auto;
-}
 
 #park1
 {
@@ -161,17 +235,7 @@ a:hover, a:active{
 	width: 100px;
 }
 
-#popupHistoryDiv{
-	border-radius: 7px;
-	background:#6b6a63;
-	margin:30px;
-	padding:6px;  
-	position:absolute;
-	width:90%;
-	height:90%;
-	top: 5%;
-	left: 5%;
-}
+
 
 #weekSelector .ui-selecting{ 
 	background: #FECA40; 
@@ -200,14 +264,34 @@ a:hover, a:active{
 
 #popupPendingDiv{
 	border-radius: 7px;
-	background:#6b6a63;
-	margin:30px;
+	border: 4px solid #CC0066;
+	height: inherit;
+	color: #FFFFFF;
+	overflow: auto;
+	background: rgba(51,0,102,1);
+	margin: auto;
 	padding:6px;  
 	position:absolute;
 	width:90%;
-	height:90%;
 	top: 5%;
 	left: 5%;
+}
+
+.pendingButton{
+	background-color: #CC0066;
+	color: #FFFFFF;
+	height: 30px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#submissionsTable{
+	border-color: #FFFFFF;
+	text-align: center;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 #popupRequestDiv{
@@ -215,13 +299,35 @@ a:hover, a:active{
 	border-color: rgba(51, 0, 102, 1);
 	border-style: solid;
 	background:#FFFFF2;
-	margin: auto;
+	margin: 30px;
 	padding:6px;  
 	position:absolute;
 	width:90%;
 	height:98%;
 	top: 3%;
 	left: 3%;
+}
+#popupHistoryDiv{
+	border-radius: 7px;
+	border: 4px solid #CC0066;
+	height: inherit;
+	color: #FFFFFF;
+	background: rgba(51,0,102,1);
+	margin: auto;
+	padding:6px;  
+	overflow: auto;
+	position:absolute;
+	width:90%;
+	top: 5%;
+	left: 5%;
+}
+
+#historyTable{
+	border-color: #FFFFFF;
+	text-align: center;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 #filterDiv{
@@ -236,7 +342,41 @@ a:hover, a:active{
 	left: 5%;
 }
 
-@media only screen and (min-width: 150px) and (max-width: 600px)
+.mainFooter{
+	width: 100%;
+	height: 40px;
+	float: left;
+	background-color: #CC0066;
+	color: #FFFFFF;
+	margin: 2% 0;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+}
+
+.mainFooter p {
+	width: 92%;
+	margin: 20px auto;
+}
+
+/* CSS to make page responsive */
+#filterDivHist{
+	border-radius: 7px;
+	background:#ABCDEF;
+	margin:30px;
+	padding:6px;  
+	position:absolute;
+	width:40%;
+	height:40%;
+	top: 5%;
+	left: 5%;
+}
+
+@media only screen and (min-width: 480px) and (max-width: 1024px)
+
+
+
 {
 	.body{
 		width: 90%;

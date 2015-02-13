@@ -23,8 +23,7 @@
 	
 		while ($row = $res->fetchRow())
 		{
-			echo '<tr id ="'.$row["room"].'" class = "contentrows" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
-			echo '<td> </br> </td>';
+			echo '<tr> <td>'.$row["room"].'</td><td> <input id ="'.$row["room"].'" type="button" value="Get Info" onclick="updateAdvancedRoomFacility(this.id)"> </input> </td></tr>';
 		}
 
 	
