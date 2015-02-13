@@ -3,7 +3,7 @@ $(document).ready(function()		// Execute all of this on load
 {
 	loadGroupSize();
 	populateTimetable(); //function to add the tiles to the timetable
-
+	
 	//These functions load and update the day and time chosen between the main page and the popup room.
 	$('#popupDay').val($('#day').val());
 	$('#popupTime').val($('#time').val());
@@ -33,6 +33,7 @@ $(document).ready(function()		// Execute all of this on load
  		{
  			$('#maxGroupSize').val(data);
  			document.getElementById("groupSize").max = data;
+			document.getElementById("groupSizeVal").value = data;
  			document.getElementById("groupSize").min = 1;
  			$('#groupSize').val(data);
  		});
@@ -42,6 +43,7 @@ $(document).ready(function()		// Execute all of this on load
  		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
  		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
  		document.getElementById("groupSize").max = $('#chosenRooms').attr('data-maxcap');
+		document.getElementById("groupSizeVal").value = $('#chosenRooms').attr('data-maxcap');
  		document.getElementById("groupSize").min = 1;
 		var rooms = getSelectedRooms();
 		var groupSizes = getGroupSizes();
@@ -355,7 +357,8 @@ function addRoomToList(id)
 	}
 	document.getElementById("maxGroupSize").value = maxCap;
 	document.getElementById("groupSize").value = reqCap;
-	document.getElementById("groupSize").max = reqCap;
+	document.getElementById("groupSize").max = maxCap;
+	document.getElementById("groupSizeVal").value = maxCap;
 }
 
 function deleteRoom(id)
@@ -506,10 +509,6 @@ function hideParkContent()
 	document.getElementById('eastinfo').style.visibility= 'hidden'
 	document.getElementById('centralinfo').style.visibility= 'hidden'
 	document.getElementById('westinfo').style.visibility= 'hidden'
-}
-function clearRoomContent()
-{
-	$('#roominfo').html("");
 }
 
 function openPendingDiv()
