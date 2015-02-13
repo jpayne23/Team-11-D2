@@ -105,7 +105,7 @@ function updateAdvancedBuilding(value)
 	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
 	{
 		addTitles();
-		$("#parkcontent").html(data);
+		$("#parkcontent").append(data);
 	});
 }
 
@@ -310,15 +310,14 @@ function addRoomToList(id)
         alert('room already added');
 		return;
     }
+	
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	x = parseInt(x); 
 	if(x>=3){ //check the no of rooms already chosen
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-	else{
-		alert("You have selected room " + newid)
-	}
+	
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
@@ -334,9 +333,9 @@ function addRoomToList(id)
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
 			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
-			$("#selectedRooms").append(html);
+			$("#selectedrooms").append(html);
 			reqCap = maxCap;
-			alert("Added room to request!")
+			alert("You have selected room " + newid)
 		}
 		else
 		{

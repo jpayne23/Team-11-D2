@@ -15,9 +15,9 @@
 				<header class="parkHeader"> 
 					<nav>
 						<ul >
-							<li><a href='#' id= 'parkeast' class='parkeast' onclick='clearParkContent(); clearBuildingContent(); hideParkContent(); clearRoomContent(); updateAdvancedBuilding(this.id)'>East Park</a></li>
-							<li><a href='#' id='parkcentral' class= 'parkcentral' onclick='clearParkContent(); clearBuildingContent(); hideParkContent(); clearRoomContent(); updateAdvancedBuilding(this.id)'>Central Park</a></li>
-							<li><a href='#' id= 'parkwest' class= 'parkwest' onclick='clearParkContent(); clearBuildingContent(); hideParkContent(); clearRoomContent(); updateAdvancedBuilding(this.id)'>West Park</a></li>
+							<li><a href='#' id= 'parkeast' class='parkeast' onclick='clearParkContent(); clearBuildingContent(); clearRoomContent(); updateAdvancedBuilding(this.id)'>East Park</a></li>
+							<li><a href='#' id='parkcentral' class= 'parkcentral' onclick='clearParkContent(); clearBuildingContent(); clearRoomContent(); updateAdvancedBuilding(this.id)'>Central Park</a></li>
+							<li><a href='#' id= 'parkwest' class= 'parkwest' onclick='clearParkContent(); clearBuildingContent(); clearRoomContent(); updateAdvancedBuilding(this.id)'>West Park</a></li>
 							<li>
 								<select id='popupDay'>
 									<option>Monday</option>

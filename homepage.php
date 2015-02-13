@@ -194,7 +194,9 @@
 								<input type='text' id='date'>
 							</td>
 						</tr>
-						-->				
+						-->	
+						</tr>
+						</table>
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
