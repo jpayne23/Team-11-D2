@@ -1,6 +1,8 @@
 var times;
 $(document).ready(function()		// Execute all of this on load 
 {
+	addTitles();
+	updateAdvancedBuilding("parkeast");
 	loadGroupSize();
 	populateTimetable(); //function to add the tiles to the timetable
 	
@@ -16,7 +18,6 @@ $(document).ready(function()		// Execute all of this on load
 		$('#time').val(day);
 	
 	});	
-	updateAdvancedBuilding("parkeast");
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
@@ -69,6 +70,12 @@ function populateTimetable()
 	}
 }
 
+function addTitles(){
+	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
+	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
+	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
+}
+
 function clearParkContent(){
 	$("#parkcontent").html("");
 }
@@ -90,13 +97,14 @@ function updateAdvancedBuilding(value)
 	//alert(string);
 	//document.getElementById("parkcontent").style.background-color= "#CC0066";
 	
-	/*$('#parkeast').css("background-color", "#CC0066");
+	$('#parkeast').css("background-color", "#CC0066");
 	$('#parkcentral').css("background-color", "#CC0066");
 	$('#parkwest').css("background-color", "#CC0066");
 	$('#'+value).css("background-color", "#330066");
-	*/
+	
 	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
 	{
+		addTitles();
 		$("#parkcontent").html(data);
 	});
 }
@@ -104,6 +112,7 @@ function updateAdvancedBuilding(value)
 
 function updateAdvancedRoomFacility(value)
 	{
+		$("#timetable").css("opacity", "1");// make the timetable visible
 		//get the information about chosen room, and show as popup
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
@@ -281,8 +290,17 @@ function updateAdvancedRoom(value)
 	
 	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
 	{
+		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
 	});
+}
+
+function timeOpacity(){
+	//$("#timetable").css("background-color", "green");
+	//var value = document.getElementById("time");
+	//value.style.opacity= "0.5";
+	//$("#timetable").css("background-color", "brown");
+	$("#timetable").css("opacity", "1");
 }
 
 function addRoomToList(id)
@@ -298,7 +316,9 @@ function addRoomToList(id)
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-
+	else{
+		alert("You have selected room " + newid)
+	}
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
@@ -314,7 +334,7 @@ function addRoomToList(id)
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
 			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
-			$("#buildingcontent").append(html);
+			$("#selectedRooms").append(html);
 			reqCap = maxCap;
 			alert("Added room to request!")
 		}
