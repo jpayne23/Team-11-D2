@@ -6,17 +6,17 @@ $(document).ready(function()		// Execute all of this on load
 	
 	//These functions load and update the day and time chosen between the main page and the popup room.
 	$('#popupDay').val($('#day').val());
-	$('#popupTime').val($('#time').val());
 	$('#popupDay').change(function(){
 		var day = $('#popupDay').val();
 		$('#day').val(day);
-	
 	});
+	$('#popupTime').val($('#time').val());
 	$('#popupTime').change(function(){
 		var day = $('#popupTime').val();
 		$('#time').val(day);
 	
 	});	
+	updateAdvancedBuilding("parkeast");
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
@@ -69,31 +69,12 @@ function populateTimetable()
 	}
 }
 
-function closeAdvancedRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	document.getElementById('east').style.visibility= 'hidden'
-	document.getElementById('eastinfo').style.visibility= 'hidden';
-	document.getElementById('central').style.visibility= 'hidden';
-	document.getElementById('centralinfo').style.visibility= 'hidden';
-	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';
-}
-
 function clearParkContent(){
 	$("#parkcontent").html("");
 }
 
 function clearBuildingContent(){
 	$("#buildingcontent").html("");
-}
-
-function hideParkContent()
-{
-	return;
-	document.getElementById('eastinfo').style.visibility= 'hidden'
-	document.getElementById('centralinfo').style.visibility= 'hidden'
-	document.getElementById('westinfo').style.visibility= 'hidden'
 }
 
 function clearRoomContent()
@@ -108,18 +89,15 @@ function updateAdvancedBuilding(value)
 	//string = string.toUpperCase();
 	//alert(string);
 	//document.getElementById("parkcontent").style.background-color= "#CC0066";
-	$('#parkeast').css("background-color", "#CC0066");
+	
+	/*$('#parkeast').css("background-color", "#CC0066");
 	$('#parkcentral').css("background-color", "#CC0066");
 	$('#parkwest').css("background-color", "#CC0066");
 	$('#'+value).css("background-color", "#330066");
-
+	*/
 	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
 	{
-		//alert(data);
-		//data = "'" + data + "'";
-		//content = '<a id="prev" title="Previous Slide">Previous Slide</a><a id="next" title="Next Slide">Next Slide</a>'
-		//alert(content);
-		$("#parkcontent").append(data);
+		$("#parkcontent").html(data);
 	});
 }
 
@@ -152,7 +130,6 @@ function updateAdvancedRoomFacility(value)
 			for(var i =0; i < times.length;i++)
 			{
 				j = 1;
-			
 				id = times[i]['id'];
 				length = times[i]['data-length'];
 				var weeks = times[i]['data-weeks'];
@@ -165,9 +142,6 @@ function updateAdvancedRoomFacility(value)
 				$('#'+id).attr('class','timeslotbooked');
 				$('#'+id).html('Available');
 				displayAvailableWeeks(id, value);
-				
-				
-		
 				while(j < (length))
 				{
 					//str = id.substr(3,1);
@@ -186,8 +160,6 @@ function updateAdvancedRoomFacility(value)
 					displayAvailableWeeks(newid, value); //function to show the user the weeks this timeslot is available
 					j++;
 				}
-				
-				
 			}
 		}); // end $.get
 		
@@ -361,7 +333,7 @@ function addRoomToList(id)
 	document.getElementById("groupSizeVal").value = maxCap;
 }
 
-function deleteRoom(id)
+function deleteRoom(id) //need to implement group capacity, increment when room is deleted
 {
 	var roomid = id.substr(3,id.length);
 	$( '#'+roomid ).remove();
@@ -370,163 +342,5 @@ function deleteRoom(id)
 		x--;
 	var str = x.toString();
 	$('#chosenRooms').attr('data-norooms',''+str+''); //alter the value of the rooms added
-}
-
-function openAdvancedSearchDiv()
-{
-	document.getElementById('popupAdvancedSearchDiv').style.visibility = 'visible';
-}
-function closeAdvancedRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
-	/*document.getElementById('east').style.visibility= 'hidden'
-	document.getElementById('eastinfo').style.visibility= 'hidden';
-	document.getElementById('central').style.visibility= 'hidden';
-	document.getElementById('centralinfo').style.visibility= 'hidden';
-	document.getElementById('west').style.visibility= 'hidden';
-	document.getElementById('westinfo').style.visibility= 'hidden';*/
-}
-
-function showEast()
-{
-	if(document.getElementById('parkcentral').style.backgroundColor= '##330066')
-	{
-		document.getElementById('parkcentral').style.backgroundColor= '#CC0066'
-	}
-	if(document.getElementById('parkwest').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkwest').style.backgroundColor= '#CC0066'
-	}
-	document.getElementById('parkeast').style.backgroundColor= '#330066'
 	
-	if(document.getElementById('central').style.visibility= 'visible')
-	{
-		document.getElementById('central').style.visibility= 'hidden'
-	}
-	if(document.getElementById('west').style.visibility= 'visible')
-	{
-		document.getElementById('west').style.visibility= 'hidden'
-	}
-	document.getElementById('east').style.visibility= 'visible'
-}
-
-function showEastContent()
-{
-	if(document.getElementById('parkeast').style.height= '40')
-	{	
-		document.getElementById('parkeast').style.height= '20%'
-	}
-	if(document.getElementById('parkeast').style.height= '20%')
-	{	
-		document.getElementById('parkeast').style.height= '40%'
-	}
-	if(document.getElementById('centralinfo').style.visibility= 'visible')
-	{
-		document.getElementById('centralinfo').style.visibility= 'hidden'
-	}
-	if(document.getElementById('westinfo').style.visibility= 'visible')
-	{
-		document.getElementById('westinfo').style.visibility= 'hidden'
-	}
-	document.getElementById('eastinfo').style.visibility= 'visible'
-}
-
-function showCentral()
-{	
-	if(document.getElementById('parkeast').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkeast').style.backgroundColor= '#CC0066'
-	}
-	if(document.getElementById('parkwest').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkwest').style.backgroundColor= '#CC0066'
-	}
-	document.getElementById('parkcentral').style.backgroundColor= '#330066'
-	
-	if(document.getElementById('east').style.visibility= 'visible')
-	{
-		document.getElementById('east').style.visibility= 'hidden'
-	}	
-	if(document.getElementById('west').style.visibility= 'visible')
-	{
-		document.getElementById('west').style.visibility= 'hidden'
-	}
-	document.getElementById('central').style.visibility= 'visible'
-}
-
-function showCentralContent()
-{
-	if(document.getElementById('eastinfo').style.visibility= 'visible')
-	{
-		document.getElementById('eastinfo').style.visibility= 'hidden'
-	}
-	if(document.getElementById('westinfo').style.visibility= 'visible')
-	{
-		document.getElementById('westinfo').style.visibility= 'hidden'
-	}
-	document.getElementById('centralinfo').style.visibility= 'visible'
-}
-
-function showWest()
-{
-	if(document.getElementById('parkeast').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkeast').style.backgroundColor= '#CC0066'
-	}
-	if(document.getElementById('parkcentral').style.backgroundColor= '#330066')
-	{
-		document.getElementById('parkcentral').style.backgroundColor= '#CC0066'
-	}
-	document.getElementById('parkwest').style.backgroundColor= '#330066'
-	
-	if(document.getElementById('east').style.visibility= 'visible')
-	{
-		document.getElementById('east').style.visibility= 'hidden'
-	}
-	if(document.getElementById('central').style.visibility= 'visible')
-	{
-		document.getElementById('central').style.visibility= 'hidden'
-	}
-	document.getElementById('west').style.visibility= 'visible'
-}
-
-function showWestContent()
-{
-	if(document.getElementById('eastinfo').style.visibility= 'visible')
-	{
-		document.getElementById('eastinfo').style.visibility= 'hidden'
-	}
-	if(document.getElementById('centralinfo').style.visibility= 'visible')
-	{
-		document.getElementById('centralinfo').style.visibility= 'hidden'
-	}
-	document.getElementById('westinfo').style.visibility= 'visible'
-}
-
-function hideParkContent()
-{
-	return;
-	document.getElementById('eastinfo').style.visibility= 'hidden'
-	document.getElementById('centralinfo').style.visibility= 'hidden'
-	document.getElementById('westinfo').style.visibility= 'hidden'
-}
-
-function openPendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'visible';
-}
-
-function closePendingDiv()
-{
-	document.getElementById('popupPendingDiv').style.visibility = 'hidden';
-}
-
-function openPopupRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'visible';
-}
-
-function closePopupRequestDiv()
-{
-	document.getElementById('popupRequestDiv').style.visibility = 'hidden';
 }

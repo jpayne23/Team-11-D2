@@ -8,7 +8,7 @@
 		<meta name="viewport" content="widtd-device-widtd, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 	</head>
 	<body id= 'body' class= 'requestbody'>
-		<button class= 'closeAdvanced' onclick='closeAdvancedRequestDiv()'> x </button>
+		<button class= 'closeAdvanced' onclick='closeDiv("popupRequestDiv");'> x </button>
 		<div id= 'whole' class= 'whole'>
 		<div id='1st' class= 'rooms'>
 			<div id= 'parktab' class='parktab'>
