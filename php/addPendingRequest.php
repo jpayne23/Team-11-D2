@@ -23,6 +23,7 @@
 	$day = $_REQUEST['day'];
 	$time = $_REQUEST['time'];
 	$round = $_REQUEST['round'];
+	$priority = $_REQUEST['priority'];
 	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
@@ -50,7 +51,7 @@
 	}
 	
 	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID,PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,$day,$time,1,0,'$specialReq',$round,'Pending')";
+	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,$day,$time,$priority,0,'$specialReq',$round,'Pending')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))

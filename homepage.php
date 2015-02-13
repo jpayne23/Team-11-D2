@@ -186,6 +186,11 @@
 								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" id='priorityCheckbox' checked="checked" disabled="disabled"> Priority Request
+							</td>
+						</tr>
 						<!-- need this in ad-hoc
 						<tr>
 							<td>
@@ -196,8 +201,7 @@
 							</td>
 						</tr>
 						-->	
-						</tr>
-						</table>
+					</table>
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>

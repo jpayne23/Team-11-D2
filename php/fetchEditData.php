@@ -11,7 +11,7 @@
 	
 	$requestID = $_REQUEST['requestID'];
 	
-	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, SessionType, SessionLength, Day, Period, SpecialRequirements ";
+	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, SessionType, SessionLength, Day, Period, PriorityRequest, SpecialRequirements ";
 	$sql .= "FROM Request ";
 	$sql .= "JOIN Module ON Request.ModCode = Module.ModCode ";
 	$sql .= "JOIN DayInfo ON Request.DayID = DayInfo.DayID ";
@@ -36,6 +36,7 @@
 		array_push($results, $row['day']);
 		array_push($results, $row['period']);
 		array_push($results, $row['specialrequirements']);
+		array_push($results, $row['priorityrequest']);
 	}
 	
 	// List weeks in one row instead of multiple		
