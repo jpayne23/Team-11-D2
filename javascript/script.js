@@ -382,6 +382,7 @@ $(document).ready(function()		// Execute all of this on load
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
 		var round = document.getElementById('round').getAttribute('name');
+		var adhoc = 0;
 
 		if ($("#priorityCheckbox").is(":checked"))
 		{
@@ -411,7 +412,8 @@ $(document).ready(function()		// Execute all of this on load
 					day: day,
 					time: time,
 					round: round,
-					priority: priority
+					priority: priority,
+					adhoc: adhoc
 				},
 				function(data, status){
 					// Function to do things with the data
@@ -446,6 +448,64 @@ $(document).ready(function()		// Execute all of this on load
 				$('#submit').removeClass();
 				$('#submit').addClass('none');
 			}
+		}
+		else
+		{
+			alert("Please enter what weeks you want to book the module for");
+		}
+	});
+	
+	// Send adhoc request to database
+	$("#submitAdhoc").click(function()
+	{		
+		// Get all values from form
+		var modCode = document.getElementById('modCodes').value.substr(0, 8);
+		var rooms = getSelectedRooms();
+		var groupSizes = getGroupSizes();
+		var selectedWeeks = updateSelectedWeeks(selectedItems);
+		var facilities = getCheckedFacilities();
+		var sessionType = document.getElementById('seshType').value;
+		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
+		var specialReq = document.getElementById('specialReq').value;
+		var day = document.getElementById('day').selectedIndex + 1;
+		var time = document.getElementById('time').selectedIndex + 1;
+		var round = document.getElementById('round').getAttribute('name');
+		var adhoc = 1;
+
+		if ($("#priorityCheckbox").is(":checked"))
+		{
+			var priority = 1;
+		}
+		else 
+		{
+			var priority = 0;
+		}
+		
+		// Error check
+		if (selectedWeeks.length != 0)
+		{	
+			
+			$.post("php/addPendingRequest.php",
+			{	
+				// Data to send
+				modCode: modCode,
+				rooms: rooms,
+				groupSizes: groupSizes,
+				selectedWeeks: selectedWeeks,
+				facilities: facilities,
+				sessionType: sessionType,
+				sessionLength: sessionLength,
+				specialReq: specialReq,
+				day: day,
+				time: time,
+				round: round,
+				priority: priority,
+				adhoc: adhoc
+			},
+			function(data, status){
+				// Function to do things with the data
+				alert(data);
+			});
 		}
 		else
 		{
