@@ -260,7 +260,7 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
-	// Delete button click event
+	// Delete button click event on pending
 	$('#submissions').on('click', "#deleteIcon", function() 
 	{
 		var requestID = this.name.substr(10);
@@ -271,6 +271,20 @@ $(document).ready(function()		// Execute all of this on load
 		function(data)
 		{
 			reloadPendingTable("down", "RequestID");
+		});
+	});
+	
+	// Delete button click event on history
+	$('#history').on('click', "#deleteIcon", function() 
+	{
+		var requestID = this.name.substr(10);
+		$.post("php/deletePendingRequest.php", 
+		{
+			requestID: requestID
+		},
+		function(data)
+		{
+			reloadHistoryTable("down", "RequestID");
 		});
 	});
 	
@@ -437,8 +451,6 @@ $(document).ready(function()		// Execute all of this on load
 		// Reload pending submissions
 		reloadPendingTable("down", "RequestID");	
 	});
-
-	
 	
 	$('#reset').click(function() //reset all default values
 	{
@@ -480,18 +492,6 @@ $(document).ready(function()		// Execute all of this on load
 			$('#popupRequestDiv').html(data);
 		});
 		openDiv("popupRequestDiv");
-	});
-	
-	$('#reset').click(function() //reset all default values
-	{
-		$("select#part")[0].selectedIndex = 1;
-		updateModCode();
-		$("#modCodes")[0].selectedIndex = 0;
-		$("select#seshType")[0].selectedIndex = 0;
-		$("select#seshLength")[0].selectedIndex = 0;
-		$("select#day")[0].selectedIndex = 0;
-		$("select#time")[0].selectedIndex = 0;
-		$("#specialReq").val("");
 	});
 
 	populateTimetable();
@@ -552,9 +552,14 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert(data);
 		});
-	});	
-	
+	});		
 });
+
+function resetSelectedRooms()
+{
+	document.getElementById('chosenRooms').innerHTML = "";
+	$("#chosenRooms").attr('data-norooms', '0');
+}
 
 function getSelectedRooms()
 {
@@ -669,6 +674,18 @@ function reloadPendingTable(sortDirection, sortColumn)
 	$.get("php/loadPendingSubmissions.php?" + sortDirection + flag + sortColumn, function(data)
 	{
 		$('#submissions').html(data);
+	});
+}
+
+function reloadHistoryTable(sortDirection, sortColumn)
+{
+	// Reload table based on sort direction and column
+	sortDirection = "sortDirection=" + sortDirection;
+	sortColumn = "&sortColumn=" + sortColumn;
+	var flag = "&flag=0";
+	$.get("php/loadHistorySubmissions.php?" + sortDirection + flag + sortColumn, function(data)
+	{
+		$('#history').html(data);
 	});
 }
 
@@ -1037,7 +1054,7 @@ function setSelectedWeeks(weeksArray)
 			var leftSide = weeksArray[i].substring(0, dashPos);
 			var rightSide = weeksArray[i].substring(dashPos + 1, weeksArray[i].length);
 			
-			for (var j = leftSide; j <= rightSide; j++)
+			for (var j = parseInt(leftSide); j <= parseInt(rightSide); j++)
 			{
 				output.push(String(j));
 			}

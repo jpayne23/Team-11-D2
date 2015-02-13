@@ -55,7 +55,11 @@
 			<div class= 'requestcontent'>
 				<div id= 'parkcontent' class= 'parkcontent' name= 'parkcontent'>
 				</div>
-				<div id= 'buildingcontent' class= 'buildingcontent'>
+				<div id= 'roomcontainer' class= 'roomcontainer'>
+					<div id= 'buildingcontent' class= 'buildingcontent'>
+					</div>
+					<div id= 'selectedrooms' class= 'selectedrooms'>
+					</div>
 				</div>
 				<div id= 'roominfo' class= 'roominfo'>
 				</div>
@@ -81,7 +85,6 @@
 						<tr> <th class= 'ttheader' id='d4'> Thursday </th></tr>
 						<tr> <th class= 'ttheader' id='d5'> Friday </th></tr>					
 					</tr>
-
 				</table>
 		</div>
 	</body>

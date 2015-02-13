@@ -52,6 +52,12 @@ function populateTimetable()
 	}
 }
 
+function addTitles(){
+	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
+	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
+	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
+}
+
 function clearParkContent(){
 	$("#parkcontent").html("");
 }
@@ -73,20 +79,22 @@ function updateAdvancedBuilding(value)
 	//alert(string);
 	//document.getElementById("parkcontent").style.background-color= "#CC0066";
 	
-	/*$('#parkeast').css("background-color", "#CC0066");
+	$('#parkeast').css("background-color", "#CC0066");
 	$('#parkcentral').css("background-color", "#CC0066");
 	$('#parkwest').css("background-color", "#CC0066");
 	$('#'+value).css("background-color", "#330066");
-	*/
+	
 	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
 	{
-		$("#parkcontent").html(data);
+		addTitles();
+		$("#parkcontent").append(data);
 	});
 }
 
 
 function updateAdvancedRoomFacility(value)
 	{
+		$("#timetable").css("opacity", "1");// make the timetable visible
 		//get the information about chosen room, and show as popup
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
@@ -264,8 +272,17 @@ function updateAdvancedRoom(value)
 	
 	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
 	{
+		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
 	});
+}
+
+function timeOpacity(){
+	//$("#timetable").css("background-color", "green");
+	//var value = document.getElementById("time");
+	//value.style.opacity= "0.5";
+	//$("#timetable").css("background-color", "brown");
+	$("#timetable").css("opacity", "1");
 }
 
 function addRoomToList(id)
@@ -275,13 +292,14 @@ function addRoomToList(id)
         alert('room already added');
 		return;
     }
+	
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	x = parseInt(x); 
 	if(x>=3){ //check the no of rooms already chosen
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-
+	
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
@@ -297,9 +315,9 @@ function addRoomToList(id)
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
 			var html= "<tr id="+("rm" + newid)+"><td id ='cap"+newid+"'>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
-			$("#buildingcontent").append(html);
+			$("#selectedrooms").append(html);
 			reqCap = maxCap;
-			alert("Added room to request!")
+			alert("You have selected room " + newid)
 		}
 		else
 		{
