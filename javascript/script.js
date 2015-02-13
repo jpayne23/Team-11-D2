@@ -157,16 +157,6 @@ $(document).ready(function()		// Execute all of this on load
 		openDiv("popupPendingDiv");
 	});
 	
-	// Load Adhoc Page
-	$('#adhocButton').click(function()
-	{
-		$.get("php/loadAdhoc.php", function(data)
-		{
-			$('#adhoc').html(data);
-		});		
-		openDiv("popupAdhocDiv");
-	});
-	
 	// Down arrow click event
 	$('#submissions').on('click', "#downArrow", function() 
 	{

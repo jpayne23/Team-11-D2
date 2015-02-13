@@ -12,17 +12,16 @@
 	<script src="javascript/script.js"></script>
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
-
 <body class="body">
-	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
 	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
+	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
 			<ul>
-				<li class="active"><a href="#">Home</a></li>
+				<li><a href="homepage.php">Home</a></li>
 				<li><a href="#" id='pendingButton'>Pending</a></li>
-				<li><a href="adhoc.php" id='adhocButton'>Ad Hoc</a></li>
+				<li class="active"><a href="#" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
@@ -32,7 +31,7 @@
 		<div class="content">
 			<article class="topcontent">
 				<header>
-					<h2 id='genInfo'> General Information</h2>
+					<h2> General Information - Ad Hoc</h2>
 				</header>
 				<content>
 					<table>
@@ -94,7 +93,21 @@
 						</tr>
 						<tr>
 							<td>
-								<label>Pick weeks</label>								
+								<label> Day </label>
+							</td>
+							<td>
+								<select id="day">
+									<option>Monday</option>
+									<option>Tuesday</option>
+									<option>Wednesday</option>
+									<option>Thursday</option>
+									<option>Friday</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Pick week</label>								
 							</td>
 							<td colspan='2'>
 								<ol id="weekSelector">
@@ -119,44 +132,10 @@
 						</tr>
 						<tr>
 							<td>
-								<label>Session Type</label>
+								<label> Pick Date </label>
 							</td>
 							<td>
-								<select id="seshType">
-									<option>Feedback</option>
-									<option>Lecture</option>
-									<option>Practical</option>
-									<option>Seminar</option>
-									<option>Tutorial</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label> Session Length </label>
-							</td>
-							<td>
-								<select id="seshLength">
-									<option>1 Hour</option>
-									<option>2 Hours</option>
-									<option>3 Hours</option>
-									<option>4 Hours</option>
-									<option>5 Hours</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label> Day </label>
-							</td>
-							<td>
-								<select id="day">
-									<option>Monday</option>
-									<option>Tuesday</option>
-									<option>Wednesday</option>
-									<option>Thursday</option>
-									<option>Friday</option>
-								</select>
+								<input type='text' id='date'>
 							</td>
 						</tr>
 						<tr>
@@ -179,29 +158,48 @@
 						</tr>
 						<tr>
 							<td>
+								<label> Session Length </label>
+							</td>
+							<td>
+								<select id="seshLength">
+									<option>1 Hour</option>
+									<option>2 Hours</option>
+									<option>3 Hours</option>
+									<option>4 Hours</option>
+									<option>5 Hours</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Session Type</label>
+							</td>
+							<td>
+								<select id="seshType">
+									<option>Feedback</option>
+									<option>Lecture</option>
+									<option>Practical</option>
+									<option>Seminar</option>
+									<option>Tutorial</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								Special Requirements:
 							</td>
 							<td>
 								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
-						<!-- need this in ad-hoc
 						<tr>
-							<td>
-								<label> Pick Date </label>
-							</td>
-							<td>
-								<input type='text' id='date'>
-							</td>
-						</tr>
-						-->	
-						</tr>
-						</table>
+							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>							
+							</table>	
+						</tr>						
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
-				<input type='button' name = '' id='round' value='Next Round'/>
 			</article>
 			<article class="bottomcontent">
 				<header>
