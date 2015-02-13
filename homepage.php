@@ -6,10 +6,11 @@
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
-	
+	<link rel="stylesheet" href="css/request.css" type="text/css" />
 	<script src="javascript/jquery-2.1.1.js"></script>
 	<script src="javascript/jquery-ui.js"></script>
 	<script src="javascript/script.js"></script>
+	<script src="javascript/requestscript.js"></script>
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 
@@ -185,6 +186,11 @@
 								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" id='priorityCheckbox' checked="checked" disabled="disabled"> Priority Request
+							</td>
+						</tr>
 						<!-- need this in ad-hoc
 						<tr>
 							<td>
@@ -195,8 +201,7 @@
 							</td>
 						</tr>
 						-->	
-						</tr>
-						</table>
+					</table>
 				</content>
 				<input type="submit" class="none" id="submit" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
