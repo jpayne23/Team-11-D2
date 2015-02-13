@@ -195,60 +195,8 @@
 							</td>
 						</tr>
 						-->
-						<!-- start of room selecter -->
 						<tr>
-							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>
-								<tr>
-									<td></td>                                                                                                                                                                                                                                                                                                                                                                  
-									<td>
-										<label for="park" >Park</label>
-									</td>
-									<td>
-										<label for="building" >Building</label>
-									</td>
-									<td>
-										<label for="room" >Room</label>
-									</td>
-								</tr>							
-								<tr>
-									<td>
-										<label for="multiRoom" >Room</label>
-									</td>
-									<td>
-										<div id='parkDiv'>
-											<select name="park" id="park1">
-												<option>Any</option>
-											</select>
-										</div>
-									</td>
-									<td>
-										<div id='buildingDiv'>
-											<select name="building" id="building1">
-												<option>Any</option>
-											</select>
-										</div>
-									</td>
-									<td>
-										<div id='roomDiv'>
-											<select name="room" id="room1">
-												<option>Any</option>
-											</select>										
-										</div>
-									</td>
-								</tr>	
-								<tr>
-									<td colspan = 4>
-										<!--<input id='btnSearch' type='button' value='Search'></input> this does nothing-->
-										<input id='btnGetInfo' type='button' value='Get Info'></input> 									</td>
-									<!--
-									<td colspan='5' style='text-align:center'>
-										<input class="rButtons" type='button' id='addRoomButton' value='Click here to add another room' onclick='addRoom();'></input>
-									</td>
-									-->
-								</tr>
-								
-								</table>
-								<!--end of room selecter-->
+							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>							
 							</table>	
 						</tr>						
 				</content>

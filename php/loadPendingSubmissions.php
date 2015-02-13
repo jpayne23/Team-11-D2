@@ -63,9 +63,6 @@
 			case "ModuleCode":
 				$sql .= " ORDER BY ModCode DESC;";
 				break;
-			case "Room":
-				$sql .= " ORDER BY Room DESC;";
-				break;
 			case "SessionType":
 				$sql .= " ORDER BY Request.SessionType DESC;";
 				break;
@@ -89,9 +86,6 @@
 				break;
 			case "ModuleCode":
 				$sql .= " ORDER BY ModCode ASC;";
-				break;
-			case "Room":
-				$sql .= " ORDER BY Room ASC;";
 				break;
 			case "SessionType":
 				$sql .= " ORDER BY Request.SessionType ASC;";
@@ -119,7 +113,7 @@
 	{				
 		echo "<th>Request ID <img id='upArrow' name='RequestID' src='img/upArrow.png'></th>";
 		echo "<th>Module Code <img id='upArrow' name= 'ModuleCode' src='img/upArrow.png'></th>";
-		echo "<th>Room <img id='upArrow' name='Room' src='img/upArrow.png'></th>";
+		echo "<th>Room</th>";
 		echo "<th>Facilities</th>";
 		echo "<th>Weeks</th>";
 		echo "<th>Session Type <img id='upArrow' name='SessionType' src='img/upArrow.png'></th>";
@@ -131,7 +125,7 @@
 	{
 		echo "<th>Request ID <img id='downArrow' name='RequestID' src='img/downArrow.png'></th>";
 		echo "<th>Module Code <img id='downArrow' name= 'ModuleCode' src='img/downArrow.png'></th>";
-		echo "<th>Room <img id='downArrow' name='Room' src='img/downArrow.png'></th>";
+		echo "<th>Room</th>";
 		echo "<th>Facilities</th>";
 		echo "<th>Weeks</th>";
 		echo "<th>Session Type <img id='downArrow' name='SessionType' src='img/downArrow.png'></th>";

@@ -440,7 +440,26 @@ $(document).ready(function()		// Execute all of this on load
 		$("select#day")[0].selectedIndex = 0;
 		$("select#time")[0].selectedIndex = 0;
 		$("#specialReq").val("");
+		$("#chosenRooms").html("");
+		document.getElementById("sortable").innerHTML = "";
+		// Set the week selector to all the correct highlighted values
+		selectedItems = ['1','2','3','4','5','6','7','8','9','10','11','12'];
 		
+		$("#weekSelector").children().each(function()
+		{
+			for (var k = 0; k < selectedItems.length; k++)
+			{
+				if (this.innerHTML == selectedItems[k])
+				{
+					$(this).addClass('ui-selected');
+					break;				// Exit current loop cycle once match is found
+				}
+				else
+				{
+					$(this).removeClass('ui-selected');
+				}
+			}
+		});		
 	});
 		//Open Advanced Requests
 	$('#btnAdvancedRequest').click(function()
@@ -579,7 +598,7 @@ function setSelectedRooms(id, groupSize)
 	var xStr = x.toString();
 	var cap = groupSize;
 	$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+groupSize+" Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+	var html= "<tr id="+("rm" + newid)+"><td>"+groupSize+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 	document.getElementById('chosenRooms').innerHTML += html;
 }
 //functions for advanced request-------------------------------------
