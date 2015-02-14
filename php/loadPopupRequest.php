@@ -6,16 +6,16 @@
 		<meta name="viewport" content="widtd-device-widtd, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 	</head>
 	<body id= 'body' class= 'requestbody'>
-		<button class= 'closeAdvanced' onclick='closeDiv("popupRequestDiv");'> x </button>
+		<button class= 'closeDiv' onclick='closeDiv("popupRequestDiv");'> x </button>
 		<div id= 'whole' class= 'requestMainDiv'>
 			<div id='1st' class= 'rooms'>
 				<div id= 'parktab' class='parktab'>
 					<header class="parkHeader"> 
 						<nav>
 							<ul >
-								<li><a href='#' id= 'parkeast' class='parkeast' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>East Park</a></li>
-								<li><a href='#' id='parkcentral' class= 'parkcentral' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>Central Park</a></li>
-								<li><a href='#' id= 'parkwest' class= 'parkwest' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>West Park</a></li>
+								<li><a href='#' id= 'parkeast' class='parkeast' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>East</a></li>
+								<li><a href='#' id='parkcentral' class= 'parkcentral' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>Central</a></li>
+								<li><a href='#' id= 'parkwest' class= 'parkwest' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>West</a></li>
 								<li>
 									<select id='popupDay'>
 										<option>Monday</option>
@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div id= 'roominfo' class= 'roominfo'>
-
+					</div>
 					
 				</div>
 			</div>

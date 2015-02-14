@@ -14,8 +14,10 @@
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 <body class="body">
-	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
-	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
+	<div id="textsize" data-counter="0">
+		<img id="minustext" alt="Decrease text size" src="img/smaller.png">
+		<img id="plustext"  alt="Increase text size" src="img/bigger.png">
+	</div>
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
@@ -123,17 +125,17 @@
 							<td colspan='2'>
 								<ol id="adhocWeekSelector">
 									<li class="ui-state-default ui-selected">1</li>
-									<li class="ui-state-default ">2</li>
-									<li class="ui-state-default ">3</li>
-									<li class="ui-state-default ">4</li>
-									<li class="ui-state-default ">5</li>
-									<li class="ui-state-default ">6</li>
-									<li class="ui-state-default ">7</li>
-									<li class="ui-state-default ">8</li>
-									<li class="ui-state-default ">9</li>
-									<li class="ui-state-default ">10</li>
-									<li class="ui-state-default ">11</li>
-									<li class="ui-state-default ">12</li>
+									<li class="ui-state-default">2</li>
+									<li class="ui-state-default">3</li>
+									<li class="ui-state-default">4</li>
+									<li class="ui-state-default">5</li>
+									<li class="ui-state-default">6</li>
+									<li class="ui-state-default">7</li>
+									<li class="ui-state-default">8</li>
+									<li class="ui-state-default">9</li>
+									<li class="ui-state-default">10</li>
+									<li class="ui-state-default">11</li>
+									<li class="ui-state-default">12</li>
 									<li class="ui-state-default">13</li>
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
@@ -239,7 +241,7 @@
 		</div>
 		<div id='popupPastDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 
-			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
+			<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
 			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Adhoc")'></input>
 			<div class = 'filterDiv' id='pastFilterDiv' style='visibility: hidden;'>
 			</div>

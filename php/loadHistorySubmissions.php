@@ -86,6 +86,9 @@
 			case "Period":
 				$sql .= " ORDER BY Request.PeriodID DESC;";
 				break;
+			case "Status":
+				$sql .= " ORDER BY case Status when 'Unsuccessful' then 1 when 'Modified' then 2 when 'Successful' then 3 else 4 end;";
+				break;
 		}		
 	}
 	else
@@ -110,6 +113,9 @@
 			case "Period":
 				$sql .= " ORDER BY Request.PeriodID ASC;";
 				break;
+			case "Status":
+				$sql .= " ORDER BY case Status when 'Submitted' then 1 when 'Successful' then 2 when 'Modified' then 3 else 4 end;";
+				break;
 		}	
 	}
 	
@@ -131,6 +137,7 @@
 		echo "<th>Session Length <img id='upArrow' name='SessionLength' src='img/upArrow.png'></th>";
 		echo "<th>Day <img id='upArrow' name='Day' src='img/upArrow.png'></th>";
 		echo "<th>Start Time <img id='upArrow' name='Period' src='img/upArrow.png'></th>";
+		echo "<th>Status <img id='upArrow' name='Status' src='img/upArrow.png'></th>";
 	}
 	else
 	{
@@ -143,9 +150,8 @@
 		echo "<th>Session Length <img id='downArrow' name='SessionLength' src='img/downArrow.png'></th>";
 		echo "<th>Day <img id='downArrow' name='Day' src='img/downArrow.png'></th>";
 		echo "<th>Start Time <img id='downArrow' name='Period' src='img/downArrow.png'></th>";
-	}
-	
-	echo "<th>Status</th>";
+		echo "<th>Status <img id='downArrow' name='Status' src='img/downArrow.png'></th>";
+	}	
 	
 	$modCodes = array();
 	$fill = True;
@@ -177,7 +183,23 @@
 		
 		if ($fill){
 			echo "<tr id='historyRow' name ='".$row["requestid"]."'>";
-			echo "<td>" . $row["requestid"] . "</td>";
+			if ($row['status'] == 'Unsuccessful')
+			{				
+				echo "<td class='unsuccessful'><b>" . $row["requestid"] . "</b></td>";
+			}
+			else if ($row['status'] == 'Successful')
+			{
+				echo "<td class='successful'>" . $row["requestid"] . "</td>";
+			}
+			else if ($row['status'] == 'Modified')
+			{
+				echo "<td class='modified'>" . $row["requestid"] . "</td>";
+			}
+			else
+			{
+				echo "<td>" . $row["requestid"] . "</td>";
+			}
+			
 			echo "<td>" . $row["modcode"] . "</td>";
 			
 			if ($row["room"] == "")	// If there are no rooms, return 'Any'
@@ -306,8 +328,25 @@
 			echo "<td>" . $row["sessiontype"] . "</td>";
 			echo "<td>" . $row["sessionlength"] . "</td>";			
 			echo "<td>" . $row["day"] . "</td>";
-			echo "<td>" . $row["period"] . "</td>";			
-			echo "<td>" . $row["status"] . "</td>";			
+			echo "<td>" . $row["period"] . "</td>";
+
+			if ($row['status'] == 'Unsuccessful')
+			{
+				echo "<td class='unsuccessful'><b>" . $row["status"] . "</b></td>";	
+			}
+			else if ($row['status'] == 'Successful')
+			{
+				echo "<td class='successful'>" . $row["status"] . "</td>";	
+			}
+			else if ($row['status'] == 'Modified')
+			{
+				echo "<td class='modified'>" . $row["status"] . "</td>";	
+			}
+			else
+			{
+				echo "<td>" . $row["status"] . "</td>";	
+			}
+					
 			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
 			echo "</tr>";
 		}
