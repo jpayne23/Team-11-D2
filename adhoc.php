@@ -14,8 +14,10 @@
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 <body class="body">
-	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
-	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
+	<div id="textsize" data-counter="0">
+		<img id="minustext" alt="Decrease text size" src="img/smaller.png">
+		<img id="plustext"  alt="Increase text size" src="img/bigger.png">
+	</div>
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
@@ -96,10 +98,10 @@
 								<label>Semester</label>
 							</td>
 							<td>
-								<ol id='semesterSelector'>
-									<li class="ui-state-default ui-selected">1</li>
-									<li class="ui-state-default">2</li>
-								</ol>
+								<select id="semester">
+									<option>1</option>
+									<option>2</option>
+								</select>
 							</td>
 						</tr>
 						<tr>

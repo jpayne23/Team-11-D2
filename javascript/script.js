@@ -779,6 +779,38 @@ $(document).ready(function()		// Execute all of this on load
 			alert("No requests selected");
 		}
 	});
+	
+	$("#plustext").click(function()
+	{
+			var x = $("#textsize").attr('data-counter');
+			x = parseInt(x);
+			if(x < 3)
+			{
+				x++;
+				$("#textsize").attr('data-counter', x)
+				resizeText(1);
+			}
+			else{
+				alert('Cannot Resize Text Any Bigger');
+			}
+		
+	});
+	
+	$("#minustext").click(function()
+	{
+			var x = $("#textsize").attr('data-counter');
+			x = parseInt(x);
+			if(x > -3)
+			{
+				x--;
+				$("#textsize").attr('data-counter', x)
+				resizeText(-1);
+			}
+			else{
+				alert('Cannot Resize Text Any Smaller');
+			}
+		
+	});
 });
 
 function toggleWeeks()
