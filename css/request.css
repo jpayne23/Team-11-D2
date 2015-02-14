@@ -441,5 +441,3 @@ button.closeAdvanced:hover{
 	color: #CC0066;
 	border: 3px solid #CC0066;
 }
-
-@media only screen and (min-width: 480px) and (max-width: 1350px){}

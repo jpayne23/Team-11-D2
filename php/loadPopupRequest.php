@@ -83,11 +83,11 @@
 						<th class= 'ttheader' id='p7'> 15.00-16.00 </br> Period 7 </th>
 						<th class= 'ttheader' id='p8'> 16.00-17.00 </br> Period 8 </th>
 						<th class= 'ttheader' id='p9'> 17.00-18.00 </br> Period 9 </th>
-						<tr> <th class= 'ttheader' id='d1'> Monday </th></tr>
-						<tr> <th class= 'ttheader' id='d2'> Tuesday </th></tr>
-						<tr> <th class= 'ttheader' id='d3'> Wednesday </th></tr>
-						<tr> <th class= 'ttheader' id='d4'> Thursday </th></tr>
-						<tr> <th class= 'ttheader' id='d5'> Friday </th></tr>					
+						<tr id='mon'> <th class= 'ttheader' id='d1'> Monday </th></tr>
+						<tr id='tue'> <th class= 'ttheader' id='d2'> Tuesday </th></tr>
+						<tr id='wed'> <th class= 'ttheader' id='d3'> Wednesday </th></tr>
+						<tr id='thu'> <th class= 'ttheader' id='d4'> Thursday </th></tr>
+						<tr id='fri'> <th class= 'ttheader' id='d5'> Friday </th></tr>					
 					</tr>
 				</table>
 		</div>

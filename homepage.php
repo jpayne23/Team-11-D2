@@ -183,7 +183,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea class="specReq" id="specialReq" cols="40" rows="3"></textarea>
+								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
 						<tr>
