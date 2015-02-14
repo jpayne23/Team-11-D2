@@ -12,8 +12,8 @@
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 <body class="body">
-	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
 	<img id="minustext" alt="Decrease text size" src="img/smaller.png" onclick="resizeText(-1)" height="20" width="20">
+	<img id="plustext"  alt="Increase text size" src="img/bigger.png" onclick="resizeText(1)"  height="20" width="20">
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
 		<nav>
@@ -201,10 +201,7 @@
 								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
-						<tr>
-							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>							
-							</table>	
-						</tr>						
+					</table>
 				</content>
 				<input type="submit" class="none" id="submitAdhoc" value="Submit" />
 				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
