@@ -247,15 +247,15 @@
 			</div>
 		</div>
 		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
-			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
+			<input type="button" class='pendingButton' value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
 			<div class='filterDiv' id='filterDivHist' style='visibility: hidden;'>
 			</div>
 			<div id='history'></div>
 		</div>
 		<div id='popupLastYear'  class='popupDiv' style='visibility: hidden;'>
-			<input type="button" value="Close me!" onclick='closeDiv("popupLastYear");'></input>
-			<input type="button" id='submitCheckedButton' value="Submit All Checked Requests"></input>
+			<input type="button"class='pendingButton'  value="Close me!" onclick='closeDiv("popupLastYear");'></input>
+			<input type="button" class='pendingButton' id='submitCheckedButton' value="Submit All Checked Requests"></input>
 			<div id='lastYear'></div>
 		</div>
 		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
