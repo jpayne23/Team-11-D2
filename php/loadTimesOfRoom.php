@@ -11,7 +11,7 @@
 	
 	$roomNo = $_REQUEST['roomNo'];
 
-	$sql = "SELECT RequestID, DayID, PeriodID, SessionLength FROM `Request` where RequestID in
+	$sql = "SELECT RequestIDHist, DayID, PeriodID, SessionLength FROM `RequestHist` where RequestIDHist in
 			(select RequestIDHist from RequestToRoomHist where RoomRequestIDHist in
 			(select RoomRequestIDHist from RoomRequestHist where Room = '".$roomNo."'));";
 			
@@ -22,7 +22,7 @@
 	}
 	
 	$sql = "select RequestIDHist, Weeks from WeekRequestHist where RequestIDHist in(
-			SELECT RequestID FROM Request where RequestID in
+			SELECT RequestIDHist FROM RequestHist where RequestIDHist in
 			(select RequestIDHist from RequestToRoomHist where RoomRequestIDHist in
 			(select RoomRequestIDHist from RoomRequestHist where Room = '".$roomNo."')));";
 
@@ -49,7 +49,7 @@
 		$weeks = "";
 		for($i = 0;$i<sizeof($a);$i=$i+2)
 		{
-			if($a[$i] == $row["requestid"]){
+			if($a[$i] == $row["requestidhist"]){
 				$weeks .= ":".$a[$i+1];
 			}
 		}

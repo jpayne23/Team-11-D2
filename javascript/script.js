@@ -143,8 +143,6 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 		{
 			$('#modCodeDiv').html(data);
-		}).done(function(){
-			loadGroupSize();
 		});
 	});
 	
@@ -155,16 +153,6 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		reloadPendingTable("down", "RequestID");		
 		openDiv("popupPendingDiv");
-	});
-	
-	// Load Adhoc Page
-	$('#adhocButton').click(function()
-	{
-		$.get("php/loadAdhoc.php", function(data)
-		{
-			$('#adhoc').html(data);
-		});		
-		openDiv("popupAdhocDiv");
 	});
 	
 	// Down arrow click event
@@ -200,10 +188,11 @@ $(document).ready(function()		// Execute all of this on load
 			var day = JSON.parse(data)[6];			
 			var period = JSON.parse(data)[7];
 			var specialReq = JSON.parse(data)[8];
-			var weeks = JSON.parse(data)[9];		
-			var facilities = JSON.parse(data)[10];
-			var rooms = JSON.parse(data)[11];
-			var groupSizes = JSON.parse(data)[12];
+			var priorityReq = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -219,7 +208,17 @@ $(document).ready(function()		// Execute all of this on load
 			}	
 			document.getElementById('day').value = day;
 			document.getElementById('time').value = period;
-			document.getElementById('specialReq').value = specialReq;			
+			document.getElementById('specialReq').value = specialReq;	
+
+			if (priorityReq == 1)
+			{
+				document.getElementById("priorityCheckbox").checked = true;
+			}
+			else
+			{
+				document.getElementById("priorityCheckbox").checked = false;
+			}
+			
 			setSelectedWeeks(weeks);
 			
 			if (facilities.length > 0)
@@ -384,6 +383,16 @@ $(document).ready(function()		// Execute all of this on load
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
 		var round = document.getElementById('round').getAttribute('name');
+		var adhoc = 0;
+
+		if ($("#priorityCheckbox").is(":checked"))
+		{
+			var priority = 1;
+		}
+		else 
+		{
+			var priority = 0;
+		}
 		
 		// Error check
 		if (selectedWeeks.length != 0)
@@ -403,7 +412,9 @@ $(document).ready(function()		// Execute all of this on load
 					specialReq: specialReq,
 					day: day,
 					time: time,
-					round: round
+					round: round,
+					priority: priority,
+					adhoc: adhoc
 				},
 				function(data, status){
 					// Function to do things with the data
@@ -426,7 +437,8 @@ $(document).ready(function()		// Execute all of this on load
 					sessionLength: sessionLength,
 					specialReq: specialReq,
 					day: day,
-					time: time
+					time: time,
+					priority: priority
 				},
 				function(data, status){
 					// Function to do things with the data
@@ -438,6 +450,64 @@ $(document).ready(function()		// Execute all of this on load
 				$('#submit').addClass('none');
 				$('#submit').addClass("homeButtons");
 			}
+		}
+		else
+		{
+			alert("Please enter what weeks you want to book the module for");
+		}
+	});
+	
+	// Send adhoc request to database
+	$("#submitAdhoc").click(function()
+	{		
+		// Get all values from form
+		var modCode = document.getElementById('modCodes').value.substr(0, 8);
+		var rooms = getSelectedRooms();
+		var groupSizes = getGroupSizes();
+		var selectedWeeks = updateSelectedWeeks(selectedItems);
+		var facilities = getCheckedFacilities();
+		var sessionType = document.getElementById('seshType').value;
+		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
+		var specialReq = document.getElementById('specialReq').value;
+		var day = document.getElementById('day').selectedIndex + 1;
+		var time = document.getElementById('time').selectedIndex + 1;
+		var round = document.getElementById('round').getAttribute('name');
+		var adhoc = 1;
+
+		if ($("#priorityCheckbox").is(":checked"))
+		{
+			var priority = 1;
+		}
+		else 
+		{
+			var priority = 0;
+		}
+		
+		// Error check
+		if (selectedWeeks.length != 0)
+		{	
+			
+			$.post("php/addPendingRequest.php",
+			{	
+				// Data to send
+				modCode: modCode,
+				rooms: rooms,
+				groupSizes: groupSizes,
+				selectedWeeks: selectedWeeks,
+				facilities: facilities,
+				sessionType: sessionType,
+				sessionLength: sessionLength,
+				specialReq: specialReq,
+				day: day,
+				time: time,
+				round: round,
+				priority: priority,
+				adhoc: adhoc
+			},
+			function(data, status){
+				// Function to do things with the data
+				alert(data);
+			});
 		}
 		else
 		{
@@ -465,6 +535,7 @@ $(document).ready(function()		// Execute all of this on load
 		$("select#time")[0].selectedIndex = 0;
 		$("#specialReq").val("");
 		$("#chosenRooms").html("");
+		document.getElementById("priorityCheckbox").checked = true;
 		document.getElementById("sortable").innerHTML = "";
 		// Set the week selector to all the correct highlighted values
 		selectedItems = ['1','2','3','4','5','6','7','8','9','10','11','12'];
@@ -491,7 +562,26 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		$.get("php/loadPopupRequest.php", function(data)
 		{
-			$('#popupRequestDiv').html(data);
+			$('#popupRequestDiv').html(data)
+		}).done(function()
+		{
+			addTitles();
+			openDiv("popupRequestDiv");
+			loadGroupSize();
+			populateTimetable(); //function to add the tiles to the timetable
+			
+			//These functions load and update the day and time chosen between the main page and the popup room.
+			$('#popupDay').val($('#day').val());
+			$('#popupDay').change(function(){
+				var day = $('#popupDay').val();
+				$('#day').val(day);
+			});
+			$('#popupTime').val($('#time').val());
+			$('#popupTime').change(function(){
+				var day = $('#popupTime').val();
+				$('#time').val(day);
+			});	
+			updateAdvancedBuilding("parkeast");
 		});
 		openDiv("popupRequestDiv");
 	});
@@ -519,6 +609,7 @@ $(document).ready(function()		// Execute all of this on load
 		var newRound = parseInt(this.getAttribute('name'))+1;
 		this.name = newRound;
 		document.getElementById('genInfo').innerHTML = 'General Information - Round ' + newRound;
+		$("#priorityCheckbox").removeAttr("disabled");
 	});
 	
 	$(function()
@@ -618,14 +709,6 @@ function setSelectedRooms(id, groupSize)
 	document.getElementById('chosenRooms').innerHTML += html;
 }
 //functions for advanced request-------------------------------------
-function loadGroupSize()//load the group size based on the module
-{
-	var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
-		$.get("php/loadGroupSize.php?" + modCode, function(data)
-		{
-			$('#groupSize').val(data);
-		});
-}
 
 function populateTimetable()
 {
@@ -730,7 +813,7 @@ function createAutoCompleteFacList()
           .val( value )
           .attr( "title", "" )
 		  .attr("id","facDropDown")
-          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          //.addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
           .autocomplete({
             delay: 0,
             minLength: 0,
@@ -756,23 +839,20 @@ function createAutoCompleteFacList()
         var input = this.input,
           wasOpen = false;
  
-        $( "<a>" )
-          .attr( "tabIndex", -1 )
-          .attr( "title", "Show All Items" )
-		  .attr("id",'btnShowAllItems')
-          .tooltip()
-          .appendTo( this.wrapper )
-          .button({
-           // icons: {
-             // primary: "ui-icon-triangle-1-s"
-            //},
-            text: true
+        
+		$('<button>Show All Facilities</button>')
+		.attr( "tabIndex", -1 )
+			.attr("id",'btnShowAllItems')
+			.tooltip()
+			.appendTo( this.wrapper )
+
+
+		//$('#facDropDown').after(btn); //append this button to the screen
+		
+		
+		.mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
           })
-          .removeClass( "ui-corner-all" )
-         // .addClass( "custom-combobox-toggle ui-corner-right" )
-         // .mousedown(function() {
-           // wasOpen = input.autocomplete( "widget" ).is( ":visible" );
-          //})
           .click(function() {
             input.focus();
             // Close if already visible
@@ -783,6 +863,24 @@ function createAutoCompleteFacList()
             // Pass empty string as value to search for, displaying all results
             input.autocomplete( "search", "" );
           });
+		
+
+		
+		/*
+		$( "<a>" )
+          
+          .button({
+
+           // icons: {
+             // primary: "ui-icon-triangle-1-s"
+            //},
+            text: true
+          })
+          .removeClass( "ui-corner-all" )
+         // .addClass( "custom-combobox-toggle ui-corner-right" )
+         // .mousedown(function() {
+           // wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          //})*/
       },
 	  
 	  //Created my own function to add a 'add' button to add the chosen facility to the list

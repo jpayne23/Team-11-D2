@@ -22,6 +22,7 @@
 	$specialReq = $_REQUEST['specialReq'];
 	$day = $_REQUEST['day'];
 	$time = $_REQUEST['time'];
+	$priority = $_REQUEST['priority'];
 	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
@@ -50,7 +51,7 @@
 	
 	$sql = "UPDATE Request ";
 	$sql .= "SET ModCode = '$modCode', SessionType = '$sessionType', SessionLength = $sessionLength, ";
-	$sql .= "DayID = $day, PeriodID = $time, SpecialRequirements = '$specialReq' ";
+	$sql .= "DayID = $day, PeriodID = $time, PriorityRequest = $priority, SpecialRequirements = '$specialReq' ";
 	$sql .= "WHERE RequestID = $requestID";
 	
 	$res =& $db->query($sql);
