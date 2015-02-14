@@ -102,6 +102,7 @@ function updateAdvancedRoomFacility(value)
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
 			//alert(data);
+<<<<<<< HEAD
 			data+= "<input class='button1' type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
 			
 			var x = $('#comparedtable').find('#com'+ str);
@@ -109,6 +110,7 @@ function updateAdvancedRoomFacility(value)
 				data+= "<input class='button1' type='button' id='com"+value+"' value='Add to Compare List' onclick='addRoomToCompareList(this.id);'>";
 
 			}
+
 			$("#roominfo").html(data);
 			document.getElementById("roominfo").title = value;
 			$('#roominfo').dialog({
@@ -248,6 +250,8 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	var str = $('#'+id).attr('data-display'); //get currently available weeks for this slot
 	var display = str.substr(1,str.length-2);
 	display = display.split(",");	//turn attribute into array
+	
+	
 	var str = "";
 	
 	/*for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
@@ -264,9 +268,7 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	*/
 	str= "";
 	
-	var availWeeks = getAvailableWeeksAsArray(chosen, id);
-	//cc010 = 13,14,15
-	//cc021 = 1,2,3,9,10,11,12,13,14,15
+	var availWeeks = getAvailableWeeksAsArray(chosen);
 	
 	var strDisplay = JSON.stringify(display);
 	var strChosen = JSON.stringify(chosen);
@@ -278,45 +280,39 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	}).done(function(){
 
 	});*/
+<<<<<<< HEAD
 	//if(id=='d2p4'){
 	//alert('avail ' + availWeeks.join(','));
 	//alert('display ' + display.join(','));
 	//}
 	
+=======
+
+>>>>>>> origin/Merged-Version
 	av = [];
 	for(var i = 0;i<display.length;i++)
 	{
 		match = false;
 		for(var j=0;j<availWeeks.length;j++)
 		{
-			//if(id=='d2p4')
-				//alert(display[i] + ' ' + availWeeks[j]);
-			if(display[i] == availWeeks[j]){
+			if(display[i] == availWeeks[j])
 				match = true;
-				//if(id=='d2p4')
-					//alert('match');
-			}
 		}
-		if(match == true){
-			//if(id=='d2p4')
-				//alert('pushing ' + display[i]);
+		if(match == true)
 			av[av.length] = display[i];
-		}
 	}
-	
-
-	
-	var s = " ";
+	var s = "";
 	for(var i =0;i<av.length;i++)
 	{
+		
 		s+= av[i] + ",";
 	}
-
 	
 	//Assign the attributes and hover function
 	$('#' + id).attr('data-display',s);
 	
 	$('#'+id).hover(function(){// make hover function to show the available weeks
+		var str = $('#'+id).attr("data-display");
 		$('#'+id).html(s);
 	}, function(){
 		$('#'+id).html("Partly Available");
@@ -329,7 +325,7 @@ function getAvailableWeeksAsArray(chosen, id) //take a array of chosen weeks and
 {
 	var match;
 	var av=[];
-	var s = "";
+	var s="";
 	for(i=0;i<16;i++)
 	{
 		match = false;
@@ -342,10 +338,8 @@ function getAvailableWeeksAsArray(chosen, id) //take a array of chosen weeks and
 			av.push(i);
 			s+= i + ","; //used for testing purposes
 		}
-			
 	}
-	//if(id=='d2p4')
-		//alert(s);
+	
 	return av;
 }
 
