@@ -91,6 +91,17 @@
 						</tr>
 						<tr>
 							<td>
+								<label>Semester</label>
+							</td>
+							<td>
+								<select id="semester">
+									<option>1</option>
+									<option>2</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<label> Day </label>
 							</td>
 							<td>
@@ -223,7 +234,7 @@
 				<header>
 					<h2> Chosen Rooms </h2>
 				</header>
-				<table id='chosenRooms' data-norooms=0 data-maxcap>				
+				<table id='chosenRooms' data-norooms=0 data-maxcap>
 				</table>
 			</article>
 		</div>
@@ -233,7 +244,7 @@
 			<input class='pastButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Pending")'></input>
 			<div id='pastFilterDiv' style='visibility: hidden;'>
 			</div>
-			<div id='past'>				
+			<div id='past'>		
 			</div>
 		</div>
 		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
