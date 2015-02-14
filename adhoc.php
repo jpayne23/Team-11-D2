@@ -5,9 +5,7 @@
 	<meta charset="UTF-8">
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
-	<link rel="stylesheet" href="css/request.css" type="text/css" />
-
-	
+	<link rel="stylesheet" href="css/request.css" type="text/css" />	
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
 	<script src="javascript/jquery-2.1.1.js"></script>
 	<script src="javascript/jquery-ui.js"></script>
@@ -123,7 +121,7 @@
 								<label>Pick week</label>								
 							</td>
 							<td colspan='2'>
-								<ol id="weekSelector">
+								<ol id="adhocWeekSelector">
 									<li class="ui-state-default ui-selected">1</li>
 									<li class="ui-state-default ui-selected">2</li>
 									<li class="ui-state-default ui-selected">3</li>
@@ -205,14 +203,11 @@
 								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
-						<tr>
-							<table class ='imageTable' id="multiRoomTable" border='1' style='margin-left:10px; font-family:arial; font-size:16px; color:#FFFFFF;'>							
-							</table>	
-						</tr>						
+					</table>					
 				</content>
-				<input type="submit" class="none" id="submitAdhoc" value="Submit" />
+				<input type="submit" class="homeButtons none" id="submitAdhoc" value="Submit" />
 				<input type='button' class="homeButtons" id='btnAdvancedRequest' value='Room Request'/>
-				<input type='button' id='reset' value='Reset All Fields'/>
+				<input type='button' class="homeButtons" id='reset' value='Reset All Fields'/>
 			</article>
 			<article class="bottomcontent">
 				<header>

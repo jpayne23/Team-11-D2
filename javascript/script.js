@@ -102,6 +102,13 @@ $(document).ready(function()		// Execute all of this on load
 		updateSelectedWeeks(selectedItems);
 	});
 	
+	// Add adhoc week selector
+	$("#adhocWeekSelector li").on('click', function()
+	{
+		$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
+		$(this).addClass('ui-selected');
+	});
+	
 	// Add park selector
 	$.get("php/updatePark.php", function(data)
 	{
