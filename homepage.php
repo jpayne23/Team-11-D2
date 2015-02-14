@@ -187,7 +187,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td colspan='2'>
 								<input type="checkbox" id='priorityCheckbox' checked="checked" disabled="disabled"> Priority Request
 							</td>
 						</tr>

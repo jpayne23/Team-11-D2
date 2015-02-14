@@ -618,6 +618,12 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			document.getElementById('round').name = data;
 			document.getElementById('genInfo').innerHTML = 'General Information - Round ' + data;
+			
+			// If the round is higher than 1, let the priority checkbox be clickable
+			if (data > 1)
+			{
+				$("#priorityCheckbox").removeAttr("disabled");
+			}
 		});
 	});
 	
@@ -645,7 +651,7 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert(data);
 		});
-	});		
+	});			
 });
 
 function resetSelectedRooms()
