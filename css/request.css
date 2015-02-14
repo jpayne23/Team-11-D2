@@ -215,9 +215,20 @@ div.buildingcontent{
 	/*border-right: 2px solid black;*/	
 }
 
-div.selectedrooms{
+div.selectedcontainer{
 	float: left;
 	width: 48%;
+	height: 100%;
+}
+
+div.selectedrooms{
+	float: top;
+	min-height: 50%;
+}
+
+div.compared{
+	float: bottom;
+	min-height: 50%;
 }
 
 .dialogClass.ui-dialog{

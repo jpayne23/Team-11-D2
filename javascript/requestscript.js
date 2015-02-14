@@ -57,6 +57,7 @@ function addTitles(){
 	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
 	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
 	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
+	$("#compared").html('<a class= "selectedcontenttitle"> Rooms Compared </a><a> </br> </a> ');
 }
 
 function clearParkContent(){

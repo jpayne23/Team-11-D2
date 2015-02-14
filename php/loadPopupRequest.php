@@ -58,7 +58,11 @@
 				<div id= 'roomcontainer' class= 'roomcontainer'>
 					<div id= 'buildingcontent' class= 'buildingcontent'>
 					</div>
-					<div id= 'selectedrooms' class= 'selectedrooms'>
+					<div id= 'selectedcontainer' class= 'selectedcontainer'>
+						<div id= 'selectedrooms' class= 'selectedrooms'>
+						</div>
+						<div id= 'compared' class= 'compared'>
+						</div>
 					</div>
 				</div>
 				<div id= 'roominfo' class= 'roominfo'>
