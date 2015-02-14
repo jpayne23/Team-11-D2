@@ -1,15 +1,32 @@
 var times;
-var newav = [];
 $(document).ready(function()		// Execute all of this on load 
 {
-
+	loadGroupSize();
+	populateTimetable(); //function to add the tiles to the timetable
+	
+	//These functions load and update the day and time chosen between the main page and the popup room.
+	$('#popupDay').val($('#day').val());
+	$('#popupDay').change(function(){
+		var day = $('#popupDay').val();
+		$('#day').val(day);
+	});
+	$('#popupTime').val($('#time').val());
+	$('#popupTime').change(function(){
+		var day = $('#popupTime').val();
+		$('#time').val(day);
+	
+	});	
+	updateAdvancedBuilding("parkeast");
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
-function loadGroupSize()//load the group size based on the module
-{
-	x = $('#chosenRooms').attr('data-norooms');
-	if (x == "0")
+
+
+
+ function loadGroupSize()//load the group size based on the module
+ {
+ 	x = $('#chosenRooms').attr('data-norooms');
+ 	if (x == "0")
  	{
  		var modCode = "modCode=" + $('#modCodes').val().substr(0,8);
  		$.get("php/loadGroupSize.php?" + modCode, function(data)
@@ -21,7 +38,7 @@ function loadGroupSize()//load the group size based on the module
  			$('#groupSize').val(data);
  		});
  	}
-	else
+ 	else
  	{
  		$('#maxGroupSize').val($('#chosenRooms').attr('data-maxcap'));
  		$('#groupSize').val($('#chosenRooms').attr('data-maxcap'));
@@ -35,10 +52,9 @@ function loadGroupSize()//load the group size based on the module
 		{
 			html += "<tr id="+("rm" + rooms[i].replace(/\./g, ''))+"><td>"+groupSizes[i]+"</td><td> Students in room </td><td>"+rooms[i]+"</td><td id='del"+ ("rm" + rooms[i].replace(/\./g, '')) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 		}
-		clearBuildingContent();
 		$("#buildingcontent").append(html);
-	}
-}
+ 	}
+ }
 
 function populateTimetable()
 {
@@ -46,17 +62,11 @@ function populateTimetable()
 	for(var d = 1; d<6; d++)
 	{
 		for(var p = 10; p > 1; p--) //go backwards as we are inserting the tiles in reverse order
-		{
-			id = "d" + d + "p" + (p-1);
-			$('#d'+d+'').after("<td class= 'timeslot' data-selected='0' data-available='' data-display='' id="+id+">Fully Available </td>");
-		}
+			{
+				id = "d" + d + "p" + (p-1);
+				$('#d'+d+'').after("<td class= 'timeslot' data-selected='0' data-available='' data-display='' id="+id+">Fully Available </td>");
+			}
 	}
-}
-
-function addTitles(){
-	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
-	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
-	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
 }
 
 function clearParkContent(){
@@ -80,22 +90,20 @@ function updateAdvancedBuilding(value)
 	//alert(string);
 	//document.getElementById("parkcontent").style.background-color= "#CC0066";
 	
-	$('#parkeast').css("background-color", "#CC0066");
+	/*$('#parkeast').css("background-color", "#CC0066");
 	$('#parkcentral').css("background-color", "#CC0066");
 	$('#parkwest').css("background-color", "#CC0066");
 	$('#'+value).css("background-color", "#330066");
-	
+	*/
 	$.get("php/updateAdvancedBuilding.php?" + 'park=' + string, function(data)
 	{
-		addTitles();
-		$("#parkcontent").append(data);
+		$("#parkcontent").html(data);
 	});
 }
 
 
 function updateAdvancedRoomFacility(value)
 	{
-		$("#timetable").css("opacity", "1");// make the timetable visible
 		//get the information about chosen room, and show as popup
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
@@ -225,91 +233,37 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	var av = [];
 	//a201 = 6,11,12,13,14,15
 	//cc011 = 6,13,14,15
-	var str = $('#'+id).attr('data-display'); //get currently available weeks for this slot
-	var display = str.substr(1,str.length-2);
-	display = display.split(",");	//turn attribute into array
-	
-	
-	var str = "";
-	
-	for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
-		match = false;
-		for(var j = 0; j< chosen.length;j++){
-			if(chosen[j] == display[i]){
-				match = true;
+		var str = $('#'+id).attr('data-display'); //get currently available weeks for this slot
+		var display = str.substr(1,str.length-2);
+		display = display.split(",");	//turn attribute into array
+		var str = "";
+		for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
+			match = false;
+			for(var j = 0; j< chosen.length;j++){
+				if(chosen[j] == display[i]){
+					match = true;
+				}
+			}
+			if(match == false){
+				av[av.length] = display[i];
 			}
 		}
-		if(match == false){
-			av[av.length] = display[i];
-		}
-	}
-	str= "";
-	
-	var availWeeks = getAvailableWeeksAsArray(chosen);
-	
-	var strDisplay = JSON.stringify(display);
-	var strChosen = JSON.stringify(chosen);
-	var strAvail = JSON.stringify(availWeeks);
-	/*$.get("php/intersection.php?" + 'array1=' + strDisplay + '&array2=' + strAvail, function(data)
-	{
+		str= "";
 		
-	newav = JSON.parse(data);
-	}).done(function(){
-
-	});*/
-
-	av = [];
-	for(var i = 0;i<display.length;i++)
-	{
-		match = false;
-		for(var j=0;j<availWeeks.length;j++)
-		{
-			if(display[i] == availWeeks[j])
-				match = true;
-		}
-		if(match == true)
-			av[av.length] = display[i];
-	}
-	var s = "";
-	for(var i =0;i<av.length;i++)
-	{
+		str = av.join(',');
 		
-		s+= av[i] + ",";
-		if(i == av.length-1) //remove the last comma
-			s = s.substr(0,s.length-1);
-	}
-	
-	//Assign the attributes and hover function
-	$('#' + id).attr('data-display',s);
-	
-	$('#'+id).hover(function(){// make hover function to show the available weeks
-		var str = $('#'+id).attr("data-display");
-		$('#'+id).html(str);
-	}, function(){
-		$('#'+id).html("Partly Available");
-	});
+		//str = "[" + str + "]";
+		$('#' + id).attr('data-display',str);
 		
+		$('#'+id).hover(function(){// make hover function to show the available weeks
+			var str = $('#'+id).attr("data-display");
+			$('#'+id).html(str);
+		}, function(){
+			$('#'+id).html("Available");
+		});
 	
 }
 
-function getAvailableWeeksAsArray(chosen) //take a array of chosen weeks and output the array of available weeks
-{
-	var match;
-	var av=[];
-	for(i=0;i<15;i++)
-	{
-		match = false;
-		for(j=0;j<chosen.length;j++)
-		{
-			if(i == chosen[j])
-				match = true;
-		}
-		if(match == false) //if a match hasnt been found i.e. the week is available
-			av.push(i);
-	}
-	
-	return av;
-}
 
 function returnBookedWeeks(start, end)
 {
@@ -327,17 +281,8 @@ function updateAdvancedRoom(value)
 	
 	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
 	{
-		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
 	});
-}
-
-function timeOpacity(){
-	//$("#timetable").css("background-color", "green");
-	//var value = document.getElementById("time");
-	//value.style.opacity= "0.5";
-	//$("#timetable").css("background-color", "brown");
-	$("#timetable").css("opacity", "1");
 }
 
 function addRoomToList(id)
@@ -347,14 +292,13 @@ function addRoomToList(id)
         alert('room already added');
 		return;
     }
-	
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	x = parseInt(x); 
 	if(x>=3){ //check the no of rooms already chosen
 		alert("You cannot choose more than 3 rooms");
 		return;
 	}
-	
+
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
@@ -368,11 +312,11 @@ function addRoomToList(id)
 			var maxCapStr = maxCap.toString();
 			$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
 			$('#chosenRooms').attr('data-maxcap',''+maxCapStr+'');
-			var html= "<tr id="+("rm" + newid)+"><td id ='cap"+newid+"'>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+			var html= "<tr id="+("rm" + newid)+"><td>"+reqCap+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 			document.getElementById('chosenRooms').innerHTML += html;
-			$("#selectedrooms").append(html);
+			$("#buildingcontent").append(html);
 			reqCap = maxCap;
-			alert("You have selected room " + newid)
+			alert("Added room to request!")
 		}
 		else
 		{
@@ -392,22 +336,11 @@ function addRoomToList(id)
 function deleteRoom(id) //need to implement group capacity, increment when room is deleted
 {
 	var roomid = id.substr(3,id.length);
+	$( '#'+roomid ).remove();
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	if(x>0)
 		x--;
 	var str = x.toString();
 	$('#chosenRooms').attr('data-norooms',''+str+''); //alter the value of the rooms added
-	var groupSize = $('#chosenRooms').attr('data-maxcap');
-	groupSize = parseInt(groupSize);
-	var justroomid = roomid.substr(2,id.length);
-	var capChange = document.getElementById('cap'+justroomid).innerHTML;
-	capChange = parseInt(capChange);
-	groupSize = groupSize+capChange;
-	var groupSizeStr = groupSize.toString();
-	$('#chosenRooms').attr('data-maxcap',''+groupSizeStr+'');
-	while ($( '#'+roomid ).length > 0)
-	{
-		$( '#'+roomid ).remove();
-	}
-	loadGroupSize();
+	
 }
