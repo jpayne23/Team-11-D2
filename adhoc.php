@@ -6,7 +6,6 @@
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
-	
 	<script src="javascript/jquery-2.1.1.js"></script>
 	<script src="javascript/jquery-ui.js"></script>
 	<script src="javascript/script.js"></script>
@@ -20,9 +19,8 @@
 		<nav>
 			<ul>
 				<li><a href="homepage.php">Home</a></li>
-				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li class="active"><a href="#" id='adhocButton'>Ad Hoc</a></li>
-				<li><a href="#" id='historyButton'>History</a></li>
+				<li><a href="#" id='pastButton'>Past Requests</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
 			</ul>
 		</nav>	
@@ -89,6 +87,17 @@
 							<td>
 								<div id="modCodeDiv">
 								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Semester</label>
+							</td>
+							<td>
+								<select id="semester">
+									<option>1</option>
+									<option>2</option>
+								</select>
 							</td>
 						</tr>
 						<tr>
@@ -225,30 +234,18 @@
 				<header>
 					<h2> Chosen Rooms </h2>
 				</header>
-				<table id='chosenRooms' data-norooms=0 data-maxcap>				
+				<table id='chosenRooms' data-norooms=0 data-maxcap>
 				</table>
 			</article>
 		</div>
-		<div id='popupPendingDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		<div id='popupPastDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 
-			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
-			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
-			<div id='filterDiv' style='visibility: hidden;'>
+			<input class='pastButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+			<input class='pastButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Pending")'></input>
+			<div id='pastFilterDiv' style='visibility: hidden;'>
 			</div>
-			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" ></input>
-			<div id='submissions'>				
+			<div id='past'>		
 			</div>
-		</div>
-		<div id='popupHistoryDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
-			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
-			<div id='filterDivHist' style='visibility: hidden;'>
-			</div>
-			<div id='history'></div>
-		</div>
-		<div id='popupAdhocDiv' style='visibility: hidden;'>
-			<input type="button" value="Close me!" onclick='closeDiv("popupAdhocDiv");'></input>
-			<div id='adhoc'></div>
 		</div>
 		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>

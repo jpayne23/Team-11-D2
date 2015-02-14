@@ -416,4 +416,19 @@ button.closeAdvanced:hover{
     padding: 11px 3px;  */
 }
 
+.button1{
+	background-color: #CC0066;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.button1:hover{
+	background-color: #FFFFFF;
+	color: #CC0066;
+	border: 3px solid #CC0066;
+}
+
 @media only screen and (min-width: 480px) and (max-width: 1350px){}
