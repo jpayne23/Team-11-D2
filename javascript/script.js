@@ -306,8 +306,8 @@ $(document).ready(function()		// Execute all of this on load
 	// Load history page
 	$('#historyButton').click(function()
 	{
-		var sortDirection = "sortDirection=down";
-		var sortColumn = "&sortColumn=RequestID";
+		var sortDirection = "sortDirection=up";
+		var sortColumn = "&sortColumn=Status";
 		var flag = "&flag=0";
 		$.get("php/loadHistorySubmissions.php?" + sortDirection + sortColumn + flag, function(data)
 		{

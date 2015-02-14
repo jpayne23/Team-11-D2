@@ -356,6 +356,18 @@ a:hover, a:active{
 	-webkit-border-radius: 7px;
 }
 
+.unsuccessful{
+	background-color:#CC0066;
+}
+
+.successful{
+	background-color:green;
+}
+
+.modified{
+	background-color:black;
+}
+
 #historyTable{
 	border-color: #FFFFFF;
 	text-align: center;
