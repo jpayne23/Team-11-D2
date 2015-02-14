@@ -1,4 +1,77 @@
 <?php
+
+	function returnBookedWeeks($start,$end) //return the booked weeks as an inclusive string
+	{
+		$str = "";
+		$intstart = intval($start); //convert given numbers into integers
+		$intend = intval($end);
+		
+		for($i = $intstart; $i <= $intend; $i++){
+			$str .= $i . ",";
+		}
+		return $str;
+	}
+
+	function getWeeks($room,$dayID,$periodID) //get the booked weeks for a speific room, day and time
+	{
+		
+		require_once 'MDB2.php';			
+		include "/disks/diskh/teams/team11/passwords/password.php";
+		$dsn = "mysql://$username:$password@$host/$dbName"; 
+		$db =& MDB2::connect($dsn); 
+		if(PEAR::isError($db)){ 
+			die($db->getMessage());
+		}
+		$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
+		
+		$sql = "SELECT DISTINCT WeekRequest.Weeks FROM WeekRequest ";
+		$sql .= "JOIN Request ON Request.RequestID = WeekRequest.RequestID ";
+		$sql .= "JOIN AllocatedRooms ON AllocatedRooms.RequestID = WeekRequest.RequestID ";
+		$sql .= "WHERE AllocatedRooms.Room = '" . $room . "' AND Request.DayID = '". $dayID ."' ";
+		$sql .= "AND Request.PeriodID = '". $periodID ."'";
+
+		$res =& $db->query($sql);
+		if(PEAR::isError($res))
+		{
+			die($res->getMessage()." Function");
+		}
+		
+		$a = array();
+		
+		while ($row = $res->fetchRow())
+		{
+			//add the weeks for each request to an array
+			$a[sizeof($a)] = $row["weeks"]; 
+		}
+		
+		$str ="";
+		for($i=0;$i<count($a);$i++)
+		{
+			$len = strlen($a[$i]);
+			switch($len){ //return the booked weeks as a string depending on the length of the string
+				case 5:
+					$str .= returnBookedWeeks(substr($a[$i],1,1),substr($a[$i],3,1));
+					break;
+				case 6:
+					if($a[$i].substr(2,1) == ","){
+						$str .= returnBookedWeeks(substr($a[$i],1,1),substr($a[$i],3,2));
+					} else{
+						$str .= returnBookedWeeks(substr($a[$i],1,2),substr($a[$i],4,1));
+					}
+					break;
+				case 7:
+					$str .= returnBookedWeeks(substr($a[$i],1,2), substr($a[$i],3,2));
+					break;
+			} //end switch
+		}
+		print($str);
+		$weeks = explode(",",$str); //turn comma delimited string into an array
+		
+		return $weeks;
+	}
+
+
+	
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -9,6 +82,7 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	//load variables
 	session_start();
 	$deptCode = $_SESSION['deptCode'];	
 	$modCode = $_REQUEST['modCode'];
@@ -136,7 +210,7 @@
 	
 	$match = false;
 	
-	if($adhoc == 1){
+	if($adhoc == 1){ //instant feedback of an adhoc request
 		
 		if($rooms != "null")
 		{
@@ -149,19 +223,31 @@
 			}
 			while ($row = $res->fetchRow())
 			{
+				//check a match for the day and time in the allocated rooms table
 				if($row['dayid'] == $day && ($row['periodid'] + $row['sessionlength'] - 1) == $time)
 				{
-					for($i = 0; $i < count($rooms); $i++)
+					for($i = 0; $i < count($rooms); $i++) //loop through each room found
 					{
 						if($rooms[$i] == $row['room'])
 						{
-							$match = true;
+							//return array of weeks booked for a given room, day and time
+							$taken = getWeeks($row['room'],$row['dayid'],($row['periodid'] + $row['sessionlength'] - 1));
+							
+							for($j=0;$j<count($taken);$j++)
+							{
+								//check any week in the booked weeks matches the given ad hoc week
+								if($taken[$j] == $selectedWeeks)
+								{
+									$match = true;
+									break;
+								}
+							}
 						}
 					}
 				}
 			}
 			
-			if(!$match)
+			if(!$match) //run this if there is no match i.e. the room is free for an ad hoc booking
 			{
 				for($i = 0; $i < count($rooms); $i++)
 				{
@@ -185,7 +271,7 @@
 				
 				echo "Request Successful";
 			}
-			else
+			else //else if the room isnt available at given day and time, alert the user that the request is unsuccessful
 			{
 				$sql = "UPDATE Request SET Status = 'Unsuccessful' WHERE RequestID = (SELECT MAX(RequestID) FROM WeekRequest)";
 				
@@ -195,7 +281,7 @@
 					die($res->getMessage()."4th");
 				}
 				
-				echo "Request Successful";
+				echo "Request Unsuccessful";
 			}
 		}
 	}

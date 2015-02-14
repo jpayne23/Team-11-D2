@@ -246,7 +246,7 @@
 			<div id='past'>		
 			</div>
 		</div>
-		<div id='popupRequestDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		<div id='popupRequestDiv' class = 'popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>
 	</div>
