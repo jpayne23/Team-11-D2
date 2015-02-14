@@ -326,7 +326,7 @@ a:hover, a:active{
 	-webkit-border-radius: 5px;
 }
 
-#filterDiv{
+.filterDiv{
 	background:#CC0066;
 	margin:30px;
 	padding:6px;  
