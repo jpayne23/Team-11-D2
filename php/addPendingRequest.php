@@ -134,18 +134,19 @@
 		}		
 	}
 	
+	$match = false;
+	
 	if($adhoc == 1){
 		
-		$match = false;
 		
 		if($rooms != "null")
 		{
-			$sql = "SELECT Room,DayID,PeriodID FROM AllocatedRooms JOIN SessionLength ON Request.RequestID = AllocatedRooms.RequestID";
+			$sql = "SELECT Room, AllocatedRooms.DayID, AllocatedRooms.PeriodID, SessionLength FROM AllocatedRooms JOIN Request ON AllocatedRooms.RequestID = Request.RequestID";
 			
 			$res =& $db->query($sql);
 			if(PEAR::isError($res))
 			{
-				die($res->getMessage());
+				die($res->getMessage() . "1st");
 			}
 			while ($row = $res->fetchRow())
 			{
@@ -166,32 +167,36 @@
 				for($i = 0; $i < count($rooms); $i++)
 				{
 					$sql = "INSERT INTO AllocatedRooms (RequestID,Room,DayID,PeriodID) ";
-					$sql .= "VALUES ((SELECT MAX(RequestID) FROM Request), $room[$i] ,$day, $time)";
-					
+					$sql .= "VALUES ((SELECT MAX(RequestID) FROM Request),'$rooms[$i]','$day', '$time')";
+
 					$res =& $db->query($sql);
 					if(PEAR::isError($res))
 					{
-						die($res->getMessage());
+						die($res->getMessage() . "2nd");
 					}
 				}
 				
-				$sql = "UPDATE Request SET Status = 'Successful' WHERE RequestID = (SELECT MAX(RequestID) FROM Request)";
+				$sql = "UPDATE Request SET Status = 'Successful' WHERE RequestID = (SELECT MAX(RequestID) FROM WeekRequest)";
 				
 				$res =& $db->query($sql);
 				if(PEAR::isError($res))
 				{
-					die($res->getMessage());
+					die($res->getMessage()."3rd");
 				}
+				
+				echo "Request Successful";
 			}
 			else
 			{
-				$sql = "UPDATE Request SET Status = 'Unsuccessful' WHERE RequestID = (SELECT MAX(RequestID) FROM Request)";
+				$sql = "UPDATE Request SET Status = 'Unsuccessful' WHERE RequestID = (SELECT MAX(RequestID) FROM WeekRequest)";
 				
 				$res =& $db->query($sql);
 				if(PEAR::isError($res))
 				{
-					die($res->getMessage());
+					die($res->getMessage()."4th");
 				}
+				
+				echo "Request Successful";
 			}
 		}
 	}
