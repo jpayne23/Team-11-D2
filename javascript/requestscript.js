@@ -56,8 +56,11 @@ function populateTimetable()
 function addTitles(){
 	$("#parkcontent").html('<b><a class= "buildingcontenttitle">  Buildings </a></b><a> </br> </a> ');
 	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
-	$("#selectedrooms").html('<b><a class= "selectedcontenttitle"> Rooms Selected </a></b><a> </br> </a> ');
-	if ($('#comparedtable').children().children().length == 0)
+	
+	if($('#selectedrooms').children().length < 3)
+		$("#selectedrooms").html('<b><a class= "selectedcontenttitle"> Rooms Selected </a></b><a> </br> </a> ');
+	
+	if ($('#comparedtable').children().children().length == 0) //if the chosen room list is empty
 		$("#compared").html('<b><a class= "selectedcontenttitle"> Rooms Compared </a></b></br><table id="comparedtable"></table> ');
 }
 
@@ -74,7 +77,7 @@ function clearRoomContent()
 	$('#roominfo').html("");
 }
 
-function updateAdvancedBuilding(value)
+function updateAdvancedBuilding(value) //function to display the list of buildings from the user park choice
 {
 	//alert(value);
 	var string = value.substr(4, 1).toUpperCase();
@@ -91,6 +94,9 @@ function updateAdvancedBuilding(value)
 	{
 		addTitles();
 		$("#parkcontent").append(data);
+		//add the option of any building
+		$('#parkcontent').children().eq(1).after('<tr id="choice'+value+'" class="contentrows" onclick="addAnyBuilding(this.id)"><td>ANY '+value.substr(4,value.length).toUpperCase()+' BUILDING</td></tr><tr><td></br></td></tr>');
+		
 	});
 }
 
@@ -136,6 +142,7 @@ function updateAdvancedRoomFacility(value)
 	
 function fillTimetable(value)
 	{
+		
 		//Fill in the timetable
 		$.get("php/loadTimesOfRoom.php?" + 'roomNo=' + value, function(data)
 		{
@@ -365,9 +372,8 @@ function addRoomToCompareList(id) //function to add the chosen room to a list
 function deleteRoomFromCompareList(id)
 {
 	id = id.substr(3,id.length);
-	$('#'+id).fadeOut(function(){
-		$('#'+id).remove();
-	});
+	$('#'+id).remove();
+
 	
 	recreateTimetable();
 }
@@ -453,7 +459,9 @@ function addRoomToList(id)
 			document.getElementById('chosenRooms').innerHTML += html;
 			$("#selectedrooms").append(html);
 			reqCap = maxCap;
-			alert("You have selected room " + newid)
+			$('#roominfo').slideUp(function(){
+				$('#roominfo').dialog('close');
+			});
 		}
 		else
 		{
@@ -491,4 +499,22 @@ function deleteRoom(id) //need to implement group capacity, increment when room 
 		$( '#'+roomid ).remove();
 	}
 	loadGroupSize();
+}
+
+function addAnyBuilding(id)
+{
+	maxCap = parseInt(document.getElementById("maxGroupSize").value);
+	reqCap = parseInt(document.getElementById("groupSize").value);
+	
+	if(reqCap > 0){
+		
+		var parkname = id.substr(6,id.length);
+		parkname = parkname.substr(0,4) + " " + parkname.substr(4,parkname.length).toUpperCase();
+		var html= "<tr id="+("rm" + id)+"><td id ='cap"+id+"'>"+reqCap+"</td><td> Students in </td><td>"+parkname+"</td><td id='del"+ ("rm" + id) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+		$("#selectedrooms").append(html);
+		document.getElementById('chosenRooms').innerHTML += html;
+	}
+	
+	
+	
 }
