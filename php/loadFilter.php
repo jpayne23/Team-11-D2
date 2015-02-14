@@ -43,7 +43,7 @@
 	
 	while ($row = $res->fetchRow())
 	{
-		echo '<option id ="'.$row["modcode"].'">' . $row["modcode"] . ' - '.$row["title"].'</option>';
+		echo '<option class="modCode" id ="'.$row["modcode"].'">' . $row["modcode"] . ' - '.$row["title"].'</option>';
 	}
 	echo "</select></td></tr>";
 	
