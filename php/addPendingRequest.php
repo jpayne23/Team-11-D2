@@ -23,9 +23,7 @@
 	$day = $_REQUEST['day'];
 	$time = $_REQUEST['time'];
 	$round = $_REQUEST['round'];
-
 	$adhoc = $_REQUEST['adhoc'];
-
 	$priority = $_REQUEST['priority'];
 
 	
@@ -55,7 +53,6 @@
 	}
 	
 	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID,PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-
 	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,$day,$time,$priority,$adhoc,'$specialReq',$round,'Pending')";
 
 	

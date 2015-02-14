@@ -155,14 +155,14 @@ $(document).ready(function()		// Execute all of this on load
 		openDiv("popupPendingDiv");
 	});
 	
-	// Down arrow click event
+	// Down arrow pending click event
 	$('#submissions').on('click', "#downArrow", function() 
 	{
 		var sortColumn = this.name;
 		reloadPendingTable("up", sortColumn);
 	});
 	
-	// Up arrow click event
+	// Up arrow pending click event
 	$('#submissions').on('click', "#upArrow", function() 
 	{		
 		var sortColumn = this.name;
@@ -300,6 +300,20 @@ $(document).ready(function()		// Execute all of this on load
 		});
 		
 		openDiv("popupHistoryDiv");
+	});	
+	
+	// Down arrow history click event
+	$('#history').on('click', "#downArrow", function() 
+	{
+		var sortColumn = this.name;
+		reloadHistoryTable("up", sortColumn);
+	});
+	
+	// Up arrow history click event
+	$('#history').on('click', "#upArrow", function() 
+	{		
+		var sortColumn = this.name;
+		reloadHistoryTable("down", sortColumn);
 	});	
 	
 	//get Facilities of a given room (room1 only)
@@ -651,7 +665,96 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert(data);
 		});
-	});			
+	});		
+
+	// Load last year's requests
+	$('#lastYearButton').click(function()
+	{
+		$.get("php/loadLastYear.php", function(data)
+		{
+			reloadLastYearTable("down", "RequestID");
+		});
+		
+		openDiv("popupLastYear");
+	});
+	
+	// Down arrow last years click event
+	$('#lastYear').on('click', "#downArrow", function() 
+	{
+		var sortColumn = this.name;
+		reloadLastYearTable("up", sortColumn);
+	});
+	
+	// Up arrow last years click event
+	$('#lastYear').on('click', "#upArrow", function() 
+	{		
+		var sortColumn = this.name;
+		reloadLastYearTable("down", sortColumn);
+	});	
+	
+	// Last years master checkbox click event
+	$('#lastYear').on('click', "#requestCheckboxMaster", function()
+	{
+		if (document.getElementById('requestCheckboxMaster').checked == true)
+		{
+			var checkboxes = $('#lastYearTable').find(':checkbox');
+			for (var i = 1; i < checkboxes.length; i++)
+			{
+				checkboxes[i].checked = true;
+			}
+		}
+		else
+		{
+			var checkboxes = $('#lastYearTable').find(':checkbox');
+			for (var i = 1; i < checkboxes.length; i++)
+			{
+				checkboxes[i].checked = false;
+			}
+		}
+	});
+	
+	// Submit all checked requests
+	$('#submitCheckedButton').click(function()
+	{
+		// Get all ID's of all checked boxes
+		var checked = $('#lastYearTable').find(':checked');
+		var requestIDHist = [];
+		var round = document.getElementById('round').name
+		
+		if (document.getElementById('requestCheckboxMaster').checked == true)
+		{			
+			for (var i = 1; i < checked.length; i++)
+			{
+				requestIDHist.push(checked[i].id.substr(15));
+			}
+		}
+		else
+		{
+			for (var i = 0; i < checked.length; i++)
+			{
+				requestIDHist.push(checked[i].id.substr(15));
+			}
+		}
+		console.log(requestIDHist);
+		// Error check
+		if (requestIDHist.length != 0)
+		{	
+			$.post("php/addCheckedRequests.php",
+			{	
+				// Data to send
+				requestIDHist: requestIDHist,
+				round: round
+			},
+			function(data, status){
+				// Function to do things with the data
+				console.log(data);
+			});
+		}
+		else
+		{
+			alert("No requests selected");
+		}
+	});
 });
 
 function resetSelectedRooms()
@@ -777,6 +880,18 @@ function reloadHistoryTable(sortDirection, sortColumn)
 	$.get("php/loadHistorySubmissions.php?" + sortDirection + flag + sortColumn, function(data)
 	{
 		$('#history').html(data);
+	});
+}
+
+function reloadLastYearTable(sortDirection, sortColumn)
+{
+	// Reload table based on sort direction and column
+	sortDirection = "sortDirection=" + sortDirection;
+	sortColumn = "&sortColumn=" + sortColumn;
+	var flag = "&flag=0";
+	$.get("php/loadLastYear.php?" + sortDirection + flag + sortColumn, function(data)
+	{
+		$('#lastYear').html(data);
 	});
 }
 

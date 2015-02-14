@@ -119,7 +119,7 @@
 		die($res->getMessage());
 	}
 	
-	echo "<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";	
+	echo "<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto;'>";	
 	if ($sortDirection == "up")
 	{				
 		echo "<th>Request ID <img id='upArrow' name='RequestID' src='img/upArrow.png'></th>";

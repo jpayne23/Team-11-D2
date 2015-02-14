@@ -29,12 +29,11 @@
 		$facility = 'Any';
 	}
 	
-	$sql = "SELECT Request.RequestID, ModCode, SessionType, SessionLength, Day, Period, Status ";
-	$sql .= "FROM Request ";
-	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
-	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";
-	$sql .= "WHERE Status = 'Pending'";
-	
+	$sql = "SELECT RequestHist.RequestIDHist, ModCode, SessionType, SessionLength, Day, Period, Status ";
+	$sql .= "FROM RequestHist ";
+	$sql .= "JOIN DayInfo ON DayInfo.DayID = RequestHist.DayID ";
+	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = RequestHist.PeriodID ";
+		
 	if ($modCode != "Any")
 	{				
 		$sql .= " AND ModCode = '" . $modCode . "'";
@@ -45,11 +44,11 @@
 	}
 	if ($day != "Any")
 	{				
-		$sql .= " AND Request.DayID = (SELECT DayID FROM DayInfo WHERE Day = '" . $day . "')";
+		$sql .= " AND RequestHist.DayID = (SELECT DayID FROM DayInfo WHERE Day = '" . $day . "')";
 	}
 	if ($facility != 'Any')
 	{
-		$sql .= " AND Request.RequestID IN (SELECT FacilityRequest.RequestID FROM FacilityRequest)";
+		$sql .= " AND RequestHist.RequestIDHist IN (SELECT FacilityRequestHist.RequestIDHist FROM FacilityRequestHist)";
 	}
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
@@ -58,22 +57,22 @@
 		switch ($sortColumn)
 		{
 			case "RequestID":
-				$sql .= " ORDER BY Request.RequestID DESC;";
+				$sql .= " ORDER BY RequestHist.RequestIDHist DESC;";
 				break;
 			case "ModuleCode":
 				$sql .= " ORDER BY ModCode DESC;";
 				break;
 			case "SessionType":
-				$sql .= " ORDER BY Request.SessionType DESC;";
+				$sql .= " ORDER BY RequestHist.SessionType DESC;";
 				break;
 			case "SessionLength":
-				$sql .= " ORDER BY Request.SessionLength DESC;";
+				$sql .= " ORDER BY RequestHist.SessionLength DESC;";
 				break;
 			case "Day":
-				$sql .= " ORDER BY Request.DayID DESC;";
+				$sql .= " ORDER BY RequestHist.DayID DESC;";
 				break;
 			case "Period":
-				$sql .= " ORDER BY Request.PeriodID DESC;";
+				$sql .= " ORDER BY RequestHist.PeriodID DESC;";
 				break;
 		}		
 	}
@@ -82,22 +81,22 @@
 		switch ($sortColumn)
 		{
 			case "RequestID":
-				$sql .= " ORDER BY Request.RequestID ASC;";
+				$sql .= " ORDER BY RequestHist.RequestIDHist ASC;";
 				break;
 			case "ModuleCode":
 				$sql .= " ORDER BY ModCode ASC;";
 				break;
 			case "SessionType":
-				$sql .= " ORDER BY Request.SessionType ASC;";
+				$sql .= " ORDER BY RequestHist.SessionType ASC;";
 				break;
 			case "SessionLength":
-				$sql .= " ORDER BY Request.SessionLength ASC;";
+				$sql .= " ORDER BY RequestHist.SessionLength ASC;";
 				break;
 			case "Day":
-				$sql .= " ORDER BY Request.DayID ASC;";
+				$sql .= " ORDER BY RequestHist.DayID ASC;";
 				break;
 			case "Period":
-				$sql .= " ORDER BY Request.PeriodID ASC;";
+				$sql .= " ORDER BY RequestHist.PeriodID ASC;";
 				break;
 		}	
 	}
@@ -108,7 +107,7 @@
 		die($res->getMessage());
 	}
 	
-	echo "<table border='1' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto;'>";	
+	echo "<table border='1' id='lastYearTable' style='width:100%; margin-left:auto; margin-right:auto;'>";	
 	if ($sortDirection == "up")
 	{				
 		echo "<th>Request ID <img id='upArrow' name='RequestID' src='img/upArrow.png'></th>";
@@ -135,6 +134,7 @@
 	}
 	
 	echo "<th>Status</th>";
+	echo "<th>Select/Deselect All<br><input type='checkbox' id='requestCheckboxMaster'</th>";
 	
 	$modCodes = array();
 	$fill = True;
@@ -143,9 +143,9 @@
 	while ($row = $res->fetchRow())
 	{
 		if ($facility != 'Any'){			
-			$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
+			$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequestHist WHERE RequestIDHist = ".$row["requestidhist"].")";
 			$sql2 .= " AND '$facility' IN (SELECT Facility FROM Facility WHERE FacilityID IN ";
-			$sql2 .= " (SELECT FacilityID FROM FacilityRequest WHERE RequestID = '".$row['requestid']."'));";
+			$sql2 .= " (SELECT FacilityID FROM FacilityRequestHist WHERE RequestIDHist = '".$row['requestidhist']."'));";
 			
 			$res2 =& $db->query($sql2);
 			if(PEAR::isError($res2))
@@ -164,16 +164,16 @@
 		}
 		
 		if($fill){
-			echo "<tr id='pendingRow' name='".$row["requestid"]."'>";
-			echo "<td>" . $row["requestid"] . "</td>";
+			echo "<tr id='pendingRow' name='".$row["requestidhist"]."'>";
+			echo "<td>" . $row["requestidhist"] . "</td>";
 			echo "<td>" . $row["modcode"] . "</td>";
 			
 			//$modCodes[$modCodes.size] = $row["modcode"];
 			
 			// List rooms in one row instead of multiple
-			$sql4 = "SELECT Room FROM RoomRequest ";
-			$sql4 .= "LEFT JOIN RequestToRoom ON " . $row["requestid"]  . " = RequestToRoom.RequestID ";		
-			$sql4 .= "WHERE RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	
+			$sql4 = "SELECT Room FROM RoomRequestHist ";
+			$sql4 .= "LEFT JOIN RequestToRoomHist ON " . $row["requestidhist"]  . " = RequestToRoomHist.RequestIDHist ";		
+			$sql4 .= "WHERE RequestToRoomHist.RoomRequestIDHist = RoomRequestHist.RoomRequestIDHist ";	
 			$res4 =& $db->query($sql4);
 			if(PEAR::isError($res4))
 			{
@@ -201,7 +201,7 @@
 			if ($facility == 'Any')
 			{
 				$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN ";
-				$sql2 .= "(SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
+				$sql2 .= "(SELECT FacilityID FROM FacilityRequestHist WHERE RequestIDHist = ".$row["requestidhist"].")";
 				
 				$res2 =& $db->query($sql2);
 				if(PEAR::isError($res2))
@@ -228,7 +228,7 @@
 			}		
 			
 			// List weeks in one row instead of multiple		
-			$sql3 = "SELECT Weeks FROM WeekRequest WHERE RequestID = ".$row["requestid"].";";
+			$sql3 = "SELECT Weeks FROM WeekRequestHist WHERE RequestIDHist = ".$row["requestidhist"].";";
 			$res3 =& $db->query($sql3);
 			if(PEAR::isError($res3))
 			{
@@ -321,8 +321,7 @@
 			echo "<td>" . $row["period"] . "</td>";
 			
 			echo "<td>" . $row["status"] . "</td>";
-			echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
-			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
+			echo "<td><input type='checkbox' id='requestCheckbox" . $row['requestidhist'] . "'/></td>";
 			echo "</tr>";
 		}
 	}
