@@ -333,17 +333,25 @@ $(document).ready(function()		// Execute all of this on load
 	
 	// Load past requets page in adhoc
 	$('#pastButton').click(function()
-	{
-		var sortDirection = "sortDirection=down";
-		var sortColumn = "&sortColumn=RequestID";
-		var flag = "&flag=0";
-		$.get("php/loadAdhocSubmissions.php?" + sortDirection + sortColumn + flag, function(data)
-		{
-			$('#past').html(data);
-		});
+	{		
+		reloadPastTable("down", "RequestID");
 		
 		openDiv("popupPastDiv");
 	});	
+	
+	// Past up arrow click event
+	$('#past').on('click', '#upArrow', function()
+	{
+		var sortColumn = this.name;
+		reloadPastTable("down", sortColumn);
+	});
+	
+	// Past down arrow click event
+	$('#past').on('click', '#downArrow', function()
+	{
+		var sortColumn = this.name;
+		reloadPastTable("up", sortColumn);
+	});
 	
 	//get Facilities of a given room (room1 only)
 	$('#btnGetInfo').on('click', function()
@@ -931,6 +939,17 @@ function reloadLastYearTable(sortDirection, sortColumn)
 	$.get("php/loadLastYear.php?" + sortDirection + flag + sortColumn, function(data)
 	{
 		$('#lastYear').html(data);
+	});
+}
+
+function reloadPastTable(sortDirection, sortColumn)
+{
+	sortDirection = "sortDirection=" + sortDirection;
+	sortColumn = "&sortColumn=" + sortColumn;
+	var flag = "&flag=0";
+	$.get("php/loadAdhocSubmissions.php?" + sortDirection + sortColumn + flag, function(data)
+	{
+		$('#past').html(data);
 	});
 }
 

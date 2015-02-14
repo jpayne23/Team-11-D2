@@ -253,7 +253,7 @@
 			</div>
 			<div id='history'></div>
 		</div>
-		<div id='popupLastYear'  class='popupDiv' style='visibility: hidden;'>
+		<div id='popupLastYear' class='popupDiv' style='visibility: hidden;'>
 			<input type="button"class='pendingButton'  value="Close me!" onclick='closeDiv("popupLastYear");'></input>
 			<input type="button" class='pendingButton' id='submitCheckedButton' value="Submit All Checked Requests"></input>
 			<div id='lastYear'></div>
