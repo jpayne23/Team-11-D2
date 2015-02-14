@@ -5,10 +5,14 @@
 	<meta charset="UTF-8">
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/request.css" type="text/css" />
+
+	
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
 	<script src="javascript/jquery-2.1.1.js"></script>
 	<script src="javascript/jquery-ui.js"></script>
 	<script src="javascript/script.js"></script>
+	<script src="javascript/requestscript.js"></script>
 	<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 </head>
 <body class="body">
@@ -207,7 +211,7 @@
 						</tr>						
 				</content>
 				<input type="submit" class="none" id="submitAdhoc" value="Submit" />
-				<input type='button' id='btnAdvancedRequest' value='Room Request'/>
+				<input type='button' class="homeButtons" id='btnAdvancedRequest' value='Room Request'/>
 				<input type='button' id='reset' value='Reset All Fields'/>
 			</article>
 			<article class="bottomcontent">
@@ -242,7 +246,7 @@
 
 			<input class='pastButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
 			<input class='pastButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Pending")'></input>
-			<div id='pastFilterDiv' style='visibility: hidden;'>
+			<div class = 'filterDiv' id='pastFilterDiv' style='visibility: hidden;'>
 			</div>
 			<div id='past'>		
 			</div>
