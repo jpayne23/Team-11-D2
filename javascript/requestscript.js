@@ -100,7 +100,7 @@ function updateAdvancedRoomFacility(value)
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
 			//alert(data);
-			data+= "<input type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
+			data+= "<input class='button1' type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
 			$("#roominfo").html(data);
 			document.getElementById("roominfo").title = value;
 			$('#roominfo').dialog({
