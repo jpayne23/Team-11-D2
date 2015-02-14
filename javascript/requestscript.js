@@ -416,6 +416,9 @@ function updateAdvancedRoom(value)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
+		$('#buildingcontent').children().eq(2).before('<tr id="choice'+value+'" class="contentrows" onclick="addAnyPark(this.id)"><td>ANY ROOM IN "'+value+'"</td></tr><tr><td></br></td></tr>');
+
+		
 	});
 }
 
@@ -515,6 +518,31 @@ function addAnyBuilding(id)
 		document.getElementById('chosenRooms').innerHTML += html;
 	}
 	
+}
+
+function addAnyPark(id)
+{
+	maxCap = parseInt(document.getElementById("maxGroupSize").value);
+	reqCap = parseInt(document.getElementById("groupSize").value);
 	
+		if(reqCap > 0){
+		
+		var buildingname = $('#buildingcontent').children().eq(4).attr('data-building');
+		var html= "<tr id="+("rm" + id)+"><td id ='cap"+id+"'>"+reqCap+"</td><td> Students in </td><td>"+buildingname+"</td><td id='del"+ ("rm" + id) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+		$("#selectedrooms").append(html);
+		document.getElementById('chosenRooms').innerHTML += html;
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,14 +18,22 @@
 		die($res->getMessage());
 	}
 		
-	//echo '<select name="room" id="room1">';
-	//echo '<option>Any</option>';
+	$sql = "SELECT building from Building where buildingcode = (SELECT distinct buildingcode FROM `Room` WHERE buildingcode = '".$building."');";
+	$res2 =& $db->query($sql);
+	if(PEAR::isError($res2))
+	{
+		die($res2->getMessage());
+	}	
 	
-		while ($row = $res->fetchRow())
-		{
-			echo '<tr id ="'.$row["room"].'" class = "contentrows" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
-			echo '<td> </br> </td>';
-		}
+	$row = $res2->fetchRow();
+	$buildingName = $row['building'];
+	
+	
+	while ($row = $res->fetchRow())
+	{
+		echo '<tr id ="'.$row["room"].'" class = "contentrows" data-building="'.$buildingName.'" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
+		echo '<td> </br> </td>';
+	}
 
 	
 ?>
