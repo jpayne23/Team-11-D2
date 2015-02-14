@@ -109,6 +109,14 @@ $(document).ready(function()		// Execute all of this on load
 		$(this).addClass('ui-selected');
 	});
 	
+	// Add semester selector
+	$("#semesterSelector li").on('click', function()
+	{
+		$("#semesterSelector").find('li.ui-selected').removeClass('ui-selected');
+		$(this).addClass('ui-selected');
+		toggleWeeks();
+	});
+	
 	// Add park selector
 	$.get("php/updatePark.php", function(data)
 	{
@@ -507,41 +515,34 @@ $(document).ready(function()		// Execute all of this on load
 		var specialReq = document.getElementById('specialReq').value;
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
-		var semester = document.getElementById('semester').selectedIndex+1;
+		var semester = $('#semesterSelector').find('li.ui-selected').text();
 		var round = 0;
 		var adhoc = 1;
 		var priority = 1;
 		
-		// Error check
-		if (selectedWeeks.length != 0)
+		// Error check	
+		$.post("php/addPendingRequest.php",
 		{	
-			$.post("php/addPendingRequest.php",
-			{	
-				// Data to send
-				modCode: modCode,
-				rooms: rooms,
-				groupSizes: groupSizes,
-				selectedWeeks: selectedWeeks,
-				facilities: facilities,
-				sessionType: sessionType,
-				sessionLength: sessionLength,
-				specialReq: specialReq,
-				day: day,
-				time: time,
-				round: round,
-				priority: priority,
-				adhoc: adhoc,
-				semester: semester
-			},
-			function(data, status){
-				// Function to do things with the data
-				alert(data);
-			});
-		}
-		else
-		{
-			alert("Please enter what weeks you want to book the module for");
-		}
+			// Data to send
+			modCode: modCode,
+			rooms: rooms,
+			groupSizes: groupSizes,
+			selectedWeeks: selectedWeek,
+			facilities: facilities,
+			sessionType: sessionType,
+			sessionLength: sessionLength,
+			specialReq: specialReq,
+			day: day,
+			time: time,
+			round: round,
+			priority: priority,
+			adhoc: adhoc,
+			semester: semester
+		},
+		function(data, status){
+			// Function to do things with the data
+			alert(data);
+		});		
 	});
 	
 	// Make all pending requests submitted ones
@@ -750,7 +751,7 @@ $(document).ready(function()		// Execute all of this on load
 				requestIDHist.push(checked[i].id.substr(15));
 			}
 		}
-		console.log(requestIDHist);
+		
 		// Error check
 		if (requestIDHist.length != 0)
 		{	
@@ -771,6 +772,29 @@ $(document).ready(function()		// Execute all of this on load
 		}
 	});
 });
+
+function toggleWeeks()
+{
+	if ($('#semesterSelector').find('li.ui-selected').text() == 1)
+	{
+		if ($('#adhocWeekSelector li').last().hasClass('ui-selected'))
+		{
+			$('#adhocWeekSelector li').first().addClass('ui-selected');
+		}
+		$('#adhocWeekSelector li').last().remove();		
+	}
+	else
+	{
+		var html = "<li class='ui-state-default'>16</li>";
+		$('#adhocWeekSelector').append(html);
+		
+		$('#adhocWeekSelector li').last().on('click', function()
+		{
+			$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
+			$(this).addClass('ui-selected');
+		});
+	}
+}
 
 function resetSelectedRooms()
 {
