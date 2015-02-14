@@ -19,10 +19,15 @@
 		$status = "Status = 'Pending'";
 		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"filterDiv\");'></input>";
 	}
-	else
+	else if($source == 'History')
 	{
 		$status = "Status != 'Pending'";
 		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"filterDivHist\");'></input>";
+	}
+	else
+	{
+		$status = "Status != 'Pending'";
+		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"pastFilterDiv\");'></input>";
 	}
 	
 	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE " . $status;
@@ -113,7 +118,7 @@
 	
 	echo "</select></td></tr>";
 	
-	if($source == 'History'){
+	if($source != 'Pending'){
 		
 		echo "<tr><td>Status</td><td>";
 		

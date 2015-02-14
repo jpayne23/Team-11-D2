@@ -123,17 +123,17 @@
 							<td colspan='2'>
 								<ol id="adhocWeekSelector">
 									<li class="ui-state-default ui-selected">1</li>
-									<li class="ui-state-default ui-selected">2</li>
-									<li class="ui-state-default ui-selected">3</li>
-									<li class="ui-state-default ui-selected">4</li>
-									<li class="ui-state-default ui-selected">5</li>
-									<li class="ui-state-default ui-selected">6</li>
-									<li class="ui-state-default ui-selected">7</li>
-									<li class="ui-state-default ui-selected">8</li>
-									<li class="ui-state-default ui-selected">9</li>
-									<li class="ui-state-default ui-selected">10</li>
-									<li class="ui-state-default ui-selected">11</li>
-									<li class="ui-state-default ui-selected">12</li>
+									<li class="ui-state-default ">2</li>
+									<li class="ui-state-default ">3</li>
+									<li class="ui-state-default ">4</li>
+									<li class="ui-state-default ">5</li>
+									<li class="ui-state-default ">6</li>
+									<li class="ui-state-default ">7</li>
+									<li class="ui-state-default ">8</li>
+									<li class="ui-state-default ">9</li>
+									<li class="ui-state-default ">10</li>
+									<li class="ui-state-default ">11</li>
+									<li class="ui-state-default ">12</li>
 									<li class="ui-state-default">13</li>
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
@@ -239,8 +239,8 @@
 		</div>
 		<div id='popupPastDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 
-			<input class='pastButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
-			<input class='pastButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Pending")'></input>
+			<input class='pastButton' type="button" value="Close me!" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
+			<input class='pastButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Adhoc")'></input>
 			<div class = 'filterDiv' id='pastFilterDiv' style='visibility: hidden;'>
 			</div>
 			<div id='past'>		

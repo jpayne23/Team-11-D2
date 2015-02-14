@@ -22,8 +22,8 @@
 		<nav>
 			<ul>
 				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="adhoc.php" id='adhocButton'>Ad Hoc</a></li>
+				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#" id='lastYearButton'>View Last Year's Requests</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
