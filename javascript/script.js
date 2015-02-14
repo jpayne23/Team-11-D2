@@ -300,9 +300,9 @@ $(document).ready(function()		// Execute all of this on load
 		});
 		
 		openDiv("popupHistoryDiv");
-	});
-
-	// Load past requests page in adhoc
+	});	
+	
+	// Load past requets page in adhoc
 	$('#pastButton').click(function()
 	{
 		var sortDirection = "sortDirection=down";
@@ -314,7 +314,7 @@ $(document).ready(function()		// Execute all of this on load
 		});
 		
 		openDiv("popupPastDiv");
-	});		
+	});	
 	
 	//get Facilities of a given room (room1 only)
 	$('#btnGetInfo').on('click', function()
@@ -398,7 +398,6 @@ $(document).ready(function()		// Execute all of this on load
 		var time = document.getElementById('time').selectedIndex + 1;
 		var round = document.getElementById('round').getAttribute('name');
 		var adhoc = 0;
-		var semester = 1;
 
 		if ($("#priorityCheckbox").is(":checked"))
 		{
@@ -429,8 +428,7 @@ $(document).ready(function()		// Execute all of this on load
 					time: time,
 					round: round,
 					priority: priority,
-					adhoc: adhoc,
-					semester: semester
+					adhoc: adhoc
 				},
 				function(data, status){
 					// Function to do things with the data
@@ -487,8 +485,6 @@ $(document).ready(function()		// Execute all of this on load
 		var specialReq = document.getElementById('specialReq').value;
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
-
-		var semester = document.getElementById('semester').selectedIndex+1;
 		var round = 0;
 		var adhoc = 1;
 
@@ -520,8 +516,7 @@ $(document).ready(function()		// Execute all of this on load
 				time: time,
 				round: round,
 				priority: priority,
-				adhoc: adhoc,
-				semester: semester
+				adhoc: adhoc
 			},
 			function(data, status){
 				// Function to do things with the data
@@ -868,6 +863,7 @@ function createAutoCompleteFacList()
 		$('<button>Show All Facilities</button>')
 		.attr( "tabIndex", -1 )
 			.attr("id",'btnShowAllItems')
+			.attr('class','homeButtons')
 			.tooltip()
 			.appendTo( this.wrapper )
 
@@ -1213,11 +1209,13 @@ function setSelectedWeeks(weeksArray)
 function openDiv(id)
 {
 	document.getElementById(id).style.visibility = 'visible';
+	$('#'+id).fadeIn();
 }
 
 function closeDiv(id)
 {
-	document.getElementById(id).style.visibility = 'hidden';
+	//document.getElementById(id).style.visibility = 'hidden';
+	$('#'+id).fadeOut();
 }
 
 function resizeText(multiplier) 

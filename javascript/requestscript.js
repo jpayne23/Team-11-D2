@@ -54,11 +54,11 @@ function populateTimetable()
 }
 
 function addTitles(){
-	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
-	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
-	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
+	$("#parkcontent").html('<b><a class= "buildingcontenttitle">  Buildings </a></b><a> </br> </a> ');
+	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
+	$("#selectedrooms").html('<b><a class= "selectedcontenttitle"> Rooms Selected </a></b><a> </br> </a> ');
 	if ($('#comparedtable').children().children().length == 0)
-		$("#compared").html('<a class= "selectedcontenttitle"> Rooms Compared </a></br><table id="comparedtable"></table> ');
+		$("#compared").html('<b><a class= "selectedcontenttitle"> Rooms Compared </a></b></br><table id="comparedtable"></table> ');
 }
 
 function clearParkContent(){
@@ -102,12 +102,12 @@ function updateAdvancedRoomFacility(value)
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
 			//alert(data);
-<<<<<<< HEAD
-			data+= "<input class='button1' type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
+
+			data+= "<input class='homeButtons' type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
 			
 			var x = $('#comparedtable').find('#com'+ str);
 			if(x.length == 0){
-				data+= "<input class='button1' type='button' id='com"+value+"' value='Add to Compare List' onclick='addRoomToCompareList(this.id);'>";
+				data+= "<input class='homeButtons' type='button' id='com"+value+"' value='Add to Compare List' onclick='addRoomToCompareList(this.id);'>";
 
 			}
 
@@ -280,15 +280,12 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	}).done(function(){
 
 	});*/
-<<<<<<< HEAD
 	//if(id=='d2p4'){
 	//alert('avail ' + availWeeks.join(','));
 	//alert('display ' + display.join(','));
 	//}
 	
-=======
 
->>>>>>> origin/Merged-Version
 	av = [];
 	for(var i = 0;i<display.length;i++)
 	{
@@ -360,12 +357,18 @@ function addRoomToCompareList(id) //function to add the chosen room to a list
 	var name = id.substr(3,id.length)
 	$('#comparedtable').append('<tr id='+newid+' value='+name+'><td>'+name+ '</td><td id=del'+newid+' onclick="deleteRoomFromCompareList(this.id);"><img src="img/delete.png" height="15" width="15"> </td></tr>');
 	recreateTimetable();
+	$('#roominfo').slideUp(function(){
+		$('#roominfo').dialog('close');
+	});
 }
 
 function deleteRoomFromCompareList(id)
 {
 	id = id.substr(3,id.length);
-	$('#'+id).remove();
+	$('#'+id).fadeOut(function(){
+		$('#'+id).remove();
+	});
+	
 	recreateTimetable();
 }
 
