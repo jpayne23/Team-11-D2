@@ -48,15 +48,17 @@ function populateTimetable()
 		for(var p = 10; p > 1; p--) //go backwards as we are inserting the tiles in reverse order
 		{
 			id = "d" + d + "p" + (p-1);
-			$('#d'+d+'').after("<td class= 'timeslot' data-selected='0' data-available='' data-display='' id="+id+">Fully Available </td>");
+			$('#d'+d+'').after("<td class= 'timeslot' data-selected='0' data-available='' data-display='[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]' id="+id+">Fully Available </td>");
 		}
 	}
 }
 
 function addTitles(){
-	$("#parkcontent").html('<a class= "buildingcontenttitle">  Buildings </a><a> </br> </a> ');
-	$("#buildingcontent").html('<a class= "roomcontenttitle"> Rooms </a><a> </br> </a> ');
-	$("#selectedrooms").html('<a class= "selectedcontenttitle"> Rooms Selected </a><a> </br> </a> ');
+	$("#parkcontent").html('<b><a class= "buildingcontenttitle">  Buildings </a></b><a> </br> </a> ');
+	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
+	$("#selectedrooms").html('<b><a class= "selectedcontenttitle"> Rooms Selected </a></b><a> </br> </a> ');
+	if ($('#comparedtable').children().children().length == 0)
+		$("#compared").html('<b><a class= "selectedcontenttitle"> Rooms Compared </a></b></br><table id="comparedtable"></table> ');
 }
 
 function clearParkContent(){
@@ -94,13 +96,21 @@ function updateAdvancedBuilding(value)
 
 
 function updateAdvancedRoomFacility(value)
-	{
+	{	var str = value.replace(/\./g, '');
 		$("#timetable").css("opacity", "1");// make the timetable visible
 		//get the information about chosen room, and show as popup
 		$.get("php/updateAdvancedRoomFacility.php?" + 'roomNo=' + value, function(data)
 		{
 			//alert(data);
-			data+= "<input type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
+
+			data+= "<input class='homeButtons' type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
+			
+			var x = $('#comparedtable').find('#com'+ str);
+			if(x.length == 0){
+				data+= "<input class='homeButtons' type='button' id='com"+value+"' value='Add to Compare List' onclick='addRoomToCompareList(this.id);'>";
+
+			}
+
 			$("#roominfo").html(data);
 			document.getElementById("roominfo").title = value;
 			$('#roominfo').dialog({
@@ -110,8 +120,22 @@ function updateAdvancedRoomFacility(value)
 					duration: 500
 				  }
 			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
-		}); //end $.get
+		}).done(function(){
+			//check if the room has already been added to the compare table
+			
+			
+			
+			
 		
+			
+			
+		}); //end $.get
+	}
+	
+	
+	
+function fillTimetable(value)
+	{
 		//Fill in the timetable
 		$.get("php/loadTimesOfRoom.php?" + 'roomNo=' + value, function(data)
 		{
@@ -125,14 +149,14 @@ function updateAdvancedRoomFacility(value)
 				id = times[i]['id'];
 				length = times[i]['data-length'];
 				var weeks = times[i]['data-weeks'];
-				var display = times[i]['data-display'];
+				//var display = times[i]['data-display'];
 				$('#'+id).attr('id',id);
 				$('#'+id).attr('data-length',length);
 				$('#'+id).attr('data-selected','1');
 				$('#'+id).attr('data-weeks', weeks);
-				$('#'+id).attr('data-display', display);
+				//$('#'+id).attr('data-display', display);
 				$('#'+id).attr('class','timeslotbooked');
-				$('#'+id).html('Available');
+				$('#'+id).html('Partly Available');
 				displayAvailableWeeks(id, value);
 				while(j < (length))
 				{
@@ -147,15 +171,15 @@ function updateAdvancedRoomFacility(value)
 					$('#'+newid).attr('data-selected','1');
 					$('#'+newid).attr('data-weeks', weeks);
 					$('#'+newid).attr('class','timeslotbooked');
-					$('#'+newid).attr('data-display', display);
-					$('#'+newid).html('Available');
+					//$('#'+newid).attr('data-display', display);
+					$('#'+newid).html('Partly Available');
 					displayAvailableWeeks(newid, value); //function to show the user the weeks this timeslot is available
 					j++;
 				}
 			}
 		}); // end $.get
 		
-	}
+}
 
 function displayAvailableWeeks(id, value) //function to show the user the weeks this timeslot is available
 {
@@ -223,8 +247,6 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 {
 	var match, str;
 	var av = [];
-	//a201 = 6,11,12,13,14,15
-	//cc011 = 6,13,14,15
 	var str = $('#'+id).attr('data-display'); //get currently available weeks for this slot
 	var display = str.substr(1,str.length-2);
 	display = display.split(",");	//turn attribute into array
@@ -232,7 +254,7 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	
 	var str = "";
 	
-	for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
+	/*for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
 		match = false;
 		for(var j = 0; j< chosen.length;j++){
 			if(chosen[j] == display[i]){
@@ -243,6 +265,7 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 			av[av.length] = display[i];
 		}
 	}
+	*/
 	str= "";
 	
 	var availWeeks = getAvailableWeeksAsArray(chosen);
@@ -257,6 +280,11 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	}).done(function(){
 
 	});*/
+	//if(id=='d2p4'){
+	//alert('avail ' + availWeeks.join(','));
+	//alert('display ' + display.join(','));
+	//}
+	
 
 	av = [];
 	for(var i = 0;i<display.length;i++)
@@ -275,8 +303,6 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	{
 		
 		s+= av[i] + ",";
-		if(i == av.length-1) //remove the last comma
-			s = s.substr(0,s.length-1);
 	}
 	
 	//Assign the attributes and hover function
@@ -284,19 +310,20 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	
 	$('#'+id).hover(function(){// make hover function to show the available weeks
 		var str = $('#'+id).attr("data-display");
-		$('#'+id).html(str);
+		$('#'+id).html(s);
 	}, function(){
 		$('#'+id).html("Partly Available");
 	});
 		
-	
+
 }
 
-function getAvailableWeeksAsArray(chosen) //take a array of chosen weeks and output the array of available weeks
+function getAvailableWeeksAsArray(chosen, id) //take a array of chosen weeks and output the array of available weeks
 {
 	var match;
 	var av=[];
-	for(i=0;i<15;i++)
+	var s="";
+	for(i=0;i<16;i++)
 	{
 		match = false;
 		for(j=0;j<chosen.length;j++)
@@ -304,8 +331,10 @@ function getAvailableWeeksAsArray(chosen) //take a array of chosen weeks and out
 			if(i == chosen[j])
 				match = true;
 		}
-		if(match == false) //if a match hasnt been found i.e. the week is available
+		if(match == false){ //if a match hasnt been found i.e. the week is available
 			av.push(i);
+			s+= i + ","; //used for testing purposes
+		}
 	}
 	
 	return av;
@@ -321,6 +350,58 @@ function returnBookedWeeks(start, end)
 	}
 	return str;
 }
+
+function addRoomToCompareList(id) //function to add the chosen room to a list
+{
+	var newid = id.replace(/\./g, '');
+	var name = id.substr(3,id.length)
+	$('#comparedtable').append('<tr id='+newid+' value='+name+'><td>'+name+ '</td><td id=del'+newid+' onclick="deleteRoomFromCompareList(this.id);"><img src="img/delete.png" height="15" width="15"> </td></tr>');
+	recreateTimetable();
+	$('#roominfo').slideUp(function(){
+		$('#roominfo').dialog('close');
+	});
+}
+
+function deleteRoomFromCompareList(id)
+{
+	id = id.substr(3,id.length);
+	$('#'+id).fadeOut(function(){
+		$('#'+id).remove();
+	});
+	
+	recreateTimetable();
+}
+
+
+function recreateTimetable() //function to update the weeks available of the selected rooms (i.e. if one was deleted)
+{
+	//recreate blank timetable
+	$('#mon').html("<th class= 'ttheader' id='d1'> Monday </th>");
+	$('#tue').html("<th class= 'ttheader' id='d2'> Tuesday </th>");
+	$('#wed').html("<th class= 'ttheader' id='d3'> Wednesday </th>");
+	$('#thu').html("<th class= 'ttheader' id='d4'> Thursday </th>");
+	$('#fri').html("<th class= 'ttheader' id='d5'> Friday </th>");
+	populateTimetable();
+
+	//loop through each chosen room add intersect the available weeks
+	var len = $('#comparedtable').children().children().length;
+	for(var i = 0;i<len;i++)
+	{
+		var id = $('#comparedtable').children().children().eq(i).attr('value'); //get id of each room in the list
+		fillTimetable(id);
+		
+		
+	}
+	
+}
+
+
+
+
+
+
+
+
 	
 function updateAdvancedRoom(value)
 {

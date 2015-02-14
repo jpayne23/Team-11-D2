@@ -23,9 +23,9 @@
 	$day = $_REQUEST['day'];
 	$time = $_REQUEST['time'];
 	$round = $_REQUEST['round'];
+	$semester = $_REQUEST['semester'];
 	$adhoc = $_REQUEST['adhoc'];
 	$priority = $_REQUEST['priority'];
-
 	
 	// Convert the selected weeks to the database weeks format
 	$weeksArray = array();
@@ -52,9 +52,8 @@
 		}
 	}
 	
-	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID,PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,RoundID,Status) ";
-	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,$day,$time,$priority,$adhoc,'$specialReq',$round,'Pending')";
-
+	$sql = "INSERT INTO Request (UserID,ModCode,SessionType,SessionLength,DayID,PeriodID,PriorityRequest,AdhocRequest,SpecialRequirements,Semester,RoundID,Status) ";
+	$sql .= "VALUES ((SELECT UserID FROM Users WHERE DeptCode = '$deptCode'),'$modCode','$sessionType',$sessionLength,$day,$time,$priority,$adhoc,'$specialReq',$semester,$round,'Pending')";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
@@ -133,5 +132,67 @@
 				die($res6->getMessage());
 			}			
 		}		
+	}
+	
+	if($adhoc == 1){
+		
+		$match = false;
+		
+		if($rooms != "null")
+		{
+			$sql = "SELECT Room,DayID,PeriodID FROM AllocatedRooms JOIN SessionLength ON Request.RequestID = AllocatedRooms.RequestID";
+			
+			$res =& $db->query($sql);
+			if(PEAR::isError($res))
+			{
+				die($res->getMessage());
+			}
+			while ($row = $res->fetchRow())
+			{
+				if($row['dayid'] == $day && ($row['periodid'] + $row['sessionlength'] - 1) == $time)
+				{
+					for($i = 0; $i < count($rooms); $i++)
+					{
+						if($rooms[$i] == $row['room'])
+						{
+							$match = true;
+						}
+					}
+				}
+			}
+			
+			if(!$match)
+			{
+				for($i = 0; $i < count($rooms); $i++)
+				{
+					$sql = "INSERT INTO AllocatedRooms (RequestID,Room,DayID,PeriodID) ";
+					$sql .= "VALUES ((SELECT MAX(RequestID) FROM Request), $room[$i] ,$day, $time)";
+					
+					$res =& $db->query($sql);
+					if(PEAR::isError($res))
+					{
+						die($res->getMessage());
+					}
+				}
+				
+				$sql = "UPDATE Request SET Status = 'Successful' WHERE RequestID = (SELECT MAX(RequestID) FROM Request)";
+				
+				$res =& $db->query($sql);
+				if(PEAR::isError($res))
+				{
+					die($res->getMessage());
+				}
+			}
+			else
+			{
+				$sql = "UPDATE Request SET Status = 'Unsuccessful' WHERE RequestID = (SELECT MAX(RequestID) FROM Request)";
+				
+				$res =& $db->query($sql);
+				if(PEAR::isError($res))
+				{
+					die($res->getMessage());
+				}
+			}
+		}
 	}
 ?>

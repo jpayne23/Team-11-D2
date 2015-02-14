@@ -314,6 +314,20 @@ $(document).ready(function()		// Execute all of this on load
 	{		
 		var sortColumn = this.name;
 		reloadHistoryTable("down", sortColumn);
+	});
+	
+	// Load past requets page in adhoc
+	$('#pastButton').click(function()
+	{
+		var sortDirection = "sortDirection=down";
+		var sortColumn = "&sortColumn=RequestID";
+		var flag = "&flag=0";
+		$.get("php/loadAdhocSubmissions.php?" + sortDirection + sortColumn + flag, function(data)
+		{
+			$('#past').html(data);
+		});
+		
+		openDiv("popupPastDiv");
 	});	
 	
 	//get Facilities of a given room (room1 only)
@@ -333,8 +347,7 @@ $(document).ready(function()		// Execute all of this on load
 			        duration: 500
 			      }
 			}); //end dialog
-		}); //end $.get
-		
+		}); //end $.get		
 	}); //end click function
 	
 	//Find rooms matching given facilities
@@ -485,7 +498,7 @@ $(document).ready(function()		// Execute all of this on load
 		var specialReq = document.getElementById('specialReq').value;
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
-		var round = document.getElementById('round').getAttribute('name');
+		var round = 0;
 		var adhoc = 1;
 
 		if ($("#priorityCheckbox").is(":checked"))
@@ -964,6 +977,7 @@ function createAutoCompleteFacList()
 		$('<button>Show All Facilities</button>')
 		.attr( "tabIndex", -1 )
 			.attr("id",'btnShowAllItems')
+			.attr('class','homeButtons')
 			.tooltip()
 			.appendTo( this.wrapper )
 
@@ -1309,11 +1323,13 @@ function setSelectedWeeks(weeksArray)
 function openDiv(id)
 {
 	document.getElementById(id).style.visibility = 'visible';
+	$('#'+id).fadeIn();
 }
 
 function closeDiv(id)
 {
-	document.getElementById(id).style.visibility = 'hidden';
+	//document.getElementById(id).style.visibility = 'hidden';
+	$('#'+id).fadeOut();
 }
 
 function resizeText(multiplier) 
