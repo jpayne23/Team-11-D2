@@ -26,7 +26,7 @@
 	}
 	else
 	{
-		$status = "Status != 'Pending'";
+		$status = "Status != 'Pending' AND AdhocRequest = 1";
 		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"pastFilterDiv\");'></input>";
 	}
 	

@@ -1182,12 +1182,22 @@ function filterTable(source)
 		});
 		closeDiv('filterDivHist');
 	}
-	else{
+	else if(source == "Pending")
+	{
 		$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + sortDirection + sortColumn + flag, function(data)
 		{
 			$('#submissions').html(data);
 		});
 		closeDiv('filterDiv');
+	}
+	else
+	{
+		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
+		$.get("php/loadAdhocSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
+		{
+			$('#past').html(data);
+		});
+		closeDiv('pastFilterDiv');
 	}
 }
 

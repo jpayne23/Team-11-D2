@@ -239,8 +239,8 @@
 		</div>
 		<div id='popupPastDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 
-			<input class='pastButton' type="button" value="Close me!" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
-			<input class='pastButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Adhoc")'></input>
+			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
+			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Adhoc")'></input>
 			<div class = 'filterDiv' id='pastFilterDiv' style='visibility: hidden;'>
 			</div>
 			<div id='past'>		
