@@ -138,6 +138,7 @@
 	
 	if($adhoc == 1){
 		
+		
 		if($rooms != "null")
 		{
 			$sql = "SELECT Room, AllocatedRooms.DayID, AllocatedRooms.PeriodID, SessionLength FROM AllocatedRooms JOIN Request ON AllocatedRooms.RequestID = Request.RequestID";

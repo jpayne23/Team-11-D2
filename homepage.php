@@ -22,8 +22,8 @@
 		<nav>
 			<ul>
 				<li class="active"><a href="#">Home</a></li>
-				<li><a href="adhoc.php" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='pendingButton'>Pending</a></li>
+				<li><a href="adhoc.php" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#" id='lastYearButton'>View Last Year's Requests</a></li>
 				<li><a href="php/logout_script.php">Log Out</a></li>
@@ -238,7 +238,7 @@
 			</article>
 		</div>
 		<div id='popupPendingDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input class='pendingButton' type="button" value="Close me!" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+			<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
 			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
 			<div class='filterDiv' id='filterDiv' style='visibility: hidden;'>
 			</div>
@@ -247,15 +247,15 @@
 			</div>
 		</div>
 		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
-			<input type="button" value="Close me!" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
-			<input type="button" value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
+			<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
 			<div class='filterDiv' id='filterDivHist' style='visibility: hidden;'>
 			</div>
 			<div id='history'></div>
 		</div>
 		<div id='popupLastYear'  class='popupDiv' style='visibility: hidden;'>
-			<input type="button" value="Close me!" onclick='closeDiv("popupLastYear");'></input>
-			<input type="button" id='submitCheckedButton' value="Submit All Checked Requests"></input>
+			<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupLastYear");'></input>
+			<input type="button" class='pendingButton'  id='submitCheckedButton' value="Submit All Checked Requests"></input>
 			<div id='lastYear'></div>
 		</div>
 		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->

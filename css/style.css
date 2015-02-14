@@ -371,6 +371,32 @@ a:hover, a:active{
 	margin: 20px auto;
 }
 
+.closeDiv{
+	float:right;
+    margin-top:-6px;
+    margin-right:-6px;
+   /* cursor:pointer;
+    color: black;*/
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+   /* line-height: 0px;
+    padding: 11px 3px;  */
+}
+
+.closeDiv:hover{
+	cursor: pointer;
+    color: #FFFFFF;
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background-color: black;
+   /* line-height: 0px;
+    padding: 11px 3px;  */
+}
+
 
 /* -----------------------------------------CSS to make page responsive-------------- */
 @media only screen and (min-width: 480px) and (max-width: 1024px)

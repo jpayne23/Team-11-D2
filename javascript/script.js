@@ -500,7 +500,7 @@ $(document).ready(function()		// Execute all of this on load
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var rooms = getSelectedRooms();
 		var groupSizes = getGroupSizes();
-		var selectedWeek = $('#adhocWeekSelector').find('li.ui-selected').text();
+		var selectedWeeks = updateSelectedWeeks(selectedItems);
 		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
@@ -1148,16 +1148,10 @@ function filterMenu(source)
 			$('#filterDiv').html(data);
 		});
 	}
-	else if(source == "History"){
+	else{
 		$.get("php/loadFilter.php?source=History", function(data)
 		{
 			$('#filterDivHist').html(data);
-		});
-	}
-	else{
-		$.get("php/loadFilter.php?source=Adhoc", function(data)
-		{
-			$('#pastFilterDiv').html(data);
 		});
 	}
 };
@@ -1182,22 +1176,12 @@ function filterTable(source)
 		});
 		closeDiv('filterDivHist');
 	}
-	else if(source == "Pending")
-	{
+	else{
 		$.get("php/loadPendingSubmissions.php?" + modCode + sessionType + facility + day + sortDirection + sortColumn + flag, function(data)
 		{
 			$('#submissions').html(data);
 		});
 		closeDiv('filterDiv');
-	}
-	else
-	{
-		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
-		$.get("php/loadAdhocSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
-		{
-			$('#past').html(data);
-		});
-		closeDiv('pastFilterDiv');
 	}
 }
 

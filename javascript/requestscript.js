@@ -462,9 +462,9 @@ function addRoomToList(id)
 			document.getElementById('chosenRooms').innerHTML += html;
 			$("#selectedrooms").append(html);
 			reqCap = maxCap;
-			$('#roominfo').slideUp(function(){
-				$('#roominfo').dialog('close');
-			});
+			//$('#roominfo').slideUp(function(){
+			//	$('#roominfo').dialog('close');
+			//});
 		}
 		else
 		{

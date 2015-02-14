@@ -17,17 +17,12 @@
 	if ($source == 'Pending')
 	{
 		$status = "Status = 'Pending'";
-		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"filterDiv\");'></input>";
-	}
-	else if($source == 'History')
-	{
-		$status = "Status != 'Pending'";
-		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"filterDivHist\");'></input>";
+		echo "<input type='button' class='closeDiv' value='x' onclick='closeDiv(\"filterDiv\");'></input>";
 	}
 	else
 	{
-		$status = "Status != 'Pending' AND AdhocRequest = 1";
-		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"pastFilterDiv\");'></input>";
+		$status = "Status != 'Pending'";
+		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"filterDivHist\");'></input>";
 	}
 	
 	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE " . $status;
@@ -118,7 +113,7 @@
 	
 	echo "</select></td></tr>";
 	
-	if($source != 'Pending'){
+	if($source == 'History'){
 		
 		echo "<tr><td>Status</td><td>";
 		
