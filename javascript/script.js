@@ -667,9 +667,17 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
-	$('#submissions').on('click', '#pendingRow', function() //show more info if row clicked
+	$('#submissions').on('click', '#pendingRow', function(event ) //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
+		if(event.target.id == 'edittd')
+			return;
+		if(event.target.nodeName == 'IMG') //check tag name is <img>
+			return;
+		if(event.target.id == 'deletetd')
+			return;
+		
+		
 		$.post("php/getRequestInfo.php", 
 		{
 			requestID: requestID
@@ -678,8 +686,8 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert(data);
 		});
-	});	
-	
+	});		
+		
 	$('#history').on('click', '#historyRow', function() //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
