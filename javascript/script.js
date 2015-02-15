@@ -15,6 +15,7 @@ $(document).ready(function()		// Execute all of this on load
 	var numSelecting = 0;		// Keep count of how many elements we have selected during selecting event
 	var selectAll = false;
 	var removeAll = false;
+	applyAccess(document.getElementById("btnAccessHome"));
 	
 	$("#weekSelector").bind("mousedown", function(e) {				
 		e.metaKey = true;		// Simulates holding down control to select non-adjacent elements
@@ -932,31 +933,67 @@ $(document).ready(function()		// Execute all of this on load
 		$("#seshLength").html(html);
 	});
 	
-	/*$('#btnAccessHome').click(function()
+	$('#btnAccessHome').click(function()
 	{
-		if(this.value == "Accessibility Mode - On")
-		{
-			$('#part').className = 
-			$('#modCodes')
-			$('#seshType')
-			$('#seshLength')
-			$('#time')
-			$('#specialReq')
-			$('#submit')
-			$('#btnAdvancedRequest')
-			$('#reset')
-			$('#round')
-			$('#chosenRooms tr')
-			
-		}
-		else
-		{
-			
-		}
-	
-	});*/
-	
+		toggleAccess(this);
+	});
 });
+
+function toggleAccess(button)
+{
+	if(button.value == "Accessibility Mode - Off")
+	{
+		button.value = "Accessibility Mode - On";
+		button.className = "accessBtn";
+		$('#part').className = "accessDropDown optionResize";
+		$('#modCodes').className = "accessDropDown optionResize";
+		$('#seshType').className = "accessDropDown optionResize";
+		$('#seshLength').className = "accessDropDown optionResize";
+		$('#time').className = "accessDropDown optionResize";
+		$('#specialReq').className = "accessTextIn optionResize";
+		$('#submit').className = "homeButtons none accessBtn";
+		$('#btnAdvancedRequest').className = "homeButtons accessBtn";
+		$('#reset').className = "homeButtons accessBtn";
+		$('#round').className = "homeButtons accessBtn";
+		//$('#chosenRooms tr')
+	}
+	else
+	{
+		button.value = "Accessibility Mode - Off";
+		button.className = "homeButtons";
+		$('#part').className = "optionResize";
+		$('#modCodes').className = "optionResize";
+		$('#seshType').className = "optionResize";
+		$('#seshLength').className = "optionResize";
+		$('#time').className = "optionResize";
+		$('#specialReq').className = "optionResize";
+		$('#submit').className = "homeButtons none";
+		$('#btnAdvancedRequest').className = "homeButtons";
+		$('#reset').className = "homeButtons";
+		$('#round').className = "homeButtons";
+		//$('#chosenRooms tr')
+	}
+	
+}
+
+function applyAccess(button)
+{
+	if(button.value == "Accessibility Mode - On")
+	{//this doesn't work because jquery.classname doesn't work
+		button.className = "accessBtn";
+		$('#part').className = "accessDropDown optionResize";
+		$('#modCodes').className = "accessDropDown optionResize";
+		$('#seshType').className = "accessDropDown optionResize";
+		$('#seshLength').className = "accessDropDown optionResize";
+		$('#time').className = "accessDropDown optionResize";
+		$('#specialReq').className = "accessTextIn optionResize";
+		$('#submit').className = "homeButtons none accessBtn";
+		$('#btnAdvancedRequest').className = "homeButtons accessBtn";
+		$('#reset').className = "accessBtn";
+		$('#round').className = "homeButtons accessBtn";
+		//$('#chosenRooms tr')
+	}
+}
 
 function roomSearch()
 {

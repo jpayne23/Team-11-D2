@@ -39,9 +39,6 @@
 
 #btnAccessLogin{
 	position: absolute;
-	border: 2px solid #CC0066;
-	background-color: #FFFFFF;
-	color: #CC0066;
 }
 
 .centerContent{
@@ -103,7 +100,9 @@ a:hover, a:active{
 	color: #FFFFFF;
 }
 
-
+#btnAccessHome{
+	position: absolute;
+}
 
 .mainHeader  img {
 	width:30%;
@@ -496,6 +495,18 @@ textarea{
 }
 
 .accessLoginBtn:focus , .accessLoginBtn:hover{
+	background:yellow;
+	color: black;
+	height: 30px;
+	font-size: 16px;
+	font-weight: bold;
+	border:3px solid red;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.accessBtn{
 	background:yellow;
 	color: black;
 	height: 30px;
