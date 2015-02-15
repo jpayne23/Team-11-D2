@@ -9,9 +9,8 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$requestID = $_REQUEST['requestID'];
+	$requestID = $_REQUEST['requestID']; //
 	
-	//$sql = "SELECT *  FROM Request WHERE RequestID = '".$requestID."';";		
 	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
@@ -125,7 +124,6 @@
 				{
 					$lowestWeekIndex = $j;	
 				}
-				
 			}			
 			
 			$tempWeek = $weekArray[$lowestWeekIndex];			
@@ -157,9 +155,7 @@
 			{
 				array_push($roomArray, $row4['room']);
 			}
-
 			$rooms .= implode(", ", $roomArray);
-
 		}	
 		
 		if ($row["priorityrequest"] == 0)
@@ -169,7 +165,7 @@
 		else
 		{
 			$priority = "Yes";
-		}
+		} //output Yes/No instead of 1/0
 		
 		if ($row["adhocrequest"] == 0)
 		{
@@ -178,7 +174,7 @@
 		else
 		{
 			$adhoc = "Yes";
-		}
+		}//output Yes/No instead of 1/0
 		
 		if ($row["sessionlength"] == 1)
 		{
@@ -187,7 +183,7 @@
 		else
 		{
 			$hours = " hours";
-		}
+		}//output hour or hours
 		
 		if ($row["specialrequirements"] == "")
 		{
@@ -196,7 +192,7 @@
 		else
 		{
 			$spReq  = $row["specialrequirements"];
-		}
+		}//output N/A or special requirements if there are any
 		
 		echo "Request ID: ".$row["requestid"]."\n";
 		echo "Department: ".$row["deptname"]."\n";
@@ -215,8 +211,7 @@
 		echo "Weeks Requested: ".$weeks."\n";
 		echo "Room: ".$rooms."\n";
 		echo "Status: ".$row["status"]."\n";
-		
-		//print_r($row);
+		//send all results back to the javascript as a string
 	}
 	
 ?>

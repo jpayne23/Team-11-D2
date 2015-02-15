@@ -147,6 +147,10 @@
 									<option>3 Hours</option>
 									<option>4 Hours</option>
 									<option>5 Hours</option>
+									<option>6 Hours</option>
+									<option>7 Hours</option>
+									<option>8 Hours</option>
+									<option>9 Hours</option>
 								</select>
 							</td>
 						</tr>
