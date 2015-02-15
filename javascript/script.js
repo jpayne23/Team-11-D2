@@ -430,7 +430,7 @@ $(document).ready(function()		// Execute all of this on load
 	// Load past requests page in adhoc
 	$('#pastButton').click(function()
 	{		
-		reloadPastTable("down", "RequestID");
+		reloadPastTable("up", "Status");
 		
 		openDiv("popupPastDiv");
 	});	
