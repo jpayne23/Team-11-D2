@@ -23,12 +23,14 @@
 	//echo '<select name="building" id="building1" onchange="updateRoom()">';
 	echo '<table class="contenttable">';
 	while ($row = $res->fetchRow())
-		{
+	{
+		if(($row['buildingcode'] == 'EAST') || ($row['buildingcode'] == 'WEST') || ($row['buildingcode'] == 'CENTRAL'))
+			continue;
+		
+		echo '<tr class = "contentrows" id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
+		//echo '<td> </br> </td>';
 			
-			echo '<tr class = "contentrows" id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
-			//echo '<td> </br> </td>';
-			
-		}
+	}
 	echo '</table>';
 	//}
 	

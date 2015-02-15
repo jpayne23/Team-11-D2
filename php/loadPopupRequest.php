@@ -58,9 +58,9 @@
 				<div class= 'requestcontent'>
 					<div id= 'parkcontent' class= 'parkcontent' name= 'parkcontent'>
 					</div>
-					<div id= 'findroomDiv' class ='popupDiv' style='visibility: hidden;'>
-					<div id= 'searchResultsDiv'></div>
-					<div id= 'matchedRoomsDiv'></div>
+					<div id= 'findroomDiv' class ='findRoomPopupDiv' style='visibility: hidden;'>	
+						<div id= 'searchResultsDiv'></div>
+						<div id= 'matchedRoomsDiv'></div>
 					</div>
 					<div id= 'roomcontainer' class= 'roomcontainer'>
 						<div id= 'buildingcontent' class= 'buildingcontent'>

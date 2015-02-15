@@ -934,7 +934,7 @@ function roomSearch()
 			$('#matchedRoomsDiv').html(results.join("<br>"));
 			document.getElementById('matchedRoomsDiv').title='Matched Rooms';
 			$('#matchedRoomsDiv').dialog({
-				dialogClass:"dialogClass",
+				dialogClass:"matcheddialogClass",
 				  show: {
 					effect: "fadeIn",
 					duration: 500
