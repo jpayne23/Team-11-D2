@@ -1058,6 +1058,30 @@ $(document).ready(function()		// Execute all of this on load
 		$("#seshLength").html(html);
 	});
 	
+	/*$('#btnAccessHome').click(function()
+	{
+		if(this.value == "Accessibility Mode - On")
+		{
+			$('#part').className = 
+			$('#modCodes')
+			$('#seshType')
+			$('#seshLength')
+			$('#time')
+			$('#specialReq')
+			$('#submit')
+			$('#btnAdvancedRequest')
+			$('#reset')
+			$('#round')
+			$('#chosenRooms tr')
+			
+		}
+		else
+		{
+			
+		}
+	
+	});*/
+	
 });
 
 function roomSearch()
@@ -1719,4 +1743,36 @@ function resizeText(multiplier)
 		document.body.style.fontSize = "1.0em";
 	}
 	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+
+	var x = document.getElementsByClassName("optionResize");
+	for(var i = 0; i < x.length; i++){
+		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	
+	var t = document.getElementsByClassName("anycontentrows");
+	for(var o = 0; o < t.length; o++){
+		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
+	}
+	
+	var r = document.getElementsByClassName("anycontentrows");
+	for(var p = 0; p < r.length; p++){
+		r[p].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
+	}
+	
+	var z = document.getElementsByClassName("roomcontenttitle");
+	for(var j = 0; j < z.length; j++){
+		z[j].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var y = document.getElementsByClassName("buildingcontenttitle");
+	for(var k = 0; k < y.length; k++){
+		y[k].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var v = document.getElementsByClassName("selectedcontenttitle");
+	for(var l = 0; l < v.length; l++){
+		v[l].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var u = document.getElementsByClassName("contentrows");
+	for(var m = 0; m < u.length; m++){
+		u[m].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
 }

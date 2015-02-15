@@ -3,7 +3,6 @@
 <head>
 	<title>Timetabling System</title>
 	<meta charset="UTF-8">
-	
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css" />
 	<link rel="stylesheet" href="css/request.css" type="text/css" />
@@ -18,6 +17,19 @@
 	<div id="textsize" data-counter="0">
 		<img id="minustext" alt="Decrease text size" src="img/smaller.png">
 		<img id="plustext"  alt="Increase text size" src="img/bigger.png">
+		<input id="btnAccessHome" class="homeButtons" type="button" alt="Accessibility" value=
+		<?php 
+		session_start();
+		if ($_SESSION["access"] == "yes")
+		{
+			echo "\"Accessibility Mode - On\"";
+		}
+		else
+		{
+			echo "\"Accessibility Mode - Off\"";
+		}
+		?>
+		>
 	</div>
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
@@ -28,7 +40,8 @@
 				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#" id='lastYearButton'>View Last Year's Requests</a></li>
-				<li><a href="php/logout_script.php">Log Out</a></li>
+				<li class='headerright'><a href="php/logout_script.php" id='logoutButton'>Log Out</a></li>
+				<li class='headerright'><a href='#' id='AddModuleButton'>Add Module</a></li>
 			</ul>
 		</nav>	
 	</header>
@@ -45,38 +58,38 @@
 								<label>Department Code</label>
 							</td>
 							<td>
-									<?php
-										session_start(); //remember to take out the comments to fix login
-										/*if (isset($_SESSION["deptCode"]))
-										//{*/
-											$_SESSION["deptCode"] = "CO"; //remove this line
-											require_once 'MDB2.php';			
-											include "/disks/diskh/teams/team11/passwords/password.php";
-											$dsn = "mysql://$username:$password@$host/$dbName"; 
-											$db =& MDB2::connect($dsn); 
-											if(PEAR::isError($db)){ 
-												die($db->getMessage());
-											}
-											$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
-											
-											$deptCode = $_SESSION["deptCode"];
-											$sql = "SELECT DeptCode, DeptName FROM DeptNames WHERE DeptCode = '".$deptCode."';";
-											$res =& $db->query($sql);
-											
-											if(PEAR::isError($res))
-											{
-												die($res->getMessage());
-											}
-											while ($row = $res->fetchRow())
-											{
-												echo '<div id="deptCodeDiv" title="'.$row["deptcode"].'">'.$row["deptcode"].' - '.$row["deptname"].'</div>';
-											}
-										/*}
-										/else
+								<?php
+									//session_start(); //remember to take out the comments to fix login
+									/*if (isset($_SESSION["deptCode"]))
+									//{*/
+										$_SESSION["deptCode"] = "CO"; //remove this line
+										require_once 'MDB2.php';			
+										include "/disks/diskh/teams/team11/passwords/password.php";
+										$dsn = "mysql://$username:$password@$host/$dbName"; 
+										$db =& MDB2::connect($dsn); 
+										if(PEAR::isError($db)){ 
+											die($db->getMessage());
+										}
+										$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
+										
+										$deptCode = $_SESSION["deptCode"];
+										$sql = "SELECT DeptCode, DeptName FROM DeptNames WHERE DeptCode = '".$deptCode."';";
+										$res =& $db->query($sql);
+										
+										if(PEAR::isError($res))
 										{
-											header("Location: login.html");
-										}*/
-									?>
+											die($res->getMessage());
+										}
+										while ($row = $res->fetchRow())
+										{
+											echo '<div id="deptCodeDiv" title="'.$row["deptcode"].'">'.$row["deptcode"].' - '.$row["deptname"].'</div>';
+										}
+									/*}
+									/else
+									{
+										header("Location: login.html");
+									}*/
+								?>
 							</td>
 						</tr>
 						<tr>
@@ -191,7 +204,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea class= "optionResize" id="specialReq" cols="40" rows="3"></textarea>
+								<textarea class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
 							</td>
 						</tr>
 						<tr>
