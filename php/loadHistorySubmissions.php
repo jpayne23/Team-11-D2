@@ -333,6 +333,7 @@
 			if ($row['status'] == 'Unsuccessful')
 			{
 				echo "<td class='unsuccessful'><b>" . $row["status"] . "</b></td>";	
+				echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
 			}
 			else if ($row['status'] == 'Successful')
 			{
