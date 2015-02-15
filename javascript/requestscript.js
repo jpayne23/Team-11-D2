@@ -373,8 +373,6 @@ function deleteRoomFromCompareList(id)
 {
 	id = id.substr(3,id.length);
 	$('#'+id).remove();
-
-	
 	recreateTimetable();
 }
 
@@ -473,9 +471,17 @@ function addRoomToList(id)
 		alert("Room not big enough!");
 	}
 	document.getElementById("maxGroupSize").value = maxCap;
+	if (maxCap == 0)
+	{
+		document.getElementById("groupSize").min = 0;
+	}
 	document.getElementById("groupSize").value = reqCap;
 	document.getElementById("groupSize").max = maxCap;
 	document.getElementById("groupSizeVal").value = maxCap;
+	if (maxCap == 0)
+	{
+		document.getElementById("groupSize").min = 0;
+	}
 }
 
 function deleteRoom(id) //need to implement group capacity, increment when room is deleted
@@ -514,7 +520,19 @@ function addAnyBuilding(id)
 		$("#selectedrooms").append(html);
 		document.getElementById('chosenRooms').innerHTML += html;
 	}
-	
-	
-	
+
 }
+
+function findRoomOpenClose()
+{
+	if (this.count == 0)
+	{
+		openDiv('findroomDiv');
+		this.count = 1;
+	}
+	else
+	{
+		closeDiv('findroomDiv');
+		this.count = 0;
+	}
+};

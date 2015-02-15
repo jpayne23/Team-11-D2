@@ -17,6 +17,9 @@
 								<li><a href='#' id='parkcentral' class= 'parkcentral' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>Central Park</a></li>
 								<li><a href='#' id= 'parkwest' class= 'parkwest' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>West Park</a></li>
 								<li>
+									<a href='#' id= 'findroom' onclick ='findRoomOpenClose(this);'>Find Room</a>
+								</li>	
+								<li>
 									<select id='popupDay'>
 										<option>Monday</option>
 										<option>Tuesday</option>
@@ -40,13 +43,13 @@
 								</li>
 								<li>
 									<a>Module Size</a>
-									<input type='text' readonly id='maxGroupSize'/>
+									<input id='maxGroupSize' size = 3 readonly/>
 								</li>
 								<li>
 									<a>Group Size</a>
-									<input type='range' id='groupSize' oninput='groupSizeVal.value=value;'/>
-									<input id='groupSizeVal'/>
-								</li>							
+									<input id='groupSize' type='range' oninput='groupSizeVal.value=value;'/>
+									<input id='groupSizeVal' size = 3 oninput='groupSize.value=value;' readonly/>
+								</li>		
 							</ul>
 						</nav>
 					</header>
@@ -55,7 +58,8 @@
 				<div class= 'requestcontent'>
 					<div id= 'parkcontent' class= 'parkcontent' name= 'parkcontent'>
 					</div>
-
+					<div id= 'findroomDiv' class ='popupDiv' style='visibility: hidden;'>
+					</div>
 					<div id= 'roomcontainer' class= 'roomcontainer'>
 						<div id= 'buildingcontent' class= 'buildingcontent'>
 						</div>
@@ -67,12 +71,11 @@
 						</div>
 					</div>
 					<div id= 'roominfo' class= 'roominfo'>
-
-					
+					</div>
 				</div>
 			</div>
 
-		<div id='2nd' class= 'time'>
+			<div id='2nd' class= 'time'>
 				<table id='timetable' class='timetable'>
 					<tr>
 						<th class= 'ttheader'> Days/Times </th>
@@ -92,7 +95,7 @@
 						<tr id='fri'> <th class= 'ttheader' id='d5'> Friday </th></tr>					
 					</tr>
 				</table>
-
+			</div>
 		</div>
 	</body>
 </html>

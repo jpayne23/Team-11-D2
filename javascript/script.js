@@ -176,6 +176,11 @@ $(document).ready(function()		// Execute all of this on load
 		reloadPendingTable("down", sortColumn);
 	});	
 	
+	$.get("php/loadPopupRequest.php", function(data)
+	{
+		$('#popupRequestDiv').html(data)
+	});
+	
 	// Edit button click event
 	$('#submissions').on('click', "#editIcon", function() 
 	{
@@ -459,7 +464,7 @@ $(document).ready(function()		// Execute all of this on load
 			}
 			else
 			{
-				var requestID = $('#submit').attr('class');
+				var requestID = $('#submit').attr('class').split(' ')[1];
 				$.post("php/editPendingRequest.php",
 				{	
 					// Data to send
@@ -611,6 +616,27 @@ $(document).ready(function()		// Execute all of this on load
 				$('#time').val(day);
 			});	
 			updateAdvancedBuilding("parkeast");
+			$.get("php/loadFacilities.php", function(data)
+			{
+				//bring in string and turn into array
+				data = data.substr(1,data.length - 2);
+				listOfFac = data.split(',');
+				//remove quotes from each element of the array
+				var html = "<form action='php/roomSearch.php' method='post'>";
+				
+				for(var i = 0; i<listOfFac.length; i++)
+				{
+					listOfFac[i] = listOfFac[i].substr(1,listOfFac[i].length - 2);
+					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
+					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
+				}
+				html += "<input type='number' name='groupsize' value = 0>";
+				html += "<input type='submit' value='Send'></br>";
+				html += "</form>";
+				$('#findroomDiv').append(html);
+				findRoomOpenClose();
+				//closeDiv('findroomDiv');
+			});
 		});
 		openDiv("popupRequestDiv");
 	});
@@ -770,6 +796,7 @@ $(document).ready(function()		// Execute all of this on load
 			alert("No requests selected");
 		}
 	});
+	
 });
 
 function resetSelectedRooms()
@@ -829,7 +856,7 @@ function setSelectedRooms(id, groupSize)
 	var xStr = x.toString();
 	var cap = groupSize;
 	$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+groupSize+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+	var html= "<tr id="+("rm" + newid)+"><td id ='cap"+newid+"'>"+groupSize+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 	document.getElementById('chosenRooms').innerHTML += html;
 }
 //functions for advanced request-------------------------------------
