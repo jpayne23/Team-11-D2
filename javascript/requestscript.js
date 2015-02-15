@@ -94,8 +94,9 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 	{
 		addTitles();
 		$("#parkcontent").append(data);
+		var buildingName =  value.substr(4,1).toUpperCase() + value.substring(5,value.length);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<tr id="choice'+value+'" class="contentrows" onclick="addAnyBuilding(this.id)"><td>ANY '+value.substr(4,value.length).toUpperCase()+' BUILDING</td></tr><tr><td></br></td></tr>');
+		$('#parkcontent').children().eq(1).after('<tr id="choice'+value+'" class="contentrows" onclick="addAnyBuilding(this.id)"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr>');
 		
 	});
 }
@@ -200,7 +201,7 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 	
 		weeks = strweeks.split(":");
 		
-		for(var i = 1;i<weeks.length;i++){ //loop through each set of weeks chosen
+		for(var i = 0;i<weeks.length;i++){ //loop through each set of weeks chosen
 			
 			len = weeks[i].length;
 			switch(len){
@@ -221,14 +222,15 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 					}
 					break;
 				case 7:
-					w = weeks[i].substr(1,2) + weeks[i].substr(3,2);
-					//alert(w);
-					str += returnBookedWeeks(weeks[i].substr(1,2), weeks[i].substr(3,2));
+					w = weeks[i].substr(1,2) + weeks[i].substr(4,2);
+					str += returnBookedWeeks(weeks[i].substr(1,2), weeks[i].substr(4,2));
 					break;
 			} //end switch
 		}
 		
 		temp = str.split(",");
+		//if(id=='d4p3')
+		//	alert('joined booked ' + temp.join(","));
 		match = false;
 		/*
 		for(var i = 1 ;i < 16;i++){
@@ -287,7 +289,7 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	}).done(function(){
 
 	});*/
-	//if(id=='d2p4'){
+	//if(id=='d4p3'){
 	//alert('avail ' + availWeeks.join(','));
 	//alert('display ' + display.join(','));
 	//}
@@ -352,6 +354,7 @@ function returnBookedWeeks(start, end)
 	var str = "";
 	var intstart = parseInt(start); //convert given numbers into integers
 	var intend = parseInt(end);
+	
 	for(var i = intstart; i <= intend; i++){
 		str += i + ",";
 	}
@@ -414,7 +417,7 @@ function updateAdvancedRoom(value)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
-		$('#buildingcontent').children().eq(2).before('<tr id="choice'+value+'" class="contentrows" onclick="addAnyPark(this.id)"><td>ANY ROOM IN "'+value+'"</td></tr><tr><td></br></td></tr>');
+		$('#buildingcontent').children().eq(2).before('<tr id="choice'+value+'" class="contentrows" onclick="addAnyPark(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr>');
 
 		
 	});
