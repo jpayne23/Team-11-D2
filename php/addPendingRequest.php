@@ -12,7 +12,7 @@
 		return $str;
 	}
 
-	function getWeeks($room,$dayID,$periodID) //get the booked weeks for a speific room, day and time
+	function getWeeks($room,$dayID,$periodID,$semester) //get the booked weeks for a speific room, day and time
 	{
 		require_once 'MDB2.php';			
 		include "/disks/diskh/teams/team11/passwords/password.php";
@@ -27,7 +27,7 @@
 		$sql .= "JOIN Request ON Request.RequestID = WeekRequest.RequestID ";
 		$sql .= "JOIN AllocatedRooms ON AllocatedRooms.RequestID = WeekRequest.RequestID ";
 		$sql .= "WHERE AllocatedRooms.Room = '" . $room . "' AND Request.DayID = '". $dayID ."' ";
-		$sql .= "AND Request.PeriodID = '". $periodID ."'";
+		$sql .= "AND Request.PeriodID = '". $periodID ."' AND Semester = $semester";
 
 		$res =& $db->query($sql);
 		if(PEAR::isError($res))
@@ -208,12 +208,12 @@
 	
 	$match = false;
 	
-	if($adhoc == 1){ //instant feedback of an adhoc request
-		
+	if($adhoc == 1){ //instant feedback of an adhoc request		
 		
 		if($rooms != "null")
 		{
 			$sql = "SELECT Room, AllocatedRooms.DayID, AllocatedRooms.PeriodID, SessionLength FROM AllocatedRooms JOIN Request ON AllocatedRooms.RequestID = Request.RequestID";
+			$sql .= " WHERE Semester = $semester";
 			
 			$res =& $db->query($sql);
 			if(PEAR::isError($res))
@@ -230,7 +230,7 @@
 						if($rooms[$i] == $row['room'])
 						{
 							//return array of weeks booked for a given room, day and time
-							$taken = getWeeks($row['room'],$row['dayid'],($row['periodid'] + $row['sessionlength'] - 1));
+							$taken = getWeeks($row['room'],$row['dayid'],($row['periodid'] + $row['sessionlength'] - 1), $semester);
 							
 							for($j=0;$j<count($taken);$j++)
 							{
@@ -282,6 +282,18 @@
 				
 				echo "Request Unsuccessful";
 			}
+		}
+		else
+		{
+			$sql = "UPDATE Request SET Status = 'Successful' WHERE RequestID = (SELECT MAX(RequestID) FROM WeekRequest)";
+			
+			$res =& $db->query($sql);
+			if(PEAR::isError($res))
+			{
+				die($res->getMessage()."5th");
+			}
+			
+			echo "Request Successful";
 		}
 	}
 ?>
