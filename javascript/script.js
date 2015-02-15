@@ -608,6 +608,7 @@ $(document).ready(function()		// Execute all of this on load
 			addTitles();
 			openDiv("popupRequestDiv");
 			loadGroupSize();
+			changeSelected();
 			populateTimetable(); //function to add the tiles to the timetable
 			
 			//These functions load and update the day and time chosen between the main page and the popup room.

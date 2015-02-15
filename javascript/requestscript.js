@@ -2,7 +2,7 @@ var times;
 var newav = [];
 $(document).ready(function()		// Execute all of this on load 
 {
-
+	
 }); //end document ready
 
 //$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
@@ -53,7 +53,8 @@ function populateTimetable()
 	}
 }
 
-function addTitles(){
+function addTitles()
+{
 	$("#parkcontent").html('<b><a class= "buildingcontenttitle">  Buildings </a></b><a> </br> </a> ');
 	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
 	
@@ -62,6 +63,11 @@ function addTitles(){
 	
 	if ($('#comparedtable').children().children().length == 0) //if the chosen room list is empty
 		$("#compared").html('<b><a class= "selectedcontenttitle"> Rooms Compared </a></b></br><table id="comparedtable"></table> ');
+}
+
+function addRoomTitle()
+{
+	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
 }
 
 function clearParkContent(){
@@ -81,6 +87,8 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 {
 	//alert(value);
 	var string = value.substr(4, 1).toUpperCase();
+	var length;
+	var lastRow;
 	//string = string.toUpperCase();
 	//alert(string);
 	//document.getElementById("parkcontent").style.background-color= "#CC0066";
@@ -95,12 +103,22 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 		addTitles();
 		$("#parkcontent").append(data);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<tr id="choice'+value+'" class="contentrows" onclick="addAnyBuilding(this.id)"><td>ANY '+value.substr(4,value.length).toUpperCase()+' BUILDING</td></tr><tr><td></br></td></tr>');
-		
+		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id); clearBuildingContent(); addRoomTitle()"><td>ANY '+value.substr(4,value.length).toUpperCase()+' BUILDING</td></tr><tr><td></br></td></tr></table>');
+		length = $('#parkcontent').children().length -1;
+		lastRow = $('#parkcontent').children().eq(length);
+		lastRow.attr('style', 'border-bottom: 0');
 	});
 }
-
-
+function changeSelected()
+{
+   $('#parkcontent').on('click', 'tr', function()
+   {
+		$('.anycontenttable tr').css('background-color', '#330066');
+		$('.contenttable tr').css('background-color', '#330066');
+		$(this).css('background-color',"#CC0066");
+   });
+}
+    
 function updateAdvancedRoomFacility(value)
 	{	var str = value.replace(/\./g, '');
 		$("#timetable").css("opacity", "1");// make the timetable visible
@@ -401,24 +419,20 @@ function recreateTimetable() //function to update the weeks available of the sel
 	
 }
 
-
-
-
-
-
-
-
-	
 function updateAdvancedRoom(value)
 {
+	var length;
+	var lastRow;
 	
 	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
-		$('#buildingcontent').children().eq(2).before('<tr id="choice'+value+'" class="contentrows" onclick="addAnyPark(this.id)"><td>ANY ROOM IN "'+value+'"</td></tr><tr><td></br></td></tr>');
+		$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id)"><td>ANY ROOM IN "'+value+'"</td></tr><tr><td></br></td></tr></table>');
 
-		
+		length = $('#buildingcontent').children().length -1;
+		lastRow = $('#buildingcontent').children().eq(length);
+		lastRow.attr('style', 'border-bottom: 0');
 	});
 }
 

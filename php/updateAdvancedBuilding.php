@@ -21,11 +21,15 @@
 	echo '<tr id ="'.$row["buildingcode"].'"> <td>'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
 	*/
 	//echo '<select name="building" id="building1" onchange="updateRoom()">';
+	echo '<table class="contenttable">';
 	while ($row = $res->fetchRow())
 		{
+			
 			echo '<tr class = "contentrows" id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
-			echo '<td> </br> </td>';
+			//echo '<td> </br> </td>';
+			
 		}
+	echo '</table>';
 	//}
 	
 ?>

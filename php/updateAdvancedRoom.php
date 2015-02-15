@@ -28,12 +28,15 @@
 	$row = $res2->fetchRow();
 	$buildingName = $row['building'];
 	
-	
+	echo '<table class="contenttable">';
 	while ($row = $res->fetchRow())
 	{
+		
 		echo '<tr id ="'.$row["room"].'" class = "contentrows" data-building="'.$buildingName.'" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
-		echo '<td> </br> </td>';
+		//echo '<td> </br> </td>';
+		
 	}
+	echo '</table>';
 
 	
 ?>

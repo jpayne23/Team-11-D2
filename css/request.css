@@ -3,7 +3,6 @@ div.requestMainDiv{
 	height: auto;
 }
 
-
 div.rooms{
 	
 	border-top:1.5px solid #ccc; 
@@ -30,8 +29,6 @@ div.rooms{
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
-
-
 
 .parkHeader{
 	width: 100%;
@@ -112,9 +109,9 @@ div.parkcontent{
 	width: 45%;
 	height: 100%;
 	margin-top: -2%;
-	margin-right: 1%;
+	/*margin-right: 1%;*/
 	background-color: rgba(51,0,102,1);
-	padding: 1% 2%;
+	padding-left: 2%;
 	/*border-right: 4px solid #CC0066;
 	border-bottom: 5px solid #CC0066;*/
 	border-radius: 5px;
@@ -146,8 +143,30 @@ div.parkcontent{
 	font-weight: bold;
 }
 
+.contenttable{
+	border: 3px solid #CC0066;
+	width:100%;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.anycontenttable{
+	width:100%;
+}
+
 tr.contentrows td{
+	border-bottom: 3px solid #CC0066;
 	font-size: 16px;
+	width: 100%;
+}
+
+.anycontentrows td {
+	border: 3px solid #CC0066;
+	font-size: 16px;
+	width: 200%;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 tr.contentrows td:hover{
@@ -170,7 +189,7 @@ div.roomcontainer{
 	margin-top: -2%;
 	height: 100%;
 	background-color: #330066;
-	padding: 1% 2%;
+
 	/*border: 2px solid #CC0066;*/
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -185,6 +204,7 @@ div.buildingcontent{
 }
 
 div.selectedcontainer{
+	padding-left: 2%;
 	float: left;
 	width: 48%;
 	height: 100%;
