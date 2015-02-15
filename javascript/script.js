@@ -512,6 +512,7 @@ $(document).ready(function()		// Execute all of this on load
 	// Send adhoc request to database
 	$("#submitAdhoc").click(function()
 	{		
+	
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var rooms = getSelectedRooms();
@@ -530,7 +531,6 @@ $(document).ready(function()		// Execute all of this on load
 		var adhoc = 1;
 		var priority = 1;
 		
-			
 		$.post("php/addPendingRequest.php",
 		{	
 			// Data to send

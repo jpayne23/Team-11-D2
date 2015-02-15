@@ -98,10 +98,10 @@
 								<label>Semester</label>
 							</td>
 							<td>
-								<select id="semester">
-									<option>1</option>
-									<option>2</option>
-								</select>
+								<ol id='semesterSelector'>
+									<li class="ui-state-default ui-selected">1</li>
+									<li class="ui-state-default">2</li>
+								</ol>
 							</td>
 						</tr>
 						<tr>
