@@ -825,24 +825,31 @@ $(document).ready(function()		// Execute all of this on load
 
 function toggleWeeks()
 {
+	// If semester 1
 	if ($('#semesterSelector').find('li.ui-selected').text() == 1)
 	{
-		if ($('#adhocWeekSelector li').last().hasClass('ui-selected'))
+		if ($('#adhocWeekSelector').children().length == 16)
 		{
-			$('#adhocWeekSelector li').first().addClass('ui-selected');
+			if ($('#adhocWeekSelector li').last().hasClass('ui-selected'))
+			{
+				$('#adhocWeekSelector li').first().addClass('ui-selected');
+			}
+			$('#adhocWeekSelector li').last().remove();	
 		}
-		$('#adhocWeekSelector li').last().remove();		
 	}
-	else
+	else		// If semester 2
 	{
-		var html = "<li class='ui-state-default'>16</li>";
-		$('#adhocWeekSelector').append(html);
-		
-		$('#adhocWeekSelector li').last().on('click', function()
+		if ($('#adhocWeekSelector').children().length == 15)
 		{
-			$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
-			$(this).addClass('ui-selected');
-		});
+			var html = "<li class='ui-state-default'>16</li>";
+			$('#adhocWeekSelector').append(html);
+			
+			$('#adhocWeekSelector li').last().on('click', function()
+			{
+				$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
+				$(this).addClass('ui-selected');
+			});
+		}
 	}
 }
 
