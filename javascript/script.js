@@ -939,7 +939,7 @@ $(document).ready(function()		// Execute all of this on load
 						effect: "fadeIn",
 						duration: 500
 					  },
-					title: "RequestID: " + requestID
+					title: "Request Information"
 				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 				$('#alertDiv').dialog('close');
 			}	
@@ -957,7 +957,7 @@ $(document).ready(function()		// Execute all of this on load
 						effect: "fadeIn",
 						duration: 500
 					  },
-					  title: "RequestID: " + requestID
+					  title: "Request Information"
 				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 				$('#modifiedAlertDiv').dialog('close');
 			}
