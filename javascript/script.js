@@ -685,8 +685,8 @@ $(document).ready(function()		// Execute all of this on load
 					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
 				}
-				html += "<input class= 'optionResize' type='number' id='myGroupSize' name='groupsize' value = 0>";
-				html += "<input class= 'optionResize' type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
+				html += "<input type='number' id='myGroupSize' name='groupsize' value = 0>";
+				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
 				findRoomOpenClose();
@@ -797,9 +797,135 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
 			
+			var html = "";
+			if (status == "Modified")
+			{
+				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
+				html += "<h3>What you chose</h3>";				
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				html += "</div>";
+				
+				var allocated = JSON.parse(data)[14];
+				var allocatedRooms = allocated[0];
+				var allocatedDay = allocated[1];
+				var allocatedPeriod = allocated[2];
+				var allocatedComments = allocated[3];
+				
+				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
+				html += "<h3>What was allocated</h3>";
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
+				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
+				html += "</div>";
+			}	
+			else
+			{
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			}
+			
+			
+			$('#alertDiv').html(html);
+			openDiv('popupAlertDiv');
 		});
 	});		
+	
+	$('#past').on('click', '#historyRow', function(event) //show more info if row clicked
+	{
+		var requestID = this.getAttribute('name');
+		if(event.target.id == 'edittd')
+			return;
+		if(event.target.nodeName == 'IMG') //check tag name is <img>
+			return;
+		if(event.target.id == 'deletetd')
+			return;
+		
+		$.post("php/getRequestInfo.php", 
+		{
+			requestID: requestID
+		},
+		function(data)
+		{
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
+			
+			var html = "";
+			if (status == "Modified")
+			{
+				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
+				html += "<h3>What you chose</h3>";				
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				html += "</div>";
+				
+				var allocated = JSON.parse(data)[14];
+				var allocatedRooms = allocated[0];
+				var allocatedDay = allocated[1];
+				var allocatedPeriod = allocated[2];
+				var allocatedComments = allocated[3];
+				
+				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
+				html += "<h3>What was allocated</h3>";
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
+				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
+				html += "</div>";
+			}	
+			else
+			{
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			}
+			
+			
+			$('#alertDiv').html(html);
+			openDiv('popupAlertDiv');
+		});
+	});
 
 	// Load last year's requests
 	$('#lastYearButton').click(function()
@@ -1593,40 +1719,4 @@ function resizeText(multiplier)
 		document.body.style.fontSize = "1.0em";
 	}
 	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	var x = document.getElementsByClassName("optionResize");
-	for(var i = 0; i < x.length; i++){
-		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
-	/*var length = document.getElementsByName("anycontentrows")[0].style.fontSize.length;
-	var size = document.getElementsByName("anycontentrows")[0].style.fontSize.toString().substr(0, length-2);
-	console.log(size);
-	console.log(length);
-	console.log(document.getElementsByName("anycontentrows")[0].style.fontSize);
-	*/
-	var t = document.getElementsByClassName("anycontentrows");
-	for(var o = 0; o < t.length; o++){
-		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
-	
-	var r = document.getElementsByClassName("anycontentrows");
-	for(var p = 0; p < r.length; p++){
-		r[p].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
-	
-	var z = document.getElementsByClassName("roomcontenttitle");
-	for(var j = 0; j < z.length; j++){
-		z[j].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
-	var y = document.getElementsByClassName("buildingcontenttitle");
-	for(var k = 0; k < y.length; k++){
-		y[k].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
-	var v = document.getElementsByClassName("selectedcontenttitle");
-	for(var l = 0; l < v.length; l++){
-		v[l].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
-	var u = document.getElementsByClassName("contentrows");
-	for(var m = 0; m < u.length; m++){
-		u[m].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-	}
 }

@@ -406,6 +406,15 @@ textarea{
 	-webkit-border-radius: 5px;
 }
 
+.chosenRequestInfo{
+	float: left;	
+}
+
+.allocatedRequestInfo{
+	float: left;
+	padding-left: 100px;
+}
+
 .filterDiv{
 	background:#CC0066;
 	margin:30px;
