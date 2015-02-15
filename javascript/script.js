@@ -1597,20 +1597,15 @@ function resizeText(multiplier)
 	for(var i = 0; i < x.length; i++){
 		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
 	}
-	/*var length = document.getElementsByName("anycontentrows")[0].style.fontSize.length;
-	var size = document.getElementsByName("anycontentrows")[0].style.fontSize.toString().substr(0, length-2);
-	console.log(size);
-	console.log(length);
-	console.log(document.getElementsByName("anycontentrows")[0].style.fontSize);
-	*/
+	
 	var t = document.getElementsByClassName("anycontentrows");
 	for(var o = 0; o < t.length; o++){
-		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
 	}
 	
 	var r = document.getElementsByClassName("anycontentrows");
 	for(var p = 0; p < r.length; p++){
-		r[p].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+		r[p].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
 	}
 	
 	var z = document.getElementsByClassName("roomcontenttitle");
