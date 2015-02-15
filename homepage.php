@@ -29,7 +29,7 @@
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#" id='lastYearButton'>View Last Year's Requests</a></li>
 				<li class='headerright'><a href="php/logout_script.php" id='logoutButton'>Log Out</a></li>
-				<li class='headerright'><a href='#' id='AddModuleButton'>Add Module</a></li>
+				<li class='headerright'><a href='#' id='AddModuleButton' onclick='AddNewModule();'>Add Module</a></li>
 			</ul>
 		</nav>	
 	</header>
@@ -128,7 +128,7 @@
 								<label>Session Type</label>
 							</td>
 							<td>
-								<select class= "optionResize" id="seshType">
+								<select id="seshType">
 									<option>Feedback</option>
 									<option>Lecture</option>
 									<option>Practical</option>
@@ -142,7 +142,7 @@
 								<label> Session Length </label>
 							</td>
 							<td>
-								<select class= "optionResize" id="seshLength">
+								<select id="seshLength">
 									<option>1 Hour</option>
 									<option>2 Hours</option>
 									<option>3 Hours</option>
@@ -160,7 +160,7 @@
 								<label> Day </label>
 							</td>
 							<td>
-								<select class= "optionResize" id="day">
+								<select id="day">
 									<option>Monday</option>
 									<option>Tuesday</option>
 									<option>Wednesday</option>
@@ -174,7 +174,7 @@
 								<label> Start Time </label>
 							</td>
 							<td>
-								<select class= "optionResize" id="time">
+								<select id="time">
 									<option>09:00</option>
 									<option>10:00</option>
 									<option>11:00</option>
@@ -192,7 +192,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea class= "optionResize" id="specialReq" cols="40" rows="3"></textarea>
+								<textarea id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -264,13 +264,8 @@
 		</div>
 		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>
-		
-		<div id='popupAlertDiv' class='popupDiv' style='visibility: hidden'>	
-			<input type="button" class="closeDiv" value="x" onclick='closeDiv("popupAlertDiv");'></input>
-			<div id='alertDiv'>
-			</div>
-		</div>
 		<div id="dialog" title="Facilities of this room"></div>
+		<div id='newModuleDialog' title='Add a New Module'></div>
 	</div>
 	<footer class="mainFooter">
 		<p>Copyright &copy 2015: Team11

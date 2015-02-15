@@ -932,7 +932,63 @@ $(document).ready(function()		// Execute all of this on load
 		$("#seshLength").html(html);
 	});
 	
+	$('#newModuleDialog').on('click','#btnAddModule',function(){
+		
+		if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
+			alert('Module Code is empty');
+			return;
+		}
+		
+		if($('#newModName').val().trim() == ''){ //validate modname isnt empty
+			alert('Module Name is empty');
+			return;
+		}
+		
+		var str = $('#newModCode').val();
+		var res = /\d{2}[a-zA-Z]{3}\d{3}/.test(str); //reg ex test the modcode
+		
+		if(res==false){
+			alert('invalid');
+			return;
+		}
+		
+		var modCode = str;
+		var modName = $('#newModName').val().trim();
+		$.get("php/addNewModule.php?modcode=" + modCode + "&modname="+modName, function(data)
+		{
+			console.log(data);
+		}).done(function()
+		{
+			
+			
+		});
+		
+		
+		
+	})
+	
 });
+
+function AddNewModule()
+{
+	var html= "";
+	html+= "<label for='modcode'>Module Code</label></br>";
+	html+= " <input type='text' id='newModCode' placeholder='e.g. 14COA101'></br>";
+	html+= "<label for='modName'>Module Name</label></br>";
+	html+= " <input type='text' id='newModName' placeholder='Team Projects'><br>";
+	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
+	
+	$('#newModuleDialog').html(html);
+	$('#newModuleDialog').dialog({
+	dialogClass:"addModuleClass",
+	  show: {
+		effect: "fadeIn",
+		duration: 500
+	  }
+	}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+	
+}
+
 
 function roomSearch()
 {
