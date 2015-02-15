@@ -391,6 +391,13 @@ textarea{
 .successPopupDiv.ui-dialog-content.ui-widget-content{
 	color: #FFFFFF;
 }
+
+#modifiedAlertDiv{
+	background-color: #330066;
+	color: #FFFFFF;
+	height: 100%;
+}
+
 /*
 .successPopupDiv{
 	border: 4px solid #CC0066;
