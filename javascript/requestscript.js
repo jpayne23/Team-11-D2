@@ -429,11 +429,11 @@ function updateAdvancedRoom(value)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
-		$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr></table>');
-
-		length = $('#buildingcontent').children().length -1;
-		lastRow = $('#buildingcontent').children().eq(length);
-		lastRow.attr('style', 'border-bottom: 0');
+		//$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr></table>');
+		$('#buildingcontent').children().eq(2).before('</br></br></br>');
+		//length = $('#buildingcontent').children().length -1;
+		//lastRow = $('#buildingcontent').children().eq(length);
+		//lastRow.attr('style', 'border-bottom: 0');
 	});
 }
 
