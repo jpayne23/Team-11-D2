@@ -1201,16 +1201,16 @@ $(document).ready(function()		// Execute all of this on load
 				alert('invalid');
 				return;
 			}
-			return;
-			var modCode = str;
+			var modCode = str.toUpperCase();
 			var modName = $('#newModName').val().trim();
 			//call php script to insert the new module
+			var data1;
 			$.get("php/addModule.php?modCode=" + modCode + "&modName="+modName + "&modSize="+gsize, function(data)
 			{
-				console.log(data);
+				data1=data;
+				console.log(data1);
 				if(data=='Nope'){
 					alert('This module code already exists!');
-					return;
 				}
 			}).done(function()
 			{
@@ -1221,7 +1221,9 @@ $(document).ready(function()		// Execute all of this on load
 				{
 					$('#modCodeDiv').html(data);
 				});
-			
+				if(data1 != 'Nope')
+					alert(modCode + ' has been added to the database.');
+				$('#newModuleDialog').dialog('close');
 			}); //end done function
 	
 		}); //end click function
@@ -1291,7 +1293,7 @@ function AddNewModule()
 	html+= "<label for='modName'>Module Name</label></br>";
 	html+= " <input type='text' id='newModName' placeholder='Team Projects'><br>";
 	html+= "<label for='modName'>Module Group Size</label></br>";
-	html+= " <input type='number' id='newModSize' placeholder='50'><br>";
+	html+= " <input type='number' id='newModSize' value='50'><br>";
 	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
 	
 	$('#newModuleDialog').html(html);

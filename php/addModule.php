@@ -31,12 +31,13 @@
 	}
 	else
 	{
-		$sql = "INSERT INTO Module(ModCode,Title,Part,Students,Hours,DeptCode) VALUES ($modCode,$modName,substr($modCode,4,1),$modSize,3,$deptCode)";
-		
+		$part = substr($modCode,4,1);
+		$sql = "INSERT INTO Module(ModCode,Title,Part,Students,Hours,DeptCode) VALUES ('".$modCode."','".$modName."','".$part."','".$modSize."','3','".$deptCode."');";
+		echo $sql;
 		$res =& $db->query($sql);
 		if(PEAR::isError($res))
 		{
-			die($res->getMessage().'ins');
+			die($res->getMessage().' inserting the module');
 		}
 	}
 ?>
