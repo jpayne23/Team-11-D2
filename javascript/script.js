@@ -685,8 +685,8 @@ $(document).ready(function()		// Execute all of this on load
 					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
 				}
-				html += "<input type='number' id='myGroupSize' name='groupsize' value = 0>";
-				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
+				html += "<input class= 'optionResize' type='number' id='myGroupSize' name='groupsize' value = 0>";
+				html += "<input class= 'optionResize' type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
 				findRoomOpenClose();
@@ -797,135 +797,9 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			var requestID = JSON.parse(data)[0];
-			var modCode = JSON.parse(data)[1];
-			var modTitle = JSON.parse(data)[2];
-			var sessionType = JSON.parse(data)[3];
-			var sessionLength = JSON.parse(data)[4];
-			var day = JSON.parse(data)[5];			
-			var period = JSON.parse(data)[6];
-			var specialReq = JSON.parse(data)[7];
-			var priorityReq = JSON.parse(data)[8];
-			var status = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
 			
-			var html = "";
-			if (status == "Modified")
-			{
-				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
-				html += "<h3>What you chose</h3>";				
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-				html += "</div>";
-				
-				var allocated = JSON.parse(data)[14];
-				var allocatedRooms = allocated[0];
-				var allocatedDay = allocated[1];
-				var allocatedPeriod = allocated[2];
-				var allocatedComments = allocated[3];
-				
-				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
-				html += "<h3>What was allocated</h3>";
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
-				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
-				html += "</div>";
-			}	
-			else
-			{
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-			}
-			
-			
-			$('#alertDiv').html(html);
-			openDiv('popupAlertDiv');
 		});
 	});		
-	
-	$('#past').on('click', '#historyRow', function(event) //show more info if row clicked
-	{
-		var requestID = this.getAttribute('name');
-		if(event.target.id == 'edittd')
-			return;
-		if(event.target.nodeName == 'IMG') //check tag name is <img>
-			return;
-		if(event.target.id == 'deletetd')
-			return;
-		
-		$.post("php/getRequestInfo.php", 
-		{
-			requestID: requestID
-		},
-		function(data)
-		{
-			var requestID = JSON.parse(data)[0];
-			var modCode = JSON.parse(data)[1];
-			var modTitle = JSON.parse(data)[2];
-			var sessionType = JSON.parse(data)[3];
-			var sessionLength = JSON.parse(data)[4];
-			var day = JSON.parse(data)[5];			
-			var period = JSON.parse(data)[6];
-			var specialReq = JSON.parse(data)[7];
-			var priorityReq = JSON.parse(data)[8];
-			var status = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
-			
-			var html = "";
-			if (status == "Modified")
-			{
-				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
-				html += "<h3>What you chose</h3>";				
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-				html += "</div>";
-				
-				var allocated = JSON.parse(data)[14];
-				var allocatedRooms = allocated[0];
-				var allocatedDay = allocated[1];
-				var allocatedPeriod = allocated[2];
-				var allocatedComments = allocated[3];
-				
-				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
-				html += "<h3>What was allocated</h3>";
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
-				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
-				html += "</div>";
-			}	
-			else
-			{
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-			}
-			
-			
-			$('#alertDiv').html(html);
-			openDiv('popupAlertDiv');
-		});
-	});
 
 	// Load last year's requests
 	$('#lastYearButton').click(function()
@@ -1058,7 +932,6 @@ $(document).ready(function()		// Execute all of this on load
 		$("#seshLength").html(html);
 	});
 	
-
 	$('#newModuleDialog').on('click','#btnAddModule',function(){
 		
 		if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
@@ -1068,6 +941,11 @@ $(document).ready(function()		// Execute all of this on load
 		
 		if($('#newModName').val().trim() == ''){ //validate modname isnt empty
 			alert('Module Name is empty');
+			return;
+		}
+		var gsize = parseInt($('#newModSize').val());
+		if($('#newModSize').val() < 1){
+			alert('Group Size is invalid');
 			return;
 		}
 		
@@ -1081,42 +959,30 @@ $(document).ready(function()		// Execute all of this on load
 		
 		var modCode = str;
 		var modName = $('#newModName').val().trim();
-		$.get("php/addNewModule.php?modcode=" + modCode + "&modname="+modName, function(data)
+		//call php script to insert the new module
+		$.get("php/addModule.php?modCode=" + modCode + "&modName="+modName + "&modSize="+gsize, function(data)
 		{
 			console.log(data);
+			if(data=='Nope'){
+				alert('This module code already exists!');
+				return;
+			}
 		}).done(function()
 		{
 			
-			
+		var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
+		var part = "&part=any";
+		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
+		{
+			$('#modCodeDiv').html(data);
+		});
+		
+		
 		});
 		
 		
 		
 	})
-	/*$('#btnAccessHome').click(function()
-	{
-		if(this.value == "Accessibility Mode - On")
-		{
-			$('#part').className = 
-			$('#modCodes')
-			$('#seshType')
-			$('#seshLength')
-			$('#time')
-			$('#specialReq')
-			$('#submit')
-			$('#btnAdvancedRequest')
-			$('#reset')
-			$('#round')
-			$('#chosenRooms tr')
-			
-		}
-		else
-		{
-			
-		}
-	
-	});*/
-
 	
 });
 
@@ -1127,6 +993,8 @@ function AddNewModule()
 	html+= " <input type='text' id='newModCode' placeholder='e.g. 14COA101'></br>";
 	html+= "<label for='modName'>Module Name</label></br>";
 	html+= " <input type='text' id='newModName' placeholder='Team Projects'><br>";
+	html+= "<label for='modName'>Module Group Size</label></br>";
+	html+= " <input type='number' id='newModSize' placeholder='50'><br>";
 	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
 	
 	$('#newModuleDialog').html(html);
@@ -1800,12 +1668,16 @@ function resizeText(multiplier)
 		document.body.style.fontSize = "1.0em";
 	}
 	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-
 	var x = document.getElementsByClassName("optionResize");
 	for(var i = 0; i < x.length; i++){
 		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
 	}
-	
+	/*var length = document.getElementsByName("anycontentrows")[0].style.fontSize.length;
+	var size = document.getElementsByName("anycontentrows")[0].style.fontSize.toString().substr(0, length-2);
+	console.log(size);
+	console.log(length);
+	console.log(document.getElementsByName("anycontentrows")[0].style.fontSize);
+	*/
 	var t = document.getElementsByClassName("anycontentrows");
 	for(var o = 0; o < t.length; o++){
 		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
@@ -1830,6 +1702,6 @@ function resizeText(multiplier)
 	}
 	var u = document.getElementsByClassName("contentrows");
 	for(var m = 0; m < u.length; m++){
-		u[m].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+		u[m].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
 	}
 }
