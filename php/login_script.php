@@ -10,6 +10,7 @@
 	
 	$username1 = $_POST["username"];
 	$password1 = $_POST["password"];
+	$access = $_POST["access"];
 	$username1 = stripslashes($username1);
 	$password1 = stripslashes($password1);
 	$username1 = mysql_real_escape_string($username1);
@@ -29,6 +30,14 @@
 		{
 			session_start();
 			$_SESSION["deptCode"] = $row["deptcode"];
+			if($access == "on")
+			{
+				$_SESSION["access"] = "yes";
+			}
+			else
+			{
+				$_SESSION["access"] = "no";
+			}
 			header("location:../homepage.php");
 		}
 	}

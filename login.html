@@ -5,11 +5,40 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/style.css" type="text/css"/>
 		<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
+		<script type="text/javascript">
+		function accessLogin()
+		{
+			if (document.getElementById("btnAccessLogin").dataset.counter == "0")
+			{
+				document.getElementById("btnAccessLogin").dataset.counter = "1";
+				document.getElementById("btnAccessLogin").value = "Accessibility Mode - On";
+				document.getElementById("btnAccessLogin").className = "loginButton accessLoginBtn";
+				document.getElementById("username").className = "accessTextIn";
+				document.getElementById("password").className = "accessTextIn";
+				document.getElementById("submit").className = "loginButton accessLoginBtn";
+				document.getElementById("accessLogin").checked = true;
+			}
+			else
+			{
+				document.getElementById("btnAccessLogin").dataset.counter = "0";
+				document.getElementById("btnAccessLogin").value = "Accessibility Mode - Off";
+				document.getElementById("btnAccessLogin").className = "loginButton";
+				document.getElementById("username").className = "";
+				document.getElementById("password").className = "";
+				document.getElementById("submit").className = "loginButton";
+				document.getElementById("accessLogin").checked = false;
+			}
+		}
+		</script>
 	</head>
 
 	<body class="loginBody">
+		<div id="textsize" data-counter="0">
+			<img id="minustext" alt="Decrease text size" src="img/smaller.png">
+			<img id="plustext"  alt="Increase text size" src="img/bigger.png">
+			<input id="btnAccessLogin" class="loginButton" data-counter="0" type="button" alt="Accessibility" value="Accessibility Mode - Off" onclick="accessLogin();">
+		</div>
 		<header class="loginHeader"> 
-		<!--<input id="accessChkBox" type="checkbox" alt="Accessibility" onclick="access();">-->
 		<img src="img/logo.png">
 		</header>
 		<div class="loginMainContent">
@@ -20,10 +49,11 @@
 				<content class="loginMainContent">
 					<form action="php/login_script.php" method="POST">
 						<p>Username:</p>
-						<input id="username" name="username" type="text"></br>
+						<input id="username" name="username" style = "font-size:16px;" class = "" placeholder="Username" type="text"></br>
 						<p>Password:</p>
-						<input id="password" name="password" type="password"></br></br>
+						<input id="password" name="password" style = "font-size:16px;" class = "" placeholder="Password" type="password"></br></br>
 						<input class="loginButton" id="submit" type="submit" value="Submit">
+						<input id="accessLogin" name="access" style="visibility:hidden;" type="checkbox">
 					</form>	
 				</content>
 			</article>

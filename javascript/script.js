@@ -912,6 +912,30 @@ $(document).ready(function()		// Execute all of this on load
 		$("#seshLength").html(html);
 	});
 	
+	/*$('#btnAccessHome').click(function()
+	{
+		if(this.value == "Accessibility Mode - On")
+		{
+			$('#part').className = 
+			$('#modCodes')
+			$('#seshType')
+			$('#seshLength')
+			$('#time')
+			$('#specialReq')
+			$('#submit')
+			$('#btnAdvancedRequest')
+			$('#reset')
+			$('#round')
+			$('#chosenRooms tr')
+			
+		}
+		else
+		{
+			
+		}
+	
+	});*/
+	
 });
 
 function roomSearch()
