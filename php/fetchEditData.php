@@ -9,7 +9,7 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$requestID = $_REQUEST['requestID'];
+	$requestID = $_REQUEST['requestID']; //pull request id from javascript
 	
 	$sql = "SELECT Request.RequestID, Request.ModCode, Title, Part, SessionType, SessionLength, Day, Period, PriorityRequest, SpecialRequirements ";
 	$sql .= "FROM Request ";
@@ -17,7 +17,7 @@
 	$sql .= "JOIN DayInfo ON Request.DayID = DayInfo.DayID ";
 	$sql .= "JOIN PeriodInfo ON Request.PeriodID = PeriodInfo.PeriodID ";
 	$sql .= "WHERE Request.RequestID = '$requestID'";
-	
+	//build sql query
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
@@ -38,7 +38,7 @@
 		array_push($results, $row['specialrequirements']);
 		array_push($results, $row['priorityrequest']);
 	}
-	
+	//add easy to display fields in an array
 	// List weeks in one row instead of multiple		
 	$sql2 = "SELECT Weeks FROM WeekRequest WHERE RequestID = '$requestID';";
 	$res2 =& $db->query($sql2);

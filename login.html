@@ -5,18 +5,12 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/style.css" type="text/css"/>
 		<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
-		<script type="text/javascript">
-			function quickLogin() //remove me
-			{
-				document.getElementById("username").value = "cojo3";
-				document.getElementById("password").value = "password";
-			}
-		</script>
 	</head>
 
 	<body class="loginBody">
 		<header class="loginHeader"> 
-			<img src="img/logo.png">
+		<!--<input id="accessChkBox" type="checkbox" alt="Accessibility" onclick="access();">-->
+		<img src="img/logo.png">
 		</header>
 		<div class="loginMainContent">
 			<article class="centerContent">
@@ -29,8 +23,7 @@
 						<input id="username" name="username" type="text"></br>
 						<p>Password:</p>
 						<input id="password" name="password" type="password"></br></br>
-						<input id="submit" type="submit" value="Submit">
-						<input id="" type="button" value="Autofill" onclick="quickLogin();">
+						<input class="loginButton" id="submit" type="submit" value="Submit">
 					</form>	
 				</content>
 			</article>

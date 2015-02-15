@@ -430,7 +430,7 @@ $(document).ready(function()		// Execute all of this on load
 	// Load past requests page in adhoc
 	$('#pastButton').click(function()
 	{		
-		reloadPastTable("down", "RequestID");
+		reloadPastTable("up", "Status");
 		
 		openDiv("popupPastDiv");
 	});	
@@ -467,53 +467,6 @@ $(document).ready(function()		// Execute all of this on load
 			      }
 			}); //end dialog
 		}); //end $.get		
-	}); //end click function
-	
-	//Find rooms matching given facilities
-	$("#getMatchingRooms").on('click',function(){
-		var f = [];
-		var valid = false; //to check if any facilities are selected
-		/*for(var i = 0;i<45;i=i+2) //+2 because it skips the <br> tags in between
-		{
-			if($('#facilitiesDiv').children().eq(i).is(':checked')){
-				//append the facility name to a array to send to server
-				f[f.length]= Number($('#facilitiesDiv').children().eq(i).attr('id').substr(1,2))+1;
-				valid = true;
-			}
-		}*/
-		var facDiv = document.getElementById("facilitiesDiv").children;
-		for(var i = 2; i <facDiv.length; i++)
-		{
-			f.push(facDiv[i].getAttribute('name'));
-		}
-		
-		if (f.length != 0)
-		{
-			valid = true;
-		}
-		if(valid == false){
-			  $('#getMatchingRooms').tooltip({ items: "#getMatchingRooms", content: "You didn't select any facilities"});
-			  $('#getMatchingRooms').tooltip("open");
-			    $( "#getMatchingRooms" ).mouseout(function(){
-			         $('#getMatchingRooms').tooltip("disable");
-			    });
-			return;
-		}
-		f = JSON.stringify(f);
-		$.get("php/getMatchedRooms.php?f=" + f, function(data)		
-		{
-			$("#matchedRoomsdiv").html(data);
-			$('#matchedRoomsdiv').dialog({
-					maxHeight: 100,
-			      show: {
-			        effect: "fadeIn",
-			        duration: 500
-			      }
-			
-			});//end dialog
-			
-		}); //end $_get
-		
 	}); //end click function
 	
 	// Send request to database as pending
@@ -804,7 +757,30 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			alert(data);
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
+			
+			var html = "";
+			html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+			html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+			html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			
+			$('#alertDiv').html(html);
+			openDiv('popupAlertDiv');
 		});
 	});		
 		
@@ -824,7 +800,7 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			alert(data);
+			
 		});
 	});		
 
@@ -930,7 +906,6 @@ $(document).ready(function()		// Execute all of this on load
 			else{
 				alert('Cannot Resize Text Any Bigger');
 			}
-		
 	});
 	
 	$("#minustext").click(function()
@@ -948,6 +923,18 @@ $(document).ready(function()		// Execute all of this on load
 			}
 		
 	});
+	
+	$("#time").change(function()
+	{
+		var time = parseInt(this.value);
+		html = "<option>1 Hour</option>";
+		for (var i = 2; i<=18-time; i++)
+		{
+			html += "<option>"+i+" Hours</option>"
+		}
+		$("#seshLength").html(html);
+	});
+	
 });
 
 function roomSearch()
