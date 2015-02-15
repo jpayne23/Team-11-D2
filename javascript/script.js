@@ -562,15 +562,12 @@ $(document).ready(function()		// Execute all of this on load
 	
 	// Send adhoc request to database
 	$("#submitAdhoc").click(function()
-	{		
-	
+	{			
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var rooms = getSelectedRooms();
 		var groupSizes = getGroupSizes();
-
 		var selectedWeeks = $('#adhocWeekSelector').find('li.ui-selected').text();
-
 		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
@@ -688,8 +685,8 @@ $(document).ready(function()		// Execute all of this on load
 					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
 				}
-				html += "<input type='number' id='myGroupSize' name='groupsize' value = 0>";
-				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
+				html += "<input class= 'optionResize' type='number' id='myGroupSize' name='groupsize' value = 0>";
+				html += "<input class= 'optionResize' type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
 				findRoomOpenClose();
@@ -757,7 +754,30 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			alert(data);
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
+			
+			var html = "";
+			html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+			html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+			html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			
+			$('#alertDiv').html(html);
+			openDiv('popupAlertDiv');
 		});
 	});		
 		
@@ -777,7 +797,7 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			alert(data);
+			
 		});
 	});		
 
@@ -1597,4 +1617,35 @@ function resizeText(multiplier)
 		document.body.style.fontSize = "1.0em";
 	}
 	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	var x = document.getElementsByClassName("optionResize");
+	for(var i = 0; i < x.length; i++){
+		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	
+	var t = document.getElementsByClassName("anycontentrows");
+	for(var o = 0; o < t.length; o++){
+		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
+	}
+	
+	var r = document.getElementsByClassName("anycontentrows");
+	for(var p = 0; p < r.length; p++){
+		r[p].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.1) + "em";
+	}
+	
+	var z = document.getElementsByClassName("roomcontenttitle");
+	for(var j = 0; j < z.length; j++){
+		z[j].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var y = document.getElementsByClassName("buildingcontenttitle");
+	for(var k = 0; k < y.length; k++){
+		y[k].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var v = document.getElementsByClassName("selectedcontenttitle");
+	for(var l = 0; l < v.length; l++){
+		v[l].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var u = document.getElementsByClassName("contentrows");
+	for(var m = 0; m < u.length; m++){
+		u[m].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
 }

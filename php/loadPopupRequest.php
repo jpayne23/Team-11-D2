@@ -20,7 +20,7 @@
 									<a href='#' id= 'findroom' onclick ='findRoomOpenClose(this);'>Find Room</a>
 								</li>	
 								<li>
-									<select id='popupDay'>
+									<select class= "optionResize" id='popupDay'>
 										<option>Monday</option>
 										<option>Tuesday</option>
 										<option>Wednesday</option>
@@ -29,7 +29,7 @@
 									</select>
 								</li>
 								<li>
-									<select id='popupTime'>
+									<select class= "optionResize" id='popupTime'>
 										<option>09:00</option>
 										<option>10:00</option>
 										<option>11:00</option>
@@ -43,12 +43,12 @@
 								</li>
 								<li>
 									<a>Module Size</a>
-									<input id='maxGroupSize' size = 3 readonly/>
+									<input class= "optionResize" id='maxGroupSize' size = 3 readonly/>
 								</li>
 								<li>
 									<a>Group Size</a>
-									<input id='groupSize' type='range' oninput='groupSizeVal.value=value;'/>
-									<input id='groupSizeVal' size = 3 oninput='groupSize.value=value;' readonly/>
+									<input class= "optionResize" id='groupSize' type='range' oninput='groupSizeVal.value=value;'/>
+									<input class= "optionResize" id='groupSizeVal' size = 3 oninput='groupSize.value=value;' readonly/>
 								</li>		
 							</ul>
 						</nav>

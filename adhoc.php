@@ -25,7 +25,8 @@
 				<li><a href="homepage.php">Home</a></li>
 				<li class="active"><a href="#" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='pastButton'>Past Requests</a></li>
-				<li><a href="php/logout_script.php">Log Out</a></li>
+				<li class='headerright'><a href="php/logout_script.php" id='logoutButton'>Log Out</a></li>
+				<li class='headerright'><a href='#' id='AddModuleButton'>Add Module</a></li>
 			</ul>
 		</nav>	
 	</header>
@@ -109,7 +110,7 @@
 								<label> Day </label>
 							</td>
 							<td>
-								<select id="day">
+								<select class= "optionResize" id="day">
 									<option>Monday</option>
 									<option>Tuesday</option>
 									<option>Wednesday</option>
@@ -156,7 +157,7 @@
 								<label> Start Time </label>
 							</td>
 							<td>
-								<select id="time">
+								<select class= "optionResize" id="time">
 									<option>09:00</option>
 									<option>10:00</option>
 									<option>11:00</option>
@@ -174,7 +175,7 @@
 								<label> Session Length </label>
 							</td>
 							<td>
-								<select id="seshLength">
+								<select class= "optionResize" id="seshLength">
 									<option>1 Hour</option>
 									<option>2 Hours</option>
 									<option>3 Hours</option>
@@ -188,7 +189,7 @@
 								<label>Session Type</label>
 							</td>
 							<td>
-								<select id="seshType">
+								<select class= "optionResize" id="seshType">
 									<option>Feedback</option>
 									<option>Lecture</option>
 									<option>Practical</option>
@@ -202,7 +203,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea id="specialReq" cols="40" rows="3"></textarea>
+								<textarea class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
 							</td>
 						</tr>
 					</table>					

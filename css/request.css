@@ -155,13 +155,13 @@ div.parkcontent{
 
 tr.contentrows td{
 	border-bottom: 3px solid #CC0066;
-	font-size: 16px;
+	font-size: 1em;
 	width: 100%;
 }
 
 .anycontentrows td {
 	border: 3px solid #CC0066;
-	font-size: 16px;
+	font-size: 1em;
 	width: 200%;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -169,7 +169,7 @@ tr.contentrows td{
 }
 
 tr.contentrows td:hover{
-	font-size: 16px;
+	font-size: 1em;
 	border: 1px solid #CC0066;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
