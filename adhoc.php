@@ -17,6 +17,19 @@
 	<div id="textsize" data-counter="0">
 		<img id="minustext" alt="Decrease text size" src="img/smaller.png">
 		<img id="plustext"  alt="Increase text size" src="img/bigger.png">
+		<input id="btnAccessHome" class="homeButtons" type="button" alt="Accessibility" value=
+		<?php 
+		session_start();
+		if ($_SESSION["access"] == "yes")
+		{
+			echo "\"Accessibility Mode - On\"";
+		}
+		else
+		{
+			echo "\"Accessibility Mode - Off\"";
+		}
+		?>
+		>
 	</div>
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
@@ -44,7 +57,6 @@
 							</td>
 							<td>
 									<?php
-										session_start();
 										if (isset($_SESSION["deptCode"]))
 										{
 											require_once 'MDB2.php';			
