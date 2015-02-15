@@ -9,8 +9,11 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$facilities = $_POST['facilities'];
-	$groupsize = $_POST['groupsize'];
+	$ticked = $_REQUEST['tickedfac'];
+	$groupsize = $_REQUEST['groupSize'];
+	
+	$facilities = explode(',', $ticked);
+	
 	
 	$fac = "(";
 	for($i=0;$i<sizeof($facilities)-1;$i++)
@@ -22,7 +25,7 @@
 		$res =& $db->query($sql);
 		if(PEAR::isError($res))
 		{
-			die($res->getMessage());
+			die($res->getMessage().'first');
 		}
 		while ($row = $res->fetchRow())
 		{
@@ -37,28 +40,28 @@
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
-		die($res->getMessage());
+		die($res->getMessage().'second');
 	}
 	while ($row = $res->fetchRow())
 	{
 		$fac .= $row["facilityid"];
 	}
 	$fac .= "')";
-	
 	$sql = "";
-	$sql .= "select distinct f.room ";
+	$sql .= "select distinct f.Room ";
 	$sql .= "from `RoomFacilities` f ";
-	$sql .= "where f.facility in $fac "; //e.g. $fac = ('1', '2')
-	$sql .= "and f.room in(select room from Room where capacity >= $groupsize) ";
-	$sql .= "group by f.room;";
+	$sql .= "where f.Facility in ".$fac." "; //e.g. $fac = ('1', '2')
+	$sql .= "and f.Room in (select Room from Room where Capacity >= ".$groupsize.") ";
+	$sql .= "group by f.Room;";
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
-		die($res->getMessage());
+		die($res->getMessage().'third');
 	}
-	
+	$ar = array();
 	while ($row = $res->fetchRow())
 	{
-		print_r($row);
+		$ar[sizeof($ar)] = $row['room'];
 	}
+	echo json_encode($ar);
 ?>

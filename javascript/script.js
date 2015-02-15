@@ -725,7 +725,7 @@ $(document).ready(function()		// Execute all of this on load
 				data = data.substr(1,data.length - 2);
 				listOfFac = data.split(',');
 				//remove quotes from each element of the array
-				var html = "<form action='php/roomSearch.php' method='post'>";
+				var html = "<form id='tickedfac'>";
 				
 				for(var i = 0; i<listOfFac.length; i++)
 				{
@@ -733,8 +733,8 @@ $(document).ready(function()		// Execute all of this on load
 					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
 				}
-				html += "<input type='number' name='groupsize' value = 0>";
-				html += "<input type='submit' value='Send'></br>";
+				html += "<input type='number' id='myGroupSize' name='groupsize' value = 0>";
+				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
 				findRoomOpenClose();
@@ -744,6 +744,7 @@ $(document).ready(function()		// Execute all of this on load
 		openDiv("popupRequestDiv");
 	});
 
+	
 	populateTimetable();
 	
 	//These functions load and update the day and time chosen between the main page and the popup room.
@@ -946,6 +947,36 @@ $(document).ready(function()		// Execute all of this on load
 		
 	});
 });
+
+function roomSearch()
+{
+		var len = $('#tickedfac').children().length;
+		var s=""; //string of ticked facilities
+		for(var i = 0;i<len;i++){
+			if ($('#tickedfac').children().eq(i).is(':checked'))
+				s += $('#tickedfac').children().eq(i).attr('value') + ",";
+		}
+		
+		var groupsize = $('#myGroupSize').val();
+		var data1;
+		$.get("php/roomSearch.php?tickedfac=" + s + "&groupSize="+groupsize, function(data)
+		{
+			data1 = data;
+		}).done(function()
+		{
+			var results = JSON.parse(data1); //this is an array of rooms that match the chosen facilites and capacity
+			$('#matchedRoomsDiv').html(results.join("<br>"));
+			document.getElementById('matchedRoomsDiv').title='Matched Rooms';
+			$('#matchedRoomsDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  }
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				
+		});
+}
 
 function toggleWeeks()
 {

@@ -251,6 +251,11 @@ div.roominfo{
 	margin-left: 2.5%;*/
 }
 
+#matchedRoomsDiv{
+	color:#FFFFFF;
+}
+
+
 div.parkeast{
 	position: relative;
 	float: left;
