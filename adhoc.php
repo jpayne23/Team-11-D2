@@ -222,12 +222,6 @@
 								<div id='facilitiesDiv'></div>
 							</td>
 						</tr>
-						<tr>
-							<td>
-								<input type='button' id='getMatchingRooms' value='Find rooms for these facilities'/>
-								<div id="matchedRoomsdiv"></div>
-							</td>
-						</tr>
 					</table>
 				</content>
 			</article>
