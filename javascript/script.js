@@ -813,6 +813,7 @@ $(document).ready(function()		// Execute all of this on load
 			var groupSizes = JSON.parse(data)[13];
 			
 			var html = "";
+			var html1 = "";
 			if (status == "Modified")
 			{
 				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
@@ -838,6 +839,16 @@ $(document).ready(function()		// Execute all of this on load
 				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
 				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
 				html += "</div>";
+			$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"modifieddialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  }
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			
+				
 			}	
 			else
 			{
@@ -846,11 +857,21 @@ $(document).ready(function()		// Execute all of this on load
 				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
 				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
 				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			
+			$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  }
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 			}
 			
 			
-			$('#alertDiv').html(html);
-			openDiv('popupAlertDiv');
+			document.getElementById("alertDiv").title = "Request ID: " + requestID;
+			
+			//openDiv('popupAlertDiv');
 		});
 	});		
 	

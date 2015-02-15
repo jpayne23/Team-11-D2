@@ -389,6 +389,28 @@ textarea{
 	-webkit-border-radius: 7px;
 }
 
+.successPopupDiv.ui-dialog-content.ui-widget-content{
+	color: #FFFFFF;
+}
+/*
+.successPopupDiv{
+	border: 4px solid #CC0066;
+	height: 60%;
+	color: #FFFFFF;
+	overflow: auto;
+	background: rgba(51,0,102,1);
+	margin: auto;
+	padding:6px;  
+	position:absolute;
+	width: 40%;
+	top: 10%;
+	left: 20%;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
+*/
+
 .unsuccessful{
 	background-color:#CC0066;
 }

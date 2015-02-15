@@ -277,9 +277,9 @@
 		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 		</div>
 		
-		<div id='popupAlertDiv' class='popupDiv' style='visibility: hidden'>	
+		<div id='popupAlertDiv' style='visibility: hidden'>	
 			<input type="button" class="closeDiv" value="x" onclick='closeDiv("popupAlertDiv");'></input>
-			<div id='alertDiv'>
+			<div id='alertDiv' class='successPopupDiv'>
 			</div>
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>
