@@ -435,7 +435,15 @@ textarea{
 }
 
 .loadTable {
-	border: 2px solid #CC0066;
+	border: 1px solid #CC0066;
+}
+
+.loadTable td{
+	border: 1px solid #CC0066;
+}
+
+.loadTable th{
+	border: 1px solid #CC0066;
 }
 
 .loadTable tr:hover{
