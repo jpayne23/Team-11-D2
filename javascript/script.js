@@ -395,7 +395,7 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			reloadHistoryTable("down", "RequestID");
+			reloadHistoryTable("up", "Status");
 		});
 	});
 	
@@ -427,7 +427,7 @@ $(document).ready(function()		// Execute all of this on load
 		reloadHistoryTable("down", sortColumn);
 	});
 	
-	// Load past requets page in adhoc
+	// Load past requests page in adhoc
 	$('#pastButton').click(function()
 	{		
 		reloadPastTable("down", "RequestID");
@@ -793,8 +793,7 @@ $(document).ready(function()		// Execute all of this on load
 		if(event.target.nodeName == 'IMG') //check tag name is <img>
 			return;
 		if(event.target.id == 'deletetd')
-			return;
-		
+			return;		
 		
 		$.post("php/getRequestInfo.php", 
 		{
@@ -806,9 +805,16 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});		
 		
-	$('#history').on('click', '#historyRow', function() //show more info if row clicked
+	$('#history').on('click', '#historyRow', function(event) //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
+		if(event.target.id == 'edittd')
+			return;
+		if(event.target.nodeName == 'IMG') //check tag name is <img>
+			return;
+		if(event.target.id == 'deletetd')
+			return;
+		
 		$.post("php/getRequestInfo.php", 
 		{
 			requestID: requestID

@@ -333,7 +333,7 @@
 			if ($row['status'] == 'Unsuccessful')
 			{
 				echo "<td class='unsuccessful'><b>" . $row["status"] . "</b></td>";	
-				echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
+				echo "<td id='edittd'><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
 			}
 			else if ($row['status'] == 'Successful')
 			{
@@ -348,7 +348,7 @@
 				echo "<td>" . $row["status"] . "</td>";	
 			}
 					
-			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
+			echo "<td id='deletetd'><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
 			echo "</tr>";
 		}
 	}
