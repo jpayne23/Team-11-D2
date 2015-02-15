@@ -225,6 +225,13 @@ div.compared{
 	height: 100%;
 }
 
+.modifieddialogClass.ui-dialog{
+	background-color: #330066;
+	color: #FFFFFF;
+	width: 800px;
+	height: 100%;
+}
+
 .ui-dialog.ui-widget.ui-widget-content{
 	text-align: center;
 }

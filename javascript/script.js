@@ -210,10 +210,10 @@ $(document).ready(function()		// Execute all of this on load
 			var period = JSON.parse(data)[7];
 			var specialReq = JSON.parse(data)[8];
 			var priorityReq = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var weeks = JSON.parse(data)[12];		
+			var facilities = JSON.parse(data)[13];
+			var rooms = JSON.parse(data)[14];
+			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -281,6 +281,97 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
+	// Edit button click event for adhoc
+	$('#past').on('click', '#editIcon', function()
+	{
+		closeDiv("popupPastDiv");
+		
+		var requestID = "requestID=" + this.name.substr(8);
+		
+		// Load the form with data from database
+		$.get("php/fetchEditData.php?" + requestID, function(data)
+		{	
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modtitle = JSON.parse(data)[2];
+			var part = JSON.parse(data)[3]
+			var sessionType = JSON.parse(data)[4];
+			var sessionLength = JSON.parse(data)[5];
+			var day = JSON.parse(data)[6];			
+			var period = JSON.parse(data)[7];
+			var specialReq = JSON.parse(data)[8];
+			var semester = JSON.parse(data)[11];
+			var weeks = JSON.parse(data)[12];		
+			var facilities = JSON.parse(data)[13];
+			var rooms = JSON.parse(data)[14];
+			var groupSizes = JSON.parse(data)[15];
+			
+			document.getElementById('part').value = part;
+			updateModCode();
+			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			document.getElementById('seshType').value = sessionType;
+			if (sessionLength == 1)
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hour";
+			}
+			else
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hours";
+			}	
+			document.getElementById('day').value = day;
+			document.getElementById('time').value = period;
+			document.getElementById('specialReq').value = specialReq;	
+			
+			setSelectedWeeks(weeks);
+			
+			if (facilities.length > 0)
+			{
+				document.getElementById("sortable").innerHTML = "";
+				
+				for (var i = 0; i < facilities.length; i++)
+				{
+					setFacilities(facilities[i]);
+				}
+			}
+			else 
+			{
+				document.getElementById("sortable").innerHTML = "";
+			}	
+			
+			if (rooms.length > 0)
+			{
+				$('#chosenRooms').attr('data-norooms', '0');
+				document.getElementById("chosenRooms").innerHTML = "";
+				
+				for (var i = 0; i < rooms.length; i++)
+				{
+					var id = rooms[i];
+					var groupSize = groupSizes[i];
+					setSelectedRooms(id, groupSize);
+				}
+			}
+			else 
+			{
+				$('#chosenRooms').attr('data-norooms', '0');
+				document.getElementById("chosenRooms").innerHTML = "";
+			}	
+			
+			if (semester == 1)
+			{
+				
+			}
+			else 
+			{
+				
+			}
+			
+			$('#submit').val("Edit");	
+			$('#submit').removeClass("none");
+			$('#submit').addClass(requestID);
+			$('#submit').addClass("homeButtons");
+		});
+	});
+	
 	// Delete button click event on pending
 	$('#submissions').on('click', "#deleteIcon", function() 
 	{
@@ -315,10 +406,10 @@ $(document).ready(function()		// Execute all of this on load
 			var period = JSON.parse(data)[7];
 			var specialReq = JSON.parse(data)[8];
 			var priorityReq = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var weeks = JSON.parse(data)[12];		
+			var facilities = JSON.parse(data)[13];
+			var rooms = JSON.parse(data)[14];
+			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -686,8 +777,8 @@ $(document).ready(function()		// Execute all of this on load
 					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
 				}
-				html += "<input class= 'optionResize' type='number' id='myGroupSize' name='groupsize' value = 0>";
-				html += "<input class= 'optionResize' type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
+				html += "<input type='number' id='myGroupSize' name='groupsize' value = 0>";
+				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
 				findRoomOpenClose();
@@ -798,9 +889,156 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
 			
+			var html = "";
+			var html1 = "";
+			if (status == "Modified")
+			{
+				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
+				html += "<h3>What you chose</h3>";				
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				html += "</div>";
+				
+				var allocated = JSON.parse(data)[14];
+				var allocatedRooms = allocated[0];
+				var allocatedDay = allocated[1];
+				var allocatedPeriod = allocated[2];
+				var allocatedComments = allocated[3];
+				
+				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
+				html += "<h3>What was allocated</h3>";
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
+				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
+				html += "</div>";
+			$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"modifieddialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  }
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			
+				
+			}	
+			else
+			{
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			
+			$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  }
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			}
+			
+			
+			document.getElementById("alertDiv").title = "Request ID: " + requestID;
+			
+			//openDiv('popupAlertDiv');
 		});
 	});		
+	
+	$('#past').on('click', '#historyRow', function(event) //show more info if row clicked
+	{
+		var requestID = this.getAttribute('name');
+		if(event.target.id == 'edittd')
+			return;
+		if(event.target.nodeName == 'IMG') //check tag name is <img>
+			return;
+		if(event.target.id == 'deletetd')
+			return;
+		
+		$.post("php/getRequestInfo.php", 
+		{
+			requestID: requestID
+		},
+		function(data)
+		{
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
+			
+			var html = "";
+			if (status == "Modified")
+			{
+				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
+				html += "<h3>What you chose</h3>";				
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				html += "</div>";
+				
+				var allocated = JSON.parse(data)[14];
+				var allocatedRooms = allocated[0];
+				var allocatedDay = allocated[1];
+				var allocatedPeriod = allocated[2];
+				var allocatedComments = allocated[3];
+				
+				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
+				html += "<h3>What was allocated</h3>";
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
+				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
+				html += "</div>";
+			}	
+			else
+			{
+				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			}
+			
+			
+			$('#alertDiv').html(html);
+			openDiv('popupAlertDiv');
+		});
+	});
 
 	// Load last year's requests
 	$('#lastYearButton').click(function()
@@ -1654,6 +1892,7 @@ function resizeText(multiplier)
 		document.body.style.fontSize = "1.0em";
 	}
 	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+
 	var x = document.getElementsByClassName("optionResize");
 	for(var i = 0; i < x.length; i++){
 		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
