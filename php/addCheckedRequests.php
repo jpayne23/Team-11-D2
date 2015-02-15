@@ -16,7 +16,7 @@
 	{
 		// Copy the main request from history to be submitted
 		$sql = "INSERT INTO Request (UserID, ModCode, SessionType, SessionLength, DayID, PeriodID, PriorityRequest, SpecialRequirements, Semester, RoundID, Status) ";
-		$sql .= "(SELECT UserID, ModCode, SessionType, SessionLength, DayID, PeriodID, PriorityRequest, SpecialRequirements, Semester, $round, \"Submitted\" FROM RequestHist ";
+		$sql .= "(SELECT UserID, ModCode, SessionType, SessionLength, DayID, PeriodID, PriorityRequest, SpecialRequirements, Semester, $round, \"Pending\" FROM RequestHist ";
 		$sql .= "WHERE RequestHist.RequestIDHist = " . $requestIDHist[$i] . ");";			
 		$res =& $db->query($sql);
 		if(PEAR::isError($res))

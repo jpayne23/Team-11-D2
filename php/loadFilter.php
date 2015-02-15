@@ -140,7 +140,7 @@
 			echo '<option id ="'.$row["status"].'">' . $row["status"].'</option>';
 		}
 		echo "</select></td></tr>";
-	}	
+	}		
 	
 	echo "</table>";
 	

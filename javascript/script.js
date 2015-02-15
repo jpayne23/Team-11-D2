@@ -109,6 +109,14 @@ $(document).ready(function()		// Execute all of this on load
 		$(this).addClass('ui-selected');
 	});
 	
+	// Add semester selector
+	$("#semesterSelector li").on('click', function()
+	{
+		$("#semesterSelector").find('li.ui-selected').removeClass('ui-selected');
+		$(this).addClass('ui-selected');
+		toggleWeeks();
+	});
+	
 	// Add park selector
 	$.get("php/updatePark.php", function(data)
 	{
@@ -303,8 +311,8 @@ $(document).ready(function()		// Execute all of this on load
 	// Load history page
 	$('#historyButton').click(function()
 	{
-		var sortDirection = "sortDirection=down";
-		var sortColumn = "&sortColumn=RequestID";
+		var sortDirection = "sortDirection=up";
+		var sortColumn = "&sortColumn=Status";
 		var flag = "&flag=0";
 		$.get("php/loadHistorySubmissions.php?" + sortDirection + sortColumn + flag, function(data)
 		{
@@ -330,17 +338,25 @@ $(document).ready(function()		// Execute all of this on load
 	
 	// Load past requets page in adhoc
 	$('#pastButton').click(function()
-	{
-		var sortDirection = "sortDirection=down";
-		var sortColumn = "&sortColumn=RequestID";
-		var flag = "&flag=0";
-		$.get("php/loadAdhocSubmissions.php?" + sortDirection + sortColumn + flag, function(data)
-		{
-			$('#past').html(data);
-		});
+	{		
+		reloadPastTable("down", "RequestID");
 		
 		openDiv("popupPastDiv");
 	});	
+	
+	// Past up arrow click event
+	$('#past').on('click', '#upArrow', function()
+	{
+		var sortColumn = this.name;
+		reloadPastTable("down", sortColumn);
+	});
+	
+	// Past down arrow click event
+	$('#past').on('click', '#downArrow', function()
+	{
+		var sortColumn = this.name;
+		reloadPastTable("up", sortColumn);
+	});
 	
 	//get Facilities of a given room (room1 only)
 	$('#btnGetInfo').on('click', function()
@@ -501,52 +517,47 @@ $(document).ready(function()		// Execute all of this on load
 	// Send adhoc request to database
 	$("#submitAdhoc").click(function()
 	{		
+	
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var rooms = getSelectedRooms();
 		var groupSizes = getGroupSizes();
-		var selectedWeek = $('#adhocWeekSelector').find('li.ui-selected').text();
+
+		var selectedWeeks = $('#adhocWeekSelector').find('li.ui-selected').text();
+
 		var facilities = getCheckedFacilities();
 		var sessionType = document.getElementById('seshType').value;
 		var sessionLength = document.getElementById('seshLength').value.substr(0, 1);
 		var specialReq = document.getElementById('specialReq').value;
 		var day = document.getElementById('day').selectedIndex + 1;
 		var time = document.getElementById('time').selectedIndex + 1;
-		var semester = document.getElementById('semester').selectedIndex+1;
+		var semester = $('#semesterSelector').find('li.ui-selected').text();
 		var round = 0;
 		var adhoc = 1;
 		var priority = 1;
 		
-		// Error check
-		if (selectedWeeks.length != 0)
+		$.post("php/addPendingRequest.php",
 		{	
-			$.post("php/addPendingRequest.php",
-			{	
-				// Data to send
-				modCode: modCode,
-				rooms: rooms,
-				groupSizes: groupSizes,
-				selectedWeeks: selectedWeeks,
-				facilities: facilities,
-				sessionType: sessionType,
-				sessionLength: sessionLength,
-				specialReq: specialReq,
-				day: day,
-				time: time,
-				round: round,
-				priority: priority,
-				adhoc: adhoc,
-				semester: semester
-			},
-			function(data, status){
-				// Function to do things with the data
-				alert(data);
-			});
-		}
-		else
-		{
-			alert("Please enter what weeks you want to book the module for");
-		}
+			// Data to send
+			modCode: modCode,
+			rooms: rooms,
+			groupSizes: groupSizes,
+			selectedWeeks: selectedWeeks,
+			facilities: facilities,
+			sessionType: sessionType,
+			sessionLength: sessionLength,
+			specialReq: specialReq,
+			day: day,
+			time: time,
+			round: round,
+			priority: priority,
+			adhoc: adhoc,
+			semester: semester
+		},
+		function(data, status){
+			// Function to do things with the data
+			alert(data);
+		});		
 	});
 	
 	// Make all pending requests submitted ones
@@ -682,9 +693,17 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
-	$('#submissions').on('click', '#pendingRow', function() //show more info if row clicked
+	$('#submissions').on('click', '#pendingRow', function(event ) //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
+		if(event.target.id == 'edittd')
+			return;
+		if(event.target.nodeName == 'IMG') //check tag name is <img>
+			return;
+		if(event.target.id == 'deletetd')
+			return;
+		
+		
 		$.post("php/getRequestInfo.php", 
 		{
 			requestID: requestID
@@ -693,8 +712,8 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert(data);
 		});
-	});	
-	
+	});		
+		
 	$('#history').on('click', '#historyRow', function() //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
@@ -776,7 +795,7 @@ $(document).ready(function()		// Execute all of this on load
 				requestIDHist.push(checked[i].id.substr(15));
 			}
 		}
-		console.log(requestIDHist);
+		
 		// Error check
 		if (requestIDHist.length != 0)
 		{	
@@ -796,8 +815,62 @@ $(document).ready(function()		// Execute all of this on load
 			alert("No requests selected");
 		}
 	});
+
+	$("#plustext").click(function()
+	{
+			var x = $("#textsize").attr('data-counter');
+			x = parseInt(x);
+			if(x < 3)
+			{
+				x++;
+				$("#textsize").attr('data-counter', x)
+				resizeText(1);
+			}
+			else{
+				alert('Cannot Resize Text Any Bigger');
+			}
+		
+	});
 	
+	$("#minustext").click(function()
+	{
+			var x = $("#textsize").attr('data-counter');
+			x = parseInt(x);
+			if(x > -3)
+			{
+				x--;
+				$("#textsize").attr('data-counter', x)
+				resizeText(-1);
+			}
+			else{
+				alert('Cannot Resize Text Any Smaller');
+			}
+		
+	});
 });
+
+function toggleWeeks()
+{
+	if ($('#semesterSelector').find('li.ui-selected').text() == 1)
+	{
+		if ($('#adhocWeekSelector li').last().hasClass('ui-selected'))
+		{
+			$('#adhocWeekSelector li').first().addClass('ui-selected');
+		}
+		$('#adhocWeekSelector li').last().remove();		
+	}
+	else
+	{
+		var html = "<li class='ui-state-default'>16</li>";
+		$('#adhocWeekSelector').append(html);
+		
+		$('#adhocWeekSelector li').last().on('click', function()
+		{
+			$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
+			$(this).addClass('ui-selected');
+		});
+	}
+}
 
 function resetSelectedRooms()
 {
@@ -934,6 +1007,17 @@ function reloadLastYearTable(sortDirection, sortColumn)
 	$.get("php/loadLastYear.php?" + sortDirection + flag + sortColumn, function(data)
 	{
 		$('#lastYear').html(data);
+	});
+}
+
+function reloadPastTable(sortDirection, sortColumn)
+{
+	sortDirection = "sortDirection=" + sortDirection;
+	sortColumn = "&sortColumn=" + sortColumn;
+	var flag = "&flag=0";
+	$.get("php/loadAdhocSubmissions.php?" + sortDirection + sortColumn + flag, function(data)
+	{
+		$('#past').html(data);
 	});
 }
 
@@ -1175,16 +1259,10 @@ function filterMenu(source)
 			$('#filterDiv').html(data);
 		});
 	}
-	else if(source == "History"){
+	else{
 		$.get("php/loadFilter.php?source=History", function(data)
 		{
 			$('#filterDivHist').html(data);
-		});
-	}
-	else{
-		$.get("php/loadFilter.php?source=Adhoc", function(data)
-		{
-			$('#pastFilterDiv').html(data);
 		});
 	}
 };
