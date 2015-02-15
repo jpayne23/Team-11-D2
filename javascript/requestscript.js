@@ -104,7 +104,7 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 		$("#parkcontent").append(data);
 		var buildingName =  value.substr(4,1).toUpperCase() + value.substring(5,value.length);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
+		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
 		length = $('#parkcontent').children().length -1;
 		lastRow = $('#parkcontent').children().eq(length);
 		lastRow.attr('style', 'border-bottom: 0');
@@ -429,7 +429,7 @@ function updateAdvancedRoom(value)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
-		$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr></table>');
+		$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr></table>');
 
 		length = $('#buildingcontent').children().length -1;
 		lastRow = $('#buildingcontent').children().eq(length);
@@ -527,16 +527,17 @@ function deleteRoom(id) //need to implement group capacity, increment when room 
 	loadGroupSize();
 }
 
-function addAnyBuilding(id)
+function addAnyPark(id)
 {
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	
 	if(reqCap > 0){
 		
-		var parkname = id.substr(6,id.length);
-		parkname = parkname.substr(0,4) + " " + parkname.substr(4,parkname.length).toUpperCase();
-		var html= "<tr id="+("rm" + id)+"><td id ='cap"+id+"'>"+reqCap+"</td><td> Students in </td><td>"+parkname+"</td><td id='del"+ ("rm" + id) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+		var parkname = id.substr(6);
+		parkname = parkname.substr(4).toUpperCase();
+		console.log(parkname);
+		var html= "<tr id="+("rm" + id)+"><td id ='cap"+id+"'>"+reqCap+"</td><td> Students in park </td><td>"+parkname+"</td><td id='del"+ ("rm" + id) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 		$("#selectedrooms").append(html);
 		document.getElementById('chosenRooms').innerHTML += html;
 	}
@@ -564,7 +565,7 @@ function findRoomOpenClose()
 	
 
 
-function addAnyPark(id)
+function addAnyBuilding(id)
 {
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
