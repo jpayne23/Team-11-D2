@@ -1175,6 +1175,56 @@ $(document).ready(function()		// Execute all of this on load
 	{
 		toggleAccess(this);
 	});
+	
+	
+		$('#newModuleDialog').on('click','#btnAddModule',function(){
+		
+			if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
+				alert('Module Code is empty');
+				return;
+			}
+			
+			if($('#newModName').val().trim() == ''){ //validate modname isnt empty
+				alert('Module Name is empty');
+				return;
+			}
+			var gsize = parseInt($('#newModSize').val());
+			if($('#newModSize').val() < 1){
+				alert('Group Size is invalid');
+				return;
+			}
+			
+			var str = $('#newModCode').val();
+			var res = /\d{2}[a-zA-Z]{3}\d{3}/.test(str); //reg ex test the modcode
+			
+			if(res==false){
+				alert('invalid');
+				return;
+			}
+			return;
+			var modCode = str;
+			var modName = $('#newModName').val().trim();
+			//call php script to insert the new module
+			$.get("php/addModule.php?modCode=" + modCode + "&modName="+modName + "&modSize="+gsize, function(data)
+			{
+				console.log(data);
+				if(data=='Nope'){
+					alert('This module code already exists!');
+					return;
+				}
+			}).done(function()
+			{
+				
+				var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
+				var part = "&part=any";
+				$.get("php/loadModCodes.php?" + deptCode + part, function(data)
+				{
+					$('#modCodeDiv').html(data);
+				});
+			
+			}); //end done function
+	
+		}); //end click function
 });
 
 function toggleAccess(button)
@@ -1231,6 +1281,28 @@ function applyAccess(button)
 		$('#round').className = "homeButtons accessBtn";
 		//$('#chosenRooms tr')
 	}
+}
+
+function AddNewModule()
+{
+	var html= "";
+	html+= "<label for='modcode'>Module Code</label></br>";
+	html+= " <input type='text' id='newModCode' placeholder='e.g. 14COA101'></br>";
+	html+= "<label for='modName'>Module Name</label></br>";
+	html+= " <input type='text' id='newModName' placeholder='Team Projects'><br>";
+	html+= "<label for='modName'>Module Group Size</label></br>";
+	html+= " <input type='number' id='newModSize' placeholder='50'><br>";
+	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
+	
+	$('#newModuleDialog').html(html);
+	$('#newModuleDialog').dialog({
+	dialogClass:"addModuleClass",
+	  show: {
+		effect: "fadeIn",
+		duration: 500
+	  }
+	}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+	
 }
 
 function roomSearch()
