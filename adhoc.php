@@ -203,7 +203,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea class= "optionResize" id="specialReq" cols="40" rows="3"></textarea>
+								<textarea class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
 							</td>
 						</tr>
 					</table>					
