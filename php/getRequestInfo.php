@@ -106,6 +106,30 @@
 	array_push($results, $roomsArray);
 	array_push($results, $groupSizeArray);
 	
+	$allocated = array();
+	if ($results[9] == "Modified")
+	{
+		$sql5 = "SELECT Room, Day, Period, Comments FROM AllocatedRooms ";
+		$sql5 .= "JOIN DayInfo ON DayInfo.DayID = AllocatedRooms.DayID ";
+		$sql5 .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = AllocatedRooms.PeriodID ";
+		$sql5 .= "WHERE RequestID = $requestID ";
+		
+		$res5 =& $db->query($sql5);
+		if(PEAR::isError($res5))
+		{
+			die($res5->getMessage());
+		}		
+		
+		while ($row5 = $res5->fetchRow())
+		{
+			array_push($allocated, $row5['room']);
+			array_push($allocated, $row5['day']);
+			array_push($allocated, $row5['period']);
+			array_push($allocated, $row5['comments']);
+		}
+	}
+	array_push($results, $allocated);
+	
 	echo json_encode($results);
 	
 ?>

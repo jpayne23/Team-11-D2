@@ -203,7 +203,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea class= "optionResize" id="specialReq" cols="40" rows="3"></textarea>
+								<textarea class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
 							</td>
 						</tr>
 					</table>					
@@ -244,6 +244,11 @@
 			</div>
 		</div>
 		<div id='popupRequestDiv' class = 'popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		</div>
+		<div id='popupAlertDiv' class='popupDiv' style='visibility: hidden'>	
+			<input type="button" class="closeDiv" value="x" onclick='closeDiv("popupAlertDiv");'></input>
+			<div id='alertDiv'>
+			</div>
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>
 	</div>

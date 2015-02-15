@@ -37,11 +37,11 @@
 	-webkit-border-radius: 5px;
 }
 
-.loginButton:hover{
+#btnAccessLogin{
+	position: absolute;
 	border: 2px solid #CC0066;
 	background-color: #FFFFFF;
 	color: #CC0066;
-
 }
 
 .centerContent{
@@ -409,6 +409,15 @@ textarea{
 	-webkit-border-radius: 5px;
 }
 
+.chosenRequestInfo{
+	float: left;	
+}
+
+.allocatedRequestInfo{
+	float: left;
+	padding-left: 100px;
+}
+
 .filterDiv{
 	background:#CC0066;
 	margin:30px;
@@ -483,6 +492,30 @@ textarea{
     background-color: black;
    /* line-height: 0px;
     padding: 11px 3px;  */
+}
+/* -----------------------------------------CSS to make page accessible-------------- */
+
+.accessTextIn:focus , .accessTextIn:hover{
+	
+	background:yellow;
+	color: black;
+	outline:3px solid red;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.accessLoginBtn:focus , .accessLoginBtn:hover{
+	background:yellow;
+	color: black;
+	height: 30px;
+	font-size: 16px;
+	font-weight: bold;
+	border:3px solid red;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 .addModuleClass.ui-dialog {
