@@ -82,6 +82,9 @@
 			case "Period":
 				$sql .= " ORDER BY Request.PeriodID DESC;";
 				break;
+			case "Status":
+				$sql .= " ORDER BY case Status when 'Unsuccessful' then 1 when 'Modified' then 2 when 'Successful' then 3 else 4 end;";
+				break;
 		}
 	}
 	else
@@ -106,6 +109,9 @@
 			case "Period":
 				$sql .= " ORDER BY Request.PeriodID ASC;";
 				break;
+			case "Status":
+				$sql .= " ORDER BY case Status when 'Submitted' then 1 when 'Successful' then 2 when 'Modified' then 3 else 4 end;";
+				break;
 		}	
 	}
 	
@@ -127,6 +133,7 @@
 		echo "<th>Session Length <img id='upArrow' name='SessionLength' src='img/upArrow.png'></th>";
 		echo "<th>Day <img id='upArrow' name='Day' src='img/upArrow.png'></th>";
 		echo "<th>Start Time <img id='upArrow' name='Period' src='img/upArrow.png'></th>";
+		echo "<th>Status <img id='upArrow' name='Status' src='img/upArrow.png'></th>";
 	}
 	else
 	{
@@ -139,6 +146,7 @@
 		echo "<th>Session Length <img id='downArrow' name='SessionLength' src='img/downArrow.png'></th>";
 		echo "<th>Day <img id='downArrow' name='Day' src='img/downArrow.png'></th>";
 		echo "<th>Start Time <img id='downArrow' name='Period' src='img/downArrow.png'></th>";
+		echo "<th>Status <img id='downArrow' name='Status' src='img/downArrow.png'></th>";
 	}
 	
 	echo "<th>Status</th>";
