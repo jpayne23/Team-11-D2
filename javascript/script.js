@@ -931,7 +931,6 @@ $(document).ready(function()		// Execute all of this on load
 				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
 				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
 				html += "</div>";
-				document.getElementById("modifiedAlertDiv").title = "Request ID: " + requestID;
 				$('#modifiedAlertDiv').html(html);
 				$('#modifiedAlertDiv').dialog({
 					width: "43%",
@@ -939,7 +938,8 @@ $(document).ready(function()		// Execute all of this on load
 					  show: {
 						effect: "fadeIn",
 						duration: 500
-					  }
+					  },
+					title: "RequestID: " + requestID
 				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 				$('#alertDiv').dialog('close');
 			}	
@@ -950,14 +950,14 @@ $(document).ready(function()		// Execute all of this on load
 				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
 				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
 				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-				document.getElementById("alertDiv").title = "Request ID: " + requestID;
 				$('#alertDiv').html(html);
 				$('#alertDiv').dialog({
 					dialogClass:"dialogClass",
 					  show: {
 						effect: "fadeIn",
 						duration: 500
-					  }
+					  },
+					  title: "RequestID: " + requestID
 				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 				$('#modifiedAlertDiv').dialog('close');
 			}
