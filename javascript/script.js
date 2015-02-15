@@ -1260,16 +1260,25 @@ function deleteFac(id) //function to delete the facility by searching for its id
 
 function filterMenu(source)
 {
-	if(source == "Pending"){
+	if(source == "Pending")
+	{
 		$.get("php/loadFilter.php?source=Pending", function(data)
 		{
 			$('#filterDiv').html(data);
 		});
 	}
-	else{
+	else if(source == "History")
+	{
 		$.get("php/loadFilter.php?source=History", function(data)
 		{
 			$('#filterDivHist').html(data);
+		});
+	}
+	else
+	{
+		$.get("php/loadFilter.php?source=Adhoc", function(data)
+		{
+			$('#pastFilterDiv').html(data);
 		});
 	}
 };
