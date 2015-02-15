@@ -25,7 +25,8 @@
 				<li><a href="homepage.php">Home</a></li>
 				<li class="active"><a href="#" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='pastButton'>Past Requests</a></li>
-				<li><a href="php/logout_script.php">Log Out</a></li>
+				<li class='headerright'><a href="php/logout_script.php" id='logoutButton'>Log Out</a></li>
+				<li class='headerright'><a href='#' id='AddModuleButton'>Add Module</a></li>
 			</ul>
 		</nav>	
 	</header>

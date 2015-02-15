@@ -28,7 +28,8 @@
 				<li><a href="#" id='pendingButton'>Pending</a></li>
 				<li><a href="#" id='historyButton'>History</a></li>
 				<li><a href="#" id='lastYearButton'>View Last Year's Requests</a></li>
-				<li><a href="php/logout_script.php">Log Out</a></li>
+				<li class='headerright'><a href="php/logout_script.php" id='logoutButton'>Log Out</a></li>
+				<li class='headerright'><a href='#' id='AddModuleButton'>Add Module</a></li>
 			</ul>
 		</nav>	
 	</header>

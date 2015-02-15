@@ -125,7 +125,7 @@ a:hover, a:active{
 }
 
 .mainHeader nav ul  li{
-	float:left;
+	
 	display: inline;
 }
 
@@ -151,6 +151,9 @@ a:hover, a:active{
 	-webkit-border-radius: 12px;
 }
 
+.headerright{
+	float:right;
+}
 .mainContent{
 	line-height: 25px;
 	border-radius: 5px;
