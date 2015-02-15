@@ -4,7 +4,6 @@ div.requestMainDiv{
 }
 
 div.rooms{
-	
 	border-top:1.5px solid #ccc; 
 	height:55%;
 	width:100%; 
@@ -24,7 +23,7 @@ div.rooms{
 	float: left;
 	background-color: #330066;
 	color: #FFFFFF;
-	margin-top: 2%;
+	margin-top: 1%;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -229,7 +228,14 @@ div.compared{
 .ui-dialog.ui-widget.ui-widget-content{
 	text-align: center;
 }
-
+.matcheddialogClass.ui-dialog{
+	overflow-x: hidden;
+	overflow-y: scroll;
+	background-color: #330066;
+	color: #FFFFFF;
+	width: 30%;
+	max-height: 80%;
+}
 
 .parkrooms{
 	visibility: hidden;
@@ -343,6 +349,7 @@ div.west{
 	border-style: outset;
 	border-radius: 5px;
 	text-align: center;
+	height: 40px;
 }
 
 .timeslotbooked{
@@ -367,7 +374,22 @@ div.west{
 	border: 2px solid #CC0066;
 }
 
-
+.findRoomPopupDiv{
+	border: 4px solid #CC0066;
+	height: 53%;
+	color: #FFFFFF;
+	overflow: auto;
+	background: #330066;
+	margin: auto;
+	padding:6px;  
+	position:absolute;
+	width:90%;
+	top: 2%;
+	left: 5%;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
 
 @media only screen and (min-width: 480px) and (max-width: 1350px)
 

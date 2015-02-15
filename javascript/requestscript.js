@@ -547,6 +547,11 @@ function findRoomOpenClose()
 	if (this.count == 0)
 	{
 		openDiv('findroomDiv');
+		if ($('#findroomDiv').children().children().length <= 31)
+		{
+			$("#findroomDiv").prepend('<input id="closefindroomDiv"class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
+			$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
+		}
 		this.count = 1;
 	}
 	else

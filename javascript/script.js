@@ -504,11 +504,13 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			$("#matchedRoomsdiv").html(data);
 			$('#matchedRoomsdiv').dialog({
+					maxHeight: 100,
 			      show: {
 			        effect: "fadeIn",
 			        duration: 500
 			      }
-			}); //end dialog
+			
+			});//end dialog
 			
 		}); //end $_get
 		
@@ -968,7 +970,7 @@ function roomSearch()
 			$('#matchedRoomsDiv').html(results.join("<br>"));
 			document.getElementById('matchedRoomsDiv').title='Matched Rooms';
 			$('#matchedRoomsDiv').dialog({
-				dialogClass:"dialogClass",
+				dialogClass:"matcheddialogClass",
 				  show: {
 					effect: "fadeIn",
 					duration: 500
