@@ -804,7 +804,30 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			alert(data);
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modTitle = JSON.parse(data)[2];
+			var sessionType = JSON.parse(data)[3];
+			var sessionLength = JSON.parse(data)[4];
+			var day = JSON.parse(data)[5];			
+			var period = JSON.parse(data)[6];
+			var specialReq = JSON.parse(data)[7];
+			var priorityReq = JSON.parse(data)[8];
+			var status = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
+			
+			var html = "";
+			html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+			html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+			html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			
+			$('#alertDiv').html(html);
+			openDiv('popupAlertDiv');
 		});
 	});		
 		
@@ -824,7 +847,7 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
-			alert(data);
+			
 		});
 	});		
 
