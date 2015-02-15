@@ -209,10 +209,10 @@ $(document).ready(function()		// Execute all of this on load
 			var period = JSON.parse(data)[7];
 			var specialReq = JSON.parse(data)[8];
 			var priorityReq = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var weeks = JSON.parse(data)[12];		
+			var facilities = JSON.parse(data)[13];
+			var rooms = JSON.parse(data)[14];
+			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
 			updateModCode();
@@ -280,6 +280,97 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
+	// Edit button click event for adhoc
+	$('#past').on('click', '#editIcon', function()
+	{
+		closeDiv("popupPastDiv");
+		
+		var requestID = "requestID=" + this.name.substr(8);
+		
+		// Load the form with data from database
+		$.get("php/fetchEditData.php?" + requestID, function(data)
+		{	
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modtitle = JSON.parse(data)[2];
+			var part = JSON.parse(data)[3]
+			var sessionType = JSON.parse(data)[4];
+			var sessionLength = JSON.parse(data)[5];
+			var day = JSON.parse(data)[6];			
+			var period = JSON.parse(data)[7];
+			var specialReq = JSON.parse(data)[8];
+			var semester = JSON.parse(data)[11];
+			var weeks = JSON.parse(data)[12];		
+			var facilities = JSON.parse(data)[13];
+			var rooms = JSON.parse(data)[14];
+			var groupSizes = JSON.parse(data)[15];
+			
+			document.getElementById('part').value = part;
+			updateModCode();
+			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			document.getElementById('seshType').value = sessionType;
+			if (sessionLength == 1)
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hour";
+			}
+			else
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hours";
+			}	
+			document.getElementById('day').value = day;
+			document.getElementById('time').value = period;
+			document.getElementById('specialReq').value = specialReq;	
+			
+			setSelectedWeeks(weeks);
+			
+			if (facilities.length > 0)
+			{
+				document.getElementById("sortable").innerHTML = "";
+				
+				for (var i = 0; i < facilities.length; i++)
+				{
+					setFacilities(facilities[i]);
+				}
+			}
+			else 
+			{
+				document.getElementById("sortable").innerHTML = "";
+			}	
+			
+			if (rooms.length > 0)
+			{
+				$('#chosenRooms').attr('data-norooms', '0');
+				document.getElementById("chosenRooms").innerHTML = "";
+				
+				for (var i = 0; i < rooms.length; i++)
+				{
+					var id = rooms[i];
+					var groupSize = groupSizes[i];
+					setSelectedRooms(id, groupSize);
+				}
+			}
+			else 
+			{
+				$('#chosenRooms').attr('data-norooms', '0');
+				document.getElementById("chosenRooms").innerHTML = "";
+			}	
+			
+			if (semester == 1)
+			{
+				
+			}
+			else 
+			{
+				
+			}
+			
+			$('#submit').val("Edit");	
+			$('#submit').removeClass("none");
+			$('#submit').addClass(requestID);
+			$('#submit').addClass("homeButtons");
+		});
+	});
+	
 	// Delete button click event on pending
 	$('#submissions').on('click', "#deleteIcon", function() 
 	{
@@ -314,10 +405,10 @@ $(document).ready(function()		// Execute all of this on load
 			var period = JSON.parse(data)[7];
 			var specialReq = JSON.parse(data)[8];
 			var priorityReq = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var weeks = JSON.parse(data)[12];		
+			var facilities = JSON.parse(data)[13];
+			var rooms = JSON.parse(data)[14];
+			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
 			updateModCode();

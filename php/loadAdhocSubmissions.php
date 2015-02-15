@@ -149,8 +149,6 @@
 		echo "<th>Status <img id='downArrow' name='Status' src='img/downArrow.png'></th>";
 	}
 	
-	echo "<th>Status</th>";
-	
 	$modCodes = array();
 	$fill = True;
 		
@@ -340,7 +338,7 @@
 			{
 				echo "<td>" . $row["status"] . "</td>";	
 			}		
-			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
+			echo "<td id='deletetd'><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
 			echo "</tr>";
 		}
 	}
