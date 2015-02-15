@@ -469,53 +469,6 @@ $(document).ready(function()		// Execute all of this on load
 		}); //end $.get		
 	}); //end click function
 	
-	//Find rooms matching given facilities
-	$("#getMatchingRooms").on('click',function(){
-		var f = [];
-		var valid = false; //to check if any facilities are selected
-		/*for(var i = 0;i<45;i=i+2) //+2 because it skips the <br> tags in between
-		{
-			if($('#facilitiesDiv').children().eq(i).is(':checked')){
-				//append the facility name to a array to send to server
-				f[f.length]= Number($('#facilitiesDiv').children().eq(i).attr('id').substr(1,2))+1;
-				valid = true;
-			}
-		}*/
-		var facDiv = document.getElementById("facilitiesDiv").children;
-		for(var i = 2; i <facDiv.length; i++)
-		{
-			f.push(facDiv[i].getAttribute('name'));
-		}
-		
-		if (f.length != 0)
-		{
-			valid = true;
-		}
-		if(valid == false){
-			  $('#getMatchingRooms').tooltip({ items: "#getMatchingRooms", content: "You didn't select any facilities"});
-			  $('#getMatchingRooms').tooltip("open");
-			    $( "#getMatchingRooms" ).mouseout(function(){
-			         $('#getMatchingRooms').tooltip("disable");
-			    });
-			return;
-		}
-		f = JSON.stringify(f);
-		$.get("php/getMatchedRooms.php?f=" + f, function(data)		
-		{
-			$("#matchedRoomsdiv").html(data);
-			$('#matchedRoomsdiv').dialog({
-					maxHeight: 100,
-			      show: {
-			        effect: "fadeIn",
-			        duration: 500
-			      }
-			
-			});//end dialog
-			
-		}); //end $_get
-		
-	}); //end click function
-	
 	// Send request to database as pending
 	$("#submit").click(function()
 	{		
@@ -953,7 +906,6 @@ $(document).ready(function()		// Execute all of this on load
 			else{
 				alert('Cannot Resize Text Any Bigger');
 			}
-		
 	});
 	
 	$("#minustext").click(function()
@@ -971,6 +923,18 @@ $(document).ready(function()		// Execute all of this on load
 			}
 		
 	});
+	
+	$("#time").change(function()
+	{
+		var time = parseInt(this.value);
+		html = "<option>1 Hour</option>";
+		for (var i = 2; i<=18-time; i++)
+		{
+			html += "<option>"+i+" Hours</option>"
+		}
+		$("#seshLength").html(html);
+	});
+	
 });
 
 function roomSearch()

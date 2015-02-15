@@ -9,9 +9,8 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$requestID = $_REQUEST['requestID'];
+	$requestID = $_REQUEST['requestID']; //
 	
-	//$sql = "SELECT *  FROM Request WHERE RequestID = '".$requestID."';";		
 	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
@@ -68,6 +67,7 @@
 		}
 		
 		array_push($weekArray, $weekString);
+
 	}
 	array_push($results, $weekArray);
 	
