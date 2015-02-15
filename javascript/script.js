@@ -735,8 +735,8 @@ $(document).ready(function()		// Execute all of this on load
 					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
 					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
 				}
-				html += "<input type='number' id='myGroupSize' name='groupsize' value = 0>";
-				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
+				html += "<input class= 'optionResize' type='number' id='myGroupSize' name='groupsize' value = 0>";
+				html += "<input class= 'optionResize' type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
 				findRoomOpenClose();
@@ -1609,4 +1609,40 @@ function resizeText(multiplier)
 		document.body.style.fontSize = "1.0em";
 	}
 	document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	var x = document.getElementsByClassName("optionResize");
+	for(var i = 0; i < x.length; i++){
+		x[i].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	/*var length = document.getElementsByName("anycontentrows")[0].style.fontSize.length;
+	var size = document.getElementsByName("anycontentrows")[0].style.fontSize.toString().substr(0, length-2);
+	console.log(size);
+	console.log(length);
+	console.log(document.getElementsByName("anycontentrows")[0].style.fontSize);
+	*/
+	var t = document.getElementsByClassName("anycontentrows");
+	for(var o = 0; o < t.length; o++){
+		t[o].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	
+	var r = document.getElementsByClassName("anycontentrows");
+	for(var p = 0; p < r.length; p++){
+		r[p].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	
+	var z = document.getElementsByClassName("roomcontenttitle");
+	for(var j = 0; j < z.length; j++){
+		z[j].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var y = document.getElementsByClassName("buildingcontenttitle");
+	for(var k = 0; k < y.length; k++){
+		y[k].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var v = document.getElementsByClassName("selectedcontenttitle");
+	for(var l = 0; l < v.length; l++){
+		v[l].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
+	var u = document.getElementsByClassName("contentrows");
+	for(var m = 0; m < u.length; m++){
+		u[m].style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+	}
 }

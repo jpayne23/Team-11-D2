@@ -104,7 +104,7 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 		$("#parkcontent").append(data);
 		var buildingName =  value.substr(4,1).toUpperCase() + value.substring(5,value.length);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
+		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" name="anycontentrows" class="anycontentrows" onclick="addAnyBuilding(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
 		length = $('#parkcontent').children().length -1;
 		lastRow = $('#parkcontent').children().eq(length);
 		lastRow.attr('style', 'border-bottom: 0');
@@ -549,7 +549,7 @@ function findRoomOpenClose()
 		openDiv('findroomDiv');
 		if ($('#findroomDiv').children().children().length <= 31)
 		{
-			$("#findroomDiv").prepend('<input id="closefindroomDiv"class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
+			$("#findroomDiv").prepend('<input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
 			$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
 		}
 		this.count = 1;

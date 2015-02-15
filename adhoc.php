@@ -109,7 +109,7 @@
 								<label> Day </label>
 							</td>
 							<td>
-								<select id="day">
+								<select class= "optionResize" id="day">
 									<option>Monday</option>
 									<option>Tuesday</option>
 									<option>Wednesday</option>
@@ -156,7 +156,7 @@
 								<label> Start Time </label>
 							</td>
 							<td>
-								<select id="time">
+								<select class= "optionResize" id="time">
 									<option>09:00</option>
 									<option>10:00</option>
 									<option>11:00</option>
@@ -174,7 +174,7 @@
 								<label> Session Length </label>
 							</td>
 							<td>
-								<select id="seshLength">
+								<select class= "optionResize" id="seshLength">
 									<option>1 Hour</option>
 									<option>2 Hours</option>
 									<option>3 Hours</option>
@@ -188,7 +188,7 @@
 								<label>Session Type</label>
 							</td>
 							<td>
-								<select id="seshType">
+								<select class= "optionResize" id="seshType">
 									<option>Feedback</option>
 									<option>Lecture</option>
 									<option>Practical</option>
@@ -202,7 +202,7 @@
 								Special Requirements:
 							</td>
 							<td>
-								<textarea id="specialReq" cols="40" rows="3"></textarea>
+								<textarea class= "optionResize" id="specialReq" cols="40" rows="3"></textarea>
 							</td>
 						</tr>
 					</table>					
