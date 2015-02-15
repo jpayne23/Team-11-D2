@@ -172,8 +172,23 @@
 		}
 		
 		if ($fill){
+			
+			
 			echo "<tr id='historyRow' name ='".$row["requestid"]."'>";
-			echo "<td>" . $row["requestid"] . "</td>";
+			
+			if ($row['status'] == 'Unsuccessful')
+			{				
+				echo "<td class='unsuccessful'><b>" . $row["requestid"] . "</b></td>";
+			}
+			else if ($row['status'] == 'Successful')
+			{
+				echo "<td class='successful'>" . $row["requestid"] . "</td>";
+			}
+			else
+			{
+				echo "<td>" . $row["requestid"] . "</td>";
+			}
+			
 			echo "<td>" . $row["modcode"] . "</td>";
 			
 			if ($row["room"] == "")	// If there are no rooms, return 'Any'
@@ -302,8 +317,21 @@
 			echo "<td>" . $row["sessiontype"] . "</td>";
 			echo "<td>" . $row["sessionlength"] . "</td>";			
 			echo "<td>" . $row["day"] . "</td>";
-			echo "<td>" . $row["period"] . "</td>";			
-			echo "<td>" . $row["status"] . "</td>";			
+			echo "<td>" . $row["period"] . "</td>";	
+
+			if ($row['status'] == 'Unsuccessful')
+			{
+				echo "<td class='unsuccessful'><b>" . $row["status"] . "</b></td>";	
+				echo "<td id='edittd'><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
+			}
+			else if ($row['status'] == 'Successful')
+			{
+				echo "<td class='successful'>" . $row["status"] . "</td>";	
+			}
+			else
+			{
+				echo "<td>" . $row["status"] . "</td>";	
+			}		
 			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
 			echo "</tr>";
 		}
