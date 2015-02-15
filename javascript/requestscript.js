@@ -102,8 +102,9 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 	{
 		addTitles();
 		$("#parkcontent").append(data);
+		var buildingName =  value.substr(4,1).toUpperCase() + value.substring(5,value.length);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id); clearBuildingContent(); addRoomTitle()"><td>ANY '+value.substr(4,value.length).toUpperCase()+' BUILDING</td></tr><tr><td></br></td></tr></table>');
+		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
 		length = $('#parkcontent').children().length -1;
 		lastRow = $('#parkcontent').children().eq(length);
 		lastRow.attr('style', 'border-bottom: 0');
@@ -218,7 +219,7 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 	
 		weeks = strweeks.split(":");
 		
-		for(var i = 1;i<weeks.length;i++){ //loop through each set of weeks chosen
+		for(var i = 0;i<weeks.length;i++){ //loop through each set of weeks chosen
 			
 			len = weeks[i].length;
 			switch(len){
@@ -239,14 +240,15 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 					}
 					break;
 				case 7:
-					w = weeks[i].substr(1,2) + weeks[i].substr(3,2);
-					//alert(w);
-					str += returnBookedWeeks(weeks[i].substr(1,2), weeks[i].substr(3,2));
+					w = weeks[i].substr(1,2) + weeks[i].substr(4,2);
+					str += returnBookedWeeks(weeks[i].substr(1,2), weeks[i].substr(4,2));
 					break;
 			} //end switch
 		}
 		
 		temp = str.split(",");
+		//if(id=='d4p3')
+		//	alert('joined booked ' + temp.join(","));
 		match = false;
 		/*
 		for(var i = 1 ;i < 16;i++){
@@ -305,7 +307,7 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	}).done(function(){
 
 	});*/
-	//if(id=='d2p4'){
+	//if(id=='d4p3'){
 	//alert('avail ' + availWeeks.join(','));
 	//alert('display ' + display.join(','));
 	//}
@@ -370,6 +372,7 @@ function returnBookedWeeks(start, end)
 	var str = "";
 	var intstart = parseInt(start); //convert given numbers into integers
 	var intend = parseInt(end);
+	
 	for(var i = intstart; i <= intend; i++){
 		str += i + ",";
 	}
@@ -391,8 +394,6 @@ function deleteRoomFromCompareList(id)
 {
 	id = id.substr(3,id.length);
 	$('#'+id).remove();
-
-	
 	recreateTimetable();
 }
 
@@ -428,7 +429,7 @@ function updateAdvancedRoom(value)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
-		$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id)"><td>ANY ROOM IN "'+value+'"</td></tr><tr><td></br></td></tr></table>');
+		$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr></table>');
 
 		length = $('#buildingcontent').children().length -1;
 		lastRow = $('#buildingcontent').children().eq(length);
@@ -490,9 +491,17 @@ function addRoomToList(id)
 		alert("Room not big enough!");
 	}
 	document.getElementById("maxGroupSize").value = maxCap;
+	if (maxCap == 0)
+	{
+		document.getElementById("groupSize").min = 0;
+	}
 	document.getElementById("groupSize").value = reqCap;
 	document.getElementById("groupSize").max = maxCap;
 	document.getElementById("groupSizeVal").value = maxCap;
+	if (maxCap == 0)
+	{
+		document.getElementById("groupSize").min = 0;
+	}
 }
 
 function deleteRoom(id) //need to implement group capacity, increment when room is deleted
@@ -531,8 +540,24 @@ function addAnyBuilding(id)
 		$("#selectedrooms").append(html);
 		document.getElementById('chosenRooms').innerHTML += html;
 	}
-	
 }
+
+function findRoomOpenClose()
+{
+	if (this.count == 0)
+	{
+		openDiv('findroomDiv');
+		this.count = 1;
+	}
+	else
+	{
+		closeDiv('findroomDiv');
+		this.count = 0;
+	}
+};
+
+	
+
 
 function addAnyPark(id)
 {
@@ -548,15 +573,3 @@ function addAnyPark(id)
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-

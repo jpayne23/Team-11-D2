@@ -321,8 +321,8 @@
 			echo "<td>" . $row["period"] . "</td>";
 			
 			echo "<td>" . $row["status"] . "</td>";
-			echo "<td><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
-			echo "<td><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
+			echo "<td id='edittd'><img id='editIcon' name='editIcon" . $row["requestid"] . "' src='img/editIcon.png'></td>";
+			echo "<td id='deletetd'><img id='deleteIcon' name='deleteIcon" . $row["requestid"] . "' src='img/deleteIcon.png'></td>";
 			echo "</tr>";
 		}
 	}

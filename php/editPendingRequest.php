@@ -51,7 +51,7 @@
 	
 	$sql = "UPDATE Request ";
 	$sql .= "SET ModCode = '$modCode', SessionType = '$sessionType', SessionLength = $sessionLength, ";
-	$sql .= "DayID = $day, PeriodID = $time, PriorityRequest = $priority, SpecialRequirements = '$specialReq' ";
+	$sql .= "DayID = $day, PeriodID = $time, PriorityRequest = $priority, SpecialRequirements = '$specialReq', Status = 'Pending' ";
 	$sql .= "WHERE RequestID = $requestID";
 	
 	$res =& $db->query($sql);

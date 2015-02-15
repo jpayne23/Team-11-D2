@@ -11,9 +11,12 @@
 	
 	$roomNo = $_REQUEST['roomNo'];
 
-	$sql = "SELECT RequestIDHist, DayID, PeriodID, SessionLength FROM `RequestHist` where RequestIDHist in
+	/*$sql = "SELECT RequestIDHist, DayID, PeriodID, SessionLength FROM `RequestHist` where RequestIDHist in
 			(select RequestIDHist from RequestToRoomHist where RoomRequestIDHist in
 			(select RoomRequestIDHist from RoomRequestHist where Room = '".$roomNo."'));";
+	*/
+	$sql= "SELECT a.RequestID, a.DayID, a.PeriodID, SessionLength FROM AllocatedRooms a join Request on Request.RequestID = a.RequestID where a.Room = '".$roomNo."'";
+			
 			
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
@@ -21,10 +24,9 @@
 		die($res->getMessage());
 	}
 	
-	$sql = "select RequestIDHist, Weeks from WeekRequestHist where RequestIDHist in(
-			SELECT RequestIDHist FROM RequestHist where RequestIDHist in
-			(select RequestIDHist from RequestToRoomHist where RoomRequestIDHist in
-			(select RoomRequestIDHist from RoomRequestHist where Room = '".$roomNo."')));";
+	$sql = "select WeekRequest.RequestID, Weeks from WeekRequest where WeekRequest.RequestID in(
+			SELECT a.RequestID FROM AllocatedRooms a join Request on Request.RequestID = a.RequestID where a.Room = '".$roomNo."')";
+			
 
 	
 	
@@ -35,12 +37,12 @@
 	}
 	
 	$a = array();
-	$ar = array(array());
+	$ar = array();
 	$arr = array();
 	while ($row = $res2->fetchRow())
 	{
 		//add the weeks for each request to an array
-		$a[sizeof($a)] = $row["requestidhist"];
+		$a[sizeof($a)] = $row["requestid"];
 		$a[sizeof($a)] = $row["weeks"];
 	}
 	
@@ -49,7 +51,7 @@
 		$weeks = "";
 		for($i = 0;$i<sizeof($a);$i=$i+2)
 		{
-			if($a[$i] == $row["requestidhist"]){
+			if($a[$i] == $row["requestid"]){
 				$weeks .= ":".$a[$i+1];
 			}
 		}
@@ -63,8 +65,6 @@
 		$ar['data-display'] = '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]';
 		$ar['class'] = 'timeslotbooked';
 		$arr[sizeof($arr)] = $ar;
-		
-		
 		//echo "<td id='".$id."' data-selected='1' data-length='".$row["sessionlength"]."' data-weeks='".$weeks."' data-available='' class='timeslotbooked'>Available</td>,,"; 
 	}
 	echo json_encode($arr);

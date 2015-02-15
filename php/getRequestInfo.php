@@ -12,10 +12,8 @@
 	$requestID = $_REQUEST['requestID'];
 	
 	//$sql = "SELECT *  FROM Request WHERE RequestID = '".$requestID."';";		
-	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, Room, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Status ";
+	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Status ";
 	$sql .= "FROM Request ";
-	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
-	$sql .= "LEFT JOIN RoomRequest ON RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	// Add rooms to the results
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
 	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";	
 	$sql .= "JOIN Module ON Module.ModCode = Request.ModCode ";	
@@ -136,6 +134,34 @@
 		}		
 		$weeks = implode(", ", $weekArray);			// Concatenate the elements of the array of weeks with a comma
 		
+		// List rooms in one row instead of multiple
+		$sql4 = "SELECT Room FROM RoomRequest ";
+		$sql4 .= "LEFT JOIN RequestToRoom ON " . $row["requestid"]  . " = RequestToRoom.RequestID ";		
+		$sql4 .= "WHERE RequestToRoom.RoomRequestID = RoomRequest.RoomRequestID ";	
+		$res4 =& $db->query($sql4);
+		if(PEAR::isError($res4))
+		{
+			die($res4->getMessage());
+		}
+		
+		$rooms = "";
+		// If there are no results, return 'Any'
+		if ($res4->numRows() == 0)
+		{
+			$rooms = "Any";
+		}
+		else 
+		{
+			$roomArray = array();
+			while ($row4 = $res4->fetchRow())
+			{
+				array_push($roomArray, $row4['room']);
+			}
+
+			$rooms .= implode(", ", $roomArray);
+
+		}	
+		
 		if ($row["priorityrequest"] == 0)
 		{
 			$priority = "No";
@@ -172,15 +198,6 @@
 			$spReq  = $row["specialrequirements"];
 		}
 		
-		if ($row["room"] == "")
-		{
-			$room = "Any";
-		}
-		else
-		{
-			$room  = $row["room"];
-		}
-		
 		echo "Request ID: ".$row["requestid"]."\n";
 		echo "Department: ".$row["deptname"]."\n";
 		echo "Department Code: ".$row["deptcode"]."\n";
@@ -196,7 +213,7 @@
 		echo "Round Number: ".$row["roundid"]."\n";
 		echo "Facilities Requested: ".$facilities."\n";
 		echo "Weeks Requested: ".$weeks."\n";
-		echo "Room: ".$room."\n";
+		echo "Room: ".$rooms."\n";
 		echo "Status: ".$row["status"]."\n";
 		
 		//print_r($row);

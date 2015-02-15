@@ -239,6 +239,7 @@
 				</table>
 			</article>
 		</div>
+
 		<div id='popupPendingDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 			<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
 			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
@@ -248,6 +249,7 @@
 			<div id='submissions'>				
 			</div>
 		</div>
+
 		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
 			<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
 			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>

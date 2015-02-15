@@ -184,7 +184,12 @@ $(document).ready(function()		// Execute all of this on load
 		reloadPendingTable("down", sortColumn);
 	});	
 	
-	// Edit button click event
+	$.get("php/loadPopupRequest.php", function(data)
+	{
+		$('#popupRequestDiv').html(data)
+	});
+	
+	// Edit button click event on pending
 	$('#submissions').on('click', "#editIcon", function() 
 	{
 		closeDiv("popupPendingDiv");
@@ -286,6 +291,97 @@ $(document).ready(function()		// Execute all of this on load
 		function(data)
 		{
 			reloadPendingTable("down", "RequestID");
+		});
+	});
+	
+	// Edit button click event on history
+	$('#history').on('click', "#editIcon", function() 
+	{
+		closeDiv("popupHistoryDiv");
+		
+		var requestID = "requestID=" + this.name.substr(8);
+		
+		// Load the form with data from database
+		$.get("php/fetchEditData.php?" + requestID, function(data)
+		{						
+			var requestID = JSON.parse(data)[0];
+			var modCode = JSON.parse(data)[1];
+			var modtitle = JSON.parse(data)[2];
+			var part = JSON.parse(data)[3]
+			var sessionType = JSON.parse(data)[4];
+			var sessionLength = JSON.parse(data)[5];
+			var day = JSON.parse(data)[6];			
+			var period = JSON.parse(data)[7];
+			var specialReq = JSON.parse(data)[8];
+			var priorityReq = JSON.parse(data)[9];
+			var weeks = JSON.parse(data)[10];		
+			var facilities = JSON.parse(data)[11];
+			var rooms = JSON.parse(data)[12];
+			var groupSizes = JSON.parse(data)[13];
+			
+			document.getElementById('part').value = part;
+			updateModCode();
+			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			document.getElementById('seshType').value = sessionType;
+			if (sessionLength == 1)
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hour";
+			}
+			else
+			{
+				document.getElementById('seshLength').value = sessionLength + " Hours";
+			}	
+			document.getElementById('day').value = day;
+			document.getElementById('time').value = period;
+			document.getElementById('specialReq').value = specialReq;	
+
+			if (priorityReq == 1)
+			{
+				document.getElementById("priorityCheckbox").checked = true;
+			}
+			else
+			{
+				document.getElementById("priorityCheckbox").checked = false;
+			}
+			
+			setSelectedWeeks(weeks);
+			
+			if (facilities.length > 0)
+			{
+				document.getElementById("sortable").innerHTML = "";
+				
+				for (var i = 0; i < facilities.length; i++)
+				{
+					setFacilities(facilities[i]);
+				}
+			}
+			else 
+			{
+				document.getElementById("sortable").innerHTML = "";
+			}	
+			
+			if (rooms.length > 0)
+			{
+				$('#chosenRooms').attr('data-norooms', '0');
+				document.getElementById("chosenRooms").innerHTML = "";
+				
+				for (var i = 0; i < rooms.length; i++)
+				{
+					var id = rooms[i];
+					var groupSize = groupSizes[i];
+					setSelectedRooms(id, groupSize);
+				}
+			}
+			else 
+			{
+				$('#chosenRooms').attr('data-norooms', '0');
+				document.getElementById("chosenRooms").innerHTML = "";
+			}	
+			
+			$('#submit').val("Edit");	
+			$('#submit').removeClass("none");
+			$('#submit').addClass(requestID);
+			$('#submit').addClass("homeButtons");
 		});
 	});
 	
@@ -475,7 +571,7 @@ $(document).ready(function()		// Execute all of this on load
 			}
 			else
 			{
-				var requestID = $('#submit').attr('class');
+				var requestID = $('#submit').attr('class').split(' ')[1];
 				$.post("php/editPendingRequest.php",
 				{	
 					// Data to send
@@ -512,6 +608,7 @@ $(document).ready(function()		// Execute all of this on load
 	// Send adhoc request to database
 	$("#submitAdhoc").click(function()
 	{		
+	
 		// Get all values from form
 		var modCode = document.getElementById('modCodes').value.substr(0, 8);
 		var rooms = getSelectedRooms();
@@ -530,7 +627,6 @@ $(document).ready(function()		// Execute all of this on load
 		var adhoc = 1;
 		var priority = 1;
 		
-			
 		$.post("php/addPendingRequest.php",
 		{	
 			// Data to send
@@ -623,6 +719,27 @@ $(document).ready(function()		// Execute all of this on load
 				$('#time').val(day);
 			});	
 			updateAdvancedBuilding("parkeast");
+			$.get("php/loadFacilities.php", function(data)
+			{
+				//bring in string and turn into array
+				data = data.substr(1,data.length - 2);
+				listOfFac = data.split(',');
+				//remove quotes from each element of the array
+				var html = "<form action='php/roomSearch.php' method='post'>";
+				
+				for(var i = 0; i<listOfFac.length; i++)
+				{
+					listOfFac[i] = listOfFac[i].substr(1,listOfFac[i].length - 2);
+					listOfFac[i] = listOfFac[i].replace(/\\/g, '');
+					html += '<input type="checkbox" id="c'+i+'" name="facilities[]" value="'+listOfFac[i]+'">'+listOfFac[i]+'</input></br>';
+				}
+				html += "<input type='number' name='groupsize' value = 0>";
+				html += "<input type='submit' value='Send'></br>";
+				html += "</form>";
+				$('#findroomDiv').append(html);
+				findRoomOpenClose();
+				//closeDiv('findroomDiv');
+			});
 		});
 		openDiv("popupRequestDiv");
 	});
@@ -668,9 +785,17 @@ $(document).ready(function()		// Execute all of this on load
 		});
 	});
 	
-	$('#submissions').on('click', '#pendingRow', function() //show more info if row clicked
+	$('#submissions').on('click', '#pendingRow', function(event ) //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
+		if(event.target.id == 'edittd')
+			return;
+		if(event.target.nodeName == 'IMG') //check tag name is <img>
+			return;
+		if(event.target.id == 'deletetd')
+			return;
+		
+		
 		$.post("php/getRequestInfo.php", 
 		{
 			requestID: requestID
@@ -679,8 +804,8 @@ $(document).ready(function()		// Execute all of this on load
 		{
 			alert(data);
 		});
-	});	
-	
+	});		
+		
 	$('#history').on('click', '#historyRow', function() //show more info if row clicked
 	{ //need to add pointer css for pendingRow 
 		var requestID = this.getAttribute('name');
@@ -782,7 +907,7 @@ $(document).ready(function()		// Execute all of this on load
 			alert("No requests selected");
 		}
 	});
-	
+
 	$("#plustext").click(function()
 	{
 			var x = $("#textsize").attr('data-counter');
@@ -818,24 +943,31 @@ $(document).ready(function()		// Execute all of this on load
 
 function toggleWeeks()
 {
+	// If semester 1
 	if ($('#semesterSelector').find('li.ui-selected').text() == 1)
 	{
-		if ($('#adhocWeekSelector li').last().hasClass('ui-selected'))
+		if ($('#adhocWeekSelector').children().length == 16)
 		{
-			$('#adhocWeekSelector li').first().addClass('ui-selected');
+			if ($('#adhocWeekSelector li').last().hasClass('ui-selected'))
+			{
+				$('#adhocWeekSelector li').first().addClass('ui-selected');
+			}
+			$('#adhocWeekSelector li').last().remove();	
 		}
-		$('#adhocWeekSelector li').last().remove();		
 	}
-	else
+	else		// If semester 2
 	{
-		var html = "<li class='ui-state-default'>16</li>";
-		$('#adhocWeekSelector').append(html);
-		
-		$('#adhocWeekSelector li').last().on('click', function()
+		if ($('#adhocWeekSelector').children().length == 15)
 		{
-			$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
-			$(this).addClass('ui-selected');
-		});
+			var html = "<li class='ui-state-default'>16</li>";
+			$('#adhocWeekSelector').append(html);
+			
+			$('#adhocWeekSelector li').last().on('click', function()
+			{
+				$("#adhocWeekSelector").find('li.ui-selected').removeClass('ui-selected');
+				$(this).addClass('ui-selected');
+			});
+		}
 	}
 }
 
@@ -896,7 +1028,7 @@ function setSelectedRooms(id, groupSize)
 	var xStr = x.toString();
 	var cap = groupSize;
 	$('#chosenRooms').attr('data-norooms',''+xStr+''); //change the no of rooms added
-	var html= "<tr id="+("rm" + newid)+"><td>"+groupSize+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
+	var html= "<tr id="+("rm" + newid)+"><td id ='cap"+newid+"'>"+groupSize+"</td><td> Students in room </td><td>"+id+"</td><td id='del"+ ("rm" + newid) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
 	document.getElementById('chosenRooms').innerHTML += html;
 }
 //functions for advanced request-------------------------------------
@@ -1220,16 +1352,25 @@ function deleteFac(id) //function to delete the facility by searching for its id
 
 function filterMenu(source)
 {
-	if(source == "Pending"){
+	if(source == "Pending")
+	{
 		$.get("php/loadFilter.php?source=Pending", function(data)
 		{
 			$('#filterDiv').html(data);
 		});
 	}
-	else{
+	else if(source == "History")
+	{
 		$.get("php/loadFilter.php?source=History", function(data)
 		{
 			$('#filterDivHist').html(data);
+		});
+	}
+	else
+	{
+		$.get("php/loadFilter.php?source=Adhoc", function(data)
+		{
+			$('#pastFilterDiv').html(data);
 		});
 	}
 };

@@ -14,7 +14,6 @@
 
 	function getWeeks($room,$dayID,$periodID) //get the booked weeks for a speific room, day and time
 	{
-		
 		require_once 'MDB2.php';			
 		include "/disks/diskh/teams/team11/passwords/password.php";
 		$dsn = "mysql://$username:$password@$host/$dbName"; 
@@ -64,7 +63,6 @@
 					break;
 			} //end switch
 		}
-		print($str);
 		$weeks = explode(",",$str); //turn comma delimited string into an array
 		
 		return $weeks;
