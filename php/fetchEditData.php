@@ -1,3 +1,9 @@
+<!--
+Returns all of the information about the requests that the user pressed the edit
+button for. It is then used to fill out the form.
+
+Implemented by Jack
+-->
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			

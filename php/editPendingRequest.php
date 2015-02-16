@@ -1,3 +1,10 @@
+<!--
+When the user clicks edit in the form, we replace any information about that
+specific request in the database with any new information the user may have 
+specified.
+
+Implemented by Jack.
+-->
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
