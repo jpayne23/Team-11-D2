@@ -4,7 +4,7 @@ These differences are a data input for the user to specify the semester the adho
 chooses, the week selector will adjust to accommodate for different number of weeks in each semester. Also the user has the option to see 
 any submitted adhoc requests and there status, with the option to edit unsuccessful requests.
 
-As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and Joe
+As with homepage.php, contribution was from Jason, Daniel, Jack, Prakash, Bhavnit and Joe
 -->
 
 <!DOCTYPE html>
@@ -255,8 +255,9 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 		</div>
 		<!-- Pop up that contains the past adhoc requests -->
 		<div id='popupPastDiv' style='visibility: hidden;'>
-
+		<div class='closeButtonDiv'>
 			<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
+		</div>
 			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Adhoc")'></input>
 			<!-- Pop up for filter -->
 			<div class = 'filterDiv' id='pastFilterDiv' style='visibility: hidden;'>

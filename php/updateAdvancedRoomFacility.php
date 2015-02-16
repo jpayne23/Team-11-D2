@@ -1,3 +1,10 @@
+<!--
+Retrieves information of the facilities, the capacity and room type for the associated room that the user has selected.
+This is then written, along with a picture (if available) of the associated room, to a dialog of the room info div.
+
+Contribution from Daniel
+-->
+
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
@@ -10,7 +17,6 @@
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
 	$roomNo = $_REQUEST['roomNo'];
-	//echo $roomNo;
 	$sql = "SELECT Facility FROM Facility;";	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))

@@ -350,6 +350,7 @@ General request retrieval by Jack, filtering implemented by Joe
 			else if ($row['status'] == 'Successful')
 			{
 				echo "<td class='successful'>" . $row["status"] . "</td>";	
+				echo "<td id='noedittd'><img id='noEditIcon' name='noEditIcon" . $row["requestid"] . "' src='img/donnotEditIcon.png'></td>";
 			}
 			else
 			{

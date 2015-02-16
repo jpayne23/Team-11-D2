@@ -1,3 +1,10 @@
+<!--
+Retrieves a list of buildings that are associated with the park that the user has selected.
+This is then written to the park content div.
+
+Contribution from Bhavnit, Daniel
+-->
+
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
@@ -17,10 +24,6 @@
 		die($res->getMessage());
 	}
 	
-	/*($row = $res->fetchRow());
-	echo '<tr id ="'.$row["buildingcode"].'"> <td>'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
-	*/
-	//echo '<select name="building" id="building1" onchange="updateRoom()">';
 	echo '<table id="buildingContent" class="contenttable">';
 	while ($row = $res->fetchRow())
 	{

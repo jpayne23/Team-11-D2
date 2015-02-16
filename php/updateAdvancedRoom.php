@@ -1,3 +1,10 @@
+<!--
+Retrieves a list of rooms that are associated with the building which the user has selected.
+This is then written into the building content div.
+
+Contribution Daniel
+-->
+
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';
@@ -33,7 +40,6 @@
 	{
 		
 		echo '<tr id ="'.$row["room"].'" class = "contentrows clickable" data-building="'.$buildingName.'" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
-		//echo '<td> </br> </td>';
 		
 	}
 	echo '</table>';
