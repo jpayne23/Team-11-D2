@@ -103,7 +103,7 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
 		length = $('#parkcontent').children().length -1;
 		lastRow = $('#parkcontent').children().eq(length);
-		lastRow.attr('style', 'border-bottom: 0'); //add a bottom border to the last row
+		lastRow.attr('style', 'border-bottom: 0'); //remove a bottom border to the last row
 	});
 }
 function changeSelected() //function to change the clicked row to a selected colour scheme
@@ -377,6 +377,9 @@ function updateAdvancedRoom(value) //Function to update the list of rooms from t
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
 		$('#buildingcontent').children().eq(2).before('</br></br></br>'); //Add some spaces
+		length = $('#buildingcontent').children().length -1;
+		lastRow = $('#buildingcontent').children().eq(length);
+		lastRow.attr('style', 'border-bottom: 0'); //remove a bottom border to the last row
 	});
 }
 
