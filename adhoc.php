@@ -26,19 +26,18 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 	<div id="textsize" data-counter="0">
 		<img id="minustext" alt="Decrease text size" src="img/smaller.png">
 		<img id="plustext"  alt="Increase text size" src="img/bigger.png">
-		<input id="btnAccessHome" class="homeButtons" type="button" alt="Accessibility" value=
 		<?php 
 		session_start();
 		if ($_SESSION["access"] == "yes")
 		{
-			echo "\"Accessibility Mode - On\"";
+			echo "<input id='btnAccessHome' class='homeButtons' title='Accessibility Mode' type='button' value='Accessibility Mode - On'/>";
 		}
 		else
 		{
-			echo "\"Accessibility Mode - Off\"";
+			echo "<input id='btnAccessHome' class='homeButtons' title='Accessibility Mode' type='button' value='Accessibility Mode - Off'/>";
 		}
 		?>
-		>
+		
 	</div>
 	<header class="mainHeader"> 
 		<img src="img/logo.png">
@@ -132,7 +131,7 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 								<label> Day </label>
 							</td>
 							<td>
-								<select class= "optionResize" id="day">
+								<select title='Day of the week' class= "optionResize" id="day">
 									<option>Monday</option>
 									<option>Tuesday</option>
 									<option>Wednesday</option>
@@ -171,7 +170,7 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 								<label> Start Time </label>
 							</td>
 							<td>
-								<select class= "optionResize" id="time">
+								<select title='Time of the day' class= "optionResize" id="time">
 									<option>09:00</option>
 									<option>10:00</option>
 									<option>11:00</option>
@@ -189,12 +188,16 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 								<label> Session Length </label>
 							</td>
 							<td>
-								<select class= "optionResize" id="seshLength">
+								<select title='Session Length' class= "optionResize" id="seshLength">
 									<option>1 Hour</option>
 									<option>2 Hours</option>
 									<option>3 Hours</option>
 									<option>4 Hours</option>
 									<option>5 Hours</option>
+									<option>6 Hours</option>
+									<option>7 Hours</option>
+									<option>8 Hours</option>
+									<option>9 Hours</option>
 								</select>
 							</td>
 						</tr>
@@ -203,7 +206,7 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 								<label>Session Type</label>
 							</td>
 							<td>
-								<select class= "optionResize" id="seshType">
+								<select title='Session Type' class= "optionResize" id="seshType">
 									<option>Feedback</option>
 									<option>Lecture</option>
 									<option>Practical</option>
@@ -217,7 +220,7 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 								Special Requirements:
 							</td>
 							<td>
-								<textarea class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
+								<textarea title='Special Requirements' class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
 							</td>
 						</tr>
 					</table>					

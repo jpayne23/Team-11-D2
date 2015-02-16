@@ -21,7 +21,7 @@
 	{
 		die($res->getMessage());
 	}
-	echo '<select class= "optionResize" name="modCode" id="modCodes" onclick="resetSelectedRooms();" style="width: 350px;">';
+	echo '<select class= "optionResize" name="modCode" title="Module Codes and Titles" id="modCodes" onclick="resetSelectedRooms();" style="width: 350px;">';
 	while ($row = $res->fetchRow())
 	{
 		echo '<option id ="'.$row["modcode"].'">' . $row["modcode"] . ' - '.$row["title"].'</option>';

@@ -104,7 +104,7 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 		$("#parkcontent").append(data);
 		var buildingName =  value.substr(4,1).toUpperCase() + value.substring(5,value.length);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
+		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows clickable" onclick="addAnyPark(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
 		length = $('#parkcontent').children().length -1;
 		lastRow = $('#parkcontent').children().eq(length);
 		lastRow.attr('style', 'border-bottom: 0');
