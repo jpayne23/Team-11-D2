@@ -1,4 +1,12 @@
 <?php 
+	/*
+	A php script that will find a room using the facilities and room capacity as 
+	search criteria. It takes in the facilities selected in the html and the 
+	capacity entered and will return an array containing all rooms that match the 
+	criteria. 
+	Written by Prakash and Bhavnit.
+	*/
+	
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -10,7 +18,14 @@
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
 	$ticked = $_REQUEST['tickedfac'];
+	//raw facilities entry from html
 	$groupsize = $_REQUEST['groupSize'];
+	//groupsize is validated to be numeric
+	if(!is_numeric($groupsize))
+	{
+		echo "notNumeric";
+		exit;
+	}
 	
 	$facilities = explode(',', $ticked);
 	
@@ -47,6 +62,7 @@
 		$fac .= $row["facilityid"];
 	}
 	$fac .= "')";
+	//list of facilities is converted into a useful format
 	$sql = "";
 	$sql .= "select distinct f.Room ";
 	$sql .= "from `RoomFacilities` f ";
@@ -62,6 +78,7 @@
 	while ($row = $res->fetchRow())
 	{
 		$ar[sizeof($ar)] = $row['room'];
-	}
+	}//run query
+	//return results array to the javascript
 	echo json_encode($ar);
 ?>

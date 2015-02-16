@@ -14,7 +14,7 @@ Written by Prakash.
 		<link rel="stylesheet" href="css/style.css" type="text/css"/>
 		<meta name="viewport" content="width-device-width, initial-scale=1.0"> <!-- Always needed if making a responsive website -->
 		<script type="text/javascript">
-		function accessLogin()
+		function accessLogin()//a function that will change the class of the main input elements to make the page easier to view
 		{
 			if (document.getElementById("btnAccessLogin").dataset.counter == "0")
 			{
@@ -47,7 +47,7 @@ Written by Prakash.
 			<input id="btnAccessLogin" class="loginButton" data-counter="0" type="button" value="Accessibility Mode - Off" onclick="accessLogin();">
 		</div>
 		<header class="loginHeader"> 
-		<img src="img/logo.png">
+		<img alt="Loughborough Logo" src="img/logo.png">
 		</header>
 		<div class="loginMainContent">
 			<article class="centerContent">
@@ -57,9 +57,9 @@ Written by Prakash.
 				<content class="loginMainContent">
 					<form action="php/login_script.php" method="POST">
 						<p>Username:</p>
-						<input id="username" name="username" style = "font-size:16px;" class = "" placeholder="Username" type="text"></br>
+						<input id="username" name="username" style = "font-size:16px;" class = "" placeholder="Username" type="text"><br>
 						<p>Password:</p>
-						<input id="password" name="password" style = "font-size:16px;" class = "" placeholder="Password" type="password"></br></br>
+						<input id="password" name="password" style = "font-size:16px;" class = "" placeholder="Password" type="password"><br><br>
 						<input class="loginButton" id="submit" type="submit" value="Submit">
 						<input id="accessLogin" name="access" style="visibility:hidden;" type="checkbox">
 					</form>	

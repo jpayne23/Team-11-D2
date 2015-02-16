@@ -58,10 +58,8 @@
 							</td>
 							<td>
 								<?php
-									//session_start(); //remember to take out the comments to fix login
-									/*if (isset($_SESSION["deptCode"]))
-									//{*/
-										$_SESSION["deptCode"] = "CO"; //remove this line
+									if (isset($_SESSION["deptCode"]))
+									{
 										require_once 'MDB2.php';			
 										include "/disks/diskh/teams/team11/passwords/password.php";
 										$dsn = "mysql://$username:$password@$host/$dbName"; 
@@ -83,11 +81,11 @@
 										{
 											echo '<div id="deptCodeDiv" title="'.$row["deptcode"].'">'.$row["deptcode"].' - '.$row["deptname"].'</div>';
 										}
-									/*}
-									/else
+									}
+									else
 									{
 										header("Location: login.html");
-									}*/
+									}
 								?>
 							</td>
 						</tr>

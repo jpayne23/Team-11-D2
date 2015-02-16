@@ -1,4 +1,12 @@
 <?php
+	/*
+	A php script that will generate all information about a request. This is run when a request in the pending/history table is clicked.
+	It takes in the requestID and will return all information pertaining to that request. 
+	For a modified request where a different room was allocated than the one that was requested, 
+	this script will generate an alert that shows what the request was and what was allocated. 
+	Written by Prakash and Jack.
+	*/
+	
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -9,7 +17,7 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$requestID = $_REQUEST['requestID']; //
+	$requestID = $_REQUEST['requestID']; //get request id from the javascript
 	
 	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Semester, Status ";
 	$sql .= "FROM Request ";
@@ -19,11 +27,12 @@
 	$sql .= "JOIN Users ON Users.UserID = Request.UserID ";	
 	$sql .= "JOIN DeptNames ON DeptNames.DeptCode = Users.DeptCode ";
 	$sql .= "WHERE Request.RequestID = '".$requestID."';";
+	//build the sql
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
-	}
+	}//run the query
 	
 	$results = array();
 	while ($row = $res->fetchRow())
@@ -39,7 +48,7 @@
 		array_push($results, $row['priorityrequest']);
 		array_push($results, $row['status']);
 		array_push($results, $row['semester']);
-	}
+	}//add easy to display information to an array
 	
 	// List weeks in one row instead of multiple		
 	$sql2 = "SELECT Weeks FROM WeekRequest WHERE RequestID = '$requestID';";
@@ -103,11 +112,12 @@
 	{
 		array_push($roomsArray, $row4['room']);
 		array_push($groupSizeArray, $row4['groupsize']);
-	}
+	}//add arrays containing rooms and group size in each room
 	array_push($results, $roomsArray);
 	array_push($results, $groupSizeArray);
 	
 	$allocated = array();
+	//if the request status is "Modified"
 	if ($results[9] == "Modified")
 	{
 		$sql5 = "SELECT Room, Day, Period, Comments FROM AllocatedRooms ";
@@ -130,7 +140,6 @@
 		}
 	}
 	array_push($results, $allocated);
-	
+	//send the results back to the javascript in an array
 	echo json_encode($results);
-	
 ?>

@@ -1,4 +1,11 @@
 <?php
+	/*
+	A php script to load a list of parts for a given department from the database.
+	We input the deptCode from the main page and output html code to create a select input element.
+	This html is appended to a div in the main page. 
+	Written by Prakash.
+	*/
+	
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";

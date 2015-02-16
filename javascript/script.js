@@ -380,6 +380,17 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
+			var html = "Request has been deleted."
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Delete successful!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 			reloadPendingTable("down", "RequestID");
 		});
 	});
@@ -394,6 +405,17 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
+			var html = "Request has been deleted."
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Delete successful!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 			reloadPastTable("up", "Status");
 		});
 	});
@@ -498,6 +520,17 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data)
 		{
+			var html = "Request has been deleted."
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Delete successful!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 			reloadHistoryTable("up", "Status");
 		});
 	});
@@ -606,7 +639,19 @@ $(document).ready(function()		// Execute all of this on load
 					// Function to do things with the data
 					console.log(data);
 					if(data=='')
-						alert("Your request has been submitted. Please check the pending table.");
+					{
+						var html = "Your request has been submitted. Please check the pending table."
+						$('#alertDiv').html(html);
+							$('#alertDiv').dialog({
+								dialogClass:"dialogClass",
+								  show: {
+									effect: "fadeIn",
+									duration: 500
+								  },
+								  title: "Submitted!"
+							}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+						$('#modifiedAlertDiv').dialog('close');
+					}
 				});
 			}
 			else
@@ -630,7 +675,22 @@ $(document).ready(function()		// Execute all of this on load
 				},
 				function(data, status){
 					// Function to do things with the data
-					alert(data);
+					{
+						if(data == "")
+							html = "Request has been edited!"
+						else
+							html = data;
+						$('#alertDiv').html(html);
+							$('#alertDiv').dialog({
+								dialogClass:"dialogClass",
+								  show: {
+									effect: "fadeIn",
+									duration: 500
+								  },
+								  title: "Submitted!"
+							}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+						$('#modifiedAlertDiv').dialog('close');
+					}
 				});
 				
 				$('#submit').val("Submit");	
@@ -642,7 +702,17 @@ $(document).ready(function()		// Execute all of this on load
 		}
 		else
 		{
-			alert("Please enter what weeks you want to book the module for");
+			var html = "Please enter what weeks you want for this request."
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Submitted!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 		}
 	});
 	
@@ -685,7 +755,20 @@ $(document).ready(function()		// Execute all of this on load
 		},
 		function(data, status){
 			// Function to do things with the data
-			alert(data);
+			if(data == "")
+				html = "Request has been submitted!";
+			else
+				html = data;
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Submitted!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 		});		
 	});
 	
@@ -1283,7 +1366,17 @@ $(document).ready(function()		// Execute all of this on load
 		}
 		else
 		{
-			alert("No requests selected");
+			var html = "No requests have been selected!";
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Error!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 		}
 	});
 
@@ -1297,8 +1390,19 @@ $(document).ready(function()		// Execute all of this on load
 				$("#textsize").attr('data-counter', x)
 				resizeText(1);
 			}
-			else{
-				alert('Cannot Resize Text Any Bigger');
+			else
+			{
+				var html = "Text resize limit reached!";
+				$('#alertDiv').html(html);
+					$('#alertDiv').dialog({
+						dialogClass:"dialogClass",
+						  show: {
+							effect: "fadeIn",
+							duration: 500
+						  },
+						  title: "Error!"
+					}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				$('#modifiedAlertDiv').dialog('close');
 			}
 	});
 	
@@ -1312,8 +1416,19 @@ $(document).ready(function()		// Execute all of this on load
 				$("#textsize").attr('data-counter', x)
 				resizeText(-1);
 			}
-			else{
-				alert('Cannot Resize Text Any Smaller');
+			else
+			{
+				var html = "Text resize limit reached!";
+				$('#alertDiv').html(html);
+					$('#alertDiv').dialog({
+						dialogClass:"dialogClass",
+						  show: {
+							effect: "fadeIn",
+							duration: 500
+						  },
+						  title: "Error"
+					}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				$('#modifiedAlertDiv').dialog('close');
 			}
 		
 	});
@@ -1338,17 +1453,47 @@ $(document).ready(function()		// Execute all of this on load
 		$('#newModuleDialog').on('click','#btnAddModule',function(){
 		
 			if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
-				alert('Module Code is empty');
+			var html = "Module Code is empty!";
+				$('#alertDiv').html(html);
+					$('#alertDiv').dialog({
+						dialogClass:"dialogClass",
+						  show: {
+							effect: "fadeIn",
+							duration: 500
+						  },
+						  title: "Error!"
+					}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				$('#modifiedAlertDiv').dialog('close');
 				return;
 			}
 			
 			if($('#newModName').val().trim() == ''){ //validate modname isnt empty
-				alert('Module Name is empty');
+			var html = "Module Name is empty!";
+				$('#alertDiv').html(html);
+					$('#alertDiv').dialog({
+						dialogClass:"dialogClass",
+						  show: {
+							effect: "fadeIn",
+							duration: 500
+						  },
+						  title: "Error!"
+					}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				$('#modifiedAlertDiv').dialog('close');
 				return;
 			}
 			var gsize = parseInt($('#newModSize').val());
 			if($('#newModSize').val() < 1){
-				alert('Group Size is invalid');
+				var html = "Group size is invalid!";
+				$('#alertDiv').html(html);
+					$('#alertDiv').dialog({
+						dialogClass:"dialogClass",
+						  show: {
+							effect: "fadeIn",
+							duration: 500
+						  },
+						  title: "Error!"
+					}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				$('#modifiedAlertDiv').dialog('close');
 				return;
 			}
 			
@@ -1356,7 +1501,17 @@ $(document).ready(function()		// Execute all of this on load
 			var res = /\d{2}[a-zA-Z]{3}\d{3}/.test(str); //reg ex test the modcode
 			
 			if(res==false){
-				alert('invalid');
+				var html = "Module Code is invalid!";
+				$('#alertDiv').html(html);
+					$('#alertDiv').dialog({
+						dialogClass:"dialogClass",
+						  show: {
+							effect: "fadeIn",
+							duration: 500
+						  },
+						  title: "Error!"
+					}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+				$('#modifiedAlertDiv').dialog('close');
 				return;
 			}
 			var modCode = str.toUpperCase();
@@ -1368,7 +1523,17 @@ $(document).ready(function()		// Execute all of this on load
 				data1=data;
 				console.log(data1);
 				if(data=='Nope'){
-					alert('This module code already exists!');
+					var html = "This module code already exists!";
+					$('#alertDiv').html(html);
+						$('#alertDiv').dialog({
+							dialogClass:"dialogClass",
+							  show: {
+								effect: "fadeIn",
+								duration: 500
+							  },
+							  title: "Error!"
+						}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+					$('#modifiedAlertDiv').dialog('close');
 				}
 			}).done(function()
 			{
@@ -1380,7 +1545,19 @@ $(document).ready(function()		// Execute all of this on load
 					$('#modCodeDiv').html(data);
 				});
 				if(data1 != 'Nope')
-					alert(modCode + ' has been added to the database.');
+				{
+					var html = modCode + " has been added to the database.";
+					$('#alertDiv').html(html);
+						$('#alertDiv').dialog({
+							dialogClass:"dialogClass",
+							  show: {
+								effect: "fadeIn",
+								duration: 500
+							  },
+							  title: "Error!"
+						}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+					$('#modifiedAlertDiv').dialog('close');
+				}
 				$('#newModuleDialog').dialog('close');
 			}); //end done function
 	
@@ -1532,8 +1709,27 @@ function roomSearch()
 		$.get("php/roomSearch.php?tickedfac=" + s + "&groupSize="+groupsize, function(data)
 		{
 			data1 = data;
+			if(data =="notNumeric")
+			{
+			var html = "Group size is not numeric";
+					$('#alertDiv').html(html);
+						$('#alertDiv').dialog({
+							dialogClass:"dialogClass",
+							  show: {
+								effect: "fadeIn",
+								duration: 500
+							  },
+							  title: "Error!"
+						}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+					$('#modifiedAlertDiv').dialog('close');
+			return;
+			}
 		}).done(function()
 		{
+			if(data1 =="notNumeric")
+			{
+				return;
+			}
 			var results = JSON.parse(data1); //this is an array of rooms that match the chosen facilites and capacity
 			$('#matchedRoomsDiv').html(results.join("<br>"));
 			document.getElementById('matchedRoomsDiv').title='Matched Rooms';
@@ -1925,7 +2121,17 @@ function createAutoCompleteFacList()
 		facid = facid.replace(/\//g, ''); //remove forward slash so ID works
 		if($("#" + facid).length > 0) {
 			//it doesn't exist
-			alert("already exists");
+			var html = "Facility already added to list!"
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Error!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 			return;
 		}
 		//create the elements and append them to the list, adding the appropriate information
@@ -1944,7 +2150,17 @@ function setFacilities(fac)
 	facid = facid.replace(/\//g, ''); //remove forward slash so ID works
 	if($("#" + facid).length > 0) {
 		//it doesn't exist
-		alert("already exists");
+		var html = "Facility already added to list!"
+		$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  },
+				  title: "Error"
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+		$('#modifiedAlertDiv').dialog('close');
 		return;
 	}
 	//create the elements and append them to the list, adding the appropriate information

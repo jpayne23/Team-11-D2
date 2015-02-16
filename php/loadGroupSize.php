@@ -2,6 +2,7 @@
 /*
 A php script to retrieve the number of students on each module. Used 
 in the room selector to set the capacity of multiroom selections. 
+Written by Prakash.
 */
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			

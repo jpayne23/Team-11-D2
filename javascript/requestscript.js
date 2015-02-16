@@ -85,7 +85,7 @@ function clearRoomContent()
 
 function updateAdvancedBuilding(value) //function to display the list of buildings from the user park choice
 {
-	//alert(value);
+
 	var string = value.substr(4, 1).toUpperCase();
 	var length;
 	var lastRow;
@@ -449,14 +449,34 @@ function addRoomToList(id)
 {
 	newid = id.replace(/\./g, '');
 	if ($('#rm'+newid).length > 0 ) { //search for id existence
-        alert('room already added');
+        var html = "Duplicated rooms cannot be added."
+		$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  },
+				  title: "Error!"
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+		$('#modifiedAlertDiv').dialog('close');
 		return;
     }
 	
 	var x = $('#chosenRooms').attr('data-norooms'); //get the no of rooms added already
 	x = parseInt(x); 
 	if(x>=3){ //check the no of rooms already chosen
-		alert("You cannot choose more than 3 rooms");
+		var html = "You cannot select more than 3 rooms!"
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Delete successful!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 		return;
 	}
 	
@@ -478,18 +498,35 @@ function addRoomToList(id)
 			$("#selectedrooms").append(html);
 			reqCap = maxCap;
 			applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
-			//$('#roominfo').slideUp(function(){
-			//	$('#roominfo').dialog('close');
-			//});
 		}
 		else
 		{
-			alert("Cannot book a room for 0 students!")
+			var html = "Cannot book a room for 0 students!";
+			$('#alertDiv').html(html);
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Error!"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 		}
 	}
 	else
 	{
-		alert("Room not big enough!");
+		var html = "The selected room is not big enough!";
+		$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  },
+				  title: "Error!"
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+		$('#modifiedAlertDiv').dialog('close');
 	}
 	document.getElementById("maxGroupSize").value = maxCap;
 	if (maxCap == 0)
