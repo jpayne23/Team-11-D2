@@ -869,7 +869,15 @@ $(document).ready(function()		// Execute all of this on load
 			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
 			
 			$('#alertDiv').html(html);
-			openDiv('popupAlertDiv');
+				$('#alertDiv').dialog({
+					dialogClass:"dialogClass",
+					  show: {
+						effect: "fadeIn",
+						duration: 500
+					  },
+					  title: "Request Information"
+				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');
 		});
 	});		
 		
@@ -905,7 +913,6 @@ $(document).ready(function()		// Execute all of this on load
 			var groupSizes = JSON.parse(data)[13];
 			
 			var html = "";
-			var html1 = "";
 			if (status == "Modified")
 			{
 				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
@@ -960,12 +967,7 @@ $(document).ready(function()		// Execute all of this on load
 					  title: "Request Information"
 				}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 				$('#modifiedAlertDiv').dialog('close');
-			}
-			
-			
-			document.getElementById("alertDiv").title = "Request ID: " + requestID;
-			
-			//openDiv('popupAlertDiv');
+			}			
 		});
 	});		
 	
@@ -1000,45 +1002,23 @@ $(document).ready(function()		// Execute all of this on load
 			var rooms = JSON.parse(data)[12];
 			var groupSizes = JSON.parse(data)[13];
 			
-			var html = "";
-			if (status == "Modified")
-			{
-				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
-				html += "<h3>What you chose</h3>";				
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-				html += "</div>";
-				
-				var allocated = JSON.parse(data)[14];
-				var allocatedRooms = allocated[0];
-				var allocatedDay = allocated[1];
-				var allocatedPeriod = allocated[2];
-				var allocatedComments = allocated[3];
-				
-				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
-				html += "<h3>What was allocated</h3>";
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
-				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
-				html += "</div>";
-			}	
-			else
-			{
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
-			}
-			
+			var html = "";				
+			html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
+			html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
+			html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
+			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
+			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
 			
 			$('#alertDiv').html(html);
-			openDiv('popupAlertDiv');
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  },
+				  title: "Request Information"
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+			$('#modifiedAlertDiv').dialog('close');			
 		});
 	});
 
