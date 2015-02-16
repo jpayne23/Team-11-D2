@@ -1,10 +1,11 @@
-<!-- This script is used to query the database using the login credentials provided by the user. 
+<?php 
+/* 
+This script is used to query the database using the login credentials provided by the user. 
 It will generate an error page if the credentials are not recognised and will pass the deptCode
 of the user and whether or not the page was being viewed in accessibility mode or not onto the main
 system.
-Written by Prakash. -->
-
-<?php 
+Written by Prakash.
+*/
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
 	$dsn = "mysql://$username:$password@$host/$dbName"; 
