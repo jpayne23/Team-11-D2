@@ -17,7 +17,7 @@
 	{
 		die($res->getMessage());
 	}
-	echo '<select name="part" id="part" title="Module Part" class="optionResize" onchange="updateModCode();">';
+	echo '<select name="part" id="part" class="optionResize" title="Module Part" onchange="updateModCode();">';
 	echo '<option id = "any">Any</option>';
 	while ($row = $res->fetchRow())
 	{

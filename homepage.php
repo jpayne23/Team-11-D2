@@ -17,22 +17,21 @@
 	<div id="textsize" data-counter="0">
 		<img id="minustext" alt="Decrease text size" src="img/smaller.png">
 		<img id="plustext"  alt="Increase text size" src="img/bigger.png">
-		<input id="btnAccessHome" class="homeButtons" type="button" alt="Accessibility" value=
 		<?php 
 		session_start();
 		if ($_SESSION["access"] == "yes")
 		{
-			echo "\"Accessibility Mode - On\"";
+			echo "<input id='btnAccessHome' class='homeButtons' type='button' value='Accessibility Mode - On'/>";
 		}
 		else
 		{
-			echo "\"Accessibility Mode - Off\"";
+			echo "<input id='btnAccessHome' class='homeButtons' type='button' value='Accessibility Mode - Off'/>";
 		}
 		?>
 		>
 	</div>
 	<header class="mainHeader">
-		<img src="img/logo.png">
+		<img alt="Loughborough Logo" src="img/logo.png">
 		<nav>
 			<ul>
 				<li class="active"><a href="#">Home</a></li>
@@ -133,7 +132,7 @@
 									<li class="ui-state-default">15</li>
 									<li><input type='button' class='homeButtons' id='helpWS' title='Click or drag the weeks you require. (Selected weeks are highlighted pink)' value='?'/></li>
 								</ol>								
-								</br>
+								<br>
 							</td>
 						</tr>
 						<tr>
@@ -141,7 +140,7 @@
 								<label>Session Type</label>
 							</td>
 							<td>
-								<select id="seshType">
+								<select title='Session Type' id="seshType">
 									<option>Feedback</option>
 									<option>Lecture</option>
 									<option>Practical</option>
@@ -155,7 +154,7 @@
 								<label> Session Length </label>
 							</td>
 							<td>
-								<select id="seshLength">
+								<select title='Session Length' id="seshLength">
 									<option>1 Hour</option>
 									<option>2 Hours</option>
 									<option>3 Hours</option>
@@ -173,7 +172,7 @@
 								<label> Day </label>
 							</td>
 							<td>
-								<select id="day">
+								<select title='Day of the week' id="day">
 									<option>Monday</option>
 									<option>Tuesday</option>
 									<option>Wednesday</option>
@@ -187,7 +186,7 @@
 								<label> Start Time </label>
 							</td>
 							<td>
-								<select id="time">
+								<select title='Time of the day' id="time">
 									<option>09:00</option>
 									<option>10:00</option>
 									<option>11:00</option>
@@ -206,24 +205,14 @@
 							</td>
 							<td>
 
-								<textarea class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
-							</td>
+								<textarea title='Special Requirements' class= "optionResize" id="specialReq" cols="40" rows="3" placeholder="e.g. Dimmer Lights"></textarea>
+								</td>
 						</tr>
 						<tr>
 							<td colspan='2'>
 								<input type="checkbox" id='priorityCheckbox' class="" checked="checked" disabled="disabled"> Priority Request
 							</td>
 						</tr>
-						<!-- need this in ad-hoc
-						<tr>
-							<td>
-								<label> Pick Date </label>
-							</td>
-							<td>
-								<input type='text' id='date'>
-							</td>
-						</tr>
-						-->	
 					</table>
 				</content>
 				<input type="submit" class="homeButtons none" id="submit" value="Submit" />
@@ -256,36 +245,36 @@
 
 		<div id='popupPendingDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
 			<div class='closeButtonDiv'>
-				<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+				<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'/>
 			</div>
-			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
+			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'/>
 			<div class='filterDiv' id='filterDiv' style='visibility: hidden;'>
 			</div>
-			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" ></input>
+			<input class='pendingButton' type="button" id = 'submitRequests' value="Submit all requests" />
 			<div id='submissions'>				
 			</div>
 		</div>
 
-		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
+		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'>
 			<div class='closeButtonDiv'>
-				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist");closeHistoryDialogs()'></input>
+				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist");closeHistoryDialogs()'/>
 			</div>
-			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
+			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'/>
 			<div class='filterDiv' id='filterDivHist' style='visibility: hidden;'>
 			</div>
 			<div id='history'></div>
 		</div>
 		<div id='popupLastYear'  class='popupDiv' style='visibility: hidden;'>
 			<div class='closeButtonDiv'>
-				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupLastYear");'></input>
+				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupLastYear");'/>
 			</div>
-			<input type="button" class='pendingButton'  id='submitCheckedButton' value="Submit All Checked Requests"></input>
+			<input type="button" class='pendingButton'  id='submitCheckedButton' value="Submit All Checked Requests"/>
 			<div id='lastYear'></div>
 		</div>
-		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> 
 		</div>
 		<div id='popupAlertDiv' style='visibility: hidden'>	
-			<input type="button" class="closeDiv" value="x" onclick='closeDiv("popupAlertDiv");'></input>
+			<input type="button" class="closeDiv" value="x" onclick='closeDiv("popupAlertDiv");'/>
 			<div id='alertDiv' class='successPopupDiv'>
 			</div>
 			<div id='modifiedAlertDiv'>
@@ -295,7 +284,7 @@
 		<div id='newModuleDialog' title='Add a New Module'></div>
 	</div>
 	<footer class="mainFooter">
-		<p>Copyright &copy 2015: Team11
+		<p>Property of Team 11</p>
 	</footer>
 </body>
 </html>

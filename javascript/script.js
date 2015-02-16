@@ -142,6 +142,7 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadPart.php?" + deptCode, function(data)
 		{
 			$('#partDiv').html(data);
+			applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 		});
 	});
 	
@@ -153,6 +154,7 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 		{
 			$('#modCodeDiv').html(data);
+			applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 		});
 	});
 	
