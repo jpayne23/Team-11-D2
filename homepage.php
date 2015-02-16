@@ -254,7 +254,9 @@
 		</div>
 
 		<div id='popupPendingDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
-			<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+			<div class='closeButtonDiv'>
+				<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPendingDiv");closeDiv("filterDiv");'></input>
+			</div>
 			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("filterDiv");filterMenu("Pending")'></input>
 			<div class='filterDiv' id='filterDiv' style='visibility: hidden;'>
 			</div>
@@ -264,14 +266,18 @@
 		</div>
 
 		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
-			<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+			<div class='closeButtonDiv'>
+				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+			</div>
 			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
 			<div class='filterDiv' id='filterDivHist' style='visibility: hidden;'>
 			</div>
 			<div id='history'></div>
 		</div>
 		<div id='popupLastYear'  class='popupDiv' style='visibility: hidden;'>
-			<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupLastYear");'></input>
+			<div class='closeButtonDiv'>
+				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupLastYear");'></input>
+			</div>
 			<input type="button" class='pendingButton'  id='submitCheckedButton' value="Submit All Checked Requests"></input>
 			<div id='lastYear'></div>
 		</div>

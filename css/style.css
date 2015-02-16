@@ -495,8 +495,39 @@ textarea{
 	width: 92%;
 	margin: 20px auto;
 }
+.closeButtonDiv{
+	position: fixed;
+	width: 89%;
+	float:left;
+}
 
 .closeDiv{
+	float:right;
+    margin-top:-20px;
+    margin-right:-6px;
+   /* cursor:pointer;
+    color: black;*/
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+   /* line-height: 0px;
+    padding: 11px 3px;  */
+}
+
+.closeDiv:hover{
+	cursor: pointer;
+    color: #FFFFFF;
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background-color: black;
+   /* line-height: 0px;
+    padding: 11px 3px;  */
+}
+
+.closeRequestDiv{
 	float:right;
     margin-top:-6px;
     margin-right:-6px;
@@ -512,7 +543,7 @@ textarea{
     padding: 11px 3px;  */
 }
 
-.closeDiv:hover{
+.closeRequestDiv:hover{
 	cursor: pointer;
     color: #FFFFFF;
     border: 1px solid #AEAEAE;

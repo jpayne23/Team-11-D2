@@ -337,11 +337,13 @@
 			}
 			else if ($row['status'] == 'Successful')
 			{
-				echo "<td class='successful'>" . $row["status"] . "</td>";	
+				echo "<td class='successful'>" . $row["status"] . "</td>";
+				echo "<td id='noedittd'><img id='noEditIcon' name='noEditIcon' src='img/donnotEditIcon.png'></td>";				
 			}
 			else if ($row['status'] == 'Modified')
 			{
-				echo "<td class='modified'>" . $row["status"] . "</td>";	
+				echo "<td class='modified'>" . $row["status"] . "</td>";
+				echo "<td id='noedittd'><img id='noEditIcon' name='noEditIcon' src='img/donnotEditIcon.png'></td>";	
 			}
 			else
 			{
