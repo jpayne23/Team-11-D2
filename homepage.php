@@ -267,7 +267,7 @@
 
 		<div id='popupHistoryDiv'  class='popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for history submissions-->
 			<div class='closeButtonDiv'>
-				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist")'></input>
+				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupHistoryDiv");closeDiv("filterDivHist");closeHistoryDialogs()'></input>
 			</div>
 			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivHist");filterMenu("History");'></input>
 			<div class='filterDiv' id='filterDivHist' style='visibility: hidden;'>

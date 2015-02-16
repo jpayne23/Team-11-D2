@@ -1211,6 +1211,13 @@ $(document).ready(function()		// Execute all of this on load
 		}); //end click function
 });
 
+function closeHistoryDialogs()
+{
+	$('#alertDiv').dialog('close');
+	$('#modifiedAlertDiv').dialog('close');	
+}
+
+
 function toggleAccess(button)
 {
 	if(button.value == "Accessibility Mode - Off")
