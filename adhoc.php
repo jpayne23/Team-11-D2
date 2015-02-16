@@ -1,3 +1,12 @@
+<!--  
+This is file for the adhoc page in the system. The majority of the structure for this page is similar to homepage.php with a few differences.
+These differences are a data input for the user to specify the semester the adhoc request is for and depending on what semester the user
+chooses, the week selector will adjust to accommodate for different number of weeks in each semester. Also the user has the option to see 
+any submitted adhoc requests and there status, with the option to edit unsuccessful requests.
+
+As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and Joe
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,6 +65,7 @@
 								<label>Department Code</label>
 							</td>
 							<td>
+									<!-- Get the department code from user login to only show modules in that department -->
 									<?php
 										if (isset($_SESSION["deptCode"]))
 										{
@@ -220,6 +230,7 @@
 						</tr>
 					</table>					
 				</content>
+				<!-- Buttons -->
 				<input type="submit" class="homeButtons none" id="submitAdhoc" value="Submit" />
 				<input type='button' class="homeButtons" id='btnAdvancedRequest' value='Room Request'/>
 				<input type='button' class="homeButtons" id='reset' value='Reset All Fields'/>
@@ -246,16 +257,19 @@
 				</table>
 			</article>
 		</div>
-		<div id='popupPastDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		<!-- Pop up that contains the past adhoc requests -->
+		<div id='popupPastDiv' style='visibility: hidden;'>
 
 			<input class='closeDiv' type="button" value="x" onclick='closeDiv("popupPastDiv");closeDiv("pastFilterDiv");'></input>
 			<input class='pendingButton' type="button" value="Filter Requests..." onclick='openDiv("pastFilterDiv");filterMenu("Adhoc")'></input>
+			<!-- Pop up for filter -->
 			<div class = 'filterDiv' id='pastFilterDiv' style='visibility: hidden;'>
 			</div>
+			<!-- Table containing past adhoc requests -->
 			<div id='past'>		
 			</div>
 		</div>
-		<div id='popupRequestDiv' class = 'popupDiv' style='visibility: hidden;'> <!--this div needs to be moved to a new webpage for pending submissions-->
+		<div id='popupRequestDiv' class = 'popupDiv' style='visibility: hidden;'>
 		</div>
 		<div id='popupAlertDiv' class='popupDiv' style='visibility: hidden'>	
 			<input type="button" class="closeDiv" value="x" onclick='closeDiv("popupAlertDiv");'></input>

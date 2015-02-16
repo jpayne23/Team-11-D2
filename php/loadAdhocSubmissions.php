@@ -1,3 +1,11 @@
+<!--  
+Loads all adhoc requests and this file is also used  to filter these requests with a flag to determine whether it was a general request or not.
+Presents all this in a table in a pop up which becomes visible when selected.
+
+General request retrieval by Jack, filtering implemented by Joe
+-->
+
+
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
@@ -15,7 +23,10 @@
 	$sortColumn = $_REQUEST['sortColumn'];
 	$flag = $_REQUEST['flag'];
 	
-	if ($flag == 1){
+	//Determines if request is from the filter menu
+	
+	if ($flag == 1){ 
+		//From filter menu
 		$modCode = $_REQUEST['modCode'];
 		$sessionType = $_REQUEST['sessionType'];
 		$day = $_REQUEST['day'];
@@ -23,7 +34,7 @@
 		$status = $_REQUEST['status'];
 	}
 	else{
-		
+		//General request
 		$modCode = 'Any';
 		$sessionType = 'Any';	
 		$day = 'Any';
@@ -31,6 +42,7 @@
 		$status = 'Any';
 	}
 	
+	//Retrieve all required information about a request
 	$sql = "SELECT Request.RequestID, ModCode, Room, SessionType, SessionLength, Day, Period, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "LEFT JOIN RequestToRoom ON Request.RequestID = RequestToRoom.RequestID ";		// Add rooms to the results
@@ -39,6 +51,7 @@
 	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";
 	$sql .= "WHERE UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode') AND AdhocRequest = 1";
 	
+	//Additional conditions for filtering
 	if ($modCode != "Any")
 	{				
 		$sql .= " AND ModCode = '" . $modCode . "'";
@@ -59,7 +72,7 @@
 	{
 		$sql .= " AND Status = '". $status ."'";
 	}
-	
+	//When results are sorted by a column
 	if ($sortDirection == "up")
 	{		
 		switch ($sortColumn)
@@ -120,8 +133,9 @@
 	{
 		die($res->getMessage());
 	}
-	
-	echo "<table border='1' class='loadTable' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";	
+	//All table headers
+	echo "<table border='1' class = 'loadTable' id='submissionsTable' style='width:100%; margin-left:auto; margin-right:auto; font-family:arial; font-size:16px; color:#FFFFFF;'>";	
+	//Determines direction of sort arrow
 	if ($sortDirection == "up")
 	{				
 		echo "<th>Request ID <img id='upArrow' name='RequestID' src='img/upArrow.png'></th>";
@@ -155,6 +169,7 @@
 	// Populate the table with rows from database	
 	while ($row = $res->fetchRow())
 	{
+		//Checks if a request contains the chosen facility before request gets added to table 
 		if ($facility != 'Any'){
 		
 			$sql2 = "SELECT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE RequestID = ".$row["requestid"].")";
@@ -166,20 +181,21 @@
 			{
 				die($res2->getMessage());
 			}
-			
+			//If the request doesn't contain the chosen facility
 			if ($res2->numRows() == 0)
 			{
 				$fill = False;
 			}
+			//If the request does contain the chosen facility
 			else
 			{
 				$fill = True;
 			}
 		}
-		
+		//Fill in request information if the request fits the criteria
 		if ($fill){
 			
-			
+			//Colour codes request ID depending on status 
 			echo "<tr id='historyRow' name ='".$row["requestid"]."'>";
 			
 			if ($row['status'] == 'Unsuccessful')
@@ -218,7 +234,7 @@
 				}
 			}
 			
-			// If there are no results, return 'Any'
+			// If there are no results and no facility was specified
 			if ($res2->numRows() == 0 && $facility == 'Any')
 			{
 				echo "<td>No preference</td>";
@@ -325,6 +341,7 @@
 			echo "<td>" . $row["day"] . "</td>";
 			echo "<td>" . $row["period"] . "</td>";	
 
+			//Colour codes status 
 			if ($row['status'] == 'Unsuccessful')
 			{
 				echo "<td class='unsuccessful'><b>" . $row["status"] . "</b></td>";	
