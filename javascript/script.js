@@ -869,17 +869,50 @@ $(document).ready(function()		// Execute all of this on load
 			var specialReq = JSON.parse(data)[7];
 			var priorityReq = JSON.parse(data)[8];
 			var status = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var weeks = JSON.parse(data)[11];		
+			var facilities = JSON.parse(data)[12];
+			var rooms = JSON.parse(data)[13];
+			var groupSizes = JSON.parse(data)[14];
 			
 			var html = "";
-			html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-			html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-			html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			html += "RequestID = " + requestID + "<br>Module = " + modCode + " - " + modTitle + "<br>";
+			html += "Session Type = " + sessionType + "<br>";
+			if (sessionLength == 1)
+			{
+				html += "Session Length = " + sessionLength + " Hour<br>";
+			}
+			else
+			{
+				html += "Session Length = " + sessionLength + " Hours<br>";
+			}
+			
+			html += "Day = " + day + "<br>";
+			html += "Period = " + period + "<br>";
+			if (specialReq != null)
+			{
+				html += "Special Requirements = " + specialReq + "<br>";
+			}
+			if (priorityReq == 1)
+			{
+				html += "Priority = Yes<br>";
+			}
+			else
+			{
+				html += "Priority = No<br>";
+			}			
+			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>";
+			if (facilities.length != 0)
+			{
+				html += "Facilities = " + facilities + "<br>";
+			}			
+			if (rooms.length != 0)
+			{
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			}
+			else
+			{
+				html += "Rooms = Any<br>";
+			}			
 			
 			$('#alertDiv').html(html);
 				$('#alertDiv').dialog({
@@ -920,24 +953,57 @@ $(document).ready(function()		// Execute all of this on load
 			var specialReq = JSON.parse(data)[7];
 			var priorityReq = JSON.parse(data)[8];
 			var status = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var weeks = JSON.parse(data)[11];		
+			var facilities = JSON.parse(data)[12];
+			var rooms = JSON.parse(data)[13];
+			var groupSizes = JSON.parse(data)[14];
 			
 			var html = "";
 			if (status == "Modified")
 			{
 				html += "<div id='chosenRequestInfo' class='chosenRequestInfo'>";		
 				html += "<h3>What you chose</h3>";				
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				html += "RequestID = " + requestID + "<br>Module = " + modCode + " - " + modTitle + "<br>";
+				html += "Session Type = " + sessionType + "<br>";
+				if (sessionLength == 1)
+				{
+					html += "Session Length = " + sessionLength + " Hour<br>";
+				}
+				else
+				{
+					html += "Session Length = " + sessionLength + " Hours<br>";
+				}
+				
+				html += "Day = " + day + "<br>";
+				html += "Period = " + period + "<br>";
+				if (specialReq != null)
+				{
+					html += "Special Requirements = " + specialReq + "<br>";
+				}
+				if (priorityReq == 1)
+				{
+					html += "Priority = Yes<br>";
+				}
+				else
+				{
+					html += "Priority = No<br>";
+				}			
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>";
+				if (facilities.length != 0)
+				{
+					html += "Facilities = " + facilities + "<br>";
+				}			
+				if (rooms.length != 0)
+				{
+					html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				}
+				else
+				{
+					html += "Rooms = Any<br>";
+				}	
 				html += "</div>";
 				
-				var allocated = JSON.parse(data)[14];
+				var allocated = JSON.parse(data)[15];
 				var allocatedRooms = allocated[0];
 				var allocatedDay = allocated[1];
 				var allocatedPeriod = allocated[2];
@@ -945,15 +1011,53 @@ $(document).ready(function()		// Execute all of this on load
 				
 				html += "<div id='allocatedRequestInfo' class='allocatedRequestInfo'>";		
 				html += "<h3>What was allocated</h3>";
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + allocatedDay + "<br>";
-				html += "Period = " + allocatedPeriod + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>Comments: " + allocatedComments;
+				html += "RequestID = " + requestID + "<br>Module = " + modCode + " - " + modTitle + "<br>";
+				html += "Session Type = " + sessionType + "<br>";
+				if (sessionLength == 1)
+				{
+					html += "Session Length = " + sessionLength + " Hour<br>";
+				}
+				else
+				{
+					html += "Session Length = " + sessionLength + " Hours<br>";
+				}
+				
+				html += "Day = " + allocatedDay + "<br>";
+				html += "Period = " + allocatedPeriod + "<br>";
+				if (specialReq != null)
+				{
+					html += "Special Requirements = " + specialReq + "<br>";
+				}
+				if (priorityReq == 1)
+				{
+					html += "Priority = Yes<br>";
+				}
+				else
+				{
+					html += "Priority = No<br>";
+				}			
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>";
+				if (facilities.length != 0)
+				{
+					html += "Facilities = " + facilities + "<br>";
+				}			
+				if (rooms.length != 0)
+				{
+					html += "Rooms = " + allocatedRooms + "<br>GroupSize = " + groupSizes + "<br>";
+				}
+				else
+				{
+					html += "Rooms = Any<br>";
+				}	
+				if (allocatedComments != null)
+				{
+					html += "Comments = " + allocatedComments + "<br>";
+				}
 				html += "</div>";
+				
 				$('#modifiedAlertDiv').html(html);
 				$('#modifiedAlertDiv').dialog({
-					width: "43%",
+					width: "50%",
 					dialogClass:"modifieddialogClass",
 					  show: {
 						effect: "fadeIn",
@@ -965,11 +1069,45 @@ $(document).ready(function()		// Execute all of this on load
 			}	
 			else
 			{
-				html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-				html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-				html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				html += "RequestID = " + requestID + "<br>Module = " + modCode + " - " + modTitle + "<br>";
+				html += "Session Type = " + sessionType + "<br>";
+				if (sessionLength == 1)
+				{
+					html += "Session Length = " + sessionLength + " Hour<br>";
+				}
+				else
+				{
+					html += "Session Length = " + sessionLength + " Hours<br>";
+				}
+				
+				html += "Day = " + day + "<br>";
+				html += "Period = " + period + "<br>";
+				if (specialReq != null)
+				{
+					html += "Special Requirements = " + specialReq + "<br>";
+				}
+				if (priorityReq == 1)
+				{
+					html += "Priority = Yes<br>";
+				}
+				else
+				{
+					html += "Priority = No<br>";
+				}			
+				html += "Status = " + status + "<br>Weeks = " + weeks + "<br>";
+				if (facilities.length != 0)
+				{
+					html += "Facilities = " + facilities + "<br>";
+				}			
+				if (rooms.length != 0)
+				{
+					html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+				}
+				else
+				{
+					html += "Rooms = Any<br>";
+				}	
+				
 				$('#alertDiv').html(html);
 				$('#alertDiv').dialog({
 					dialogClass:"dialogClass",
@@ -1010,17 +1148,51 @@ $(document).ready(function()		// Execute all of this on load
 			var specialReq = JSON.parse(data)[7];
 			var priorityReq = JSON.parse(data)[8];
 			var status = JSON.parse(data)[9];
-			var weeks = JSON.parse(data)[10];		
-			var facilities = JSON.parse(data)[11];
-			var rooms = JSON.parse(data)[12];
-			var groupSizes = JSON.parse(data)[13];
+			var semester = JSON.parse(data)[10];
+			var weeks = JSON.parse(data)[11];		
+			var facilities = JSON.parse(data)[12];
+			var rooms = JSON.parse(data)[13];
+			var groupSizes = JSON.parse(data)[14];
 			
 			var html = "";				
-			html += "RequestID = " + requestID + "<br>ModCode = " + modCode + "<br>ModTitle = " + modTitle + "<br>";
-			html += "SessionType = " + sessionType + "<br>SessionLength = " + sessionLength + "<br>Day = " + day + "<br>";
-			html += "Period = " + period + "<br>SpecialRequirements = " + specialReq + "<br>Priority = " + priorityReq + "<br>";
-			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>Facilities = " + facilities + "<br>";
-			html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			html += "RequestID = " + requestID + "<br>Module = " + modCode + " - " + modTitle + "<br>";
+			html += "Session Type = " + sessionType + "<br>";
+			if (sessionLength == 1)
+			{
+				html += "Session Length = " + sessionLength + " Hour<br>";
+			}
+			else
+			{
+				html += "Session Length = " + sessionLength + " Hours<br>";
+			}
+			html += "Semester = " + semester + "<br>";
+			html += "Day = " + day + "<br>";
+			html += "Period = " + period + "<br>";
+			if (specialReq != null)
+			{
+				html += "Special Requirements = " + specialReq + "<br>";
+			}
+			if (priorityReq == 1)
+			{
+				html += "Priority = Yes<br>";
+			}
+			else
+			{
+				html += "Priority = No<br>";
+			}			
+			html += "Status = " + status + "<br>Weeks = " + weeks + "<br>";
+			if (facilities.length != 0)
+			{
+				html += "Facilities = " + facilities + "<br>";
+			}			
+			if (rooms.length != 0)
+			{
+				html += "Rooms = " + rooms + "<br>GroupSize = " + groupSizes + "<br>";
+			}
+			else
+			{
+				html += "Rooms = Any<br>";
+			}	
 			
 			$('#alertDiv').html(html);
 			$('#alertDiv').dialog({

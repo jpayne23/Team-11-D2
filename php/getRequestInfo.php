@@ -11,7 +11,7 @@
 	
 	$requestID = $_REQUEST['requestID']; //
 	
-	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Status ";
+	$sql = "SELECT Request.RequestID, Users.DeptCode, DeptNames.DeptName, Request.ModCode, Title, SessionType, SessionLength, Day, Request.PeriodID ,Period, PriorityRequest, AdhocRequest, SpecialRequirements, RoundID, Semester, Status ";
 	$sql .= "FROM Request ";
 	$sql .= "JOIN DayInfo ON DayInfo.DayID = Request.DayID ";
 	$sql .= "JOIN PeriodInfo ON PeriodInfo.PeriodID = Request.PeriodID ";	
@@ -38,6 +38,7 @@
 		array_push($results, $row['specialrequirements']);
 		array_push($results, $row['priorityrequest']);
 		array_push($results, $row['status']);
+		array_push($results, $row['semester']);
 	}
 	
 	// List weeks in one row instead of multiple		
