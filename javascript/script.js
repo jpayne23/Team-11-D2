@@ -142,7 +142,6 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadPart.php?" + deptCode, function(data)
 		{
 			$('#partDiv').html(data);
-			applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 		});
 	});
 	
@@ -154,7 +153,6 @@ $(document).ready(function()		// Execute all of this on load
 		$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 		{
 			$('#modCodeDiv').html(data);
-			applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 		});
 	});
 	
@@ -1385,6 +1383,10 @@ $(document).ready(function()		// Execute all of this on load
 			}); //end done function
 	
 		}); //end click function
+		
+		 $( "#helpWS" ).tooltip({
+
+		});
 });
 
 function closeHistoryDialogs()
@@ -1505,11 +1507,15 @@ function AddNewModule()
 	
 	$('#newModuleDialog').html(html);
 	$('#newModuleDialog').dialog({
+	    create: function(event, ui) {
+        var widget = $(this).dialog("widget");
+        $(".ui-dialog-titlebar-close span", widget).removeClass("ui-icon-closethick").addClass("homeButtons");
+    },
 	dialogClass:"addModuleClass",
 	  show: {
 		effect: "fadeIn",
 		duration: 500
-	  }
+	  }	
 	}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
 	
 }
