@@ -1,11 +1,11 @@
-<!--
+<?php
+/*
 Retrieves a list of rooms that are associated with the building which the user has selected.
 This is then written into the building content div.
+Called from request.js -> updateAdvancedRoom().
 
 Contribution Daniel
--->
-
-<?php
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -17,6 +17,7 @@ Contribution Daniel
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
+	//retrieves all the rooms associated with 'building'.
 	$building = $_REQUEST['building'];
 	$sql = "SELECT room FROM `Room` WHERE buildingcode = '".$building."';";			
 	$res =& $db->query($sql);
@@ -35,6 +36,7 @@ Contribution Daniel
 	$row = $res2->fetchRow();
 	$buildingName = $row['building'];
 	
+	//echos the retrieved rooms
 	echo '<table id ="roomContent" class="contenttable">';
 	while ($row = $res->fetchRow())
 	{
