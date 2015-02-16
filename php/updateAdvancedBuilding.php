@@ -1,11 +1,11 @@
-<?php
-/*
+<!--
 Retrieves a list of buildings that are associated with the park that the user has selected.
 This is then written to the park content div.
-Called from request.js -> updateAdvancedBuilding().
 
 Contribution from Bhavnit, Daniel
-*/
+-->
+
+<?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -16,7 +16,6 @@ Contribution from Bhavnit, Daniel
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	//retrieves all the buildings associated with 'park'.
 	$park = $_REQUEST['park'];
 	$sql = "SELECT buildingcode, building FROM `Building` WHERE park = '$park'";			
 	$res =& $db->query($sql);
@@ -25,7 +24,6 @@ Contribution from Bhavnit, Daniel
 		die($res->getMessage());
 	}
 	
-	//echo the retrieved buildings 	
 	echo '<table id="buildingContent" class="contenttable">';
 	while ($row = $res->fetchRow())
 	{

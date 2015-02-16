@@ -1,10 +1,12 @@
-<?php
-/*  
-Loads all adhoc requests and this file is also used  to filter these requests with a flag to determine whether it was a general request or not.
+<!--  
+Loads all adhoc requests and this file is also used to filter these requests with a flag to determine whether it was a general request or not.
 Presents all this in a table in a pop up which becomes visible when selected.
 
 General request retrieval by Jack, filtering implemented by Joe
-*/
+-->
+
+
+<?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";

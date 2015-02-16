@@ -1335,56 +1335,55 @@ $(document).ready(function()		// Execute all of this on load
 	});
 	
 	
-		$('#newModuleDialog').on('click','#btnAddModule',function(){
-		
-			if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
-				alert('Module Code is empty');
-				return;
-			}
-			
-			if($('#newModName').val().trim() == ''){ //validate modname isnt empty
-				alert('Module Name is empty');
-				return;
-			}
-			var gsize = parseInt($('#newModSize').val());
-			if($('#newModSize').val() < 1){
-				alert('Group Size is invalid');
-				return;
-			}
-			
-			var str = $('#newModCode').val();
-			var res = /\d{2}[a-zA-Z]{3}\d{3}/.test(str); //reg ex test the modcode
-			
-			if(res==false){
-				alert('invalid');
-				return;
-			}
-			var modCode = str.toUpperCase();
-			var modName = $('#newModName').val().trim();
-			//call php script to insert the new module
-			var data1;
-			$.get("php/addModule.php?modCode=" + modCode + "&modName="+modName + "&modSize="+gsize, function(data)
-			{
-				data1=data;
-				console.log(data1);
-				if(data=='Nope'){
-					alert('This module code already exists!');
-				}
-			}).done(function()
-			{
-				
-				var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
-				var part = "&part=any";
-				$.get("php/loadModCodes.php?" + deptCode + part, function(data)
-				{
-					$('#modCodeDiv').html(data);
-				});
-				if(data1 != 'Nope')
-					alert(modCode + ' has been added to the database.');
-				$('#newModuleDialog').dialog('close');
-			}); //end done function
+	$('#newModuleDialog').on('click','#btnAddModule',function(){ //Occurs when the 'Add Module' button is pressed
 	
-		}); //end click function
+		if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
+			alert('Module Code is empty');
+			return;
+		}
+		
+		if($('#newModName').val().trim() == ''){ //validate modname isnt empty
+			alert('Module Name is empty');
+			return;
+		}
+		var gsize = parseInt($('#newModSize').val()); //validate the size is valid
+		if($('#newModSize').val() < 1){
+			alert('Group Size is invalid');
+			return;
+		}
+		
+		var str = $('#newModCode').val();
+		var res = /\d{2}[a-zA-Z]{3}\d{3}/.test(str); //reg ex test the modcode e.g. 14COA101
+		
+		if(res==false){
+			alert('invalid');
+			return; //end function if the reg ex is false
+		}
+		var modCode = str.toUpperCase();
+		var modName = $('#newModName').val().trim(); //trim the module name of whitespaces
+		var data1;
+		//call php script to insert the new module
+		$.get("php/addModule.php?modCode=" + modCode + "&modName="+modName + "&modSize="+gsize, function(data)
+		{
+			data1=data;
+			if(data=='Nope'){
+				alert('This module code already exists!');
+			}
+		}).done(function() //run this when the above script has returned
+		{
+			
+			var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
+			var part = "&part=any";
+			$.get("php/loadModCodes.php?" + deptCode + part, function(data) //script to reload the mod codes
+			{
+				$('#modCodeDiv').html(data);
+			});
+			if(data1 != 'Nope') //Check the module doesnt exist. 'Nope' is the return string for this error.
+				alert(modCode + ' has been added to the database.');
+			$('#newModuleDialog').dialog('close'); //Close the dialog once a module has been added
+		}); //end done function
+
+	}); //end click function
 });
 
 function closeHistoryDialogs()
@@ -1492,9 +1491,9 @@ function applyAccess(button)
 	}
 }
 
-function AddNewModule()
+function AddNewModule() //function to create the popup for adding a new module
 {
-	var html= "";
+	var html= ""; //write html for the form contents
 	html+= "<label for='modcode'>Module Code</label></br>";
 	html+= " <input type='text' id='newModCode' placeholder='e.g. 14COA101'></br>";
 	html+= "<label for='modName'>Module Name</label></br>";
@@ -1503,15 +1502,11 @@ function AddNewModule()
 	html+= " <input type='number' id='newModSize' placeholder='50'><br>";
 	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
 	
-	$('#newModuleDialog').html(html);
-	$('#newModuleDialog').dialog({
-	    create: function(event, ui) {
-        var widget = $(this).dialog("widget");
-        $(".ui-dialog-titlebar-close span", widget).removeClass("ui-icon-closethick").addClass("homeButtons");
-    },
+	$('#newModuleDialog').html(html); //Add this html into the div
+	$('#newModuleDialog').dialog({ //dialog code for the popup
 	dialogClass:"addModuleClass",
 	  show: {
-		effect: "fadeIn",
+		effect: "fadeIn", //Fade the popup into display
 		duration: 500
 	  }	
 	}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog

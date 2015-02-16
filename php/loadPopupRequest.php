@@ -1,4 +1,3 @@
-<!DOCTYPE html> 
 <!--
 This page is the contents that is loaded as a pop-up of the popupRequestDiv in both the Adoc and Homepage.
 It is initiated by btnAdvancedRequest, which then runs its associated click function.
@@ -8,8 +7,10 @@ The user can view the weeks available for a set of rooms by selecting the Add to
 The user can also select a room by selecting the Select Room button in the roominfo dialog.
 By selecting the findroom button, the user can then go onto select multiple facilities, state the group size and then click on the roomSearchSubmit button, to view a list of rooms that match the chosen requirements.
 
-Contibution by Bhavnit, Daniel, Prakash and Jason
+Contibution by Jason, Bhavnit, Dan, Prakash
 -->
+
+<!DOCTYPE html> 
 <html>
 	<head>
 		<title>Advanced Requests</title>
