@@ -1,4 +1,11 @@
 <?php
+/* 
+Gets all of the requests that have been ticked in the Last Year's Submissions
+table, and adds them to the database as pending so the timetabler can either 
+edit or submit them.
+
+Implemented by Jack
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -17,7 +24,7 @@
 		// Copy the main request from history to be submitted
 		$sql = "INSERT INTO Request (UserID, ModCode, SessionType, SessionLength, DayID, PeriodID, PriorityRequest, SpecialRequirements, Semester, RoundID, Status) ";
 		$sql .= "(SELECT UserID, ModCode, SessionType, SessionLength, DayID, PeriodID, PriorityRequest, SpecialRequirements, Semester, $round, \"Pending\" FROM RequestHist ";
-		$sql .= "WHERE RequestHist.RequestIDHist = " . $requestIDHist[$i] . ");";			
+		$sql .= "WHERE RequestHist.RequestIDHist = " . $requestIDHist[$i] . ");";
 		$res =& $db->query($sql);
 		if(PEAR::isError($res))
 		{

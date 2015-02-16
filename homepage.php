@@ -266,6 +266,9 @@
 				<input type="button" class= 'closeDiv' value="x" onclick='closeDiv("popupLastYear");'/>
 			</div>
 			<input type="button" class='pendingButton'  id='submitCheckedButton' value="Submit All Checked Requests"/>
+			<input type="button" class='pendingButton' value="Filter Results" onclick='openDiv("filterDivLast");filterMenu("LastYear");'/>
+			<div class='filterDiv' id='filterDivLast' style='visibility: hidden;'>
+			</div>
 			<div id='lastYear'></div>
 		</div>
 		<div id='popupRequestDiv' class='popupDiv' style='visibility: hidden;'> 

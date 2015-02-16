@@ -1,4 +1,12 @@
 <?php
+/*
+This file is similar to loadPendingRequests.php, except we load all the
+requests from last year into it's own table that the user can view.
+We also add a checkbox to the end of each request so the user can select which
+requests they would like to add.
+
+Implemented by Jack.
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -52,6 +60,7 @@
 	}
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 	
+	// Sort each column depending on what the user clicks.
 	if ($sortDirection == "up")
 	{				
 		switch ($sortColumn)
@@ -107,6 +116,7 @@
 		die($res->getMessage());
 	}
 	
+	// Add the table and all the headers
 	echo "<table class='loadTable' border='1' id='lastYearTable' style='width:100%; margin-left:auto; margin-right:auto;'>";	
 	if ($sortDirection == "up")
 	{				

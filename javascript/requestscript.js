@@ -5,7 +5,6 @@ $(document).ready(function()		// Execute all of this on load
 	
 }); //end document ready
 
-//$('#timetable').children().eq(0).children().eq(2).children().eq(2).attr('id')
 function loadGroupSize()//load the group size based on the module
 {
 	x = $('#chosenRooms').attr('data-norooms');
@@ -40,7 +39,7 @@ function loadGroupSize()//load the group size based on the module
 	}
 }
 
-function populateTimetable()
+function populateTimetable() //function to populate the timeslots of the timetable
 {
 	var id;
 	for(var d = 1; d<6; d++)
@@ -53,12 +52,12 @@ function populateTimetable()
 	}
 }
 
-function addTitles()
+function addTitles() //function to refresh the main contents, and re add the titles
 {
 	$("#parkcontent").html('<b><a class= "buildingcontenttitle">  Buildings </a></b><a> </br> </a> ');
 	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
 	
-	if($('#selectedrooms').children().length < 3)
+	if($('#selectedrooms').children().length < 3) //if a room isnt in the list
 		$("#selectedrooms").html('<b><a class= "selectedcontenttitle"> Rooms Selected </a></b><a> </br> </a> ');
 	
 	if ($('#comparedtable').children().children().length == 0) //if the chosen room list is empty
@@ -70,29 +69,26 @@ function addRoomTitle()
 	$("#buildingcontent").html('<b><a class= "roomcontenttitle"> Rooms </a></b><a> </br> </a> ');
 }
 
-function clearParkContent(){
+function clearParkContent(){ //Clear the buildings listed
 	$("#parkcontent").html("");
 }
 
-function clearBuildingContent(){
+function clearBuildingContent(){ //clear the rooms listed
 	$("#buildingcontent").html("");
 }
 
-function clearRoomContent()
+function clearRoomContent() //Clears the room info pop up
 {
 	$('#roominfo').html("");
 }
 
 function updateAdvancedBuilding(value) //function to display the list of buildings from the user park choice
 {
-
 	var string = value.substr(4, 1).toUpperCase();
 	var length;
 	var lastRow;
-	//string = string.toUpperCase();
-	//alert(string);
-	//document.getElementById("parkcontent").style.background-color= "#CC0066";
 	
+	//change background colours of sections
 	$('#parkeast').css("background-color", "#CC0066");
 	$('#parkcentral').css("background-color", "#CC0066");
 	$('#parkwest').css("background-color", "#CC0066");
@@ -104,23 +100,24 @@ function updateAdvancedBuilding(value) //function to display the list of buildin
 		$("#parkcontent").append(data);
 		var buildingName =  value.substr(4,1).toUpperCase() + value.substring(5,value.length);
 		//add the option of any building
-		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows clickable" onclick="addAnyPark(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
+		$('#parkcontent').children().eq(1).after('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyPark(this.id); clearBuildingContent(); addRoomTitle()"><td>Any '+buildingName+' Building</td></tr><tr><td></br></td></tr></table>');
 		length = $('#parkcontent').children().length -1;
 		lastRow = $('#parkcontent').children().eq(length);
-		lastRow.attr('style', 'border-bottom: 0');
+		lastRow.attr('style', 'border-bottom: 0'); //remove a bottom border to the last row
 	});
 }
-function changeSelected()
+function changeSelected() //function to change the clicked row to a selected colour scheme
 {
    $('#parkcontent').on('click', 'tr', function()
    {
+	   //Change the background colors of the selected row in the table (i.e. showing selected)
 		$('.anycontenttable tr').css('background-color', '#330066');
 		$('.contenttable tr').css('background-color', '#330066');
 		$(this).css('background-color',"#CC0066");
    });
 }
     
-function updateAdvancedRoomFacility(value)
+function updateAdvancedRoomFacility(value) //function to display the information of a room
 	{	var str = value.replace(/\./g, '');
 		$("#timetable").css("opacity", "1");// make the timetable visible
 		//get the information about chosen room, and show as popup
@@ -130,15 +127,16 @@ function updateAdvancedRoomFacility(value)
 
 			data+= "<input class='homeButtons' type='button' id='"+value+"' value='Select Room' onclick='addRoomToList(this.id);'>";
 			
+			//find the id of the 'Select Room' button and add a 'compare' button
 			var x = $('#comparedtable').find('#com'+ str);
 			if(x.length == 0){
 				data+= "<input class='homeButtons' type='button' id='com"+value+"' value='Add to Compare List' onclick='addRoomToCompareList(this.id);'>";
 
 			}
 
-			$("#roominfo").html(data);
+			$("#roominfo").html(data); //Add the html data to the popup
 			document.getElementById("roominfo").title = value;
-			$('#roominfo').dialog({
+			$('#roominfo').dialog({ //display the popup
 				dialogClass:"dialogClass",
 				  show: {
 					effect: "fadeIn",
@@ -166,38 +164,36 @@ function fillTimetable(value)
 		$.get("php/loadTimesOfRoom.php?" + 'roomNo=' + value, function(data)
 		{
 			var id, length, j, str;
-			//var times = data.split(',,');
+	
+	
 			times = JSON.parse(data); //JSON.parse turns php string into javascript object	
 			
-			for(var i =0; i < times.length;i++)
+			for(var i =0; i < times.length;i++) //loop through each timeslot and add it to the timetable
 			{
 				j = 1;
+				//bring in array data from php to each timeslot attribute
 				id = times[i]['id'];
 				length = times[i]['data-length'];
 				var weeks = times[i]['data-weeks'];
-				//var display = times[i]['data-display'];
 				$('#'+id).attr('id',id);
 				$('#'+id).attr('data-length',length);
 				$('#'+id).attr('data-selected','1');
 				$('#'+id).attr('data-weeks', weeks);
-				//$('#'+id).attr('data-display', display);
 				$('#'+id).attr('class','timeslotbooked');
 				$('#'+id).html('Partly Available');
 				displayAvailableWeeks(id, value);
 				while(j < (length))
 				{
-					//str = id.substr(3,1);
+					//Loop through the length of a session and change the timeslot attributes
 					str = $('#'+id).attr('id').substr(3,1);
 					var n = parseInt(str);
 					n = n + j;
 					var newid = $('#'+id).attr('id').substr(0,3) + n;
-					//var newTime = times[i].replace(id,newid);
-					//$('#'+newid).replaceWith(newTime);
+
 					$('#'+newid).attr('data-length',length);
 					$('#'+newid).attr('data-selected','1');
 					$('#'+newid).attr('data-weeks', weeks);
 					$('#'+newid).attr('class','timeslotbooked');
-					//$('#'+newid).attr('data-display', display);
 					$('#'+newid).html('Partly Available');
 					displayAvailableWeeks(newid, value); //function to show the user the weeks this timeslot is available
 					j++;
@@ -215,59 +211,37 @@ function displayAvailableWeeks(id, value) //function to show the user the weeks 
 		var temp = [];
 		var len, match, w;
 		var str = "";
-		//weeks = weeks.replace(/[\[\]']+/g,'')
 	
-		weeks = strweeks.split(":");
+		weeks = strweeks.split(":"); //turn the weeks into an array to loop through
 		
 		for(var i = 0;i<weeks.length;i++){ //loop through each set of weeks chosen
 			
 			len = weeks[i].length;
-			switch(len){
-				case 5:
-					w = weeks[i].substr(1,1) + weeks[i].substr(3,1);
-					//alert(w);
+			switch(len){ //check the length of the week string
+				case 5: //i.e.[1,2]
+					//append to a string the list of booked weeks
 					str += returnBookedWeeks(weeks[i].substr(1,1), weeks[i].substr(3,1));
 					break;
-				case 6:
+				case 6://i.e.[1,12] or [12,1]
 					if(weeks[i].substr(2,1) == ","){
-						w = weeks[i].substr(1,1) + weeks[i].substr(3,2);
-						//alert(w);
+						//append to a string the list of booked weeks
 						str += returnBookedWeeks(weeks[i].substr(1,1), weeks[i].substr(3,2));
 					} else{
-						w = weeks[i].substr(1,2) + weeks[i].substr(4,1);
-						//alert(w);
+						//append to a string the list of booked weeks
 						str += returnBookedWeeks(weeks[i].substr(1,2), weeks[i].substr(4,1));
 					}
 					break;
-				case 7:
-					w = weeks[i].substr(1,2) + weeks[i].substr(4,2);
+				case 7: //i.e.[11,12]
+				//append to a string the list of booked weeks
 					str += returnBookedWeeks(weeks[i].substr(1,2), weeks[i].substr(4,2));
 					break;
 			} //end switch
 		}
 		
-		temp = str.split(",");
-		//if(id=='d4p3')
-		//	alert('joined booked ' + temp.join(","));
+		temp = str.split(","); //temp is a array of booked weeks
+		
 		match = false;
-		/*
-		for(var i = 1 ;i < 16;i++){
-			for(var j = 0; j < temp.length; j++){
-				if(temp[j] == i){
-					chosen = true;
-					//break;
-				}
-			}
-			
-			if(chosen == false){
-				av[av.length] = i;
-			}
-			chosen = false;
-		
-		}
-		*/
-		
-		avweeks(id, temp);
+		avweeks(id, temp); //output the available weeks
 }
 
 function avweeks(id, chosen) //function to change the available weeks of a time slot
@@ -279,53 +253,27 @@ function avweeks(id, chosen) //function to change the available weeks of a time 
 	display = display.split(",");	//turn attribute into array
 	
 	
-	var str = "";
-	
-	/*for(var i = 0; i< display.length; i++){ //loop to push available weeks into an array
-		match = false;
-		for(var j = 0; j< chosen.length;j++){
-			if(chosen[j] == display[i]){
-				match = true;
-			}
-		}
-		if(match == false){
-			av[av.length] = display[i];
-		}
-	}
-	*/
-	str= "";
-	
+	var str = "";	
+	//get the available weeks from an array of chosen/booked weeks
 	var availWeeks = getAvailableWeeksAsArray(chosen);
-	
-	var strDisplay = JSON.stringify(display);
-	var strChosen = JSON.stringify(chosen);
-	var strAvail = JSON.stringify(availWeeks);
-	/*$.get("php/intersection.php?" + 'array1=' + strDisplay + '&array2=' + strAvail, function(data)
-	{
-		
-	newav = JSON.parse(data);
-	}).done(function(){
 
-	});*/
-	//if(id=='d4p3'){
-	//alert('avail ' + availWeeks.join(','));
-	//alert('display ' + display.join(','));
-	//}
-	
 
 	av = [];
+	/*Match the currently displayed available weeks and intersect it with the available weeks
+	/and output the new array of available weeks for the rooms chosen */
 	for(var i = 0;i<display.length;i++)
 	{
 		match = false;
 		for(var j=0;j<availWeeks.length;j++)
 		{
 			if(display[i] == availWeeks[j])
-				match = true;
+				match = true; //there is a available room that is also displayed available
 		}
-		if(match == true)
+		if(match == true) //write the commonly available room into a new array
 			av[av.length] = display[i];
 	}
 	var s = "";
+	//turn array into a concatenated strings
 	for(var i =0;i<av.length;i++)
 	{
 		
@@ -367,7 +315,7 @@ function getAvailableWeeksAsArray(chosen, id) //take a array of chosen weeks and
 	return av;
 }
 
-function returnBookedWeeks(start, end)
+function returnBookedWeeks(start, end) //takes two numbers and return the inclusive string of numbers
 {
 	var str = "";
 	var intstart = parseInt(start); //convert given numbers into integers
@@ -381,20 +329,20 @@ function returnBookedWeeks(start, end)
 
 function addRoomToCompareList(id) //function to add the chosen room to a list
 {
-	var newid = id.replace(/\./g, '');
+	var newid = id.replace(/\./g, ''); //remove the slashes and dots so ID works
 	var name = id.substr(3,id.length)
 	$('#comparedtable').append('<tr id='+newid+' value='+name+'><td>'+name+ '</td><td id=del'+newid+' onclick="deleteRoomFromCompareList(this.id);"><img src="img/delete.png" height="15" width="15"> </td></tr>');
 	recreateTimetable();
 	$('#roominfo').slideUp(function(){
-		$('#roominfo').dialog('close');
+		$('#roominfo').dialog('close'); //animation to slide up and close the popup
 	});
 }
 
-function deleteRoomFromCompareList(id)
+function deleteRoomFromCompareList(id) //function to delete a room from the compare list
 {
-	id = id.substr(3,id.length);
-	$('#'+id).remove();
-	recreateTimetable();
+	id = id.substr(3,id.length); //get the ID from the string
+	$('#'+id).remove(); //remove the room from the list
+	recreateTimetable(); //recreate the timetable of available weeks from the new set of rooms
 }
 
 
@@ -413,41 +361,35 @@ function recreateTimetable() //function to update the weeks available of the sel
 	for(var i = 0;i<len;i++)
 	{
 		var id = $('#comparedtable').children().children().eq(i).attr('value'); //get id of each room in the list
-		fillTimetable(id);
-		
+		fillTimetable(id); //take the room and add it to the timetable
 		
 	}
 	
 }
 
-function updateAdvancedRoom(value)
+function updateAdvancedRoom(value) //Function to update the list of rooms from the chosen building
 {
 	var length;
-	var lastRow;
 	
+	//call script to return the html of a list of rooms for a building
 	$.get("php/updateAdvancedRoom.php?" + 'building=' + value, function(data)
 	{
 		$("#buildingcontent").html('<a class= "roomcontenttitle">  Rooms </a><a> </br> </a> ');
 		$("#buildingcontent").append(data);
-		//$('#buildingcontent').children().eq(2).before('<table class= "anycontenttable"> <tr id="choice'+value+'" class="anycontentrows" onclick="addAnyBuilding(this.id)"><td>Any Room in "'+value+'"</td></tr><tr><td></br></td></tr></table>');
-		$('#buildingcontent').children().eq(2).before('</br></br></br>');
-		//length = $('#buildingcontent').children().length -1;
-		//lastRow = $('#buildingcontent').children().eq(length);
-		//lastRow.attr('style', 'border-bottom: 0');
+		$('#buildingcontent').children().eq(2).before('</br></br></br>'); //Add some spaces
+		length = $('#buildingcontent').children().length -1;
+		lastRow = $('#buildingcontent').children().eq(length);
+		lastRow.attr('style', 'border-bottom: 0'); //remove a bottom border to the last row
 	});
 }
 
-function timeOpacity(){
-	//$("#timetable").css("background-color", "green");
-	//var value = document.getElementById("time");
-	//value.style.opacity= "0.5";
-	//$("#timetable").css("background-color", "brown");
+function timeOpacity(){ //When the user chooses a room, it makes the timetable opaque
 	$("#timetable").css("opacity", "1");
 }
 
-function addRoomToList(id)
+function addRoomToList(id) //function to take a ID of a room and add it to the 'selected rooms' list
 {
-	newid = id.replace(/\./g, '');
+	newid = id.replace(/\./g, ''); //remove dots and slashes for ID validity
 	if ($('#rm'+newid).length > 0 ) { //search for id existence
         var html = "Duplicated rooms cannot be added."
 		$('#alertDiv').html(html);
@@ -479,13 +421,14 @@ function addRoomToList(id)
 			$('#modifiedAlertDiv').dialog('close');
 		return;
 	}
-	
+		
+	//get caps on the group sizes of rooms, user given sizes and module size
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
 	roomCap = parseInt(document.getElementById("roomCapacity").innerHTML);
 	if (roomCap >= reqCap)
 	{
-		if (reqCap>0)
+		if (reqCap>0) //if the groupsize is valid
 		{
 			maxCap = maxCap-reqCap;
 			x++;
@@ -565,41 +508,43 @@ function deleteRoom(id) //need to implement group capacity, increment when room 
 	loadGroupSize();
 }
 
-function addAnyPark(id)
+function addAnyPark(id) //function to add the option of 'Any building' in a chosen park
 {
 	maxCap = parseInt(document.getElementById("maxGroupSize").value);
 	reqCap = parseInt(document.getElementById("groupSize").value);
-	
-	console.log(id);
-	var str = 'rm'+id;
+
+	var str = 'rm'+id; //get the id
 	var len = $('#chosenRooms').children().children().length;
+	//loop through chosen rooms and check that the passed in room doesnt already exist
 	for(i=0;i<len;i++){
 		var parkname = $('#chosenRooms').children().children().eq(i).attr('id');
 		if(str == parkname)
-			return;
+			return; //end function because the room has already been added
 		
 	}
 	
 	if(reqCap > 0){
 		
-		var parkname = id.substr(6);
-		parkname = parkname.substr(4).toUpperCase();
-		//console.log(parkname);
+		var parkname = id.substr(6); 
+		parkname = parkname.substr(4).toUpperCase(); //Get the parkname character as uppercase
+		//create html of the parkname
 		var html= "<tr id="+("rm" + id)+"><td id ='cap"+id+"'>"+reqCap+"</td><td> Students in park </td><td>"+parkname+"</td><td id='del"+ ("rm" + id) +"' onclick='deleteRoom(this.id);'><img src='img/delete.png' height='15' width='15'><td></tr>";
-		$("#selectedrooms").append(html);
-		document.getElementById('chosenRooms').innerHTML += html;
+		$("#selectedrooms").append(html); //add it to the selected rooms list
+		document.getElementById('chosenRooms').innerHTML += html; //add it to the homepage list
 	}
 }
 
-function findRoomOpen()
+function findRoomOpen() //function to open the popup which lets the user find a room with given facilities and group size
 {
 	openDiv('findroomDiv');
-	if ($('#findroomDiv').children().children().length <= 31)
+	if ($('#findroomDiv').children().children().length <= 31) //31 is the last facility tag
 	{
-		$("#findroomDiv").prepend('<input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
-		$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
+		//Add a close button at the top of the popup
+			$("#findroomDiv").prepend('<div class="closeFindButtonDiv"><input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a></div>');
+			//Add a onclick attribute to close the popups
+			$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
 	}
-	this.count = "1";
+	this.count = "1"; //reset the count
 };
 
 	

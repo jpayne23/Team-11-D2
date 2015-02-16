@@ -1450,7 +1450,7 @@ $(document).ready(function()		// Execute all of this on load
 	});
 	
 	
-		$('#newModuleDialog').on('click','#btnAddModule',function(){
+	$('#newModuleDialog').on('click','#btnAddModule',function(){
 		
 			if($('#newModCode').val().trim() == ''){ //validate modcode isnt empty
 			var html = "Module Code is empty!";
@@ -1669,9 +1669,9 @@ function applyAccess(button)
 	}
 }
 
-function AddNewModule()
+function AddNewModule() //function to create the popup for adding a new module
 {
-	var html= "";
+	var html= ""; //write html for the form contents
 	html+= "<label for='modcode'>Module Code</label></br>";
 	html+= " <input type='text' id='newModCode' placeholder='e.g. 14COA101'></br>";
 	html+= "<label for='modName'>Module Name</label></br>";
@@ -1680,15 +1680,11 @@ function AddNewModule()
 	html+= " <input type='number' id='newModSize' placeholder='50'><br>";
 	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
 	
-	$('#newModuleDialog').html(html);
-	$('#newModuleDialog').dialog({
-	    create: function(event, ui) {
-        var widget = $(this).dialog("widget");
-        $(".ui-dialog-titlebar-close span", widget).removeClass("ui-icon-closethick").addClass("homeButtons");
-    },
+	$('#newModuleDialog').html(html); //Add this html into the div
+	$('#newModuleDialog').dialog({ //dialog code for the popup
 	dialogClass:"addModuleClass",
 	  show: {
-		effect: "fadeIn",
+		effect: "fadeIn", //Fade the popup into display
 		duration: 500
 	  }	
 	}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
@@ -2190,11 +2186,18 @@ function filterMenu(source)
 			$('#filterDivHist').html(data);
 		});
 	}
-	else
+	else if(source == "Adhoc")
 	{
 		$.get("php/loadFilter.php?source=Adhoc", function(data)
 		{
 			$('#pastFilterDiv').html(data);
+		});
+	}
+	else
+	{
+		$.get("php/loadLastFilter.php?source=LastYear", function(data)
+		{
+			$('#filterDivLast').html(data);
 		});
 	}
 };
@@ -2227,7 +2230,7 @@ function filterTable(source)
 		});
 		closeDiv('filterDiv');
 	}
-	else
+	else if(source == "Adhoc")
 	{
 		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
 		$.get("php/loadAdhocSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
@@ -2235,6 +2238,15 @@ function filterTable(source)
 			$('#past').html(data);
 		});
 		closeDiv('pastFilterDiv');
+	}
+	else
+	{
+		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
+		$.get("php/loadLastYear.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
+		{
+			$('#lastYear').html(data);
+		});
+		closeDiv('filterDivLast');
 	}
 }
 

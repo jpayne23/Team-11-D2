@@ -1,6 +1,14 @@
 <?php
+/*
+Gets all of the information from the form, and adds the necessary 
+information to the correct table in the database.
+If the request is an adhoc request, it will automatically assign
+the status to be either successful or unsuccessful.
 
-	function returnBookedWeeks($start,$end) //return the booked weeks as an inclusive string
+Submitting data to the database by Jack, allocating adhoc submissions by Joe.
+*/
+	//return the booked weeks as an inclusive string
+	function returnBookedWeeks($start,$end) 
 	{
 		$str = "";
 		$intstart = intval($start); //convert given numbers into integers
@@ -11,8 +19,9 @@
 		}
 		return $str;
 	}
-
-	function getWeeks($room,$dayID,$periodID,$semester) //get the booked weeks for a speific room, day and time
+	
+	//get the booked weeks for a speific room, day and time
+	function getWeeks($room,$dayID,$periodID,$semester) 
 	{
 		require_once 'MDB2.php';			
 		include "/disks/diskh/teams/team11/passwords/password.php";
@@ -25,9 +34,12 @@
 		
 		$sql = "SELECT DISTINCT WeekRequest.Weeks FROM WeekRequest ";
 		$sql .= "JOIN Request ON Request.RequestID = WeekRequest.RequestID ";
-		$sql .= "JOIN AllocatedRooms ON AllocatedRooms.RequestID = WeekRequest.RequestID ";
-		$sql .= "WHERE AllocatedRooms.Room = '" . $room . "' AND Request.DayID = '". $dayID ."' ";
-		$sql .= "AND Request.PeriodID = '". $periodID ."' AND Semester = $semester";
+		$sql .= "JOIN AllocatedRooms ON ";
+		$sql .= "AllocatedRooms.RequestID = WeekRequest.RequestID ";
+		$sql .= "WHERE AllocatedRooms.Room = '" . $room . "' AND ";
+		$sql .= "Request.DayID = '". $dayID ."' ";
+		$sql .= "AND Request.PeriodID = '". $periodID ."' AND "
+		$sql .= "Semester = $semester";
 
 		$res =& $db->query($sql);
 		if(PEAR::isError($res))
@@ -47,7 +59,9 @@
 		for($i=0;$i<count($a);$i++)
 		{
 			$len = strlen($a[$i]);
-			switch($len){ //return the booked weeks as a string depending on the length of the string
+			//return the booked weeks as a string depending 
+			//on the length of the string
+			switch($len){ 
 				case 5:
 					$str .= returnBookedWeeks(substr($a[$i],1,1),substr($a[$i],3,1));
 					break;
