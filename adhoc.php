@@ -47,7 +47,7 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 				<li class="active"><a href="#" id='adhocButton'>Ad Hoc</a></li>
 				<li><a href="#" id='pastButton'>Past Requests</a></li>
 				<li class='headerright'><a href="php/logout_script.php" id='logoutButton'>Log Out</a></li>
-				<li class='headerright'><a href='#' id='AddModuleButton'>Add Module</a></li>
+				<li class='headerright'><a href='#' id='AddModuleButton' onclick='AddNewModule();'>Add Module</a></li>
 			</ul>
 		</nav>	
 	</header>
@@ -272,6 +272,7 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 			</div>
 		</div>
 		<div id="dialog" title="Facilities of this room"></div>
+		<div id='newModuleDialog' title='Add a New Module'></div>
 	</div>
 	<footer class="mainFooter">
 		<p>Copyright &copy 2015: Team11

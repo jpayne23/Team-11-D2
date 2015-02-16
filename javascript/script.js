@@ -604,7 +604,9 @@ $(document).ready(function()		// Execute all of this on load
 				},
 				function(data, status){
 					// Function to do things with the data
-					alert(data);
+					console.log(data);
+					if(data=='')
+						alert("Your request has been submitted. Please check the pending table.");
 				});
 			}
 			else
