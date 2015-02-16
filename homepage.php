@@ -28,7 +28,6 @@
 			echo "<input id='btnAccessHome' class='homeButtons' type='button' value='Accessibility Mode - Off'/>";
 		}
 		?>
-		>
 	</div>
 	<header class="mainHeader">
 		<img alt="Loughborough Logo" src="img/logo.png">
