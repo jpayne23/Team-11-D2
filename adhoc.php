@@ -168,14 +168,6 @@ As with homepage.php, contribution was from Jason, Dan, Jack, Prakash, Bhav and 
 						</tr>
 						<tr>
 							<td>
-								<label> Pick Date </label>
-							</td>
-							<td>
-								<input type='text' id='date'>
-							</td>
-						</tr>
-						<tr>
-							<td>
 								<label> Start Time </label>
 							</td>
 							<td>

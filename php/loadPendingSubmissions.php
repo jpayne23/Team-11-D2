@@ -164,7 +164,7 @@
 		}
 		
 		if($fill){
-			echo "<tr id='pendingRow' name='".$row["requestid"]."'>";
+			echo "<tr id='pendingRow' class='clickable' name='".$row["requestid"]."'>";
 			echo "<td>" . $row["requestid"] . "</td>";
 			echo "<td>" . $row["modcode"] . "</td>";
 			

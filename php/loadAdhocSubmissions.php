@@ -196,7 +196,7 @@ General request retrieval by Jack, filtering implemented by Joe
 		if ($fill){
 			
 			//Colour codes request ID depending on status 
-			echo "<tr id='historyRow' name ='".$row["requestid"]."'>";
+			echo "<tr id='historyRow' class='clickable' name ='".$row["requestid"]."'>";
 			
 			if ($row['status'] == 'Unsuccessful')
 			{				

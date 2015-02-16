@@ -68,12 +68,12 @@
 	margin: 20px auto;
 }
 
-
-
-
-
 /*--------------------------------------------Main Content------------------------------------------------------------------*/
 
+.clickable
+{
+	cursor: pointer;
+}
 
 .body{
 	background-color:#FFFFF2;

@@ -182,7 +182,7 @@
 		}
 		
 		if ($fill){
-			echo "<tr id='historyRow' name ='".$row["requestid"]."'>";
+			echo "<tr id='historyRow' class='clickable' name ='".$row["requestid"]."'>";
 			if ($row['status'] == 'Unsuccessful')
 			{				
 				echo "<td class='unsuccessful'><b>" . $row["requestid"] . "</b></td>";

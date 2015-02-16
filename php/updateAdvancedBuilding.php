@@ -27,7 +27,7 @@
 		if(($row['buildingcode'] == 'EAST') || ($row['buildingcode'] == 'WEST') || ($row['buildingcode'] == 'CENTRAL'))
 			continue;
 		
-		echo '<tr class = "contentrows" id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
+		echo '<tr class = "contentrows clickable" id ="'.$row["buildingcode"].'"> <td id ="'.$row["buildingcode"].'" onclick=" updateAdvancedRoom(this.id); clearBuildingContent();">'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
 		//echo '<td> </br> </td>';
 			
 	}

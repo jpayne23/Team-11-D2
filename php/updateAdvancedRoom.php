@@ -32,7 +32,7 @@
 	while ($row = $res->fetchRow())
 	{
 		
-		echo '<tr id ="'.$row["room"].'" class = "contentrows" data-building="'.$buildingName.'" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
+		echo '<tr id ="'.$row["room"].'" class = "contentrows clickable" data-building="'.$buildingName.'" onclick="updateAdvancedRoomFacility(this.id);"> <td>'.$row["room"].'</td></tr>';
 		//echo '<td> </br> </td>';
 		
 	}

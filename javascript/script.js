@@ -118,12 +118,6 @@ $(document).ready(function()		// Execute all of this on load
 		toggleWeeks();
 	});
 	
-	// Add park selector
-	$.get("php/updatePark.php", function(data)
-	{
-		$('#parkDiv').html(data);
-	});
-	
 	// Load facilities
 	$.get("php/loadFacilities.php", function(data)
 	{
@@ -161,8 +155,6 @@ $(document).ready(function()		// Execute all of this on load
 			$('#modCodeDiv').html(data);
 		});
 	});
-	
-	$('#date').datepicker({minDate:0, beforeShowDay: $.datepicker.noWeekends, firstDay: 1});
 	
 	// Load pending submissions
 	$('#pendingButton').click(function()
@@ -278,6 +270,7 @@ $(document).ready(function()		// Execute all of this on load
 			$('#submit').addClass(requestID);
 			$('#submit').addClass("homeButtons");
 		});
+		applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 	});
 	
 	// Edit button click event for adhoc
@@ -372,6 +365,7 @@ $(document).ready(function()		// Execute all of this on load
 			$('#submit').addClass(requestID);
 			$('#submit').addClass("homeButtons");
 		});
+		applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 	});
 	
 	// Delete button click event on pending
@@ -556,26 +550,6 @@ $(document).ready(function()		// Execute all of this on load
 		reloadPastTable("up", sortColumn);
 	});
 	
-	//get Facilities of a given room (room1 only)
-	$('#btnGetInfo').on('click', function()
-	{
-		var room = document.getElementById("room1").value;
-		var roomNo = "roomNo=" + room;
-		if(room == "Any")
-			return;
-		$.get("php/roomFacility.php?" + roomNo, function(data)
-		{
-			$("#dialog").html(data);
-			document.getElementById("dialog").title = "Room Info ";
-			$('#dialog').dialog({
-			      show: {
-			        effect: "fadeIn",
-			        duration: 500
-			      }
-			}); //end dialog
-		}); //end $.get		
-	}); //end click function
-	
 	// Send request to database as pending
 	$("#submit").click(function()
 	{		
@@ -659,6 +633,7 @@ $(document).ready(function()		// Execute all of this on load
 				$('#submit').removeClass();
 				$('#submit').addClass('none');
 				$('#submit').addClass("homeButtons");
+				applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 			}
 		}
 		else
@@ -820,7 +795,19 @@ $(document).ready(function()		// Execute all of this on load
 	
 	$('#round').click(function() //reset all default values
 	{
-		alert("pending submissions might be lost");
+		$( "#submitRequests" ).trigger( "click" );
+		var html = "All pending requests have been submitted!"
+		$('#alertDiv').html(html);
+			$('#alertDiv').dialog({
+				dialogClass:"dialogClass",
+				  show: {
+					effect: "fadeIn",
+					duration: 500
+				  },
+				  title: "Next Round"
+			}).prev(".ui-dialog-titlebar").css("background", "#CC0066"); //end dialog
+		$('#modifiedAlertDiv').dialog('close');
+			
 		$.post("php/simulateRound.php");
 		var newRound = parseInt(this.getAttribute('name'))+1;
 		this.name = newRound;
