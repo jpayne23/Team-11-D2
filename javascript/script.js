@@ -216,8 +216,7 @@ $(document).ready(function()		// Execute all of this on load
 			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
-			updateModCode();
-			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			setModCode(modCode + " - " + modtitle);			
 			document.getElementById('seshType').value = sessionType;
 			if (sessionLength == 1)
 			{
@@ -307,8 +306,7 @@ $(document).ready(function()		// Execute all of this on load
 			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
-			updateModCode();
-			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			setModCode(modCode + " - " + modtitle);
 			document.getElementById('seshType').value = sessionType;
 			if (sessionLength == 1)
 			{
@@ -358,11 +356,15 @@ $(document).ready(function()		// Execute all of this on load
 			
 			if (semester == 1)
 			{
-				
+				$('#semesterSelector').find('li.ui-selected').removeClass('ui-selected');
+				$('#semesterSelector li').first().addClass('ui-selected');
+				toggleWeeks();
 			}
 			else 
 			{
-				
+				$('#semesterSelector').find('li.ui-selected').removeClass('ui-selected');
+				$('#semesterSelector li').last().addClass('ui-selected');
+				toggleWeeks();
 			}
 			
 			$('#submit').val("Edit");	
@@ -383,6 +385,20 @@ $(document).ready(function()		// Execute all of this on load
 		function(data)
 		{
 			reloadPendingTable("down", "RequestID");
+		});
+	});
+	
+	// Delete button click event on adhoc
+	$('#past').on('click', "#deleteIcon", function() 
+	{
+		var requestID = this.name.substr(10);
+		$.post("php/deletePendingRequest.php", 
+		{
+			requestID: requestID
+		},
+		function(data)
+		{
+			reloadPastTable("up", "Status");
 		});
 	});
 	
@@ -412,8 +428,7 @@ $(document).ready(function()		// Execute all of this on load
 			var groupSizes = JSON.parse(data)[15];
 			
 			document.getElementById('part').value = part;
-			updateModCode();
-			document.getElementById('modCodes').value = modCode + " - " + modtitle;
+			setModCode(modCode + " - " + modtitle);
 			document.getElementById('seshType').value = sessionType;
 			if (sessionLength == 1)
 			{
@@ -1827,6 +1842,19 @@ function updateModCode()
 	$.get("php/loadModCodes.php?" + deptCode + part, function(data)
 	{
 		$('#modCodeDiv').html(data);
+	});
+}
+
+function setModCode(module)
+{
+	var deptCode = "deptCode=" + document.getElementById("deptCodeDiv").title;
+	var part = "&part=" + document.getElementById("part")[document.getElementById("part").selectedIndex].id;
+	$.get("php/loadModCodes.php?" + deptCode + part, function(data)
+	{
+		$('#modCodeDiv').html(data);
+	}).done(function()
+	{
+		document.getElementById('modCodes').value = module;
 	});
 }
 

@@ -451,6 +451,8 @@ textarea{
 	margin:30px;
 	padding:6px;  
 	position:absolute;
+	width:25%;
+	height:25%;
 	top: 5%;
 	left: 5%;
 	border: 2px solid #FFFFFF;
