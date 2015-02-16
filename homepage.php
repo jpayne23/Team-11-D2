@@ -113,7 +113,7 @@
 							<td>
 								<label>Pick weeks</label>								
 							</td>
-							<td colspan='2'>
+							<td colspan='2' title='Click or drag the weeks you require. (Selected weeks are highlighted pink)'>
 								<ol id="weekSelector">
 									<li class="ui-state-default ui-selected">1</li>
 									<li class="ui-state-default ui-selected">2</li>
@@ -130,7 +130,6 @@
 									<li class="ui-state-default">13</li>
 									<li class="ui-state-default">14</li>
 									<li class="ui-state-default">15</li>
-									<li><input type='button' class='homeButtons' id='helpWS' title='Click or drag the weeks you require. (Selected weeks are highlighted pink)' value='?'/></li>
 								</ol>								
 								<br>
 							</td>

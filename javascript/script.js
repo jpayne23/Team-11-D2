@@ -1385,10 +1385,6 @@ $(document).ready(function()		// Execute all of this on load
 			}); //end done function
 	
 		}); //end click function
-		
-		 $( "#helpWS" ).tooltip({
-
-		});
 });
 
 function closeHistoryDialogs()
