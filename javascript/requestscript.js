@@ -497,9 +497,9 @@ function findRoomOpen() //function to open the popup which lets the user find a 
 	if ($('#findroomDiv').children().children().length <= 31) //31 is the last facility tag
 	{
 		//Add a close button at the top of the popup
-		$("#findroomDiv").prepend('<input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
-		//Add a onclick attribute to close the popups
-		$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
+			$("#findroomDiv").prepend('<div class="closeFindButtonDiv"><input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a></div>');
+			//Add a onclick attribute to close the popups
+			$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
 	}
 	this.count = "1"; //reset the count
 };
