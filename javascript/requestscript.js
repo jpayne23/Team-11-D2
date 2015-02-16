@@ -477,6 +477,7 @@ function addRoomToList(id)
 			document.getElementById('chosenRooms').innerHTML += html;
 			$("#selectedrooms").append(html);
 			reqCap = maxCap;
+			applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 			//$('#roominfo').slideUp(function(){
 			//	$('#roominfo').dialog('close');
 			//});
@@ -553,23 +554,15 @@ function addAnyPark(id)
 	}
 }
 
-function findRoomOpenClose()
+function findRoomOpen()
 {
-	if (this.count == 0)
+	openDiv('findroomDiv');
+	if ($('#findroomDiv').children().children().length <= 31)
 	{
-		openDiv('findroomDiv');
-		if ($('#findroomDiv').children().children().length <= 31)
-		{
-			$("#findroomDiv").prepend('<input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
-			$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
-		}
-		this.count = 1;
+		$("#findroomDiv").prepend('<input id="closefindroomDiv" class="closeDiv" type="button" value="x"></input><b><a class= "buildingcontenttitle"> Find Rooms </a></b><a> </br> </a> ');
+		$("#closefindroomDiv").attr("onclick", "closeDiv('findroomDiv'); closeDiv('matchedRoomsDiv')")
 	}
-	else
-	{
-		closeDiv('findroomDiv');
-		this.count = 0;
-	}
+	this.count = "1";
 };
 
 	

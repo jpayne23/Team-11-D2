@@ -17,7 +17,7 @@
 								<li><a href='#' id='parkcentral' class= 'parkcentral' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>Central</a></li>
 								<li><a href='#' id= 'parkwest' class= 'parkwest' onclick='clearParkContent(); clearBuildingContent(); updateAdvancedBuilding(this.id)'>West</a></li>
 								<li>
-									<a href='#' id= 'findroom' onclick ='findRoomOpenClose(this);'>Find Room</a>
+									<a href='#' id= 'findroom' onclick ='findRoomOpen();'>Find Room</a>
 								</li>	
 								<li>
 									<select class= "optionResize" id='popupDay'>

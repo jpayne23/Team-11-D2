@@ -100,10 +100,6 @@ a:hover, a:active{
 	color: #FFFFFF;
 }
 
-#btnAccessHome{
-	position: absolute;
-}
-
 .mainHeader  img {
 	width:30%;
 	height:auto;
@@ -233,6 +229,8 @@ a:hover, a:active{
 }
 
 #weekSelector li { 
+	width: 25px;
+	height: 25px;
 	margin: 1px; 
 	padding: 1px; 
 	float: left;
@@ -585,6 +583,41 @@ textarea{
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+}
+
+#btnAccessHome{
+	position: absolute;
+}
+
+.accessDropDown:focus , .accessDropDown:hover{
+	
+	background:yellow;
+	color: black;
+	outline:3px solid red;
+	font-weight: bold;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.accessTable tr:hover{
+	background-color: yellow;
+	color: black;
+	font-weight: bold;
+	outline: 3px solid red;
+}
+
+.mainHeader nav .activeAccess  a:link, .mainHeader nav .activeAccess a:visited{
+	background-color: yellow;
+	box-shadow: 0px 0px 10pt 6pt red;
+	color: black;
+	text-shadow: none;
+}
+
+.accesslink:hover, .accesslink:active, .accesslink:focus{
+	background-color:yellow;
+	color: black;
+	box-shadow: 0px 0px 10pt 6pt red;
 }
 
 .optionResize{

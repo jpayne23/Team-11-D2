@@ -21,7 +21,7 @@
 	echo '<tr id ="'.$row["buildingcode"].'"> <td>'. $row["buildingcode"] . " - " . $row["building"] . '</td></tr>';
 	*/
 	//echo '<select name="building" id="building1" onchange="updateRoom()">';
-	echo '<table class="contenttable">';
+	echo '<table id="buildingContent" class="contenttable">';
 	while ($row = $res->fetchRow())
 	{
 		if(($row['buildingcode'] == 'EAST') || ($row['buildingcode'] == 'WEST') || ($row['buildingcode'] == 'CENTRAL'))

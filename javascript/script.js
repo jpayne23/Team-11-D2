@@ -796,8 +796,6 @@ $(document).ready(function()		// Execute all of this on load
 				html += "<input type='button' id='roomSearchSubmit' onclick='roomSearch();'value='Send'></br>";
 				html += "</form>";
 				$('#findroomDiv').append(html);
-				findRoomOpenClose();
-				//closeDiv('findroomDiv');
 			});
 		});
 		openDiv("popupRequestDiv");
@@ -1239,33 +1237,61 @@ function toggleAccess(button)
 	{
 		button.value = "Accessibility Mode - On";
 		button.className = "accessBtn";
-		$('#part').className = "accessDropDown optionResize";
-		$('#modCodes').className = "accessDropDown optionResize";
-		$('#seshType').className = "accessDropDown optionResize";
-		$('#seshLength').className = "accessDropDown optionResize";
-		$('#time').className = "accessDropDown optionResize";
-		$('#specialReq').className = "accessTextIn optionResize";
-		$('#submit').className = "homeButtons none accessBtn";
-		$('#btnAdvancedRequest').className = "homeButtons accessBtn";
-		$('#reset').className = "homeButtons accessBtn";
-		$('#round').className = "homeButtons accessBtn";
-		//$('#chosenRooms tr')
+		$('#part').attr('class', 'accessDropDown optionResize');
+		$('#modCodes').attr('class', 'accessDropDown optionResize');
+		$('#seshType').attr('class', 'accessDropDown optionResize');
+		$('#seshLength').attr('class', 'accessDropDown optionResize');
+		$('#day').attr('class', 'accessDropDown optionResize');
+		$('#time').attr('class', 'accessDropDown optionResize');
+		$('#specialReq').attr('class', 'accessTextIn optionResize');
+		$('#priorityCheckbox').attr('class', 'accessTextIn');
+		$('#submit').attr('class', 'homeButtons none accessLoginBtn');
+		$('#submitAdhoc').attr('class', 'homeButtons none accessLoginBtn');
+		$('#btnAdvancedRequest').attr('class', 'homeButtons accessLoginBtn');
+		$('#reset').attr('class', 'homeButtons accessLoginBtn');
+		$('#round').attr('class', 'homeButtons accessLoginBtn');
+		$('#chosenRooms tr').attr('class', 'accessTextIn');
+		$('#facDropDown').attr('class', 'accessTextIn');
+		$('#sortable tr').attr('class', 'accessTextIn');
+		$('#btnShowAllItems').attr('class', 'homeButtons accessLoginBtn');
+		$('#facAddBtn').attr('class', 'homeButtons accessLoginBtn');
+		$('#weekSelector').attr('class', 'ui-selectable accessTextIn');
+		$('#adhocWeekSelector').attr('class', 'ui-selectable accessTextIn');
+		$('#semesterSelector').attr('class', 'ui-selectable accessTextIn');
+		$('#submissionsTable').attr('class', 'accessTable');
+		$('#lastYearTable tr').attr('class', 'accessTable');
+		$('#buildingContent').attr('class', 'accessTable');
+		$('#roomContent').attr('class', 'accessTable');
 	}
 	else
 	{
 		button.value = "Accessibility Mode - Off";
 		button.className = "homeButtons";
-		$('#part').className = "optionResize";
-		$('#modCodes').className = "optionResize";
-		$('#seshType').className = "optionResize";
-		$('#seshLength').className = "optionResize";
-		$('#time').className = "optionResize";
-		$('#specialReq').className = "optionResize";
-		$('#submit').className = "homeButtons none";
-		$('#btnAdvancedRequest').className = "homeButtons";
-		$('#reset').className = "homeButtons";
-		$('#round').className = "homeButtons";
-		//$('#chosenRooms tr')
+		$('#part').attr('class', 'optionResize');
+		$('#modCodes').attr('class', 'optionResize');
+		$('#seshType').attr('class', 'optionResize');
+		$('#seshLength').attr('class', 'optionResize');
+		$('#day').attr('class', 'optionResize');
+		$('#time').attr('class', 'optionResize');
+		$('#specialReq').attr('class', 'optionResize');
+		$('#priorityCheckbox').attr('class', '');
+		$('#submit').attr('class', 'homeButtons none');
+		$('#submitAdhoc').attr('class', 'homeButtons none');
+		$('#btnAdvancedRequest').attr('class', 'homeButtons');
+		$('#reset').attr('class', 'homeButtons');
+		$('#round').attr('class', 'homeButtons');
+		$('#chosenRooms tr').attr('class', '');
+		$('#facDropDown').attr('class', '');
+		$('#sortable tr').attr('class', '');
+		$('#btnShowAllItems').attr('class', 'homeButtons');
+		$('#facAddBtn').attr('class', 'homeButtons');
+		$('#weekSelector').attr('class', 'ui-selectable');
+		$('#adhocWeekSelector').attr('class', 'ui-selectable');
+		$('#semesterSelector').attr('class', 'ui-selectable');
+		$('#submissionsTable').attr('class', 'loadTable');
+		$('#lastYearTable').attr('class', 'loadTable');
+		$('#buildingContent').attr('class', 'contenttable');
+		$('#roomContent').attr('class', 'contenttable');
 	}
 	
 }
@@ -1273,19 +1299,33 @@ function toggleAccess(button)
 function applyAccess(button)
 {
 	if(button.value == "Accessibility Mode - On")
-	{//this doesn't work because jquery.classname doesn't work
+	{
 		button.className = "accessBtn";
-		$('#part').className = "accessDropDown optionResize";
-		$('#modCodes').className = "accessDropDown optionResize";
-		$('#seshType').className = "accessDropDown optionResize";
-		$('#seshLength').className = "accessDropDown optionResize";
-		$('#time').className = "accessDropDown optionResize";
-		$('#specialReq').className = "accessTextIn optionResize";
-		$('#submit').className = "homeButtons none accessBtn";
-		$('#btnAdvancedRequest').className = "homeButtons accessBtn";
-		$('#reset').className = "accessBtn";
-		$('#round').className = "homeButtons accessBtn";
-		//$('#chosenRooms tr')
+		$('#part').attr('class', 'accessDropDown optionResize');
+		$('#modCodes').attr('class', 'accessDropDown optionResize');
+		$('#seshType').attr('class', 'accessDropDown optionResize');
+		$('#seshLength').attr('class', 'accessDropDown optionResize');
+		$('#day').attr('class', 'accessDropDown optionResize');
+		$('#time').attr('class', 'accessDropDown optionResize');
+		$('#specialReq').attr('class', 'accessTextIn optionResize');
+		$('#priorityCheckbox').attr('class', 'accessTextIn');
+		$('#submit').attr('class', 'homeButtons none accessLoginBtn');
+		$('#submitAdhoc').attr('class', 'homeButtons none accessLoginBtn');
+		$('#btnAdvancedRequest').attr('class', 'homeButtons accessLoginBtn');
+		$('#reset').attr('class', 'homeButtons accessLoginBtn');
+		$('#round').attr('class', 'homeButtons accessLoginBtn');
+		$('#chosenRooms tr').attr('class', 'accessTextIn');
+		$('#facDropDown').attr('class', 'accessTextIn');
+		$('#sortable tr').attr('class', 'accessTextIn');
+		$('#btnShowAllItems').attr('class', 'homeButtons accessLoginBtn');
+		$('#facAddBtn').attr('class', 'homeButtons accessLoginBtn');
+		$('#weekSelector').attr('class', 'ui-selectable accessTextIn');
+		$('#adhocWeekSelector').attr('class', 'ui-selectable accessTextIn');
+		$('#semesterSelector').attr('class', 'ui-selectable accessTextIn');
+		$('#submissionsTable').attr('class', 'accessTable');
+		$('#lastYearTable tr').attr('class', 'accessTable');
+		$('#buildingContent').attr('class', 'accessTable');
+		$('#roomContent').attr('class', 'accessTable');
 	}
 }
 
@@ -1297,7 +1337,7 @@ function AddNewModule()
 	html+= "<label for='modName'>Module Name</label></br>";
 	html+= " <input type='text' id='newModName' placeholder='Team Projects'><br>";
 	html+= "<label for='modName'>Module Group Size</label></br>";
-	html+= " <input type='number' id='newModSize' value='50'><br>";
+	html+= " <input type='number' id='newModSize' placeholder='50'><br>";
 	html+= "<input type='button' id='btnAddModule' value='Add Module' class='homeButtons' style='margin-top:8px;'>";
 	
 	$('#newModuleDialog').html(html);
@@ -1632,7 +1672,7 @@ function createAutoCompleteFacList()
 	  
 	  //Created my own function to add a 'add' button to add the chosen facility to the list
 	  _createAddButton: function(){
-		var btn = $('<button class="homeButtons">Add</button>').click(function () 
+		var btn = $('<button id="facAddBtn" class="homeButtons">Add</button>').click(function () 
 		{
 			var fac = $('#facDropDown').val(); //get the value of the selected facility
 			if (fac != "")
@@ -1724,6 +1764,7 @@ function createAutoCompleteFacList()
 		//create the elements and append them to the list, adding the appropriate information
 		html = "<tr id='"+facid+"' name='"+fac+"'><td>" + fac + "</td><td id='del"+facid+"' onclick='deleteFac(this.id);'><img src='img/delete.png' height='15' width='15'></td></tr>";
 		document.getElementById("sortable").innerHTML += html;
+		applyAccess(document.getElementById("btnAccessHome")); //add accessibility class if required
 	}
 
 }	

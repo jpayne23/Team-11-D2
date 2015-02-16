@@ -31,7 +31,7 @@
 		?>
 		>
 	</div>
-	<header class="mainHeader"> 
+	<header class="mainHeader">
 		<img src="img/logo.png">
 		<nav>
 			<ul>
@@ -210,7 +210,7 @@
 						</tr>
 						<tr>
 							<td colspan='2'>
-								<input type="checkbox" id='priorityCheckbox' checked="checked" disabled="disabled"> Priority Request
+								<input type="checkbox" id='priorityCheckbox' class="" checked="checked" disabled="disabled"> Priority Request
 							</td>
 						</tr>
 						<!-- need this in ad-hoc

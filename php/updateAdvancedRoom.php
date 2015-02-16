@@ -28,7 +28,7 @@
 	$row = $res2->fetchRow();
 	$buildingName = $row['building'];
 	
-	echo '<table class="contenttable">';
+	echo '<table id ="roomContent" class="contenttable">';
 	while ($row = $res->fetchRow())
 	{
 		
