@@ -1969,11 +1969,18 @@ function filterMenu(source)
 			$('#filterDivHist').html(data);
 		});
 	}
-	else
+	else if(source == "Adhoc")
 	{
 		$.get("php/loadFilter.php?source=Adhoc", function(data)
 		{
 			$('#pastFilterDiv').html(data);
+		});
+	}
+	else
+	{
+		$.get("php/loadLastFilter.php?source=LastYear", function(data)
+		{
+			$('#filterDivLast').html(data);
 		});
 	}
 };
@@ -2006,7 +2013,7 @@ function filterTable(source)
 		});
 		closeDiv('filterDiv');
 	}
-	else
+	else if(source == "Adhoc")
 	{
 		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
 		$.get("php/loadAdhocSubmissions.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
@@ -2014,6 +2021,15 @@ function filterTable(source)
 			$('#past').html(data);
 		});
 		closeDiv('pastFilterDiv');
+	}
+	else
+	{
+		var status = "&status=" + document.getElementById("statusFilter")[document.getElementById("statusFilter").selectedIndex].id;
+		$.get("php/loadLastYear.php?" + modCode + sessionType + facility + day + status + sortDirection + sortColumn + flag, function(data)
+		{
+			$('#lastYear').html(data);
+		});
+		closeDiv('filterDivLast');
 	}
 }
 
