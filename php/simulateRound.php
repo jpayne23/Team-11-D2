@@ -1,4 +1,9 @@
 <?php
+	/*
+	A php script file to simulate the round ending. In the actual implementation of the system, this would be replaced 
+	with the system used by timetable admins to progress through the rounds. 
+	Written by Prakash and Joe. 
+	*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -8,7 +13,7 @@
 		die($db->getMessage());
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
-	session_start();
+	session_start();//allows access to session variables
 	
 	$sql="SELECT UserID FROM Users WHERE DeptCode = '".$_SESSION["deptCode"]."';";
 	$res =& $db->query($sql);
@@ -21,16 +26,17 @@
 	{
 		$userID = $row["userid"];
 	}
-	
+	//build sql
 	$sql="SELECT RequestID FROM Request WHERE UserID = ".$userID." AND Status = 'Submitted' AND AdhocRequest = '0'";
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
 	{
 		die($res->getMessage());
-	}
+	}//run query
 	while ($row = $res->fetchRow())
-	{
+	{//for each result
 		$passfail = rand(0,1);
+		//request will randomly pass or fail
 		if ($passfail>=0.5)
 		{
 			$sql2 = "UPDATE Request SET Status = 'Successful' WHERE RequestID = ".$row['requestid'].";";
@@ -39,7 +45,7 @@
 			if(PEAR::isError($res2))
 			{
 				die($res2->getMessage());
-			}
+			}//update request status to Successful
 		
 			$rooms = array();
 			$dayID = 0;
@@ -57,7 +63,7 @@
 			}
 			
 			if ($res3->numRows() > 0)
-			{
+			{//the requested room is allocated
 				while ($row3 = $res3->fetchRow())
 				{
 					$rooms[count($rooms)] = $row3['room'];
@@ -67,7 +73,7 @@
 				}
 				
 				for ($i=0;$i<count($rooms);$i++)
-				{
+				{//update the database
 					$sql4 = "INSERT INTO AllocatedRooms (RequestID,Room,DayID,PeriodID) VALUES ('". $row['requestid'] ."','" . $rooms[$i] . "','" . $dayID . "','" . $periodID . "');";
 					
 					$res4 =& $db->query($sql4);
@@ -79,7 +85,7 @@
 			}
 		}
 		else
-		{
+		{//set request status to Unsuccessful
 			$sql2 = "UPDATE Request SET Status = 'Unsuccessful' WHERE RequestID = ".$row['requestid']."";
 			$res2 =& $db->query($sql2);
 			if(PEAR::isError($res2))
