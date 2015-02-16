@@ -1,3 +1,9 @@
+<!--
+When the user clicks submit all requests, we set all of the current pending 
+requests for the user to be submitted.
+
+Implemented by Jack
+-->
 <?php
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
@@ -9,7 +15,10 @@
 	}
 	$db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
-	$sql = "UPDATE Request SET Status='Submitted' WHERE Status='Pending';";
+	session_start();
+	$deptCode = $_SESSION['deptCode'];	
+	
+	$sql = "UPDATE Request SET Status='Submitted' WHERE Status='Pending' AND DeptCode = '$deptCode'";
 	
 	$res =& $db->query($sql);
 	if(PEAR::isError($res))
