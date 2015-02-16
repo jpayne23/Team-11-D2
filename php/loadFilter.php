@@ -1,4 +1,12 @@
 <?php
+	/* 
+	File generates the filter menu dynamically depending on what information is
+	stored in the table. i.e. The filter menu will only let you select a
+	facility which is in at least one of the requests in the table.
+	
+	Implemented by Joe.
+	*/
+	
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
@@ -12,8 +20,10 @@
 	session_start();
 	$deptCode = $_SESSION['deptCode'];
 	
+	//Tells script what table the filter menu is being generated for
 	$source = $_REQUEST['source'];
-		
+	
+	//Conditions which depend on source
 	if ($source == 'Pending')
 	{
 		$status = "Status = 'Pending'";
@@ -30,6 +40,7 @@
 		echo "<input type='button' class='filterButton' value='Close me!' onclick='closeDiv(\"pastFilterDiv\");'></input>";
 	}
 	
+	//Gets all modules which are part of a request
 	$sql = "SELECT ModCode, Title FROM Module WHERE ModCode IN (SELECT ModCode FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
@@ -54,6 +65,7 @@
 	
 	echo "<tr><td>Session Type</td><td>";
 	
+	//Gets all session types which are part of a request
 	$sql = "SELECT DISTINCT SessionType FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 
@@ -75,6 +87,7 @@
 	
 	echo "<tr><td>Day</td><td>";
 	
+	//Gets all days which are part of a request
 	$sql = "SELECT DISTINCT Day FROM DayInfo WHERE DayID IN (SELECT DayID FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode'))";
 	
@@ -96,6 +109,7 @@
 	
 	echo "<tr><td>Facility</td><td>";
 	
+	//Gets all facilities which are part of a request
 	$sql = "SELECT DISTINCT Facility FROM Facility WHERE FacilityID IN (SELECT FacilityID FROM FacilityRequest WHERE ";
 	$sql .= "RequestID IN (SELECT RequestID FROM Request WHERE " . $status;
 	$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')))";
@@ -118,10 +132,12 @@
 	
 	echo "</select></td></tr>";
 	
+	//Only have the option to filter by status when it isn't in the 
+	//pending table
 	if($source != 'Pending'){
 		
 		echo "<tr><td>Status</td><td>";
-		
+		//Gets all status' which are part of a request
 		$sql = "SELECT DISTINCT Status FROM Request WHERE " . $status;
 		$sql .= " AND UserID = (SELECT UserID FROM Users WHERE DeptCode = '$deptCode')";
 		
