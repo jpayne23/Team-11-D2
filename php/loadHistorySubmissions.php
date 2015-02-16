@@ -1,4 +1,5 @@
-<!-- 
+<?php
+/*
 Gets all of the requests that are submitted, successful, unsuccessful or modified
 for the user's department to display in a table. 
 The user can sort each column by ascending or descending
@@ -6,8 +7,7 @@ order and filter by different fields to only display values matching
 those fields.
 
 Implemented by Jack and Joe.
--->
-<?php
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";

@@ -1,12 +1,12 @@
-<!--
+<?php
+/*
 Gets all of the information from the form, and adds the necessary 
 information to the correct table in the database.
 If the request is an adhoc request, it will automatically assign
 the status to be either successful or unsuccessful.
 
 Submitting data to the database by Jack, allocating adhoc submissions by Joe.
--->
-<?php
+*/
 	//return the booked weeks as an inclusive string
 	function returnBookedWeeks($start,$end) 
 	{

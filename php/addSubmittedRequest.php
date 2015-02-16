@@ -1,10 +1,10 @@
-<!--
+<?php
+/*
 When the user clicks submit all requests, we set all of the current pending 
 requests for the user to be submitted.
 
 Implemented by Jack
--->
-<?php
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";

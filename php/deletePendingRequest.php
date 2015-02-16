@@ -1,10 +1,10 @@
-<!--
+<?php
+/*
 When the user clicks the delete icon, we remove any information relating to
 that specific requestID.
 
 Implemented by Jack.
--->
-<?php
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";

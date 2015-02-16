@@ -1,12 +1,11 @@
-<!-- 
+<?php
+/* 
 Gets all of the requests that have been ticked in the Last Year's Submissions
 table, and adds them to the database as pending so the timetabler can either 
 edit or submit them.
 
 Implemented by Jack
--->
-
-<?php
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";

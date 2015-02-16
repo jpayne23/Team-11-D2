@@ -1,12 +1,12 @@
-<!--
+<?php
+/*
 This file is similar to loadPendingRequests.php, except we load all the
 requests from last year into it's own table that the user can view.
 We also add a checkbox to the end of each request so the user can select which
 requests they would like to add.
 
 Implemented by Jack.
--->
-<?php
+*/
 	// Setting up connecting to the database
 	require_once 'MDB2.php';			
 	include "/disks/diskh/teams/team11/passwords/password.php";
