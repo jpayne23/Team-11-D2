@@ -548,6 +548,12 @@ textarea{
    /* line-height: 0px;
     padding: 11px 3px;  */
 }
+
+.closeFindButtonDiv{
+	position: fixed;
+	width: 82%;
+	float:left;
+}
 /* -----------------------------------------CSS to make page accessible-------------- */
 
 .accessTextIn:focus , .accessTextIn:hover{
